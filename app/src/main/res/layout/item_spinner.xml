@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/item_spinner_tv_name"
+        android:layout_width="match_parent"
+        android:textColor="@color/c_2d2d2d"
+        android:textSize="@dimen/ts_13"
+        android:layout_height="@dimen/fs_46"
+        android:paddingStart="@dimen/fs_10"
+        android:gravity="center_vertical"
+        android:fontFamily="@font/axis_std_regular"
+        tools:ignore="RtlSymmetry,UnusedAttribute"
+        android:paddingLeft="@dimen/fs_10"/>

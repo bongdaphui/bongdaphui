@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "940999611140",
+    "firebase_url": "https://bongdaphui-a9999.firebaseio.com",
+    "project_id": "bongdaphui-a9999",
+    "storage_bucket": "bongdaphui-a9999.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:940999611140:android:37a411d693a33eff",
+        "android_client_info": {
+          "package_name": "com.bongdaphui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "940999611140-v8bko25t93n2fsrjadbll0bpkc5h4ltm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC09CRlwBneAG1jTRQC7pLfpTKCUrjA8_g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "940999611140-v8bko25t93n2fsrjadbll0bpkc5h4ltm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

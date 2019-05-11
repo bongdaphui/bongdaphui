@@ -1,0 +1,172 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="bg_item_input">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/fs_46</item>
+        <item name="android:background">@drawable/bg_white_solid_gray_border_5_radius</item>
+    </style>
+
+    <style name="iv_icon_item_input">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginStart" tools:ignore="NewApi">@dimen/fs_15</item>
+    </style>
+
+    <style name="title_item_input">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/fs_15</item>
+        <item name="android:layout_marginBottom">@dimen/fs_12</item>
+        <item name="android:textColor">@color/c_2d2d2d</item>
+        <item name="android:textSize">@dimen/ts_12</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">@font/axis_std_bold</item>
+    </style>
+
+    <style name="et_item_input">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@null</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColorHint">@color/c_9b9b9b</item>
+        <item name="android:textSize">@dimen/ts_13</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:layout_marginStart" tools:ignore="NewApi">@dimen/fs_15</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">@font/axis_std_regular</item>
+        <item name="android:imeOptions">actionNext</item>
+    </style>
+
+    <style name="iv_clear_item_input">
+        <item name="android:layout_width">@dimen/fs_46</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_alignParentEnd" tools:ignore="NewApi">true</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:src">@drawable/ic_clear_text</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="tv_error_item_input">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/c_b21225</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">@font/axis_std_regular</item>
+        <item name="android:textSize">@dimen/ts_10</item>
+        <item name="android:layout_marginTop">@dimen/fs_3</item>
+        <item name="android:layout_marginBottom">@dimen/fs_3</item>
+        <item name="android:visibility">invisible</item>
+    </style>
+
+    <style name="tv_ts_12_c_2d2d2d_bold">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/c_2d2d2d</item>
+        <item name="android:textSize">@dimen/ts_12</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">@font/axis_std_bold</item>
+    </style>
+
+    <style name="tv_ts_14_c_white_regular">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/ts_14</item>
+        <item name="android:fontFamily">@font/axis_std_regular</item>
+    </style>
+
+    <style name="tv_ts_14_c_2d2d2d_regular">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/c_2d2d2d</item>
+        <item name="android:textSize">@dimen/ts_14</item>
+        <item name="android:fontFamily">@font/axis_std_regular</item>
+    </style>
+
+    <style name="tv_ts_15_c_white_bold">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/ts_15</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">@font/axis_std_bold</item>
+    </style>
+
+    <style name="tv_ts_15_c_2d2d2d_bold">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/c_2d2d2d</item>
+        <item name="android:textSize">@dimen/ts_15</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">@font/axis_std_bold</item>
+    </style>
+
+    <style name="tv_ts_15_c_black_bold">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">@dimen/ts_15</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">@font/axis_std_bold</item>
+    </style>
+
+    <style name="tv_ts_16_c_accent_dark_bold">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">@dimen/ts_16</item>
+        <item name="android:fontFamily">@font/axis_std_bold</item>
+    </style>
+
+    <style name="tv_ts_16_c_2d2d2d_regular">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/c_2d2d2d</item>
+        <item name="android:textSize">@dimen/ts_16</item>
+        <item name="android:fontFamily">@font/axis_std_regular</item>
+    </style>
+
+
+    <style name="tv_ts_18_c_2d2d2d_bold">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/c_2d2d2d</item>
+        <item name="android:textSize">@dimen/ts_18</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">@font/axis_std_bold</item>
+    </style>
+
+    <style name="bt_single_c_accent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/fs_46</item>
+        <item name="android:paddingStart">@dimen/fs_46</item>
+        <item name="android:paddingEnd">@dimen/fs_46</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/ts_15</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">@font/axis_std_bold</item>
+        <item name="android:layout_marginBottom">@dimen/fs_20</item>
+        <item name="android:layout_marginTop">@dimen/fs_15</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:background">@drawable/bg_accent_solid_no_border_30_radius</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="ExpandedTitle" parent="@android:style/TextAppearance">
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="CollapsedTitle" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/fs_18</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@android:color/black</item>
+    </style>
+
+</resources>

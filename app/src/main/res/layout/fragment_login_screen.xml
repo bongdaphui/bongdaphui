@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@android:color/white"
+        android:clickable="true"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:focusable="true">
+
+    <TextView
+            android:layout_width="wrap_content"
+            style="@style/tv_ts_18_c_2d2d2d_bold"
+            android:text="@string/login"
+            android:textAllCaps="true"
+            tools:ignore="UnusedAttribute"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fs_46"
+            android:layout_margin="@dimen/fs_30"
+            android:orientation="horizontal"
+            tools:ignore="DisableBaselineAlignment">
+
+        <LinearLayout
+                android:id="@+id/frg_login_screen_ll_login_with_facebook"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:background="@drawable/bg_button_login_facebook">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fs_10"
+                    android:src="@drawable/ic_login_facebook"
+                    android:layout_marginLeft="@dimen/fs_10"
+                    android:layout_marginEnd="@dimen/ts_10"
+                    tools:ignore="ContentDescription"
+                    android:layout_marginRight="@dimen/ts_10"/>
+
+            <TextView
+                    style="@style/tv_ts_15_c_white_bold"
+                    android:text="Facebook"/>
+
+            <com.facebook.login.widget.LoginButton
+                    android:id="@+id/buttonFacebookLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:visibility="gone"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_marginStart="@dimen/fs_30"
+                android:id="@+id/frg_login_screen_ll_login_with_google"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:background="@drawable/bg_button_login_google"
+                android:layout_marginLeft="@dimen/fs_30">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fs_10"
+                    android:src="@drawable/ic_login_google"
+                    android:layout_marginLeft="@dimen/fs_10"
+                    android:layout_marginEnd="@dimen/ts_10"
+                    tools:ignore="ContentDescription"
+                    android:layout_marginRight="@dimen/ts_10"/>
+
+            <TextView
+                    style="@style/tv_ts_15_c_2d2d2d_bold"
+                    android:text="Google"/>
+
+            <com.google.android.gms.common.SignInButton
+                    android:id="@+id/buttonGoogleLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/frg_login_screen_ll_login_with_email"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fs_46"
+            android:background="@drawable/bg_transparent_solid_gray_border_5_radius"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/fs_30"
+            android:layout_marginStart="@dimen/fs_30"
+            android:layout_marginBottom="@dimen/fs_30"
+            android:orientation="horizontal"
+            android:layout_marginRight="@dimen/fs_30">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/fs_20"
+                android:src="@drawable/ic_email"
+                android:layout_marginRight="@dimen/fs_20"/>
+
+        <TextView
+                style="@style/tv_ts_15_c_2d2d2d_bold"
+                android:text="Email"
+                android:textColor="@color/c_2d2d2d"
+                android:textSize="@dimen/ts_14"/>
+    </LinearLayout>
+
+    <TextView
+            android:layout_width="wrap_content"
+            style="@style/tv_ts_18_c_2d2d2d_bold"
+            android:text="Hoặc"
+            android:layout_marginBottom="@dimen/fs_30"
+            android:textAllCaps="true"
+            tools:ignore="UnusedAttribute"/>
+
+    <LinearLayout
+            android:id="@+id/frg_login_screen_ll_sing_up_with_email"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fs_46"
+            android:background="@drawable/bg_transparent_solid_gray_border_5_radius"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/fs_30"
+            android:layout_marginStart="@dimen/fs_30"
+            android:layout_marginBottom="@dimen/fs_30"
+            android:orientation="horizontal"
+            android:layout_marginRight="@dimen/fs_30">
+
+        <TextView
+                style="@style/tv_ts_15_c_2d2d2d_bold"
+                android:text="Đăng ký"
+                android:textColor="@color/c_2d2d2d"/>
+    </LinearLayout>
+
+</LinearLayout>

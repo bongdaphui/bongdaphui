@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:id="@+id/frg_add_fc_scroll"
+        android:fillViewport="true">
+
+    <LinearLayout
+            android:id="@+id/frg_add_fc_v_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:paddingStart="@dimen/fs_20"
+            android:paddingLeft="@dimen/fs_20"
+            android:paddingEnd="@dimen/fs_20"
+            android:paddingRight="@dimen/fs_20"
+            android:focusable="true">
+
+        <TextView
+                android:layout_marginTop="@dimen/fs_20"
+                style="@style/title_item_input"
+                android:text="Logo đội bóng"/>
+
+        <RelativeLayout
+                android:id="@+id/frg_add_fc_v_photo"
+                android:layout_width="@dimen/fs_150"
+                android:layout_marginBottom="@dimen/fs_5"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bg_transparent_solid_gray_border_0_radius"
+                android:layout_height="@dimen/fs_150">
+
+            <ImageView
+                    android:id="@+id/frg_add_fc_iv_photo"
+                    android:layout_width="match_parent"
+                    android:scaleType="centerCrop"
+                    android:layout_margin="@dimen/fs_1"
+                    android:src="@drawable/ic_picture"
+                    android:layout_height="match_parent"/>
+            <ImageView
+                    android:id="@+id/frg_add_fc_iv_camera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_camera"
+                    android:layout_marginBottom="-1dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"/>
+
+        </RelativeLayout>
+
+        <TextView
+                android:id="@+id/frg_add_fc_tv_error_select_photo"
+                style="@style/tv_error_item_input"
+                android:layout_gravity="center_horizontal"
+                android:text="Vui lòng chọn logo đội bóng"/>
+
+        <TextView
+                style="@style/title_item_input"
+                android:text="Tên đội bóng"/>
+
+        <RelativeLayout
+                android:id="@+id/frg_add_fc_v_input_name_fc"
+                style="@style/bg_item_input">
+
+            <ImageView
+                    android:id="@+id/frg_add_fc_iv_name_fc"
+                    style="@style/iv_icon_item_input"
+                    android:src="@drawable/ic_user_name"
+                    tools:ignore="ContentDescription"/>
+
+            <EditText
+                    android:id="@+id/frg_add_fc_et_name_fc"
+                    style="@style/et_item_input"
+                    android:layout_toStartOf="@+id/frg_add_fc_iv_clear_input_name_fc"
+                    android:layout_toEndOf="@+id/frg_add_fc_iv_name_fc"
+                    android:hint="Nhập tên tên đội bóng"
+                    android:inputType="textCapWords"
+                    android:layout_toLeftOf="@+id/frg_add_fc_iv_clear_input_name_fc"
+                    android:layout_toRightOf="@+id/frg_add_fc_iv_name_fc"
+                    tools:ignore="Autofill"/>
+
+            <ImageView
+                    android:id="@+id/frg_add_fc_iv_clear_input_name_fc"
+                    style="@style/iv_clear_item_input"
+                    tools:ignore="ContentDescription"/>
+
+        </RelativeLayout>
+
+        <TextView
+                android:id="@+id/frg_add_fc_tv_error_input_name_fc"
+                style="@style/tv_error_item_input"
+                android:text="Vui lòng nhập tên đội bóng"/>
+
+        <TextView
+                style="@style/title_item_input"
+                android:text="Họ và tên đội trưởng"/>
+
+        <RelativeLayout
+                android:id="@+id/frg_add_fc_v_input_full_name"
+                style="@style/bg_item_input">
+
+            <ImageView
+                    android:id="@+id/frg_add_fc_iv_username"
+                    style="@style/iv_icon_item_input"
+                    android:src="@drawable/ic_user_name"
+                    tools:ignore="ContentDescription"/>
+
+            <EditText
+                    android:id="@+id/frg_add_fc_et_full_name"
+                    style="@style/et_item_input"
+                    android:layout_toStartOf="@+id/frg_add_fc_iv_clear_input_full_name"
+                    android:layout_toEndOf="@+id/frg_add_fc_iv_username"
+                    android:hint="Nhập họ và tên đội trưởng"
+                    android:inputType="textCapWords"
+                    android:layout_toLeftOf="@+id/frg_add_fc_iv_clear_input_full_name"
+                    android:layout_toRightOf="@+id/frg_add_fc_iv_username"
+                    tools:ignore="Autofill"/>
+
+            <ImageView
+                    android:id="@+id/frg_add_fc_iv_clear_input_full_name"
+                    style="@style/iv_clear_item_input"
+                    tools:ignore="ContentDescription"/>
+
+        </RelativeLayout>
+
+        <TextView
+                android:id="@+id/frg_add_fc_tv_error_input_full_name"
+                style="@style/tv_error_item_input"
+                android:text="Vui lòng nhập họ và tên đội trưởng"/>
+
+        <TextView
+                style="@style/title_item_input"
+                android:text="@string/email"/>
+
+        <RelativeLayout
+                android:id="@+id/frg_add_fc_v_input_email"
+                style="@style/bg_item_input">
+
+            <ImageView
+                    android:id="@+id/frg_add_fc_iv_email"
+                    style="@style/iv_icon_item_input"
+                    android:src="@drawable/ic_email"
+                    tools:ignore="ContentDescription"/>
+
+            <EditText
+                    android:id="@+id/frg_add_fc_et_email"
+                    style="@style/et_item_input"
+                    android:layout_toStartOf="@+id/frg_add_fc_iv_clear_input_email"
+                    android:layout_toEndOf="@+id/frg_add_fc_iv_email"
+                    android:hint="@string/please_enter_your_email"
+                    android:inputType="textEmailAddress"
+                    android:layout_toLeftOf="@+id/frg_add_fc_iv_clear_input_email"
+                    android:layout_toRightOf="@+id/frg_add_fc_iv_email"
+                    tools:ignore="Autofill"/>
+
+            <ImageView
+                    android:id="@+id/frg_add_fc_iv_clear_input_email"
+                    style="@style/iv_clear_item_input"
+                    tools:ignore="ContentDescription"/>
+
+        </RelativeLayout>
+
+        <TextView
+                android:id="@+id/frg_add_fc_tv_error_input_email"
+                style="@style/tv_error_item_input"
+                android:text="@string/please_enter_your_email"/>
+
+        <TextView
+                style="@style/title_item_input"
+                android:text="Số điện thoại liên hệ:"/>
+
+        <RelativeLayout
+                android:id="@+id/frg_add_fc_v_input_phone"
+                style="@style/bg_item_input">
+
+            <ImageView
+                    android:id="@+id/frg_add_fc_iv_phone"
+                    style="@style/iv_icon_item_input"
+                    android:src="@drawable/ic_phone"
+                    tools:ignore="ContentDescription"/>
+
+            <EditText
+                    android:id="@+id/frg_add_fc_et_phone"
+                    style="@style/et_item_input"
+                    android:layout_toStartOf="@+id/frg_add_fc_iv_clear_input_phone"
+                    android:layout_toEndOf="@+id/frg_add_fc_iv_phone"
+                    android:hint="Nhập số điện thoại liên hệ"
+                    android:inputType="phone"
+                    android:layout_toLeftOf="@+id/frg_add_fc_iv_clear_input_phone"
+                    android:layout_toRightOf="@+id/frg_add_fc_iv_phone"
+                    tools:ignore="Autofill"/>
+
+            <ImageView
+                    android:id="@+id/frg_add_fc_iv_clear_input_phone"
+                    style="@style/iv_clear_item_input"
+                    tools:ignore="ContentDescription"/>
+
+        </RelativeLayout>
+
+        <TextView
+                android:id="@+id/frg_add_fc_tv_error_input_phone"
+                style="@style/tv_error_item_input"
+                android:text="Vui lòng nhập số điện thoại liên hệ"/>
+
+        <TextView
+                style="@style/title_item_input"
+                android:text="Ngày thành lập đội bóng"/>
+
+        <RelativeLayout
+                android:id="@+id/frg_add_fc_v_input_dob"
+                style="@style/bg_item_input">
+
+            <ImageView
+                    android:id="@+id/frg_add_fc_iv_dob"
+                    style="@style/iv_icon_item_input"
+                    android:src="@drawable/ic_dob"
+                    tools:ignore="ContentDescription"/>
+
+            <TextView
+                    android:id="@+id/frg_add_fc_et_dob"
+                    style="@style/et_item_input"
+                    android:layout_toStartOf="@+id/frg_add_fc_iv_clear_input_dob"
+                    android:layout_toEndOf="@+id/frg_add_fc_iv_dob"
+                    android:hint="Vui lòng nhập ngày thành lập đội bóng"
+                    android:gravity="center_vertical"
+                    android:layout_toLeftOf="@+id/frg_add_fc_iv_clear_input_dob"
+                    android:layout_toRightOf="@+id/frg_add_fc_iv_dob"
+                    tools:ignore="Autofill"/>
+
+            <ImageView
+                    android:id="@+id/frg_add_fc_iv_clear_input_dob"
+                    style="@style/iv_clear_item_input"
+                    tools:ignore="ContentDescription"/>
+
+        </RelativeLayout>
+
+        <TextView
+                android:id="@+id/frg_add_fc_tv_error_input_dob"
+                style="@style/tv_error_item_input"
+                android:text="@string/please_input_dob"/>
+
+        <TextView
+                style="@style/title_item_input"
+                android:text="@string/address"/>
+
+        <RelativeLayout
+                android:id="@+id/frg_add_fc_v_input_address"
+                style="@style/bg_item_input">
+
+            <ImageView
+                    android:id="@+id/frg_add_fc_iv_address"
+                    style="@style/iv_icon_item_input"
+                    android:src="@drawable/ic_address"
+                    tools:ignore="ContentDescription"/>
+
+            <EditText
+                    android:id="@+id/frg_add_fc_et_address"
+                    style="@style/et_item_input"
+                    android:layout_toStartOf="@+id/frg_add_fc_iv_clear_input_address"
+                    android:layout_toEndOf="@+id/frg_add_fc_iv_address"
+                    android:hint="@string/please_enter_address_fc"
+                    android:maxLines="1"
+                    android:inputType="textCapWords"
+                    android:ellipsize="end"
+                    android:scrollHorizontally="true"
+                    android:layout_toLeftOf="@+id/frg_add_fc_iv_clear_input_address"
+                    android:layout_toRightOf="@+id/frg_add_fc_iv_address"
+                    tools:ignore="Autofill,RtlHardcoded"/>
+
+            <ImageView
+                    android:id="@+id/frg_add_fc_iv_clear_input_address"
+                    style="@style/iv_clear_item_input"
+                    tools:ignore="ContentDescription"/>
+
+        </RelativeLayout>
+
+        <TextView
+                android:id="@+id/frg_add_fc_tv_error_input_address"
+                style="@style/tv_error_item_input"
+                android:text="@string/please_enter_address_fc"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+            <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/fs_15"
+                    style="@style/bg_item_input"
+                    android:layout_marginRight="@dimen/fs_15">
+
+                <Spinner
+                        android:id="@+id/frg_add_fc_sp_district"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:overlapAnchor="false"
+                        tools:ignore="HardcodedText,UnusedAttribute"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    style="@style/bg_item_input">
+
+                <Spinner
+                        android:id="@+id/frg_add_fc_sp_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:overlapAnchor="false"
+                        tools:ignore="HardcodedText,UnusedAttribute"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fs_15"
+                android:id="@+id/frg_add_fc_progress"
+                android:visibility="invisible"
+                android:max="100"/>
+
+        <TextView
+                android:id="@+id/frg_add_fc_tv_input"
+                style="@style/bt_single_c_accent"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/input"/>
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

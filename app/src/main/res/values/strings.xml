@@ -1,0 +1,76 @@
+<resources>
+
+    <string name="facebook_app_id">2352385625041592</string>
+    <string name="google_client_id">132300636972-0434oq6e27sbf271g1r61j2hmmbvc2gn.apps.googleusercontent.com</string>
+
+    <string name="app_name">Bóng Đá Phủi</string>
+    <string name="please_enter_your_photo">Vui lòng chọn hình đại diện</string>
+    <string name="please_enter_your_full_name">Vui lòng nhập họ và tên của bạn</string>
+    <string name="full_name">Họ và tên:</string>
+    <string name="todo">TODO</string>
+    <string name="email">Email:</string>
+    <string name="please_enter_your_email">Vui lòng nhập email của bạn</string>
+    <string name="email_not_valid">Email của bạn không phù hợp</string>
+    <string name="phone">Số điện thoại:</string>
+    <string name="please_enter_your_phone">Vui lòng nhập số điện thoại của bạn</string>
+    <string name="please_enter_your_phone_valid">Số điện thoại không đúng</string>
+    <string name="day_of_birth">Ngày sinh</string>
+    <string name="please_input_dob">Vui lòng nhập ngày sinh của bạn</string>
+    <string name="address">Địa chỉ:</string>
+    <string name="please_input_address">Vui lòng nhập địa chỉ của bạn</string>
+    <string name="height">Chiều cao</string>
+    <string name="please_input_height">Vui lòng nhập chiều cao của bạn (cm)</string>
+    <string name="weight">Cân nặng:</string>
+    <string name="please_input_weight">Vui lòng nhập cân nặng của bạn (kg)</string>
+    <string name="position">Vị trị sở trường:</string>
+    <string name="please_input_position">Vui lòng nhập vị trí sở trường của bạn</string>
+    <string name="clothers_number">Số áo đang mặc</string>
+    <string name="please_input_clothers_number">Vui lòng nhập số áo bạn đang mặc</string>
+    <string name="input">Thêm</string>
+    <string name="text">text</string>
+    <string name="list_member">Danh Sách Đội Bóng</string>
+    <string name="list_fc">Đội bóng</string>
+    <string name="list_fc_manager">Đội bóng bạn quản lý</string>
+    <string name="join_club">Gia nhập đội</string>
+    <string name="update_info">Cập nhật thông tin</string>
+    <string name="add_fc">Thêm đội bóng</string>
+    <string name="members">Thành viên</string>
+    <string name="football_field">Sân banh</string>
+    <string name="user">Tài khoản</string>
+    <string name="list_football_field">Danh sách sân bóng đá</string>
+    <string name="name_football_field">Tên sân cỏ nhân tạo</string>
+    <string name="please_input_name_football_field">Vui lòng nhập tên sân</string>
+    <string name="please_input_count_field">Vui lòng nhập số lượng sân 5 người</string>
+    <string name="please_enter_phone_field">Vui lòng nhập số điện thoại sân</string>
+    <string name="please_enter_address_field">Vui lòng nhập địa chỉ sân</string>
+    <string name="please_enter_address_fc">Vui lòng nhập địa chỉ đội bóng</string>
+    <string name="price_field">Giá sân trung bình</string>
+    <string name="please_enter_price_one_hour">Vui lòng nhập giá sân đá 1 tiếng</string>
+    <string name="count_field">Số lượng sân</string>
+    <string name="add_football_field">Thêm sân bóng</string>
+    <string name="login_with_facebook">Facebook</string>
+    <string name="use_app_to_login">Bạn cần đăng nhập để vào ứng dụng</string>
+    <string name="info_user">Thông tin của bạn</string>
+    <string name="login">Đăng nhập</string>
+    <string name="please_enter_your_name">Vui lòng nhập họ và tên của bạn</string>
+    <string name="please_enter_your_password">Vui lòng nhập mật khẩu của bạn</string>
+    <string name="please_re_enter_your_password">Vui lòng xác nhận mật khẩu của bạn</string>
+    <string name="invalid_password">Mật khẩu phải ít nhất 6 ký tự</string>
+    <string name="password_not_match">Xác nhận nhận khẩu không đúng</string>
+    <string name="register_account">Đăng ký tài khoản</string>
+    <string name="not_yet_update">Chưa cập nhật</string>
+    <string name="not_update">Chưa cập nhật</string>
+    <string name="alert">Thông báo</string>
+    <string name="no">Không</string>
+    <string name="yes">Có</string>
+    <string name="close">Đóng</string>
+    <string name="are_you_want_logout">Bạn có muốn đăng xuất không?</string>
+    <string name="alert_denied_permission">
+        Bạn đã từ chối quyền truy cập thư viện hình ảnh, vui lòng vào phần cài đặt của ứng dụng để cho phép truy cập
+        hình ảnh
+    </string>
+    <string name="request_join_club_fail">Yêu cầu của bạn không thành công. Vui lòng thực hiện lại.</string>
+    <string name="request_join_club_success">Yêu cầu của bạn đã được gửi. Bạn hãy đợi đội trưởng duyệt.</string>
+
+
+</resources>

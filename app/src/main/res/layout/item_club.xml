@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:background="@drawable/bg_blue_5_radius"
+        android:elevation="@dimen/fs_5"
+        android:id="@+id/item_club_container"
+        android:layout_margin="@dimen/fs_10"
+        android:layout_height="wrap_content"
+        tools:ignore="UnusedAttribute">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fs_20"
+            android:layout_marginTop="@dimen/fs_10"
+            android:layout_marginLeft="@dimen/fs_20"
+            android:orientation="horizontal">
+
+        <FrameLayout
+                android:layout_width="@dimen/fs_71"
+                android:background="@drawable/bg_oval_solid_transparent_border_white"
+                android:layout_height="@dimen/fs_71">
+
+            <ImageView
+                    android:id="@+id/item_club_image"
+                    android:layout_width="@dimen/fs_70"
+                    android:layout_gravity="center"
+                    android:layout_height="@dimen/fs_70"/>
+        </FrameLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fs_20"
+                android:layout_marginEnd="@dimen/fs_20"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/fs_20"
+                tools:ignore="RtlHardcoded">
+
+            <TextView
+                    android:id="@+id/item_club_name"
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/ts_16"
+                    android:text="Brothers FC"
+                    android:layout_marginBottom="@dimen/fs_5"
+                    android:fontFamily="@font/axis_std_bold"
+                    android:textColor="@android:color/white"
+                    android:layout_height="wrap_content"/>
+            <TextView
+                    android:id="@+id/item_club_caption"
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/ts_14"
+                    android:text="Nguyễn Tấn Linh"
+                    android:fontFamily="@font/axis_std_regular"
+                    android:textColor="@android:color/white"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/item_club_area"
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/ts_14"
+                    android:text="Bình Thạnh"
+                    android:lineSpacingExtra="@dimen/fs_3"
+                    android:fontFamily="@font/axis_std_regular"
+                    android:textColor="@android:color/white"
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fs_110"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginEnd="@dimen/fs_20"
+            android:layout_marginBottom="@dimen/fs_10"
+            android:layout_marginLeft="@dimen/fs_110"
+            android:layout_marginRight="@dimen/fs_20">
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <TextView
+                    android:id="@+id/item_club_phone"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/ts_14"
+                    android:paddingTop="@dimen/fs_5"
+                    android:paddingBottom="@dimen/fs_3"
+                    android:text="+84"
+                    android:fontFamily="@font/axis_std_bold"
+                    android:textColor="@android:color/white"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/ts_12"
+                    android:text="Liên hệ"
+                    android:fontFamily="@font/axis_std_regular"
+                    android:textColor="@android:color/white"
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <TextView
+                    android:id="@+id/item_club_amount_player"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/ts_14"
+                    android:paddingTop="@dimen/fs_5"
+                    android:paddingBottom="@dimen/fs_3"
+                    android:text=""
+                    android:fontFamily="@font/axis_std_bold"
+                    android:textColor="@android:color/white"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/ts_12"
+                    android:text="Số cầu thủ"
+                    android:fontFamily="@font/axis_std_regular"
+                    android:textColor="@android:color/white"
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
