@@ -79,10 +79,21 @@ abstract class BaseFragment : Fragment(), BaseInterface {
     }
 
     fun onBackPressed() {
-        if (activity != null && activity is BaseActivity)
-            (activity as BaseActivity).onBackPressed()
-        else
-            activeActivity!!.onBackPressed()
+
+        if (activity != null && activity is BaseActivity) {
+            if (KeyboardManager.isShowSoftKeyboard(activity as BaseActivity)) {
+                KeyboardManager.hideSoftKeyboard(activity as BaseActivity)
+            } else {
+                (activity as BaseActivity).onBackPressed()
+            }
+        } else {
+            if (KeyboardManager.isShowSoftKeyboard(activeActivity!!)) {
+                KeyboardManager.hideSoftKeyboard(activeActivity!!)
+            } else {
+                activeActivity!!.onBackPressed()
+            }
+
+        }
     }
 
     fun showHeader(isShow: Boolean) {
