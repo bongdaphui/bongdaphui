@@ -93,9 +93,9 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
             addFragment(RegisterWithEmailScreen())
         }
 
-        frg_login_screen_ll_login_with_email.setOnClickListener {
-            addFragment(LoginWithEmailScreen())
-        }
+//        frg_login_screen_ll_login_with_email.setOnClickListener {
+//            addFragment(LoginWithEmailScreen())
+//        }
 
     }
 

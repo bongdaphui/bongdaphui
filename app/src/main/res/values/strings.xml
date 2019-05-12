@@ -71,6 +71,9 @@
     </string>
     <string name="request_join_club_fail">Yêu cầu của bạn không thành công. Vui lòng thực hiện lại.</string>
     <string name="request_join_club_success">Yêu cầu của bạn đã được gửi. Bạn hãy đợi đội trưởng duyệt.</string>
+    <string name="new_user">Thành viên mới?</string>
+    <string name="sign_up">Đăng ký</string>
+    <string name="password">Mật khẩu</string>
 
 
 </resources>
