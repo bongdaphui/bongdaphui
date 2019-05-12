@@ -185,8 +185,11 @@ abstract class BaseFragment : Fragment(), BaseInterface {
     }
 
     fun getUIDUser(): String {
-
-        return getFireBaseAuth()!!.currentUser!!.uid
+        val user = getFireBaseAuth()?.currentUser
+        if (user != null) {
+            return user.uid
+        }
+        return ""
     }
 
     fun setListCity(list: ArrayList<CityModel>) {
