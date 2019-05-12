@@ -1,4 +1,0 @@
-#Sat May 11 16:38:13 ICT 2019
-base.0=/Users/nguyentanlinh/Documents/pj/soccermanager/app/build/intermediates/dex/release/mergeDexRelease/out
-path.0=classes.dex
-renamed.0=classes.dex
