@@ -7,13 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.listener.CheckUserListener
 import com.bongdaphui.listener.UpdateUserListener
-import com.bongdaphui.loginWithEmail.LoginWithEmailScreen
 import com.bongdaphui.register.RegisterWithEmailScreen
 import com.bongdaphui.utils.Constant
+import com.bongdaphui.utils.Utils
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -93,9 +94,13 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
             addFragment(RegisterWithEmailScreen())
         }
 
-//        frg_login_screen_ll_login_with_email.setOnClickListener {
-//            addFragment(LoginWithEmailScreen())
-//        }
+
+        frg_login_with_email_tv_login.setOnClickListener {
+            signIn(
+                frg_login_with_email_et_email.text.toString(),
+                frg_login_with_email_et_input_password.text.toString()
+            )
+        }
 
     }
 
@@ -277,5 +282,117 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
         showProgress(false)
 
         openClubs()
+    }
+
+    private fun signIn(email: String, password: String) {
+        if (!validForm()) {
+            return
+        }
+        hideKeyBoard()
+        showProgress(true)
+
+        getFireBaseAuth()!!.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+
+                    val user = getFireBaseAuth()!!.currentUser
+
+//                    saveUIDUser(Constant().KEY_LOGIN_UID_USER, user!!.uid)
+
+                    Log.d(Constant().TAG, "login email uid: " + user!!.uid)
+
+                    getInfoUser(user.uid)
+
+                } else {
+
+                    loginFail()
+                }
+
+                showProgress(false)
+            }
+            .addOnFailureListener {
+
+                loginFail()
+
+                showProgress(false)
+
+            }
+            .addOnCanceledListener {
+                Log.d(Constant().TAG, "login email fail: ")
+
+            }
+    }
+
+    private fun getInfoUser(id: String) {
+
+        showProgress(true)
+
+        BaseRequest().checkUserExistsOnFireBase(id, object : CheckUserListener {
+
+            override fun onCheck(exists: Boolean) {
+
+                if (exists) {
+
+                    openClub()
+
+                } else {
+
+                    BaseRequest().createUserDataOnFireBase(id, object : UpdateUserListener {
+                        override fun onUpdateSuccess() {
+
+                            openClub()
+
+                        }
+
+                        override fun onUpdateFail() {
+
+                            openClub()
+                        }
+                    })
+                }
+            }
+
+            override fun onCancel() {
+            }
+        })
+    }
+
+    private fun validForm(): Boolean {
+
+        if (frg_login_with_email_et_email.text.toString().isEmpty()) {
+
+            frg_login_with_email_et_email.error = getString(R.string.please_enter_your_email)
+            frg_login_with_email_et_email.requestFocus()
+            return false
+        }
+
+        if (!Utils().validateEmail(frg_login_with_email_et_email.text.toString())) {
+
+            frg_login_with_email_et_email.error = getString(R.string.email_not_valid)
+            frg_login_with_email_et_email.requestFocus()
+
+            return false
+
+        }
+
+        if (frg_login_with_email_et_input_password.text.toString().isEmpty()) {
+            frg_login_with_email_et_input_password.error = getString(R.string.please_enter_your_password)
+            frg_login_with_email_et_input_password.requestFocus()
+
+            return false
+
+        }
+
+        if (frg_login_with_email_et_input_password.text.toString().length < Constant().LENGTH_PASS_WORD) {
+
+            frg_login_with_email_et_input_password.error = getString(R.string.invalid_password)
+
+            frg_login_with_email_et_input_password.requestFocus()
+
+            return false
+
+        }
+
+        return true
     }
 }
