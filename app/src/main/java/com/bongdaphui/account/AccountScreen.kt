@@ -1,6 +1,7 @@
 package com.bongdaphui.account
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -53,6 +54,9 @@ class AccountScreen : BaseFragment() {
     }
 
     override fun onBindView() {
+
+        val uIdUser = getUIDUser()
+        layout_user_info.visibility = if (TextUtils.isEmpty(uIdUser)) View.GONE else View.VISIBLE
 
         onClick()
 
@@ -209,6 +213,10 @@ class AccountScreen : BaseFragment() {
                     }
                 }
             })
+        }
+
+        btn_login_account.setOnClickListener {
+            addFragment(LoginScreen())
         }
     }
 

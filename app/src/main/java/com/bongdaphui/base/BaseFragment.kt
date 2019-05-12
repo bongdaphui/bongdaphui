@@ -79,10 +79,21 @@ abstract class BaseFragment : Fragment(), BaseInterface {
     }
 
     fun onBackPressed() {
-        if (activity != null && activity is BaseActivity)
-            (activity as BaseActivity).onBackPressed()
-        else
-            activeActivity!!.onBackPressed()
+
+        if (activity != null && activity is BaseActivity) {
+            if (KeyboardManager.isShowSoftKeyboard(activity as BaseActivity)) {
+                KeyboardManager.hideSoftKeyboard(activity as BaseActivity)
+            } else {
+                (activity as BaseActivity).onBackPressed()
+            }
+        } else {
+            if (KeyboardManager.isShowSoftKeyboard(activeActivity!!)) {
+                KeyboardManager.hideSoftKeyboard(activeActivity!!)
+            } else {
+                activeActivity!!.onBackPressed()
+            }
+
+        }
     }
 
     fun showHeader(isShow: Boolean) {
@@ -174,8 +185,11 @@ abstract class BaseFragment : Fragment(), BaseInterface {
     }
 
     fun getUIDUser(): String {
-
-        return getFireBaseAuth()!!.currentUser!!.uid
+        val user = getFireBaseAuth()?.currentUser
+        if (user != null) {
+            return user.uid
+        }
+        return ""
     }
 
     fun setListCity(list: ArrayList<CityModel>) {

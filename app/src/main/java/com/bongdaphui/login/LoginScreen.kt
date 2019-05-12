@@ -102,6 +102,10 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
             )
         }
 
+        frg_login_screen_ll_skip.setOnClickListener {
+            openClubs()
+        }
+
     }
 
     private fun initFacebook() {

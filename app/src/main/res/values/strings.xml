@@ -74,6 +74,7 @@
     <string name="new_user">Thành viên mới?</string>
     <string name="sign_up">Đăng ký</string>
     <string name="password">Mật khẩu</string>
+    <string name="skip">Để sau </string>
 
 
 </resources>
