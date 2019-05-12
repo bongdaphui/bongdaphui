@@ -9,12 +9,7 @@ import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.login.LoginScreen
-import com.bongdaphui.model.CityModel
 import com.bongdaphui.utils.Constant
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.fragment_splash_screen.*
 
 
@@ -51,7 +46,9 @@ class SplashScreen : BaseFragment() {
 
             Log.d(Constant().TAG, "user uid: ${currentUser.uid}")
 
-            loadListCity()
+            openClubs()
+
+//            loadListCity()
 //                loadListField()
 //                HardcodeInsertData().addDataCity()
 //                HardcodeInsertUserData().addData()
@@ -72,43 +69,5 @@ class SplashScreen : BaseFragment() {
         fragment_fab.setOnClickListener {
 
         }
-    }
-
-    private fun loadListCity() {
-
-        val refCities = FirebaseDatabase.getInstance().getReference(Constant().DATABASE_CITY)
-
-        refCities.addValueEventListener(object : ValueEventListener {
-
-            override fun onCancelled(p0: DatabaseError) {
-
-            }
-
-            override fun onDataChange(p0: DataSnapshot) {
-
-                if (p0.exists()) {
-
-                    val listCityModel: ArrayList<CityModel> = ArrayList()
-
-                    for (i in p0.children) {
-
-                        val cityModel = i.getValue<CityModel>(CityModel::class.java)
-
-                        listCityModel.add(cityModel!!)
-                    }
-                    try {
-
-                        setListCity(listCityModel)
-
-                    } catch (e: Exception) {
-
-                        Log.d(Constant().TAG, "setListCity fail: ${e.message}")
-
-                    }
-
-                    openClubs()
-                }
-            }
-        })
     }
 }

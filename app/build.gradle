@@ -41,7 +41,7 @@ dependencies {
 //    implementation 'com.firebase:firebase-client-android:2.4.0'
 
     //dung cho FCM
-    //implementation 'com.google.firebase:firebase-core:16.0.9'
+    implementation 'com.google.firebase:firebase-core:16.0.9'
     //implementation 'com.google.firebase:firebase-messaging:18.0.0'
 
     //----------
