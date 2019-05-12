@@ -20,6 +20,8 @@ import com.bongdaphui.model.FbFieldModel
 import com.bongdaphui.utils.*
 import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.fragment_add_football_field.*
@@ -27,6 +29,8 @@ import java.io.File
 
 
 class AddFieldScreen : BaseFragment() {
+
+    private lateinit var db: DocumentReference
 
     private var idCity: String = ""
     private var idDistrict: String = ""
@@ -90,19 +94,7 @@ class AddFieldScreen : BaseFragment() {
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onBindView() {
 
-        /*val bundle = arguments
-
-        if (bundle != null) {
-
-            listCityModel = bundle.getSerializable(LIST_CITY_MODEL) as ArrayList<CityModel>
-
-            listDistrictModelFull = bundle.getSerializable(LIST_DISTRICT_MODEL) as ArrayList<DistrictModel>
-
-        }*/
-
         initSpinner()
-
-        initView()
 
         onClick()
 
@@ -111,16 +103,15 @@ class AddFieldScreen : BaseFragment() {
     private fun initSpinner() {
         Utils().initSpinnerCity(
             activity!!,
-            getListCity(),
             frg_add_football_field_sp_city,
             frg_add_football_field_sp_district,
             object :
                 BaseSpinnerSelectInterface {
-                override fun onSelectCity(cityId: String, districtId: String) {
+                override fun onSelectCity(_idCity: String, _idDistrict: String) {
 
-                    idCity = cityId
+                    idCity = _idCity
 
-                    idDistrict = districtId
+                    idDistrict = _idDistrict
 
                     Log.d(Constant().TAG, "spinner onSelectCity with idCity: $idCity - idDistrict : $idDistrict")
 
@@ -130,12 +121,13 @@ class AddFieldScreen : BaseFragment() {
         hideKeyBoard()
     }
 
+    var step = 0
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     private fun onClick() {
 
         frg_add_football_field_tv_input.setOnClickListener {
 
-            startInsertData()
+                        startSave()
         }
 
         frg_add_football_field_container.setOnTouchListener { _, _ ->
@@ -146,7 +138,7 @@ class AddFieldScreen : BaseFragment() {
         }
     }
 
-    private fun startInsertData() {
+    private fun startSave() {
 
         if (validate()) {
 
@@ -220,25 +212,6 @@ class AddFieldScreen : BaseFragment() {
 
         val priceField = frg_add_football_field_et_price_field.text.toString()
 
-        val dataReference = FirebaseDatabase.getInstance().getReference(Constant().DATABASE_CITY)
-
-//        val fbFieldId = dataReference.push().key
-
-        /*val footballFieldModel1 = FbFieldModel(
-            fbFieldId,
-            "-Ldhdzv3rIqReHz010jj",
-            "-LdhhBIAlKbs1tOF3xt0",
-            getUIDUser(Constant().KEY_LOGIN_UID_USER),
-            uriPhoto,
-            "C1",
-            "0909060202",
-            "Phan Chu Trinh, phường 12, Bình Thạnh, Hồ Chí Minh",
-            "5",
-            "300000"
-        )*/
-
-//        dataReference.child(fbFieldId!!).setValue(footballFieldModel)
-
         var idOfField = ""
 
         for (i in 0 until getListCity().size) {
@@ -263,7 +236,7 @@ class AddFieldScreen : BaseFragment() {
         }
 
         val footballFieldModel = FbFieldModel(
-            idOfField,
+            idOfField.toLong(),
             idCity,
             idDistrict,
 //            getUIDUser(Constant().KEY_LOGIN_UID_USER),
@@ -278,7 +251,29 @@ class AddFieldScreen : BaseFragment() {
 
         Log.d(Constant().TAG, "field of idCity:$idCity, idDistrict:$idDistrict : $idOfField")
 
-        dataReference.child(idCity).child("districts")
+        val db = FirebaseFirestore.getInstance().document("fields/$step")
+
+//        for (i in 0 until Utils().getListField(activity!!).size) {
+
+//            if (i == step) {
+
+                /*db.set(Utils().getListField(activity!!)[i])
+                    .addOnSuccessListener {
+
+                        Log.d(Constant().TAG, "upload field success - step: $step")
+
+                        step++
+
+                    }
+                    .addOnFailureListener {
+
+                        Log.d(Constant().TAG, "upload field fail : $it")
+
+                    }*/
+//            }
+        }
+
+        /*dataReference.child(idCity).child("districts")
             .child(idDistrict).child("fields").child(idOfField).setValue(footballFieldModel)
 
             .addOnCompleteListener {
@@ -293,7 +288,7 @@ class AddFieldScreen : BaseFragment() {
                 Utils().alertInsertFail(activity)
 
             }
-    }
+    }*/
 
 
     private fun disableItem() {
@@ -404,7 +399,7 @@ class AddFieldScreen : BaseFragment() {
         if (!Utils().validatePhoneNumber(frg_add_football_field_et_phone.text.toString())) {
             frg_add_football_field_tv_error_input_phone.visibility = View.VISIBLE
             frg_add_football_field_tv_error_input_phone.text =
-                activity!!.getString(R.string.please_enter_your_phone_valid)
+                activity!!.getString(com.bongdaphui.R.string.please_enter_your_phone_valid)
             frg_add_football_field_et_phone.requestFocus()
 
             validate = false

@@ -281,7 +281,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
             val footballFieldScreen = getTopFragment() as FieldScreen
 
-            footballFieldScreen.openFilter()
+//            footballFieldScreen.openFilter()
         }
     }
 

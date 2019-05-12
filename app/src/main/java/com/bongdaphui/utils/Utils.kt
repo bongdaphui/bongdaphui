@@ -26,7 +26,9 @@ import com.bongdaphui.addField.SpinnerAdapter
 import com.bongdaphui.base.BaseApplication
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.model.CityModel
+import com.bongdaphui.model.CommentModel
 import com.bongdaphui.model.DistrictModel
+import com.bongdaphui.model.FbFieldModel
 import com.google.firebase.storage.UploadTask
 import org.json.JSONArray
 import org.json.JSONException
@@ -324,12 +326,12 @@ class Utils {
 
     fun initSpinnerCity(
         context: Context,
-        listCity: ArrayList<CityModel>,
         spCity: Spinner,
         spDistrict: Spinner,
         spInterface: BaseSpinnerSelectInterface
     ) {
 
+        val listCity = getListCity(context)
         //init City
         val listCityName = ArrayList<String>()
         var idCity = ""
@@ -463,12 +465,12 @@ class Utils {
         sp.adapter = adapter
     }
 
-    private fun loadJSONFromAsset(context: Context): String? {
+    private fun loadJSONFromAsset(context: Context, fileName: String): String? {
 
         val json: String
 
         try {
-            val `is` = context.assets.open("json_city.json")
+            val `is` = context.assets.open(fileName)
             val size = `is`.available()
             val buffer = ByteArray(size)
             `is`.read(buffer)
@@ -486,12 +488,12 @@ class Utils {
 
     }
 
-    fun getListCity(context: Context): ArrayList<CityModel> {
+     fun getListCity(context: Context): ArrayList<CityModel> {
 
         val listCity = ArrayList<CityModel>()
 
         try {
-            val jsonArrayCity = JSONArray(loadJSONFromAsset(context))
+            val jsonArrayCity = JSONArray(loadJSONFromAsset(context, "json_city.json"))
 
             for (i in 0 until jsonArrayCity.length()) {
 
@@ -529,5 +531,68 @@ class Utils {
         }
 
         return listCity
+    }
+
+    fun getListField(context: Context): ArrayList<FbFieldModel> {
+
+        val listField = ArrayList<FbFieldModel>()
+
+        try {
+            val jsonArrayField = JSONArray(loadJSONFromAsset(context, "json_field.json"))
+
+            for (i in 0 until jsonArrayField.length()) {
+
+                val jsonObjectField = jsonArrayField.getJSONObject(i)
+
+                val id = jsonObjectField.getString("id")
+                val idCity = jsonObjectField.getString("idCity")
+                val idDistrict = jsonObjectField.getString("idDistrict")
+                val photoUrl = jsonObjectField.getString("photoUrl")
+                val name = jsonObjectField.getString("name")
+                val phone = jsonObjectField.getString("phone")
+                val address = jsonObjectField.getString("address")
+                val amountField = jsonObjectField.getString("amountField")
+                val price = jsonObjectField.getString("price")
+                val lat = jsonObjectField.getString("lat")
+                val lng = jsonObjectField.getString("lng")
+                val countRating = jsonObjectField.getString("countRating")
+                val rating = jsonObjectField.getString("rating")
+
+
+                val jsonArrayComment = JSONArray(jsonObjectField.getString("comment"))
+
+                val listComment = ArrayList<CommentModel>()
+
+                for (j in 0 until jsonArrayComment.length()) {
+
+                    val jsonObjectComment = jsonArrayComment.getJSONObject(i)
+
+                    val id = jsonObjectComment.getString("id")
+
+                    val idUser = jsonObjectComment.getString("idUser")
+
+                    val nameUser = jsonObjectComment.getString("nameUser")
+
+                    val content = jsonObjectComment.getString("content")
+
+                    val commentModel = CommentModel(id, idUser, nameUser, content)
+
+                    listComment.add(commentModel)
+                }
+
+                val fbFieldModel = FbFieldModel(
+                    id.toLong(), idCity, idDistrict, photoUrl, name, phone, address, amountField, price, lat,
+                    lng, countRating, rating, listComment
+                )
+
+                listField.add(fbFieldModel)
+
+            }
+        } catch (e: JSONException) {
+
+            Log.d(Constant().TAG, "getListField fail : ${e.message}")
+        }
+
+        return listField
     }
 }

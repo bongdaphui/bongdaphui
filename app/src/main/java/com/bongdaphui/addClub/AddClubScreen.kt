@@ -110,7 +110,6 @@ class AddClubScreen : BaseFragment() {
     private fun initSpinner() {
         Utils().initSpinnerCity(
             activity!!,
-            getListCity(),
             frg_add_fc_sp_city,
             frg_add_fc_sp_district,
             object :

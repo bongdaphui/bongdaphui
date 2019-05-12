@@ -164,13 +164,13 @@ class BaseRequest {
     fun removeImage(urlImage: String) {
         val photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(urlImage)
 
-        photoRef.delete().addOnSuccessListener(OnSuccessListener<Void> {
+        photoRef.delete().addOnSuccessListener {
             // File deleted successfully
             Log.d(Constant().TAG, "onSuccess: deleted file")
-        }).addOnFailureListener(OnFailureListener {
+        }.addOnFailureListener {
             // Uh-oh, an error occurred!
             Log.d(Constant().TAG, "onFailure: did not delete file")
-        })
+        }
     }
 
     fun saveDataField(context: Context, path: String, fbFieldModel: FbFieldModel) {

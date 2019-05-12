@@ -7,7 +7,7 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bongdaphui.R
-import com.bongdaphui.listener.ItemClickInterface
+import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.model.FbFieldModel
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Enum
@@ -18,7 +18,7 @@ import com.bumptech.glide.request.RequestOptions
 class FieldAdapter(
     var context: Context?,
     private val items: ArrayList<FbFieldModel>,
-    var itemClickInterface: ItemClickInterface<FbFieldModel>
+    var itemClickInterface: OnItemClickListener<FbFieldModel>
 ) : RecyclerView.Adapter<FieldHolder>() {
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): FieldHolder {
@@ -55,7 +55,7 @@ class FieldAdapter(
             viewHolder.phone.text = Html.fromHtml("<u>${fbFieldModel.phone}</u>")
 
             viewHolder.phone.setOnClickListener {
-                itemClickInterface.OncItemlick(fbFieldModel, position, Enum.EnumTypeClick.Phone.value)
+                itemClickInterface.onItemClick(fbFieldModel, position, Enum.EnumTypeClick.Phone.value)
             }
 
         }
@@ -82,7 +82,7 @@ class FieldAdapter(
         }
 
         viewHolder.container.setOnClickListener {
-            itemClickInterface.OncItemlick(fbFieldModel, position, Enum.EnumTypeClick.View.value)
+            itemClickInterface.onItemClick(fbFieldModel, position, Enum.EnumTypeClick.View.value)
         }
 
     }

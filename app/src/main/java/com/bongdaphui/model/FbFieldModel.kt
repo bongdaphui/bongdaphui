@@ -5,11 +5,11 @@ import java.io.Serializable
 
 @IgnoreExtraProperties
 data class FbFieldModel(
-    val id: String? = "",
+    val id: Long?,
     val idCity: String? = "",
     val idDistrict: String? = "",
     val photoUrl: String? = "",
-    val name: String? = "",
+    var name: String? = "",
     val phone: String? = "",
     val address: String? = "",
     val amountField: String? = "",
@@ -19,4 +19,12 @@ data class FbFieldModel(
     val countRating: String? = "",
     val rating: String? = "",
     val comment: ArrayList<CommentModel>? = ArrayList()
-) : Serializable
+) : Serializable {
+
+    var section = false
+
+    fun FbFieldModel(name: String, section: Boolean) {
+        this.name = name
+        this.section = section
+    }
+}

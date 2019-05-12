@@ -2,5 +2,5 @@ package com.bongdaphui.listener
 
 interface BaseSpinnerSelectInterface {
 
-    fun onSelectCity(idCity: String, idDistrict: String)
+    fun onSelectCity(_idCity: String, _idDistrict: String)
 }

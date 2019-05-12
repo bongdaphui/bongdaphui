@@ -1,25 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ImageView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:fillViewport="true">
-    <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_splash"
-            android:layout_centerInParent="true"/>
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_splash"/>
 
-    <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fragment_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_plus"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="16dp"
-            android:layout_alignParentRight="true"
-            tools:ignore="RtlHardcoded"/>
-</RelativeLayout>
+

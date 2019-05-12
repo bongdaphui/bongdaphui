@@ -10,7 +10,7 @@ import com.bongdaphui.addClub.AddClubScreen
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.listener.FireBaseSuccessListener
-import com.bongdaphui.listener.ItemClickInterface
+import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.utils.Constant
 import com.google.firebase.database.DataSnapshot
@@ -57,9 +57,9 @@ class ClubManageScreen : BaseFragment() {
 
         adapterManagerClub = ClubManagerAdapter(context, listManagerClub, object :
 
-            ItemClickInterface<ClubModel> {
+            OnItemClickListener<ClubModel> {
 
-            override fun OncItemlick(item: ClubModel, position: Int, type: Int) {
+            override fun onItemClick(item: ClubModel, position: Int, type: Int) {
 
             }
         })

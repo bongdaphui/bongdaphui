@@ -6,7 +6,7 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bongdaphui.R
-import com.bongdaphui.listener.ItemClickInterface
+import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
@@ -16,7 +16,7 @@ import com.bumptech.glide.request.RequestOptions
 class ClubManagerAdapter(
     var context: Context?,
     private val items: ArrayList<ClubModel>,
-    var itemClickInterface: ItemClickInterface<ClubModel>
+    var onItemClickListener: OnItemClickListener<ClubModel>
 ) : RecyclerView.Adapter<ClubManagerHolder>() {
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ClubManagerHolder {
@@ -45,7 +45,7 @@ class ClubManagerAdapter(
         viewHolder.amountPlayer.text = Html.fromHtml("Số thành viên: <b>${club.getAmountPlayer()}</b>")
 
         viewHolder.container.setOnClickListener {
-            itemClickInterface.OncItemlick(club, position, Enum.EnumTypeClick.View.value)
+            onItemClickListener.onItemClick(club, position, Enum.EnumTypeClick.View.value)
         }
 
     }
