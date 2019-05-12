@@ -6,6 +6,7 @@ import com.bongdaphui.MainActivity
 import com.bongdaphui.listener.CheckUserListener
 import com.bongdaphui.listener.FireBaseSuccessListener
 import com.bongdaphui.listener.UpdateUserListener
+import com.bongdaphui.model.FbFieldModel
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.utils.Constant
 import com.google.android.gms.tasks.OnFailureListener
@@ -14,6 +15,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
 
@@ -171,4 +173,18 @@ class BaseRequest {
         })
     }
 
+    fun saveDataField(context: Context, path: String, fbFieldModel: FbFieldModel) {
+
+        val db = FirebaseFirestore.getInstance().document(path)
+
+        db.set(fbFieldModel)
+            .addOnSuccessListener {
+                Log.d(Constant().TAG, "upload field success")
+
+            }
+            .addOnFailureListener {
+                Log.d(Constant().TAG, "upload field fail : $it")
+
+            }
+    }
 }

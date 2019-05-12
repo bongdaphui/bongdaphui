@@ -56,6 +56,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             .setApiKey("AIzaSyB5GkogHL0UNqnsY4WVBFb5gq26cO6vJqY")
             .setDatabaseUrl("https://bongdaphui-27e53.firebaseio.com")
             .setStorageBucket("bongdaphui-27e53.appspot.com")
+            .setProjectId("bongdaphui-27e53")
 
         FirebaseApp.initializeApp(this, builder.build())
 
