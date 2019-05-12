@@ -76,6 +76,8 @@ class FieldScreen : BaseFragment() {
 
         initListField()
 
+        Log.d(Constant().TAG, "${Utils().getListCity(activity!!).size}")
+
     }
 
     private fun initListField() {

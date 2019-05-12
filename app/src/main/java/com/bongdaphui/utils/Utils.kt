@@ -26,9 +26,14 @@ import com.bongdaphui.addField.SpinnerAdapter
 import com.bongdaphui.base.BaseApplication
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.model.CityModel
+import com.bongdaphui.model.DistrictModel
 import com.google.firebase.storage.UploadTask
+import org.json.JSONArray
+import org.json.JSONException
 import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
+import java.io.IOException
+import java.nio.charset.Charset
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.ParseException
@@ -456,5 +461,73 @@ class Utils {
         val adapter = SpinnerAdapter(context, R.layout.item_spinner, listPosition)
 
         sp.adapter = adapter
+    }
+
+    private fun loadJSONFromAsset(context: Context): String? {
+
+        val json: String
+
+        try {
+            val `is` = context.assets.open("json_city.json")
+            val size = `is`.available()
+            val buffer = ByteArray(size)
+            `is`.read(buffer)
+            `is`.close()
+            json = String(buffer, Charset.forName("UTF-8"))
+
+        } catch (e: IOException) {
+
+            Log.d(Constant().TAG, "loadJSONFromAsset fail : ${e.message}")
+
+            return null
+        }
+
+        return json
+
+    }
+
+    fun getListCity(context: Context): ArrayList<CityModel> {
+
+        val listCity = ArrayList<CityModel>()
+
+        try {
+            val jsonArrayCity = JSONArray(loadJSONFromAsset(context))
+
+            for (i in 0 until jsonArrayCity.length()) {
+
+                val jsonObjectCity = jsonArrayCity.getJSONObject(i)
+
+                val idCity = jsonObjectCity.getString("id")
+
+                val nameCity = jsonObjectCity.getString("name")
+
+                val jsonArrayDistrict = JSONArray(jsonObjectCity.getString("districts"))
+
+                val listDistrict = ArrayList<DistrictModel>()
+
+                for (j in 0 until jsonArrayDistrict.length()) {
+
+                    val jsonObjectDistrict = jsonArrayDistrict.getJSONObject(i)
+
+                    val idDistrict = jsonObjectDistrict.getString("id")
+
+                    val nameDistrict = jsonObjectDistrict.getString("name")
+
+                    val districtModel = DistrictModel(idDistrict, nameDistrict)
+
+                    listDistrict.add(districtModel)
+                }
+
+                val cityModel = CityModel(idCity, nameCity, listDistrict)
+
+                listCity.add(cityModel)
+
+            }
+        } catch (e: JSONException) {
+
+            Log.d(Constant().TAG, "getListCity fail : ${e.message}")
+        }
+
+        return listCity
     }
 }

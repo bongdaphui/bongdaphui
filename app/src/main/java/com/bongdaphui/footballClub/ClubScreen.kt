@@ -62,9 +62,9 @@ class ClubScreen : BaseFragment() {
                 Log.d(Constant().TAG, "token $token")
             })*/
 
-        initAdapter()
-
-        loadListClub()
+//        initAdapter()
+//
+//        loadListClub()
 
         onClick()
 
