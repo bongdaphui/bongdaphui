@@ -52,10 +52,10 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
         //setup fire base
         val builder = FirebaseOptions.Builder()
-            .setApplicationId("1:940999611140:android:37a411d693a33eff")
-            .setApiKey("AIzaSyC09CRlwBneAG1jTRQC7pLfpTKCUrjA8_g")
-            .setDatabaseUrl("https://bongdaphui-a9999.firebaseio.com")
-            .setStorageBucket("bongdaphui-a9999.appspot.com")
+            .setApplicationId("1:303996690941:android:37a411d693a33eff")
+            .setApiKey("AIzaSyB5GkogHL0UNqnsY4WVBFb5gq26cO6vJqY")
+            .setDatabaseUrl("https://bongdaphui-27e53.firebaseio.com")
+            .setStorageBucket("bongdaphui-27e53.appspot.com")
 
         FirebaseApp.initializeApp(this, builder.build())
 

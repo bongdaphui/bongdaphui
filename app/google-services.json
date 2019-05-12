@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "303996690941",
+    "firebase_url": "https://bongdaphui-27e53.firebaseio.com",
+    "project_id": "bongdaphui-27e53",
+    "storage_bucket": "bongdaphui-27e53.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:303996690941:android:37a411d693a33eff",
+        "android_client_info": {
+          "package_name": "com.bongdaphui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "303996690941-j270499p6n6g08b193s2btj57fnph2uo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bongdaphui",
+            "certificate_hash": "969ca6be05a4cf12162b9033b280cc036151eae5"
+          }
+        },
+        {
+          "client_id": "303996690941-vq3ot26cmv2po4s9n7di8cmco9nj784b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5GkogHL0UNqnsY4WVBFb5gq26cO6vJqY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "303996690941-vq3ot26cmv2po4s9n7di8cmco9nj784b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
