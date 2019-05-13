@@ -75,6 +75,7 @@
     <string name="sign_up">Đăng ký</string>
     <string name="password">Mật khẩu</string>
     <string name="skip">Để sau </string>
+    <string name="not_yet_data">Chưa có dữ liệu</string>
 
 
 </resources>

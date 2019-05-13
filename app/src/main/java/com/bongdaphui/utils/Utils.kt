@@ -509,7 +509,7 @@ class Utils {
 
                 for (j in 0 until jsonArrayDistrict.length()) {
 
-                    val jsonObjectDistrict = jsonArrayDistrict.getJSONObject(i)
+                    val jsonObjectDistrict = jsonArrayDistrict.getJSONObject(j)
 
                     val idDistrict = jsonObjectDistrict.getString("id")
 

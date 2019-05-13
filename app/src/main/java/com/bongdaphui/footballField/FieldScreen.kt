@@ -10,25 +10,22 @@ import com.bongdaphui.R
 import com.bongdaphui.addField.AddFieldScreen
 import com.bongdaphui.addField.SpinnerAdapter
 import com.bongdaphui.base.BaseFragment
+import com.bongdaphui.base.BaseRequest
+import com.bongdaphui.listener.BaseSpinnerSelectInterface
+import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.OnItemClickListener
-import com.bongdaphui.model.CommentModel
 import com.bongdaphui.model.FbFieldModel
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_field.*
 
 
 class FieldScreen : BaseFragment() {
 
-    private var fieldListFull: ArrayList<FbFieldModel> = ArrayList()
-
     private var fieldList: ArrayList<FbFieldModel> = ArrayList()
 
     private lateinit var fieldAdapter: FieldAdapter
-
-    private lateinit var spAdapter: SpinnerAdapter
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -52,90 +49,8 @@ class FieldScreen : BaseFragment() {
 
         getData()
 
-//        loadListField()
-
-//        intBottomSheet()
-
-//        initViewFilter()
-
 //        onClick()
 
-    }
-
-    /*fun getListOfPlaces() : ArrayList<FbFieldModel> {
-        Log.d("TAG", "Before attaching the listener!");
-        val fields = ArrayList<FbFieldModel>()
-        val db = FirebaseFirestore.getInstance().collection("fields")
-
-        db.get().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Log.d("TAG", "Inside onComplete function!")
-
-                for (document in task.result) {
-                    val fieldModel = document.data
-                    fields.add(fieldModel)
-                }
-            }
-        }
-        Log.d("TAG", "After attaching the listener!");
-        return fields
-    }*/
-
-    private fun getData() {
-        showProgress(true)
-        val db = FirebaseFirestore.getInstance().collection("fields")
-
-        db.orderBy("name").get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-
-                    val fbFieldModel = FbFieldModel(
-                        document.data["id"] as Long?,
-                        document.data["idCity"] as String?,
-                        document.data["idDistrict"] as String?,
-                        document.data["photoUrl"] as String?,
-                        document.data["name"] as String?,
-                        document.data["phone"] as String?,
-                        document.data["address"] as String?,
-                        document.data["amountField"] as String?,
-                        document.data["price"] as String?,
-                        document.data["lat"] as String?,
-                        document.data["lng"] as String?,
-                        document.data["countRating"] as String?,
-                        document.data["rating"] as String?,
-                        document.data["comment"] as ArrayList<CommentModel>?
-                    )
-
-                    fieldListFull.add(fbFieldModel)
-                    fieldList.add(fbFieldModel)
-
-//                    Log.d(Constant().TAG, "${document.id} => ${document.data}")
-                }
-
-                Log.d(Constant().TAG, "field size: ${fieldList.size}")
-
-                if (fieldList.size > 0) {
-
-                    fieldAdapter.notifyDataSetChanged()
-
-                    showProgress(false)
-
-                    showNoData(false)
-
-                    initSpinnerFieldBox()
-
-                } else {
-                    showProgress(false)
-                    showNoData(true)
-                }
-
-            }
-            .addOnFailureListener { exception ->
-                Log.d(Constant().TAG, "Error getting documents: ", exception)
-                showProgress(false)
-                showNoData(true)
-
-            }
     }
 
     private fun initListField() {
@@ -156,66 +71,82 @@ class FieldScreen : BaseFragment() {
 
     }
 
-    private fun initSpinnerFieldBox() {
+    private fun getData() {
 
-        val listCity = Utils().getListCity(activity!!)
+        if (getListField().size > 0) {
 
-        val listCityName = ArrayList<String>()
+            initSpinnerFieldBox()
 
-        for (i in 0 until listCity.size) {
+        } else {
 
-            val cityModel = listCity[i]
+            showProgress(true)
 
-            listCityName.add(cityModel.name!!)
-        }
-        spAdapter = SpinnerAdapter(activity!!, R.layout.item_spinner, listCityName)
+            BaseRequest().getDataField(object : GetDataListener<FbFieldModel> {
+                override fun onSuccess(list: ArrayList<FbFieldModel>) {
 
-        frg_field_v_spinner.visibility = View.VISIBLE
+                    fieldList.addAll(list)
 
-        frg_field_sp_city.adapter = spAdapter
+                    setListField(list)
 
-        frg_field_sp_city.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-
-                val nameCity: String = parent.getItemAtPosition(position) as String
-
-                val idCity = Utils().getIdCityFromNameCity(nameCity, listCity)
-
-                val fieldListTemp: ArrayList<FbFieldModel> = ArrayList()
-
-                for (i in 0 until fieldListFull.size) {
-
-                    if (idCity == fieldListFull[i].idCity!!) {
-
-                        fieldListTemp.add(fieldListFull[i])
-                    }
-                }
-                Log.d(Constant().TAG, "fieldListTemp size: ${fieldListTemp.size}")
-
-                fieldList.clear()
-                fieldList.addAll(fieldListTemp)
-                Log.d(Constant().TAG, "fieldList sort size: ${fieldList.size}")
-
-                if (fieldList.size > 0) {
+                    showProgress(false)
 
                     showNoData(false)
 
-                    spAdapter.notifyDataSetChanged()
+                    initSpinnerFieldBox()
 
-                } else {
+                }
 
+                override fun onFail(message: String) {
+                    showProgress(false)
                     showNoData(true)
                 }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                Log.d(Constant().TAG, "onNothingSelected")
-
-            }
+            })
         }
     }
 
+
+    private fun initSpinnerFieldBox() {
+
+        frg_field_v_spinner.visibility = View.VISIBLE
+
+        Utils().initSpinnerCity(
+            activity!!,
+            frg_field_sp_city,
+            frg_field_sp_district,
+            object :
+                BaseSpinnerSelectInterface {
+                override fun onSelectCity(_idCity: String, _idDistrict: String) {
+
+                    Log.d(Constant().TAG, "spinner onSelectCity with idCity: $_idCity - idDistrict : $_idDistrict")
+
+                    val fieldListTemp: ArrayList<FbFieldModel> = ArrayList()
+
+                    for (i in 0 until getListField().size) {
+
+                        if (_idCity == getListField()[i].idCity!! && _idDistrict == getListField()[i].idDistrict!!) {
+
+                            fieldListTemp.add(getListField()[i])
+                        }
+                    }
+
+                    fieldList.clear()
+                    fieldList.addAll(fieldListTemp)
+
+                    Log.d(Constant().TAG, "fieldList sort size: ${fieldList.size}")
+
+                    if (fieldList.size > 0) {
+
+                        showNoData(false)
+
+                        fieldAdapter.notifyDataSetChanged()
+
+                    } else {
+
+                        showNoData(true)
+                    }
+                }
+            })
+    }
 
     private fun onClick() {
 

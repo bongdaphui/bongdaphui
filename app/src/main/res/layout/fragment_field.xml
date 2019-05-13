@@ -13,14 +13,35 @@
             android:id="@+id/frg_field_v_spinner"
             android:layout_width="match_parent"
             android:visibility="gone"
-            style="@style/bg_item_input">
+            android:layout_height="@dimen/fs_46">
 
-        <Spinner
-                android:id="@+id/frg_field_sp_city"
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:overlapAnchor="false"
-                tools:ignore="HardcodedText,UnusedAttribute"/>
+                android:orientation="horizontal">
+
+            <Spinner
+                    android:id="@+id/frg_field_sp_city"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:overlapAnchor="false"
+                    tools:ignore="HardcodedText,UnusedAttribute"/>
+            <Spinner
+                    android:id="@+id/frg_field_sp_district"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:overlapAnchor="false"
+                    tools:ignore="HardcodedText,UnusedAttribute"/>
+        </LinearLayout>
+
+        <View
+                android:id="@+id/activity_main_v_line"
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/c_2d2d2d"/>
 
     </RelativeLayout>
 
@@ -30,6 +51,7 @@
             android:id="@+id/frg_field_rcv"
             android:layout_width="match_parent"
             tools:listitem="@layout/item_club"
+            android:visibility="gone"
             android:scrollbars="vertical"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             android:layout_height="match_parent"/>
@@ -39,7 +61,7 @@
             android:layout_width="wrap_content"
             android:fontFamily="@font/axis_std_regular"
             android:textColor="@color/c_2d2d2d"
-            android:text="Không có dữ liệu"
+            android:text="@string/not_yet_data"
             android:textSize="@dimen/ts_16"
             android:visibility="gone"
             android:layout_centerInParent="true"
@@ -54,6 +76,7 @@
             android:layout_alignParentEnd="true"
             android:layout_margin="16dp"
             android:visibility="visible"
-            android:layout_alignParentRight="true" tools:ignore="RtlHardcoded"/>
+            android:layout_alignParentRight="true"
+            tools:ignore="RtlHardcoded"/>
 
 </RelativeLayout>

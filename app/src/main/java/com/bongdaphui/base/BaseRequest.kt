@@ -5,12 +5,12 @@ import android.util.Log
 import com.bongdaphui.MainActivity
 import com.bongdaphui.listener.CheckUserListener
 import com.bongdaphui.listener.FireBaseSuccessListener
+import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.UpdateUserListener
+import com.bongdaphui.model.CommentModel
 import com.bongdaphui.model.FbFieldModel
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.utils.Constant
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -185,6 +185,52 @@ class BaseRequest {
             .addOnFailureListener {
                 Log.d(Constant().TAG, "upload field fail : $it")
 
+            }
+    }
+
+    fun getDataField(listener: GetDataListener<FbFieldModel>) {
+
+        val db = FirebaseFirestore.getInstance().collection(Constant().collectionPathField)
+        val fieldList: ArrayList<FbFieldModel> = ArrayList()
+
+        db.orderBy("name").get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+
+                    val fbFieldModel = FbFieldModel(
+                        document.data["id"] as Long?,
+                        document.data["idCity"] as String?,
+                        document.data["idDistrict"] as String?,
+                        document.data["photoUrl"] as String?,
+                        document.data["name"] as String?,
+                        document.data["phone"] as String?,
+                        document.data["address"] as String?,
+                        document.data["amountField"] as String?,
+                        document.data["price"] as String?,
+                        document.data["lat"] as String?,
+                        document.data["lng"] as String?,
+                        document.data["countRating"] as String?,
+                        document.data["rating"] as String?,
+                        document.data["comment"] as ArrayList<CommentModel>?
+                    )
+
+                    fieldList.add(fbFieldModel)
+                }
+
+                Log.d(Constant().TAG, "field size: ${fieldList.size}")
+
+                if (fieldList.size > 0) {
+
+                    listener.onSuccess(fieldList)
+
+                } else {
+
+                    listener.onFail("Chưa có dữ liệu")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d(Constant().TAG, "Error getting documents: ", exception)
+                listener.onFail("${exception.message}")
             }
     }
 }
