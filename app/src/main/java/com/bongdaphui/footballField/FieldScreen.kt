@@ -24,6 +24,8 @@ class FieldScreen : BaseFragment() {
 
     private lateinit var database: AppDatabase
 
+    private var fieldListFull: ArrayList<FbFieldModel> = ArrayList()
+
     private var fieldList: ArrayList<FbFieldModel> = ArrayList()
 
     private lateinit var fieldAdapter: FieldAdapter
@@ -45,9 +47,9 @@ class FieldScreen : BaseFragment() {
 
     override fun onBindView() {
 
-        getDataFromCache()
-
         initListField()
+
+        getDataFromCache()
 
 //        getData()
 
@@ -63,18 +65,17 @@ class FieldScreen : BaseFragment() {
 
         val daoInterface = database.getItemDAO()
 
-        fieldList = daoInterface.getItems() as ArrayList<FbFieldModel>
+        fieldListFull = daoInterface.getItems() as ArrayList<FbFieldModel>
+        fieldList.addAll(fieldListFull)
 
         if (fieldList.size > 0) {
 
-            initListField()
+            initSpinnerFieldBox()
 
         } else {
 
             getData()
         }
-
-
     }
 
     private fun initListField() {
@@ -102,7 +103,13 @@ class FieldScreen : BaseFragment() {
         BaseRequest().getDataField(database, object : GetDataListener<FbFieldModel> {
             override fun onSuccess(list: ArrayList<FbFieldModel>) {
 
-                fieldList.addAll(list)
+                fieldListFull.clear()
+
+                fieldList.clear()
+
+                fieldListFull.addAll(list)
+
+                fieldList.addAll(fieldListFull)
 
                 showProgress(false)
 
@@ -136,11 +143,11 @@ class FieldScreen : BaseFragment() {
 
                     val fieldListTemp: ArrayList<FbFieldModel> = ArrayList()
 
-                    for (i in 0 until getListField().size) {
+                    for (i in 0 until fieldListFull.size) {
 
-                        if (_idCity == getListField()[i].idCity!! && _idDistrict == getListField()[i].idDistrict!!) {
+                        if (_idCity == fieldListFull[i].idCity!! && _idDistrict == fieldListFull[i].idDistrict!!) {
 
-                            fieldListTemp.add(getListField()[i])
+                            fieldListTemp.add(fieldListFull[i])
                         }
                     }
 
