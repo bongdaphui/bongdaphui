@@ -24,6 +24,8 @@ import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.GoogleApiClient
@@ -38,9 +40,9 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    private var mGoogleSignInClient: GoogleSignInClient? = null
     private val RC_SIGN_IN = 12
 
-    private lateinit var googleApiClient: GoogleApiClient
 
     private val FB_FIELDS = "fields"
     private val FB_FIELDS_PARAMS = "id,name,email,gender,birthday,picture.type(large)"
@@ -84,7 +86,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
 
             buttonGoogleLogin.performClick()
 
-            val signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
+            val signInIntent = mGoogleSignInClient?.signInIntent
 
             startActivityForResult(signInIntent, RC_SIGN_IN)
 
@@ -185,6 +187,13 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
             .build()
 
         buttonGoogleLogin.setScopes(gso.scopeArray)*/
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.google_web_client_id))
+            .requestEmail()
+            .build()
+        mGoogleSignInClient = activity?.let { GoogleSignIn.getClient(it,gso) }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

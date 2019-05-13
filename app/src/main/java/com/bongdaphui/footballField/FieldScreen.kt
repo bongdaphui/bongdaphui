@@ -20,13 +20,11 @@ import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import kotlinx.android.synthetic.main.fragment_field.*
 
-
 class FieldScreen : BaseFragment() {
 
     private var fieldList: ArrayList<FbFieldModel> = ArrayList()
 
     private lateinit var fieldAdapter: FieldAdapter
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_field, container, false)

@@ -27,6 +27,10 @@
                     android:layout_height="match_parent"
                     android:overlapAnchor="false"
                     tools:ignore="HardcodedText,UnusedAttribute"/>
+            <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/c_2d2d2d"/>
             <Spinner
                     android:id="@+id/frg_field_sp_district"
                     android:layout_width="0dp"

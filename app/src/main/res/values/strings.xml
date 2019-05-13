@@ -74,8 +74,10 @@
     <string name="new_user">Thành viên mới?</string>
     <string name="sign_up">Đăng ký</string>
     <string name="password">Mật khẩu</string>
-    <string name="skip">Để sau </string>
+    <string name="skip">Để sau</string>
     <string name="not_yet_data">Chưa có dữ liệu</string>
+    <string name="google_web_client_id">303996690941-vq3ot26cmv2po4s9n7di8cmco9nj784b.apps.googleusercontent.com
+    </string>
 
 
 </resources>
