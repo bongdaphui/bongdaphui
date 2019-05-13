@@ -3,11 +3,11 @@ package com.bongdaphui.base
 import android.content.Context
 import android.util.Log
 import com.bongdaphui.MainActivity
+import com.bongdaphui.dao.AppDatabase
 import com.bongdaphui.listener.CheckUserListener
 import com.bongdaphui.listener.FireBaseSuccessListener
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.UpdateUserListener
-import com.bongdaphui.model.CommentModel
 import com.bongdaphui.model.FbFieldModel
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.utils.Constant
@@ -188,13 +188,19 @@ class BaseRequest {
             }
     }
 
-    fun getDataField(listener: GetDataListener<FbFieldModel>) {
+    fun getDataField(
+        database: AppDatabase,
+        listener: GetDataListener<FbFieldModel>
+    ) {
 
         val db = FirebaseFirestore.getInstance().collection(Constant().collectionPathField)
         val fieldList: ArrayList<FbFieldModel> = ArrayList()
 
         db.orderBy("name").get()
             .addOnSuccessListener { result ->
+
+                val dataListener = database.getItemDAO()
+
                 for (document in result) {
 
                     val fbFieldModel = FbFieldModel(
@@ -210,11 +216,14 @@ class BaseRequest {
                         document.data["lat"] as String?,
                         document.data["lng"] as String?,
                         document.data["countRating"] as String?,
-                        document.data["rating"] as String?,
-                        document.data["comment"] as ArrayList<CommentModel>?
+                        document.data["rating"] as String?
+//                        document.data["comment"] as ArrayList<CommentModel>?
                     )
 
                     fieldList.add(fbFieldModel)
+
+//                    cache data to room
+                    dataListener.insert(fbFieldModel)
                 }
 
                 Log.d(Constant().TAG, "field size: ${fieldList.size}")

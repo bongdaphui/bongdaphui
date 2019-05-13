@@ -1,11 +1,16 @@
 package com.bongdaphui.model
 
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+import android.support.annotation.NonNull
 import com.google.firebase.database.IgnoreExtraProperties
 import java.io.Serializable
 
 @IgnoreExtraProperties
+@Entity(tableName = "fields")
 data class FbFieldModel(
-    val id: Long?,
+    @PrimaryKey
+    @NonNull val id: Long?,
     val idCity: String? = "",
     val idDistrict: String? = "",
     val photoUrl: String? = "",
@@ -17,14 +22,6 @@ data class FbFieldModel(
     val lat: String? = "",
     val lng: String? = "",
     val countRating: String? = "",
-    val rating: String? = "",
-    val comment: ArrayList<CommentModel>? = ArrayList()
-) : Serializable {
-
-    var section = false
-
-    fun FbFieldModel(name: String, section: Boolean) {
-        this.name = name
-        this.section = section
-    }
-}
+    val rating: String? = ""
+//    val comment: ArrayList<CommentModel>? = ArrayList()
+) : Serializable

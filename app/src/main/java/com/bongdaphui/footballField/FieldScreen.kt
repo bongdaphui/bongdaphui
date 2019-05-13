@@ -1,16 +1,16 @@
 package com.bongdaphui.footballField
 
+import android.arch.persistence.room.Room
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import com.bongdaphui.R
 import com.bongdaphui.addField.AddFieldScreen
-import com.bongdaphui.addField.SpinnerAdapter
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
+import com.bongdaphui.dao.AppDatabase
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.OnItemClickListener
@@ -21,6 +21,8 @@ import com.bongdaphui.utils.Utils
 import kotlinx.android.synthetic.main.fragment_field.*
 
 class FieldScreen : BaseFragment() {
+
+    private lateinit var database: AppDatabase
 
     private var fieldList: ArrayList<FbFieldModel> = ArrayList()
 
@@ -43,11 +45,35 @@ class FieldScreen : BaseFragment() {
 
     override fun onBindView() {
 
+        getDataFromCache()
+
         initListField()
 
-        getData()
+//        getData()
 
 //        onClick()
+
+    }
+
+    private fun getDataFromCache() {
+
+        database = Room.databaseBuilder(activity!!, AppDatabase::class.java, Constant().roomData)
+            .allowMainThreadQueries()
+            .build()
+
+        val daoInterface = database.getItemDAO()
+
+        fieldList = daoInterface.getItems() as ArrayList<FbFieldModel>
+
+        if (fieldList.size > 0) {
+
+            initListField()
+
+        } else {
+
+            getData()
+        }
+
 
     }
 
@@ -71,35 +97,26 @@ class FieldScreen : BaseFragment() {
 
     private fun getData() {
 
-        if (getListField().size > 0) {
+        showProgress(true)
 
-            initSpinnerFieldBox()
+        BaseRequest().getDataField(database, object : GetDataListener<FbFieldModel> {
+            override fun onSuccess(list: ArrayList<FbFieldModel>) {
 
-        } else {
+                fieldList.addAll(list)
 
-            showProgress(true)
+                showProgress(false)
 
-            BaseRequest().getDataField(object : GetDataListener<FbFieldModel> {
-                override fun onSuccess(list: ArrayList<FbFieldModel>) {
+                showNoData(false)
 
-                    fieldList.addAll(list)
+                initSpinnerFieldBox()
 
-                    setListField(list)
+            }
 
-                    showProgress(false)
-
-                    showNoData(false)
-
-                    initSpinnerFieldBox()
-
-                }
-
-                override fun onFail(message: String) {
-                    showProgress(false)
-                    showNoData(true)
-                }
-            })
-        }
+            override fun onFail(message: String) {
+                showProgress(false)
+                showNoData(true)
+            }
+        })
     }
 
 

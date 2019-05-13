@@ -582,7 +582,7 @@ class Utils {
 
                 val fbFieldModel = FbFieldModel(
                     id.toLong(), idCity, idDistrict, photoUrl, name, phone, address, amountField, price, lat,
-                    lng, countRating, rating, listComment
+                    lng, countRating, rating
                 )
 
                 listField.add(fbFieldModel)

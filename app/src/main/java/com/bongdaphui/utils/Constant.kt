@@ -5,6 +5,9 @@ import android.Manifest
 class Constant {
 
     val TAG = "linhnt"
+
+    val roomData = "db_bongdaphui"
+
     val collectionPathField = "fields"
 
     val EMAIL_REGULAR_EXPRESSION =
