@@ -60,7 +60,7 @@ class AccountScreen : BaseFragment() {
 
         onClick()
 
-//        getInfoUser(getUIDUser())
+        getInfoUser(uIdUser)
 //
 //        getListRequestJoinGroup()
 
