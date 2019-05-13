@@ -189,7 +189,6 @@ class BaseRequest {
     }
 
     fun getDataField(
-        database: AppDatabase,
         listener: GetDataListener<FbFieldModel>
     ) {
 
@@ -198,8 +197,6 @@ class BaseRequest {
 
         db.orderBy("name").get()
             .addOnSuccessListener { result ->
-
-                val dataListener = database.getItemDAO()
 
                 for (document in result) {
 
@@ -222,8 +219,6 @@ class BaseRequest {
 
                     fieldList.add(fbFieldModel)
 
-//                    cache data to room
-                    dataListener.insert(fbFieldModel)
                 }
 
                 Log.d(Constant().TAG, "field size: ${fieldList.size}")

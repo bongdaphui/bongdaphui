@@ -17,6 +17,9 @@ interface FieldsDAO {
 
     @Query("SELECT * FROM fields")
     fun getItems(): List<FbFieldModel>
+
+    @Query("DELETE FROM fields")
+    fun deleteTable()
 //
 //    @Query("SELECT * FROM fields WHERE idCity = :id")
 //    fun getItemById(id: String?): FbFieldModel

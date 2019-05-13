@@ -100,7 +100,7 @@ class FieldScreen : BaseFragment() {
 
         showProgress(true)
 
-        BaseRequest().getDataField(database, object : GetDataListener<FbFieldModel> {
+        BaseRequest().getDataField(object : GetDataListener<FbFieldModel> {
             override fun onSuccess(list: ArrayList<FbFieldModel>) {
 
                 fieldListFull.clear()
@@ -117,6 +117,10 @@ class FieldScreen : BaseFragment() {
 
                 initSpinnerFieldBox()
 
+                deleteCache()
+
+                saveCache(fieldListFull)
+
             }
 
             override fun onFail(message: String) {
@@ -124,6 +128,24 @@ class FieldScreen : BaseFragment() {
                 showNoData(true)
             }
         })
+    }
+
+    private fun saveCache(fieldListFull: ArrayList<FbFieldModel>) {
+
+        val dataListener = database.getItemDAO()
+
+        for (i in 0 until fieldListFull.size) {
+
+            dataListener.insert(fieldListFull[i])
+
+        }
+    }
+
+    private fun deleteCache() {
+
+        val dataListener = database.getItemDAO()
+        dataListener.deleteTable()
+
     }
 
 
