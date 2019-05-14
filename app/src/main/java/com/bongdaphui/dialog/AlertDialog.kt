@@ -20,12 +20,14 @@ class AlertDialog {
 
         //set positive button
 
+
         //set negative button
         when (id) {
             Enum.EnumConfirmYes.Logout.value -> message = context.resources.getString(R.string.are_you_want_logout)
             Enum.EnumConfirmYes.DeniedPermission.value -> message = context.resources.getString(R.string.alert_denied_permission)
             Enum.EnumConfirmYes.RequestJoinClubFail.value -> message = context.resources.getString(R.string.request_join_club_fail)
             Enum.EnumConfirmYes.RequestJoinClubSuccess.value -> message = context.resources.getString(R.string.request_join_club_success)
+            Enum.EnumConfirmYes.FeatureNeedLogin.value -> message = context.resources.getString(R.string.this_feature_need_login)
         }
 
         val alertDialog = AlertDialog.Builder(context)
@@ -41,7 +43,7 @@ class AlertDialog {
 
             //set positive button
             .setPositiveButton(
-                if (id == Enum.EnumConfirmYes.Logout.value) context.resources.getString(R.string.yes)
+                if (id == Enum.EnumConfirmYes.Logout.value || id == Enum.EnumConfirmYes.FeatureNeedLogin.value) context.resources.getString(R.string.yes)
                 else context.resources.getString(R.string.close)
             ) { dialog, _ ->
 
@@ -52,12 +54,13 @@ class AlertDialog {
 
             //set negative button
             .setNegativeButton(
-                if (id == Enum.EnumConfirmYes.Logout.value) context.resources.getString(R.string.no)
+                if (id == Enum.EnumConfirmYes.Logout.value || id == Enum.EnumConfirmYes.FeatureNeedLogin.value) context.resources.getString(R.string.no)
                 else ""
             ) { dialog, _ ->
 
                 dialog.dismiss()
             }
+
 
         alertDialog.show()
     }

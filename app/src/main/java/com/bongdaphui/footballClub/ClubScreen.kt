@@ -1,6 +1,7 @@
 package com.bongdaphui.footballClub
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +11,16 @@ import com.bongdaphui.addClub.AddClubScreen
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.clubInfo.ClubInfoScreen
+import com.bongdaphui.dialog.AlertDialog
+import com.bongdaphui.listener.ConfirmListener
 import com.bongdaphui.listener.FireBaseSuccessListener
 import com.bongdaphui.listener.OnItemClickListener
+import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import kotlinx.android.synthetic.main.fragment_club.*
 
@@ -149,8 +154,29 @@ class ClubScreen : BaseFragment() {
 
         frg_football_club_fab.setOnClickListener {
 
-            //lấy id cuối cùng của club cuối cùng để cộng thêm 1 khi thêm club
-            addFragment(AddClubScreen.getInstance(getListClub()[getListClub().size - 1].id!!.toInt()))
+            val uIdUser = getUIDUser()
+            if (TextUtils.isEmpty(uIdUser)) {
+                //non account
+                AlertDialog().showDialog(
+                    activity!!,
+                    Enum.EnumConfirmYes.FeatureNeedLogin.value,
+                    object : ConfirmListener {
+                        override fun onConfirm(id: Int) {
+                            if (id == Enum.EnumConfirmYes.FeatureNeedLogin.value) {
+                                addFragment(LoginScreen())
+                            }
+                        }
+                    })
+            } else {
+                //lấy id cuối cùng của club cuối cùng để cộng thêm 1 khi thêm club
+                val listClubs = getListClub()
+                if (listClubs.size > 0) {
+                    addFragment(AddClubScreen.getInstance(listClubs[listClubs.size - 1].id!!.toInt()))
+                } else {
+                    addFragment(AddClubScreen.getInstance(0))
+                }
+            }
+
 
         }
     }

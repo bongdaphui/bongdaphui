@@ -160,7 +160,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
 
                     Log.d(Constant().TAG, "login fb uid: " + user!!.uid)
 
-                    checkUser(user.uid)
+                    checkForFirstUpdate(user.uid)
 
                 } else {
 
@@ -174,19 +174,11 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
             }
     }
 
+    private fun checkForFirstUpdate(uid: String) {
+        openClub()
+    }
+
     private fun initGoogle() {
-
-        /*val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("839377434311-efbf98vmdponkse5o10muosur0nm20sg.apps.googleusercontent.com")
-            .requestEmail()
-            .build()
-
-        googleApiClient = GoogleApiClient.Builder(activity!!)
-            .enableAutoManage(activity!! *//* FragmentActivity *//*, 0, this *//* OnConnectionFailedListener *//*)
-            .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-            .build()
-
-        buttonGoogleLogin.setScopes(gso.scopeArray)*/
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.google_web_client_id))
@@ -258,38 +250,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
         onBackPressed()
     }
 
-    private fun checkUser(uid: String) {
-        BaseRequest().checkUserExistsOnFireBase(uid, object : CheckUserListener {
 
-            override fun onCheck(exists: Boolean) {
-
-                if (exists) {
-
-                    openClub()
-
-                } else {
-
-                    BaseRequest().createUserDataOnFireBase(uid, object : UpdateUserListener {
-                        override fun onUpdateSuccess() {
-
-                            openClub()
-                        }
-
-                        override fun onUpdateFail() {
-
-                            openClub()
-                        }
-                    })
-                }
-            }
-
-            override fun onCancel() {
-
-                openClub()
-            }
-
-        })
-    }
 
     private fun openClub() {
         showProgress(false)
@@ -314,7 +275,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
 
                     Log.d(Constant().TAG, "login email uid: " + user!!.uid)
 
-                    getInfoUser(user.uid)
+                    checkForFirstUpdate(user.uid)
 
                 } else {
 
@@ -336,39 +297,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
             }
     }
 
-    private fun getInfoUser(id: String) {
 
-        showProgress(true)
-
-        BaseRequest().checkUserExistsOnFireBase(id, object : CheckUserListener {
-
-            override fun onCheck(exists: Boolean) {
-
-                if (exists) {
-
-                    openClub()
-
-                } else {
-
-                    BaseRequest().createUserDataOnFireBase(id, object : UpdateUserListener {
-                        override fun onUpdateSuccess() {
-
-                            openClub()
-
-                        }
-
-                        override fun onUpdateFail() {
-
-                            openClub()
-                        }
-                    })
-                }
-            }
-
-            override fun onCancel() {
-            }
-        })
-    }
 
     private fun validForm(): Boolean {
 

@@ -28,6 +28,7 @@ class Enum {
         DeniedPermission(1),
         RequestJoinClubFail(2),
         RequestJoinClubSuccess(3),
+        FeatureNeedLogin(4)
 
     }
 
