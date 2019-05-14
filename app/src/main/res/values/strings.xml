@@ -79,6 +79,7 @@
     <string name="google_web_client_id">303996690941-vq3ot26cmv2po4s9n7di8cmco9nj784b.apps.googleusercontent.com
     </string>
     <string name="this_feature_need_login">Vui lòng đăng nhập để sử dụng tính năng này</string>
+    <string name="need_login_to_see">Đăng nhập để xem</string>
 
 
 </resources>

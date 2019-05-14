@@ -2,6 +2,7 @@ package com.bongdaphui.footballField
 
 import android.arch.persistence.room.Room
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.bongdaphui.dao.AppDatabase
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.OnItemClickListener
+import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.FbFieldModel
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Enum
@@ -79,15 +81,19 @@ class FieldScreen : BaseFragment() {
     }
 
     private fun initListField() {
-
-        fieldAdapter = FieldAdapter(context, fieldList, object :
+        val isLoggedUser = !TextUtils.isEmpty(getUIDUser())
+        fieldAdapter = FieldAdapter(context, fieldList, isLoggedUser, object :
             OnItemClickListener<FbFieldModel> {
 
             override fun onItemClick(item: FbFieldModel, position: Int, type: Int) {
 
                 if (type == Enum.EnumTypeClick.Phone.value) {
+                    if (isLoggedUser) {
+                        Utils().openDial(activity!!, "${item.phone}")
+                    } else {
+                        addFragment(LoginScreen())
+                    }
 
-                    Utils().openDial(activity!!, "${item.phone}")
                 }
             }
         })
