@@ -31,6 +31,8 @@ class AlertDialog {
             Enum.EnumConfirmYes.FieldIsAvailable.value -> message = context.resources.getString(R.string.add_field_is_available)
             Enum.EnumConfirmYes.AddFieldFail.value -> message = context.resources.getString(R.string.add_field_fail)
             Enum.EnumConfirmYes.AddFieldSuccess.value -> message = context.resources.getString(R.string.add_field_success)
+            Enum.EnumConfirmYes.UpdateSuccess.value -> message = context.resources.getString(R.string.update_success)
+            Enum.EnumConfirmYes.UpdateFail.value -> message = context.resources.getString(R.string.update_fail)
         }
 
         val alertDialog = AlertDialog.Builder(context)
@@ -46,7 +48,8 @@ class AlertDialog {
 
             //set positive button
             .setPositiveButton(
-                if (id == Enum.EnumConfirmYes.Logout.value || id == Enum.EnumConfirmYes.FeatureNeedLogin.value) context.resources.getString(R.string.yes)
+                if (id == Enum.EnumConfirmYes.Logout.value || id == Enum.EnumConfirmYes.FeatureNeedLogin.value)
+                    context.resources.getString(R.string.yes)
                 else context.resources.getString(R.string.close)
             ) { dialog, _ ->
 

@@ -17,6 +17,8 @@ import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
+import com.bongdaphui.dialog.AlertDialog
+import com.bongdaphui.listener.ConfirmListener
 import com.bongdaphui.listener.UpdateUserListener
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.utils.*
@@ -243,7 +245,7 @@ class UpdateAccountScreen : BaseFragment() {
                 // Creating second StorageReference.
                 val storageReference2nd: StorageReference =
                     storageReference.child(
-                        Constant().STORAGE_USER + System.currentTimeMillis() + "." + Utils().getFileExtension(
+                        Constant().pathStorageUser + System.currentTimeMillis() + "." + Utils().getFileExtension(
                             activity, filePathUri!!
                         )
                     )
@@ -304,15 +306,20 @@ class UpdateAccountScreen : BaseFragment() {
 
                 showProgress(false)
 
-                Utils().alertUpdateSuccess(activity)
-//                updateUserOnAccountScreen(userModel)
+                AlertDialog().showDialog(activity!!, Enum.EnumConfirmYes.UpdateSuccess.value, object : ConfirmListener {
+                    override fun onConfirm(id: Int) {
+                    }
+                })
             }
 
             override fun onUpdateFail() {
 
                 showProgress(false)
 
-                Utils().alertInsertFail(activity)
+                AlertDialog().showDialog(activity!!, Enum.EnumConfirmYes.UpdateFail.value, object : ConfirmListener {
+                    override fun onConfirm(id: Int) {
+                    }
+                })
 
             }
 

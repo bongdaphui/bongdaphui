@@ -31,7 +31,9 @@ class Enum {
         FeatureNeedLogin(4),
         FieldIsAvailable(5),
         AddFieldFail(6),
-        AddFieldSuccess(7)
+        AddFieldSuccess(7),
+        UpdateSuccess(8),
+        UpdateFail(9)
 
     }
 
