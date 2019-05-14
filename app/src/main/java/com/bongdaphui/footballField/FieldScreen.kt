@@ -100,6 +100,9 @@ class FieldScreen : BaseFragment() {
         showProgress(true)
 
         BaseRequest().getDataField(object : GetDataListener<FbFieldModel> {
+            override fun onSuccess(item: FbFieldModel) {
+            }
+
             override fun onSuccess(list: ArrayList<FbFieldModel>) {
 
                 if (frg_field_refresh_view.isRefreshing) frg_field_refresh_view.isRefreshing = false

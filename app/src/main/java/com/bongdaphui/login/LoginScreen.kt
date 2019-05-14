@@ -2,6 +2,7 @@ package com.bongdaphui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +12,12 @@ import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.listener.CheckUserListener
+import com.bongdaphui.listener.FireBaseSuccessListener
+import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.UpdateUserListener
+import com.bongdaphui.model.UserModel
 import com.bongdaphui.register.RegisterWithEmailScreen
+import com.bongdaphui.updateAccount.UpdateAccountScreen
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Utils
 import com.facebook.AccessToken
@@ -31,8 +36,11 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.DataSnapshot
 import kotlinx.android.synthetic.main.fragment_login_screen.*
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.system.exitProcess
 
 
 class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
@@ -130,7 +138,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
 
                 Log.d(Constant().TAG, "facebook:onCancel")
 
-                loginFail()
+                loginFail("facebook:onCancel")
 
             }
 
@@ -138,7 +146,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
 
                 Log.d(Constant().TAG, "facebook:onError", error)
 
-                loginFail()
+                loginFail(error.localizedMessage)
 
             }
         })
@@ -155,7 +163,6 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
                 if (it.isSuccessful) {
 
                     val user = getFireBaseAuth()!!.currentUser
-
 //                    saveUIDUser(Constant().KEY_LOGIN_UID_USER, user!!.uid)
 
                     Log.d(Constant().TAG, "login fb uid: " + user!!.uid)
@@ -164,18 +171,40 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
 
                 } else {
 
-                    loginFail()
+                    loginFail(it.exception.toString())
                 }
             }
 
             .addOnFailureListener {
 
-                loginFail()
+                loginFail(it.localizedMessage)
             }
     }
 
     private fun checkForFirstUpdate(uid: String) {
-        openClub()
+        BaseRequest().getUserInfo(uid,object : GetDataListener<UserModel>{
+            override fun onSuccess(list: ArrayList<UserModel>) {
+            }
+
+            override fun onSuccess(item: UserModel) {
+                if (TextUtils.isEmpty(item.phone)) {
+                    //update account for first time
+                    replaceFragment(UpdateAccountScreen.getInstance(item), true)
+                } else {
+                    openClub()
+                }
+
+                Log.d(Constant().TAG, "user id: ${item.id}")
+            }
+
+            override fun onFail(message: String) {
+                //for case not found
+                val userModel = UserModel(uid)
+                replaceFragment(UpdateAccountScreen.getInstance(userModel), true)
+            }
+
+        })
+
     }
 
     private fun initGoogle() {
@@ -184,7 +213,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
             .requestIdToken(getString(R.string.google_web_client_id))
             .requestEmail()
             .build()
-        mGoogleSignInClient = activity?.let { GoogleSignIn.getClient(it,gso) }
+        mGoogleSignInClient = activity?.let { GoogleSignIn.getClient(it, gso) }
 
     }
 
@@ -230,26 +259,25 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
 
                     Log.d(Constant().TAG, "login google uid: " + user!!.uid)
 
-                    openClubs()
+                    checkForFirstUpdate(user.uid)
 
                 } else {
 
-                    loginFail()
+                    loginFail(it.exception.toString())
                 }
             }
             .addOnFailureListener {
 
-                loginFail()
+                loginFail(it.localizedMessage)
             }
     }
 
-    private fun loginFail() {
+    private fun loginFail(errorMsg: String?) {
 
-        Toast.makeText(activity, "Đăng nhập thất bại, bạn vui lòng thực hiện lại", Toast.LENGTH_SHORT).show()
-
+        Toast.makeText(activity, "Đăng nhập thất bại \n ${errorMsg!!}", Toast.LENGTH_SHORT).show()
+        showProgress(false)
         onBackPressed()
     }
-
 
 
     private fun openClub() {
@@ -279,14 +307,14 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
 
                 } else {
 
-                    loginFail()
+                    loginFail(it.exception.toString())
                 }
 
                 showProgress(false)
             }
             .addOnFailureListener {
 
-                loginFail()
+                loginFail(it.localizedMessage)
 
                 showProgress(false)
 
@@ -296,7 +324,6 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
 
             }
     }
-
 
 
     private fun validForm(): Boolean {

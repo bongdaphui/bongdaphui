@@ -297,7 +297,7 @@ class UpdateAccountScreen : BaseFragment() {
 
         val userModel = UserModel(getUIDUser(), uriPhoto, name, email, phone, dob, height, weight, position)
 
-        BaseRequest().updateUserDataOnFireBase(userModel, object : UpdateUserListener {
+        BaseRequest().saveOrUpdateUser(userModel, object : UpdateUserListener {
             override fun onUpdateSuccess() {
 
                 showProgress(false)

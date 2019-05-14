@@ -10,6 +10,7 @@ import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.listener.UpdateUserListener
+import com.bongdaphui.model.UserModel
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Utils
 import kotlinx.android.synthetic.main.fragment_register_with_email_screen.*
@@ -90,7 +91,9 @@ class RegisterWithEmailScreen : BaseFragment() {
 
                     Log.d(Constant().TAG, "register email uid: " + user!!.uid)
 
-                    BaseRequest().createUserDataOnFireBase(user.uid, object : UpdateUserListener {
+
+                    val userModel = UserModel(user.uid,user.photoUrl.toString(),user.displayName,user.email,user.phoneNumber)
+                    BaseRequest().saveOrUpdateUser(userModel, object : UpdateUserListener {
                         override fun onUpdateSuccess() {
 
                             openClub()

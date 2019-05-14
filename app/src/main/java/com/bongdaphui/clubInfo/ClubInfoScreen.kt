@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.ConfirmListener
 import com.bongdaphui.listener.FireBaseSuccessListener
+import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.model.RequestJoinClubModel
 import com.bongdaphui.model.UserModel
@@ -99,6 +101,7 @@ class ClubInfoScreen : BaseFragment() {
             .into(frg_club_info_iv_logo)
 
     }
+
     private fun onClick() {
 
         frg_club_info_toolbar.setOnClickListener {
@@ -180,25 +183,25 @@ class ClubInfoScreen : BaseFragment() {
 
         var userModel: UserModel
 
-        BaseRequest().loadUserData(
-            activity!!,
-            getUIDUser(),
-            object : FireBaseSuccessListener {
-                override fun onSuccess(data: DataSnapshot) {
 
-                    showProgress(false)
+        BaseRequest().getUserInfo(getUIDUser(), object : GetDataListener<UserModel> {
+            override fun onSuccess(list: ArrayList<UserModel>) {
+            }
 
-                    userModel = data.getValue(UserModel::class.java)!!
+            override fun onSuccess(item: UserModel) {
+                userModel = item
+                showProgress(false)
 
-                    requestJoinGroup(userModel)
+                requestJoinGroup(userModel)
 
-                }
+            }
 
-                override fun onFail(message: String) {
+            override fun onFail(message: String) {
+                showAlertFailJoinGroup()
+            }
 
-                    showAlertFailJoinGroup()
-                }
-            })
+        })
+
     }
 
     private fun requestJoinGroup(userModel: UserModel) {

@@ -12,10 +12,7 @@ import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.clubManager.ClubManageScreen
 import com.bongdaphui.dialog.AlertDialog
-import com.bongdaphui.listener.CheckUserListener
-import com.bongdaphui.listener.ConfirmListener
-import com.bongdaphui.listener.FireBaseSuccessListener
-import com.bongdaphui.listener.UpdateUserListener
+import com.bongdaphui.listener.*
 import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.RequestJoinClubModel
 import com.bongdaphui.model.UserModel
@@ -74,23 +71,23 @@ class AccountScreen : BaseFragment() {
 
                 if (exists) {
 
-                    BaseRequest().loadUserData(
-                        activity!!,
-                        id,
-                        object : FireBaseSuccessListener {
-                            override fun onSuccess(data: DataSnapshot) {
+                    BaseRequest().getUserInfo(id, object : GetDataListener<UserModel> {
+                        override fun onSuccess(list: ArrayList<UserModel>) {
+                        }
 
-                                userModel = data.getValue(UserModel::class.java)!!
+                        override fun onSuccess(item: UserModel) {
+                            userModel = item
+                            updateUI(userModel)
 
-                                updateUI(userModel)
+                            Log.d(Constant().TAG, "user id: ${userModel.id}")
+                        }
 
-                                Log.d(Constant().TAG, "user id: ${userModel.id}")
-                            }
+                        override fun onFail(message: String) {
 
-                            override fun onFail(message: String) {
+                        }
 
-                            }
-                        })
+                    })
+
                 } else {
 
                     Glide.with(context!!).load(Utils().getDrawable(context!!, R.drawable.ic_profile))
@@ -99,15 +96,7 @@ class AccountScreen : BaseFragment() {
 
                     frg_account_tv_name.text = activity!!.resources.getString(R.string.not_yet_update)
 
-                    BaseRequest().createUserDataOnFireBase(id, object : UpdateUserListener {
-                        override fun onUpdateSuccess() {
-                            //todo
-                        }
 
-                        override fun onUpdateFail() {
-                            //todo
-                        }
-                    })
                 }
             }
 
