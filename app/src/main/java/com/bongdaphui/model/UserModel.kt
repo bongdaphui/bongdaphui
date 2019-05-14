@@ -1,8 +1,10 @@
 package com.bongdaphui.model
 
+import android.arch.persistence.room.Entity
 import com.google.firebase.database.IgnoreExtraProperties
 import java.io.Serializable
 
+@Entity(tableName = "users")
 @IgnoreExtraProperties
 data class UserModel(
     val id: String? = "",
