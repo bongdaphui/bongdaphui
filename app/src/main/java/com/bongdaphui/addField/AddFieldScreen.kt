@@ -146,6 +146,10 @@ class AddFieldScreen : BaseFragment() {
             showProgress(true)
 
             BaseRequest().getDataField(object : GetDataListener<FbFieldModel> {
+                override fun onSuccess(item: FbFieldModel) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
                 override fun onSuccess(list: ArrayList<FbFieldModel>) {
 
                     var idMaxFieldList = 0L
