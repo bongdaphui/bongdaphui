@@ -299,6 +299,8 @@ class UpdateAccountScreen : BaseFragment() {
 
         BaseRequest().saveOrUpdateUser(userModel, object : UpdateUserListener {
             override fun onUpdateSuccess() {
+                //cache data
+                getDatabase().getUserDAO().insert(userModel)
 
                 showProgress(false)
 

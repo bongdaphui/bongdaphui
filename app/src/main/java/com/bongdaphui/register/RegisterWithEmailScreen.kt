@@ -95,6 +95,8 @@ class RegisterWithEmailScreen : BaseFragment() {
                     val userModel = UserModel(user.uid,user.photoUrl.toString(),user.displayName,user.email,user.phoneNumber)
                     BaseRequest().saveOrUpdateUser(userModel, object : UpdateUserListener {
                         override fun onUpdateSuccess() {
+                            //cache data
+                            getDatabase().getUserDAO().insert(userModel)
 
                             openClub()
                         }
