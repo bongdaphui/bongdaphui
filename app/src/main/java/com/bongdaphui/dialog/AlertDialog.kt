@@ -28,6 +28,9 @@ class AlertDialog {
             Enum.EnumConfirmYes.RequestJoinClubFail.value -> message = context.resources.getString(R.string.request_join_club_fail)
             Enum.EnumConfirmYes.RequestJoinClubSuccess.value -> message = context.resources.getString(R.string.request_join_club_success)
             Enum.EnumConfirmYes.FeatureNeedLogin.value -> message = context.resources.getString(R.string.this_feature_need_login)
+            Enum.EnumConfirmYes.FieldIsAvailable.value -> message = context.resources.getString(R.string.add_field_is_available)
+            Enum.EnumConfirmYes.AddFieldFail.value -> message = context.resources.getString(R.string.add_field_fail)
+            Enum.EnumConfirmYes.AddFieldSuccess.value -> message = context.resources.getString(R.string.add_field_success)
         }
 
         val alertDialog = AlertDialog.Builder(context)

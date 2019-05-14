@@ -15,29 +15,28 @@ import android.view.View
 import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
+import com.bongdaphui.base.BaseRequest
+import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
+import com.bongdaphui.listener.ConfirmListener
+import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.model.FbFieldModel
 import com.bongdaphui.utils.*
+import com.bongdaphui.utils.Enum
 import com.bumptech.glide.Glide
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.android.synthetic.main.fragment_add_football_field.*
+import kotlinx.android.synthetic.main.fragment_add_field.*
 import java.io.File
 
 
 class AddFieldScreen : BaseFragment() {
 
-    private lateinit var db: DocumentReference
-
     private var idCity: String = ""
     private var idDistrict: String = ""
 
     private var filePathUri: Uri? = null
-
-    private var storagePath = "football_field_image/"
 
     /*companion object {
 
@@ -68,7 +67,7 @@ class AddFieldScreen : BaseFragment() {
     }*/
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_add_football_field, container, false)
+        return inflater.inflate(R.layout.fragment_add_field, container, false)
 
     }
 
@@ -98,13 +97,14 @@ class AddFieldScreen : BaseFragment() {
 
         onClick()
 
+        initView()
     }
 
     private fun initSpinner() {
         Utils().initSpinnerCity(
             activity!!,
-            frg_add_football_field_sp_city,
-            frg_add_football_field_sp_district,
+            frg_add_field_sp_city,
+            frg_add_field_sp_district,
             object :
                 BaseSpinnerSelectInterface {
                 override fun onSelectCity(_idCity: String, _idDistrict: String) {
@@ -121,222 +121,291 @@ class AddFieldScreen : BaseFragment() {
         hideKeyBoard()
     }
 
-    var step = 0
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     private fun onClick() {
 
-        frg_add_football_field_tv_input.setOnClickListener {
-
-                        startSave()
-        }
-
-        frg_add_football_field_container.setOnTouchListener { _, _ ->
+        frg_add_field_container.setOnTouchListener { _, _ ->
 
             hideKeyBoard()
 
             false
         }
+
+        frg_add_field_tv_input.setOnClickListener {
+
+            checkFieldAndGetIdForField()
+        }
     }
 
-    private fun startSave() {
+    private fun checkFieldAndGetIdForField() {
 
         if (validate()) {
 
-            disableItem()
+            enableItem(false)
 
-            //no image
-            if (null == filePathUri) {
+            showProgress(true)
 
-                storageData("")
+            BaseRequest().getDataField(object : GetDataListener<FbFieldModel> {
+                override fun onSuccess(list: ArrayList<FbFieldModel>) {
 
-                //has image
-            } else {
+                    var idMaxFieldList = 0L
 
-                // Assign FirebaseStorage instance to storageReference.
-                val storageReference = FirebaseStorage.getInstance().reference
+                    for (i in 0 until list.size) {
 
-                // Creating second StorageReference.
-                val storageReference2nd: StorageReference =
-                    storageReference.child(
-                        storagePath + System.currentTimeMillis() + "." + Utils().getFileExtension(
-                            activity,
-                            filePathUri!!
-                        )
-                    )
+                        if (list[i].name == frg_add_field_et_name.text.toString() || list[i].phone == frg_add_field_et_phone.text.toString()) {
 
-                val selectedFilePath = FilePath.getPath(activity!!, filePathUri!!)
+                            showAlertFieldIsAvailable()
 
-                val file = CompressFile.getCompressedImageFile(File(selectedFilePath), activity!!)
+                            idMaxFieldList = 0L
 
-                storageReference2nd.putFile(Uri.fromFile(file))
-
-                    .addOnSuccessListener {
-
-                        storageReference2nd.downloadUrl.addOnSuccessListener {
-
-                            storageData("$it")
+                            break
                         }
 
-                    }
-                    // If something goes wrong .
-                    .addOnFailureListener {
-
-                        Utils().alertInsertFail(activity)
-
+                        if (list[i].id!!.toLong() > idMaxFieldList) {
+                            idMaxFieldList = list[i].id!!.toLong()
+                        }
                     }
 
-                    // On progress change upload time.
-                    .addOnProgressListener {
+                    if (idMaxFieldList > 0L) {
 
-                        frg_add_football_field_progress.visibility = View.VISIBLE
-                        frg_add_football_field_progress.progress = Utils().progressTask(it)
+                        // plus 1 for id of field
+                        startInsertField(idMaxFieldList + 1)
+
+                        Log.d(Constant().TAG, "idOfField: ${idMaxFieldList + 1}")
+
                     }
-            }
+                }
+
+                override fun onFail(message: String) {
+
+                    showAlertAddFail()
+                }
+            })
         }
     }
 
-    private fun storageData(uriPhoto: String) {
+    private fun validate(): Boolean {
 
-        Log.d(Constant().TAG, uriPhoto)
+        var validate = true
 
-        val name = frg_add_football_field_et_name.text.toString()
-
-        val phone = frg_add_football_field_et_phone.text.toString()
-
-        val address =
-            frg_add_football_field_et_address.text.toString() +
-                    ", " + frg_add_football_field_sp_district.selectedItem.toString() +
-                    ", " + frg_add_football_field_sp_city.selectedItem.toString()
-
-        val amountField = frg_add_football_field_et_count_field.text.toString()
-
-        val priceField = frg_add_football_field_et_price_field.text.toString()
-
-        var idOfField = ""
-
-        for (i in 0 until getListCity().size) {
-
-            if (idCity == getListCity()[i].id) {
-
-                for (j in 0 until getListCity()[i].districts!!.size) {
-
-                    /*if (idDistrict == getListCity()[i].districts!![j].id) {
-
-                        idOfField = if (null == getListCity()[i].districts!![j].fields) {
-
-                            "0"
-
-                        } else {
-
-                            "${getListCity()[i].districts!![j].fields!!.size}"
-                        }
-                    }*/
-                }
-            }
+        if (frg_add_field_et_name.text.toString().isEmpty()) {
+            frg_add_field_tv_error_input_name.visibility = View.VISIBLE
+            frg_add_field_et_name.requestFocus()
+            validate = false
         }
 
-        val footballFieldModel = FbFieldModel(
-            idOfField.toLong(),
+        if (frg_add_field_et_phone.text.toString().isEmpty()) {
+            frg_add_field_tv_error_input_phone.visibility = View.VISIBLE
+            frg_add_field_tv_error_input_phone.text =
+                activity!!.getString(R.string.please_enter_your_phone)
+            frg_add_field_et_phone.requestFocus()
+            validate = false
+        }
+
+        if (!Utils().validatePhoneNumber(frg_add_field_et_phone.text.toString())) {
+            frg_add_field_tv_error_input_phone.visibility = View.VISIBLE
+            frg_add_field_tv_error_input_phone.text =
+                activity!!.getString(R.string.please_enter_your_phone_valid)
+            frg_add_field_et_phone.requestFocus()
+
+            validate = false
+        }
+
+        if (frg_add_field_et_address.text.toString().isEmpty()) {
+            frg_add_field_tv_error_input_address.visibility = View.VISIBLE
+            frg_add_field_et_address.requestFocus()
+            validate = false
+        }
+
+        return validate
+    }
+
+    private fun enableItem(isDisable: Boolean) {
+
+        frg_add_field_et_name.isEnabled = isDisable
+        frg_add_field_et_phone.isEnabled = isDisable
+        frg_add_field_et_address.isEnabled = isDisable
+        frg_add_field_sp_district.isEnabled = isDisable
+        frg_add_field_sp_city.isEnabled = isDisable
+        frg_add_field_et_count_field.isEnabled = isDisable
+        frg_add_field_et_price_field.isEnabled = isDisable
+
+    }
+
+    private fun startInsertField(idField: Long) {
+
+        //no image
+        if (null == filePathUri) {
+
+            setData(idField, "")
+
+            //has image
+        } else {
+
+            // Assign FirebaseStorage instance to storageReference.
+            val storageReference = FirebaseStorage.getInstance().reference
+
+            // Creating second StorageReference.
+            val storageReference2nd: StorageReference =
+                storageReference.child(
+                    Constant().pathStorageField + System.currentTimeMillis() + "." + Utils().getFileExtension(
+                        activity,
+                        filePathUri!!
+                    )
+                )
+
+            val selectedFilePath = FilePath.getPath(activity!!, filePathUri!!)
+
+            val file = CompressFile.getCompressedImageFile(File(selectedFilePath), activity!!)
+
+            storageReference2nd.putFile(Uri.fromFile(file))
+
+                .addOnSuccessListener {
+
+                    storageReference2nd.downloadUrl.addOnSuccessListener {
+
+                        setData(idField, "$it")
+                    }
+                }
+                // If something goes wrong .
+                .addOnFailureListener {
+
+                    showAlertAddFail()
+
+                }
+
+                // On progress change upload time.
+                .addOnProgressListener {
+
+                    //                    frg_add_field_progress.visibility = View.GONE
+                    frg_add_field_progress.progress = Utils().progressTask(it)
+                }
+        }
+    }
+
+    private fun setData(idField: Long, uriPhoto: String) {
+
+        val name = frg_add_field_et_name.text.toString()
+        val phone = frg_add_field_et_phone.text.toString()
+        val address =
+            frg_add_field_et_address.text.toString() +
+                    ", " + frg_add_field_sp_district.selectedItem.toString() +
+                    ", " + frg_add_field_sp_city.selectedItem.toString()
+
+        val amountField = frg_add_field_et_count_field.text.toString()
+        val priceField = frg_add_field_et_price_field.text.toString()
+
+        val fieldModel = FbFieldModel(
+            idField,
             idCity,
             idDistrict,
-//            getUIDUser(Constant().KEY_LOGIN_UID_USER),
-            getUIDUser(),
             uriPhoto,
             name,
             phone,
             address,
             amountField,
-            priceField
+            priceField, "", "", "", ""
         )
 
-        Log.d(Constant().TAG, "field of idCity:$idCity, idDistrict:$idDistrict : $idOfField")
+        val db = FirebaseFirestore.getInstance().document("${Constant().collectionPathField}/$idField")
 
-        val db = FirebaseFirestore.getInstance().document("fields/$step")
+        db.set(fieldModel)
+            .addOnSuccessListener {
 
-//        for (i in 0 until Utils().getListField(activity!!).size) {
+                Log.d(Constant().TAG, "upload field success")
 
-//            if (i == step) {
+                //cache data
 
-                /*db.set(Utils().getListField(activity!!)[i])
-                    .addOnSuccessListener {
+                getDatabase().getFieldDAO().insert(fieldModel)
 
-                        Log.d(Constant().TAG, "upload field success - step: $step")
-
-                        step++
-
-                    }
-                    .addOnFailureListener {
-
-                        Log.d(Constant().TAG, "upload field fail : $it")
-
-                    }*/
-//            }
-        }
-
-        /*dataReference.child(idCity).child("districts")
-            .child(idDistrict).child("fields").child(idOfField).setValue(footballFieldModel)
-
-            .addOnCompleteListener {
-
-                Utils().alertInsertSuccess(activity)
-
-                hideKeyBoard()
-
+                showAlertAddSuccess()
             }
             .addOnFailureListener {
 
-                Utils().alertInsertFail(activity)
+                Log.d(Constant().TAG, "upload field fail : $it")
+
+                showAlertAddFail()
+            }
+    }
+
+    private fun showAlertFieldIsAvailable() {
+
+        showProgress(false)
+
+        enableItem(true)
+
+        AlertDialog().showDialog(activity!!, Enum.EnumConfirmYes.FieldIsAvailable.value, object : ConfirmListener {
+            override fun onConfirm(id: Int) {
 
             }
-    }*/
+        })
+    }
 
+    private fun showAlertAddFail() {
 
-    private fun disableItem() {
+        showProgress(false)
 
-        frg_add_football_field_et_name.isEnabled = false
-        frg_add_football_field_et_phone.isEnabled = false
-        frg_add_football_field_et_address.isEnabled = false
-        frg_add_football_field_sp_district.isEnabled = false
-        frg_add_football_field_sp_city.isEnabled = false
-        frg_add_football_field_et_count_field.isEnabled = false
-        frg_add_football_field_et_price_field.isEnabled = false
+        enableItem(true)
 
+        AlertDialog().showDialog(activity!!, Enum.EnumConfirmYes.AddFieldFail.value, object : ConfirmListener {
+            override fun onConfirm(id: Int) {
+
+            }
+        })
+    }
+
+    private fun showAlertAddSuccess() {
+
+        showProgress(false)
+
+        AlertDialog().showDialog(activity!!, Enum.EnumConfirmYes.AddFieldSuccess.value, object : ConfirmListener {
+            override fun onConfirm(id: Int) {
+
+                enableItem(true)
+
+                frg_add_field_et_name.text.clear()
+                frg_add_field_et_phone.text.clear()
+                frg_add_field_et_address.text.clear()
+                frg_add_field_et_count_field.text.clear()
+                frg_add_field_et_price_field.text.clear()
+            }
+        })
     }
 
     private fun initView() {
 
-        frg_add_football_field_v_photo.setOnClickListener {
+        frg_add_field_v_photo.setOnClickListener {
             checkPermissionStore()
         }
 
         Utils().editTextTextChange(
-            frg_add_football_field_et_name,
-            frg_add_football_field_iv_clear_input_name,
-            frg_add_football_field_tv_error_input_name
+            frg_add_field_et_name,
+            frg_add_field_iv_clear_input_name,
+            frg_add_field_tv_error_input_name
         )
 
         Utils().editTextTextChange(
-            frg_add_football_field_et_phone,
-            frg_add_football_field_iv_clear_input_phone,
-            frg_add_football_field_tv_error_input_phone
+            frg_add_field_et_phone,
+            frg_add_field_iv_clear_input_phone,
+            frg_add_field_tv_error_input_phone
         )
 
         Utils().editTextTextChange(
-            frg_add_football_field_et_address,
-            frg_add_football_field_iv_clear_input_address,
-            frg_add_football_field_tv_error_input_address
+            frg_add_field_et_address,
+            frg_add_field_iv_clear_input_address,
+            frg_add_field_tv_error_input_address
         )
 
         Utils().editTextTextChange(
-            frg_add_football_field_et_count_field,
-            frg_add_football_field_iv_clear_input_count_field,
-            frg_add_football_field_tv_error_input_count_field
+            frg_add_field_et_count_field,
+            frg_add_field_iv_clear_input_count_field,
+            frg_add_field_tv_error_input_count_field
         )
 
         Utils().editTextTextChange(
-            frg_add_football_field_et_price_field,
-            frg_add_football_field_iv_clear_input_price_field,
-            frg_add_football_field_tv_error_input_height
+            frg_add_field_et_price_field,
+            frg_add_field_iv_clear_input_price_field,
+            frg_add_field_tv_error_input_price
         )
     }
 
@@ -368,50 +437,13 @@ class AddFieldScreen : BaseFragment() {
 
             if (null != filePathUri) {
 
-                Glide.with(activity!!).load(filePathUri).into(frg_add_football_field_iv_photo)
+                Glide.with(activity!!).load(filePathUri).into(frg_add_field_iv_photo)
 
-                frg_add_football_field_iv_camera.visibility = View.GONE
+                frg_add_field_iv_camera.visibility = View.GONE
 
-                frg_add_football_field_tv_error_select_photo.visibility = View.INVISIBLE
+                frg_add_field_tv_error_select_photo.visibility = View.INVISIBLE
 
             }
         }
     }
-
-    private fun validate(): Boolean {
-
-        var validate = true
-
-        if (frg_add_football_field_et_name.text.toString().isEmpty()) {
-            frg_add_football_field_tv_error_input_name.visibility = View.VISIBLE
-            frg_add_football_field_et_name.requestFocus()
-            validate = false
-        }
-
-        if (frg_add_football_field_et_phone.text.toString().isEmpty()) {
-            frg_add_football_field_tv_error_input_phone.visibility = View.VISIBLE
-            frg_add_football_field_tv_error_input_phone.text =
-                activity!!.getString(R.string.please_enter_your_phone)
-            frg_add_football_field_et_phone.requestFocus()
-            validate = false
-        }
-
-        if (!Utils().validatePhoneNumber(frg_add_football_field_et_phone.text.toString())) {
-            frg_add_football_field_tv_error_input_phone.visibility = View.VISIBLE
-            frg_add_football_field_tv_error_input_phone.text =
-                activity!!.getString(com.bongdaphui.R.string.please_enter_your_phone_valid)
-            frg_add_football_field_et_phone.requestFocus()
-
-            validate = false
-        }
-
-        if (frg_add_football_field_et_address.text.toString().isEmpty()) {
-            frg_add_football_field_tv_error_input_address.visibility = View.VISIBLE
-            frg_add_football_field_et_address.requestFocus()
-            validate = false
-        }
-
-        return validate
-    }
-
 }

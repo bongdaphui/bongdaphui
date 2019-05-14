@@ -50,7 +50,7 @@ class Utils {
     }
 
     fun validateEmail(email: String): Boolean {
-        return email.matches(Constant().EMAIL_REGULAR_EXPRESSION.toRegex())
+        return email.matches(Constant().emailRegularExpression.toRegex())
     }
 
     fun getDrawable(resourceID: Int): Drawable? {

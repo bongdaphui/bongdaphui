@@ -5,11 +5,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
-        android:id="@+id/frg_add_football_field_scroll"
+        android:id="@+id/frg_add_field_scroll"
         android:fillViewport="true">
 
     <LinearLayout
-            android:id="@+id/frg_add_football_field_container"
+            android:id="@+id/frg_add_field_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -21,7 +21,7 @@
             android:focusable="true">
 
         <RelativeLayout
-                android:id="@+id/frg_add_football_field_v_photo"
+                android:id="@+id/frg_add_field_v_photo"
                 android:layout_width="@dimen/fs_150"
                 android:layout_marginTop="@dimen/fs_20"
                 android:layout_marginBottom="@dimen/fs_5"
@@ -30,7 +30,7 @@
                 android:layout_height="@dimen/fs_150">
 
             <ImageView
-                    android:id="@+id/frg_add_football_field_iv_photo"
+                    android:id="@+id/frg_add_field_iv_photo"
                     android:layout_width="match_parent"
                     android:scaleType="fitCenter"
                     android:layout_margin="@dimen/fs_1"
@@ -38,7 +38,7 @@
                     android:layout_height="match_parent"
                     tools:ignore="ContentDescription"/>
             <ImageView
-                    android:id="@+id/frg_add_football_field_iv_camera"
+                    android:id="@+id/frg_add_field_iv_camera"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_camera"
@@ -51,7 +51,7 @@
         </RelativeLayout>
 
         <TextView
-                android:id="@+id/frg_add_football_field_tv_error_select_photo"
+                android:id="@+id/frg_add_field_tv_error_select_photo"
                 style="@style/tv_error_item_input"
                 android:layout_gravity="center_horizontal"
                 android:text="Vui lòng chọn logo sân bóng"/>
@@ -60,35 +60,35 @@
                 android:text="@string/name_football_field"/>
 
         <RelativeLayout
-                android:id="@+id/frg_add_football_field_v_input_full_name"
+                android:id="@+id/frg_add_field_v_input_full_name"
                 style="@style/bg_item_input">
 
             <ImageView
-                    android:id="@+id/frg_add_football_field_iv_name"
+                    android:id="@+id/frg_add_field_iv_name"
                     style="@style/iv_icon_item_input"
                     android:src="@drawable/ic_input_text"
                     tools:ignore="ContentDescription"/>
 
             <EditText
-                    android:id="@+id/frg_add_football_field_et_name"
+                    android:id="@+id/frg_add_field_et_name"
                     style="@style/et_item_input"
-                    android:layout_toStartOf="@+id/frg_add_football_field_iv_clear_input_name"
-                    android:layout_toEndOf="@+id/frg_add_football_field_iv_name"
+                    android:layout_toStartOf="@+id/frg_add_field_iv_clear_input_name"
+                    android:layout_toEndOf="@+id/frg_add_field_iv_name"
                     android:hint="@string/please_input_name_football_field"
                     android:inputType="textCapWords"
-                    android:layout_toLeftOf="@+id/frg_add_football_field_iv_clear_input_name"
-                    android:layout_toRightOf="@+id/frg_add_football_field_iv_name"
+                    android:layout_toLeftOf="@+id/frg_add_field_iv_clear_input_name"
+                    android:layout_toRightOf="@+id/frg_add_field_iv_name"
                     tools:ignore="Autofill"/>
 
             <ImageView
-                    android:id="@+id/frg_add_football_field_iv_clear_input_name"
+                    android:id="@+id/frg_add_field_iv_clear_input_name"
                     style="@style/iv_clear_item_input"
                     tools:ignore="ContentDescription"/>
 
         </RelativeLayout>
 
         <TextView
-                android:id="@+id/frg_add_football_field_tv_error_input_name"
+                android:id="@+id/frg_add_field_tv_error_input_name"
                 style="@style/tv_error_item_input"
                 android:text="@string/please_input_name_football_field"/>
 
@@ -97,35 +97,35 @@
                 android:text="@string/phone"/>
 
         <RelativeLayout
-                android:id="@+id/frg_add_football_field_v_input_phone"
+                android:id="@+id/frg_add_field_v_input_phone"
                 style="@style/bg_item_input">
 
             <ImageView
-                    android:id="@+id/frg_add_football_field_iv_phone"
+                    android:id="@+id/frg_add_field_iv_phone"
                     style="@style/iv_icon_item_input"
                     android:src="@drawable/ic_phone"
                     tools:ignore="ContentDescription"/>
 
             <EditText
-                    android:id="@+id/frg_add_football_field_et_phone"
+                    android:id="@+id/frg_add_field_et_phone"
                     style="@style/et_item_input"
-                    android:layout_toStartOf="@+id/frg_add_football_field_iv_clear_input_phone"
-                    android:layout_toEndOf="@+id/frg_add_football_field_iv_phone"
+                    android:layout_toStartOf="@+id/frg_add_field_iv_clear_input_phone"
+                    android:layout_toEndOf="@+id/frg_add_field_iv_phone"
                     android:hint="@string/please_enter_phone_field"
                     android:inputType="phone"
-                    android:layout_toLeftOf="@+id/frg_add_football_field_iv_clear_input_phone"
-                    android:layout_toRightOf="@+id/frg_add_football_field_iv_phone"
+                    android:layout_toLeftOf="@+id/frg_add_field_iv_clear_input_phone"
+                    android:layout_toRightOf="@+id/frg_add_field_iv_phone"
                     tools:ignore="Autofill"/>
 
             <ImageView
-                    android:id="@+id/frg_add_football_field_iv_clear_input_phone"
+                    android:id="@+id/frg_add_field_iv_clear_input_phone"
                     style="@style/iv_clear_item_input"
                     tools:ignore="ContentDescription"/>
 
         </RelativeLayout>
 
         <TextView
-                android:id="@+id/frg_add_football_field_tv_error_input_phone"
+                android:id="@+id/frg_add_field_tv_error_input_phone"
                 style="@style/tv_error_item_input"
                 android:text="@string/please_enter_phone_field"/>
 
@@ -134,40 +134,39 @@
                 android:text="@string/address"/>
 
         <RelativeLayout
-                android:id="@+id/frg_add_football_field_v_input_address"
+                android:id="@+id/frg_add_field_v_input_address"
                 style="@style/bg_item_input">
 
             <ImageView
-                    android:id="@+id/frg_add_football_field_iv_address"
+                    android:id="@+id/frg_add_field_iv_address"
                     style="@style/iv_icon_item_input"
                     android:src="@drawable/ic_address"
                     tools:ignore="ContentDescription"/>
 
             <EditText
-                    android:id="@+id/frg_add_football_field_et_address"
+                    android:id="@+id/frg_add_field_et_address"
                     style="@style/et_item_input"
-                    android:layout_toStartOf="@+id/frg_add_football_field_iv_clear_input_address"
-                    android:layout_toEndOf="@+id/frg_add_football_field_iv_address"
+                    android:layout_toStartOf="@+id/frg_add_field_iv_clear_input_address"
+                    android:layout_toEndOf="@+id/frg_add_field_iv_address"
                     android:hint="@string/please_enter_address_field"
                     android:maxLines="1"
                     android:inputType="textCapWords"
                     android:ellipsize="end"
                     android:scrollHorizontally="true"
-                    android:layout_toLeftOf="@+id/frg_add_football_field_iv_clear_input_address"
-                    android:layout_toRightOf="@+id/frg_add_football_field_iv_address"
+                    android:layout_toLeftOf="@+id/frg_add_field_iv_clear_input_address"
+                    android:layout_toRightOf="@+id/frg_add_field_iv_address"
                     tools:ignore="Autofill"/>
 
             <ImageView
-                    android:id="@+id/frg_add_football_field_iv_clear_input_address"
+                    android:id="@+id/frg_add_field_iv_clear_input_address"
                     style="@style/iv_clear_item_input"
                     tools:ignore="ContentDescription"/>
 
         </RelativeLayout>
 
         <TextView
-                android:id="@+id/frg_add_football_field_tv_error_input_address"
-                style="@style/tv_error_item_input"
-                android:text="@string/please_enter_address_field"/>
+                android:id="@+id/frg_add_field_tv_error_input_address"
+                style="@style/tv_error_item_input"/>
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -183,7 +182,7 @@
                     android:layout_marginRight="@dimen/fs_15">
 
                 <Spinner
-                        android:id="@+id/frg_add_football_field_sp_district"
+                        android:id="@+id/frg_add_field_sp_district"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:overlapAnchor="false"
@@ -197,7 +196,7 @@
                     style="@style/bg_item_input">
 
                 <Spinner
-                        android:id="@+id/frg_add_football_field_sp_city"
+                        android:id="@+id/frg_add_field_sp_city"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:overlapAnchor="false"
@@ -208,45 +207,43 @@
         </LinearLayout>
 
         <TextView
-                android:id="@+id/frg_add_football_field_tv_error_input_city_district"
-                style="@style/tv_error_item_input"
-                android:text="@string/please_enter_address_field"/>
+                android:id="@+id/frg_add_field_tv_error_input_city_district"
+                style="@style/tv_error_item_input"/>
 
         <TextView
                 style="@style/title_item_input"
                 android:text="@string/count_field"/>
 
         <RelativeLayout
-                android:id="@+id/frg_add_football_field_v_input_count_field"
+                android:id="@+id/frg_add_field_v_input_count_field"
                 style="@style/bg_item_input">
 
             <ImageView
-                    android:id="@+id/frg_add_football_field_iv_count_field"
+                    android:id="@+id/frg_add_field_iv_count_field"
                     style="@style/iv_icon_item_input"
                     android:src="@drawable/ic_amount"
                     tools:ignore="ContentDescription"/>
 
             <EditText
-                    android:id="@+id/frg_add_football_field_et_count_field"
+                    android:id="@+id/frg_add_field_et_count_field"
                     style="@style/et_item_input"
-                    android:layout_toStartOf="@+id/frg_add_football_field_iv_clear_input_count_field"
-                    android:layout_toEndOf="@+id/frg_add_football_field_iv_count_field"
+                    android:layout_toStartOf="@+id/frg_add_field_iv_clear_input_count_field"
+                    android:layout_toEndOf="@+id/frg_add_field_iv_count_field"
                     android:hint="@string/please_input_count_field"
                     android:inputType="number"
-                    android:layout_toLeftOf="@+id/frg_add_football_field_iv_clear_input_count_field"
-                    android:layout_toRightOf="@+id/frg_add_football_field_iv_count_field"
+                    android:layout_toLeftOf="@+id/frg_add_field_iv_clear_input_count_field"
+                    android:layout_toRightOf="@+id/frg_add_field_iv_count_field"
                     tools:ignore="Autofill,TextFields"/>
 
             <ImageView
-                    android:id="@+id/frg_add_football_field_iv_clear_input_count_field"
+                    android:id="@+id/frg_add_field_iv_clear_input_count_field"
                     style="@style/iv_clear_item_input"
                     tools:ignore="ContentDescription"/>
 
         </RelativeLayout>
 
         <TextView
-                android:id="@+id/frg_add_football_field_tv_error_input_count_field"
-                android:text="@string/please_input_count_field"
+                android:id="@+id/frg_add_field_tv_error_input_count_field"
                 style="@style/tv_error_item_input"/>
 
         <TextView
@@ -254,48 +251,47 @@
                 android:text="@string/price_field"/>
 
         <RelativeLayout
-                android:id="@+id/frg_add_football_field_v_input_price_field"
+                android:id="@+id/frg_add_field_v_input_price_field"
                 style="@style/bg_item_input">
 
             <ImageView
-                    android:id="@+id/frg_add_football_field_iv_price_field"
+                    android:id="@+id/frg_add_field_iv_price_field"
                     style="@style/iv_icon_item_input"
                     android:src="@drawable/ic_price"
                     tools:ignore="ContentDescription"/>
 
             <EditText
-                    android:id="@+id/frg_add_football_field_et_price_field"
+                    android:id="@+id/frg_add_field_et_price_field"
                     style="@style/et_item_input"
-                    android:layout_toStartOf="@+id/frg_add_football_field_iv_clear_input_price_field"
-                    android:layout_toEndOf="@+id/frg_add_football_field_iv_price_field"
+                    android:layout_toStartOf="@+id/frg_add_field_iv_clear_input_price_field"
+                    android:layout_toEndOf="@+id/frg_add_field_iv_price_field"
                     android:hint="@string/please_enter_price_one_hour"
                     android:inputType="numberDecimal"
-                    android:layout_toLeftOf="@+id/frg_add_football_field_iv_clear_input_price_field"
-                    android:layout_toRightOf="@+id/frg_add_football_field_iv_price_field"
+                    android:layout_toLeftOf="@+id/frg_add_field_iv_clear_input_price_field"
+                    android:layout_toRightOf="@+id/frg_add_field_iv_price_field"
                     tools:ignore="Autofill"/>
 
             <ImageView
-                    android:id="@+id/frg_add_football_field_iv_clear_input_price_field"
+                    android:id="@+id/frg_add_field_iv_clear_input_price_field"
                     style="@style/iv_clear_item_input"
                     tools:ignore="ContentDescription"/>
 
         </RelativeLayout>
 
         <TextView
-                android:id="@+id/frg_add_football_field_tv_error_input_height"
-                style="@style/tv_error_item_input"
-                android:text="@string/please_enter_price_one_hour"/>
+                android:id="@+id/frg_add_field_tv_error_input_price"
+                style="@style/tv_error_item_input"/>
 
         <ProgressBar
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/frg_add_football_field_progress"
+                android:id="@+id/frg_add_field_progress"
                 android:visibility="invisible"
                 android:max="100"/>
 
         <TextView
-                android:id="@+id/frg_add_football_field_tv_input"
+                android:id="@+id/frg_add_field_tv_input"
                 android:layout_width="@dimen/fs_150"
                 android:layout_height="@dimen/fs_46"
                 android:layout_marginBottom="@dimen/fs_20"

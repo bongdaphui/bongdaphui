@@ -1,6 +1,5 @@
 package com.bongdaphui.footballField
 
-import android.arch.persistence.room.Room
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -11,7 +10,6 @@ import com.bongdaphui.R
 import com.bongdaphui.addField.AddFieldScreen
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
-import com.bongdaphui.dao.AppDatabase
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.OnItemClickListener
@@ -23,8 +21,6 @@ import com.bongdaphui.utils.Utils
 import kotlinx.android.synthetic.main.fragment_field.*
 
 class FieldScreen : BaseFragment() {
-
-    private lateinit var database: AppDatabase
 
     private var fieldListFull: ArrayList<FbFieldModel> = ArrayList()
 
@@ -55,21 +51,14 @@ class FieldScreen : BaseFragment() {
 
         refreshData()
 
-//        getData()
-
-//        onClick()
+        onClick()
 
     }
 
     private fun getDataFromCache() {
 
-        database = Room.databaseBuilder(activity!!, AppDatabase::class.java, Constant().roomData)
-            .allowMainThreadQueries()
-            .build()
+        fieldListFull = getDatabase().getFieldDAO().getItems() as ArrayList<FbFieldModel>
 
-        val daoInterface = database.getItemDAO()
-
-        fieldListFull = daoInterface.getItems() as ArrayList<FbFieldModel>
         fieldList.addAll(fieldListFull)
 
         if (fieldList.size > 0) {
@@ -144,19 +133,18 @@ class FieldScreen : BaseFragment() {
 
     private fun saveCache(fieldListFull: ArrayList<FbFieldModel>) {
 
-        val dataListener = database.getItemDAO()
+//        val dataListener = database.getFieldDAO()
 
         for (i in 0 until fieldListFull.size) {
 
-            dataListener.insert(fieldListFull[i])
+            getDatabase().getFieldDAO().insert(fieldListFull[i])
 
         }
     }
 
     private fun deleteCache() {
 
-        val dataListener = database.getItemDAO()
-        dataListener.deleteTable()
+        getDatabase().getFieldDAO().deleteTable()
 
     }
 

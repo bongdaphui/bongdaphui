@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.view.View
 import com.bongdaphui.MainActivity
+import com.bongdaphui.dao.AppDatabase
 import com.bongdaphui.footballField.SpinnerSelectInterface
 import com.bongdaphui.model.CityModel
 import com.bongdaphui.model.ClubModel
@@ -255,4 +256,9 @@ abstract class BaseFragment : Fragment(), BaseInterface {
 
         return (activity as MainActivity).getListCityModel()
     }*/
+
+    fun getDatabase(): AppDatabase {
+
+        return (activity as MainActivity).getDatabase()
+    }
 }

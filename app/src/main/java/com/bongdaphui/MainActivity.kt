@@ -1,5 +1,6 @@
 package com.bongdaphui
 
+import android.arch.persistence.room.Room
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.util.Log
@@ -10,6 +11,7 @@ import com.bongdaphui.addField.SpinnerAdapter
 import com.bongdaphui.base.BaseActivity
 import com.bongdaphui.base.BaseApplication
 import com.bongdaphui.base.BaseFragment
+import com.bongdaphui.dao.AppDatabase
 import com.bongdaphui.footballClub.ClubScreen
 import com.bongdaphui.footballField.FieldScreen
 import com.bongdaphui.footballField.SpinnerSelectInterface
@@ -34,6 +36,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     private lateinit var mAuth: FirebaseAuth
 
 //    private lateinit var prefs: SharedPreference
+
+    private lateinit var database: AppDatabase
 
     private var listCityModel: ArrayList<CityModel> = ArrayList()
 
@@ -62,7 +66,11 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
         mAuth = FirebaseAuth.getInstance()
 
-//        prefs = SharedPreference(this)
+//        prefs = SharedPreference(this
+
+        database = Room.databaseBuilder(this, AppDatabase::class.java, Constant().roomData)
+            .allowMainThreadQueries()
+            .build()
 
         replaceFragment(SplashScreen(), true)
 
@@ -314,4 +322,10 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             }
         }
     }
+
+    fun getDatabase(): AppDatabase {
+
+        return database
+    }
+
 }

@@ -7,6 +7,6 @@ import com.bongdaphui.model.FbFieldModel
 @Database(entities = [FbFieldModel::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun getItemDAO(): FieldsDAO
+    abstract fun getFieldDAO(): FieldsDAO
 
 }
