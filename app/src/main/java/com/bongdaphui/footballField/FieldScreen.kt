@@ -53,6 +53,8 @@ class FieldScreen : BaseFragment() {
 
         getDataFromCache()
 
+        refreshData()
+
 //        getData()
 
 //        onClick()
@@ -110,6 +112,8 @@ class FieldScreen : BaseFragment() {
 
         BaseRequest().getDataField(object : GetDataListener<FbFieldModel> {
             override fun onSuccess(list: ArrayList<FbFieldModel>) {
+
+                if (frg_field_refresh_view.isRefreshing) frg_field_refresh_view.isRefreshing = false
 
                 fieldListFull.clear()
 
@@ -219,6 +223,20 @@ class FieldScreen : BaseFragment() {
         } else {
             frg_field_tv_no_data.visibility = View.GONE
             frg_field_rcv.visibility = View.VISIBLE
+        }
+    }
+
+    private fun refreshData() {
+
+        frg_field_refresh_view.setOnRefreshListener {
+
+            frg_field_v_spinner.visibility = View.GONE
+
+            frg_field_tv_no_data.visibility = View.GONE
+
+            frg_field_rcv.visibility = View.GONE
+
+            getData()
         }
     }
 
