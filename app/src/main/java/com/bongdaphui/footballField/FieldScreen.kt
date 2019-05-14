@@ -98,6 +98,8 @@ class FieldScreen : BaseFragment() {
             }
         })
         frg_field_rcv.setHasFixedSize(true)
+        frg_field_rcv.setItemViewCacheSize(20)
+        fieldAdapter.setHasStableIds(true)
         frg_field_rcv.adapter = fieldAdapter
 
     }

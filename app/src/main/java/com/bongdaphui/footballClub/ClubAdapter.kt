@@ -65,5 +65,9 @@ class ClubAdapter(
         }
 
     }
+
+    override fun getItemId(position: Int): Long {
+        return items[position].id.hashCode().toLong()
+    }
 }
 
