@@ -18,7 +18,7 @@ import com.bumptech.glide.request.RequestOptions
 class FieldAdapter(
     var context: Context?,
     private val items: ArrayList<FbFieldModel>,
-    val isLoggedUser : Boolean = true,
+    val isLoggedUser: Boolean = true,
     var itemClickInterface: OnItemClickListener<FbFieldModel>
 ) : RecyclerView.Adapter<FieldHolder>() {
 
@@ -53,7 +53,8 @@ class FieldAdapter(
 
         } else {
 
-            viewHolder.phone.text = if (isLoggedUser) Html.fromHtml("<u>${fbFieldModel.phone}</u>") else context!!.getString(R.string.need_login_to_see)
+            viewHolder.phone.text =
+                Html.fromHtml("<u> ${if (isLoggedUser) fbFieldModel.phone else context!!.getString(R.string.need_login_to_see)}</u>")
 
             viewHolder.phone.setOnClickListener {
                 itemClickInterface.onItemClick(fbFieldModel, position, Enum.EnumTypeClick.Phone.value)
