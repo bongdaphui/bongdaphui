@@ -147,7 +147,7 @@ class FieldScreen : BaseFragment() {
 
     private fun initSpinnerFieldBox() {
 
-        frg_field_v_spinner.visibility = View.VISIBLE
+        frg_field_cv_spinner.visibility = View.VISIBLE
 
         Utils().initSpinnerCity(
             activity!!,
@@ -215,7 +215,7 @@ class FieldScreen : BaseFragment() {
 
         frg_field_refresh_view.setOnRefreshListener {
 
-            frg_field_v_spinner.visibility = View.GONE
+            frg_field_cv_spinner.visibility = View.GONE
 
             frg_field_tv_no_data.visibility = View.GONE
 

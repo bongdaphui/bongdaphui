@@ -137,9 +137,17 @@ abstract class BaseFragment : Fragment(), BaseInterface {
 
     fun showProgress(isShow: Boolean) {
 
-        if (activity is MainActivity) {
+        if (null != activity && activity is MainActivity) {
 
             (activity as MainActivity).showProgress(isShow)
+        }
+    }
+
+    fun showEmpty(isShow: Boolean) {
+
+        if (null != activity && activity is MainActivity) {
+
+            (activity as MainActivity).showEmpty(isShow)
         }
     }
 

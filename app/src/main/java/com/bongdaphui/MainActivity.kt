@@ -11,6 +11,8 @@ import com.bongdaphui.base.BaseActivity
 import com.bongdaphui.base.BaseApplication
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.dao.AppDatabase
+import com.bongdaphui.findClub.FindClubScreen
+import com.bongdaphui.findPlayer.FindPlayerScreen
 import com.bongdaphui.footballClub.ClubScreen
 import com.bongdaphui.footballField.FieldScreen
 import com.bongdaphui.footballField.SpinnerSelectInterface
@@ -26,6 +28,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.view_empty.*
 
 class MainActivity : BaseActivity(), View.OnClickListener {
 
@@ -100,6 +103,10 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
         activity_main_v_menu_club.setOnClickListener(this)
 
+        activity_main_v_menu_find_player.setOnClickListener(this)
+
+        activity_main_v_menu_find_club.setOnClickListener(this)
+
         activity_main_v_menu_football_field.setOnClickListener(this)
 
         activity_main_v_menu_manager.setOnClickListener(this)
@@ -168,6 +175,14 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
+    fun showEmpty(isShow: Boolean) {
+        if (isShow) {
+            view_empty.visibility = View.VISIBLE
+        } else {
+            view_empty.visibility = View.GONE
+        }
+    }
+
     fun showButtonFilter(isShow: Boolean) {
 
         if (isShow) {
@@ -183,6 +198,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             R.id.activity_main_iv_back -> onBackPressed()
             R.id.activity_main_iv_filter -> openFilterPanel()
             R.id.activity_main_v_menu_club -> openClubs()
+            R.id.activity_main_v_menu_find_player -> openFindPlayer()
+            R.id.activity_main_v_menu_find_club -> openFindClub()
             R.id.activity_main_v_menu_football_field -> openFootballField()
             R.id.activity_main_v_menu_manager -> openManager()
 
@@ -195,6 +212,42 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
         activity_main_iv_menu_club.isSelected = true
         activity_main_tv_menu_club.isSelected = true
+        activity_main_iv_menu_find_player.isSelected = false
+        activity_main_tv_menu_find_player.isSelected = false
+        activity_main_iv_menu_find_club.isSelected = false
+        activity_main_tv_menu_find_club.isSelected = false
+        activity_main_iv_menu_football_field.isSelected = false
+        activity_main_tv_menu_football_field.isSelected = false
+        activity_main_iv_menu_settings.isSelected = false
+        activity_main_tv_menu_settings.isSelected = false
+    }
+
+    private fun openFindPlayer() {
+
+        replaceFragment(FindPlayerScreen(), true)
+
+        activity_main_iv_menu_club.isSelected = false
+        activity_main_tv_menu_club.isSelected = false
+        activity_main_iv_menu_find_player.isSelected = true
+        activity_main_tv_menu_find_player.isSelected = true
+        activity_main_iv_menu_find_club.isSelected = false
+        activity_main_tv_menu_find_club.isSelected = false
+        activity_main_iv_menu_football_field.isSelected = false
+        activity_main_tv_menu_football_field.isSelected = false
+        activity_main_iv_menu_settings.isSelected = false
+        activity_main_tv_menu_settings.isSelected = false
+    }
+
+    private fun openFindClub() {
+
+        replaceFragment(FindClubScreen(), true)
+
+        activity_main_iv_menu_club.isSelected = false
+        activity_main_tv_menu_club.isSelected = false
+        activity_main_iv_menu_find_player.isSelected = false
+        activity_main_tv_menu_find_player.isSelected = false
+        activity_main_iv_menu_find_club.isSelected = true
+        activity_main_tv_menu_find_club.isSelected = true
         activity_main_iv_menu_football_field.isSelected = false
         activity_main_tv_menu_football_field.isSelected = false
         activity_main_iv_menu_settings.isSelected = false
@@ -207,6 +260,10 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
         activity_main_iv_menu_club.isSelected = false
         activity_main_tv_menu_club.isSelected = false
+        activity_main_iv_menu_find_player.isSelected = false
+        activity_main_tv_menu_find_player.isSelected = false
+        activity_main_iv_menu_find_club.isSelected = false
+        activity_main_tv_menu_find_club.isSelected = false
         activity_main_iv_menu_football_field.isSelected = true
         activity_main_tv_menu_football_field.isSelected = true
         activity_main_iv_menu_settings.isSelected = false
@@ -219,6 +276,10 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
         activity_main_iv_menu_club.isSelected = false
         activity_main_tv_menu_club.isSelected = false
+        activity_main_iv_menu_find_player.isSelected = false
+        activity_main_tv_menu_find_player.isSelected = false
+        activity_main_iv_menu_find_club.isSelected = false
+        activity_main_tv_menu_find_club.isSelected = false
         activity_main_iv_menu_football_field.isSelected = false
         activity_main_tv_menu_football_field.isSelected = false
         activity_main_iv_menu_settings.isSelected = true

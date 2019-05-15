@@ -1,4 +1,4 @@
-package com.bongdaphui.footballClub
+package com.bongdaphui.findPlayer
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -12,6 +12,7 @@ import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.clubInfo.ClubInfoScreen
 import com.bongdaphui.dialog.AlertDialog
+import com.bongdaphui.footballClub.ClubAdapter
 import com.bongdaphui.listener.ConfirmListener
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.OnItemClickListener
@@ -23,7 +24,7 @@ import com.bongdaphui.utils.Utils
 import kotlinx.android.synthetic.main.fragment_club.*
 
 
-class ClubScreen : BaseFragment() {
+class FindPlayerScreen : BaseFragment() {
 
     private var listClubModel: ArrayList<ClubModel> = ArrayList()
 
