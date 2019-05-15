@@ -95,7 +95,7 @@
                         <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Thông tin đội"
+                                android:text="@string/info_team"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                                 android:textColor="@color/colorPrimary"
                                 android:textStyle="bold" />
@@ -105,7 +105,51 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/spacing_middle"
                                 android:lineSpacingExtra="2dp"
-                                android:text="Đẹp zai"
+                                android:text="20h-22h T2,T4,T6"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                                android:textColor="@color/grey_60" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/spacing_large" /><LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    <ImageButton
+                            android:layout_width="@dimen/spacing_mxlarge"
+                            android:layout_height="@dimen/spacing_mxlarge"
+                            android:background="@android:color/transparent"
+                            android:tint="@color/grey_60"
+                            app:srcCompat="@drawable/ic_newspaper" />
+
+                    <View
+                            android:layout_width="@dimen/spacing_large"
+                            android:layout_height="match_parent" />
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/missing_position"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                                android:textColor="@color/colorPrimary"
+                                android:textStyle="bold" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_middle"
+                                android:lineSpacingExtra="2dp"
+                                android:text="Hậu vệ, Thủ môn, Tiền vệ"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                                 android:textColor="@color/grey_60" />
 
@@ -141,13 +185,14 @@
                         <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Cầu thủ"
+                                android:text="@string/player"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                                 android:textColor="@color/colorPrimary"
                                 android:textStyle="bold" />
 
 
                         <android.support.v7.widget.RecyclerView
+                                android:id="@+id/recycler_list_player"
                                 android:layout_marginTop="@dimen/fs_10"
                                 android:layout_marginBottom="@dimen/fs_10"
                                 android:background="@drawable/bg_transparent_solid_gray_border_5_radius"
@@ -211,7 +256,7 @@
                                         android:layout_marginEnd="@dimen/spacing_medium"
                                         android:layout_marginRight="@dimen/spacing_medium"
                                         android:scaleType="centerCrop"
-                                        android:src="@color/grey_20" />
+                                        android:src="@drawable/ic_launcher" />
 
                                 <ImageView
                                         android:id="@+id/image_2"
@@ -220,7 +265,7 @@
                                         android:layout_marginEnd="@dimen/spacing_medium"
                                         android:layout_marginRight="@dimen/spacing_medium"
                                         android:scaleType="centerCrop"
-                                        android:src="@color/grey_20" />
+                                        android:src="@drawable/ic_launcher" />
 
                                 <ImageView
                                         android:id="@+id/image_3"
@@ -229,7 +274,7 @@
                                         android:layout_marginEnd="@dimen/spacing_medium"
                                         android:layout_marginRight="@dimen/spacing_medium"
                                         android:scaleType="centerCrop"
-                                        android:src="@color/grey_20" />
+                                        android:src="@drawable/ic_launcher" />
 
                                 <ImageView
                                         android:id="@+id/image_4"
@@ -238,7 +283,7 @@
                                         android:layout_marginEnd="@dimen/spacing_medium"
                                         android:layout_marginRight="@dimen/spacing_medium"
                                         android:scaleType="centerCrop"
-                                        android:src="@color/grey_20" />
+                                        android:src="@drawable/ic_launcher" />
 
                                 <ImageView
                                         android:id="@+id/image_5"
@@ -247,7 +292,7 @@
                                         android:layout_marginEnd="@dimen/spacing_medium"
                                         android:layout_marginRight="@dimen/spacing_medium"
                                         android:scaleType="centerCrop"
-                                        android:src="@color/grey_20" />
+                                        android:src="@drawable/ic_launcher" />
 
                             </LinearLayout>
 

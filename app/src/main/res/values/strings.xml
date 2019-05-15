@@ -87,6 +87,9 @@
     <string name="add_field_is_available">Sân bóng này đã có trên hệ thống.\n Nếu bạn muốn thay đổi thông tin sân hãy gửi thông tin về
     địa chỉ email bongdaphui.247@gmail.com\n Chúng tôi sẽ cập nhật thông tin cho bạn.</string>
     <string name="album">Hình ảnh</string>
+    <string name="missing_position">Vị trí ưu tiên</string>
+    <string name="info_team">Thông tin đội</string>
+    <string name="player">Cầu thủ</string>
 
 
 </resources>
