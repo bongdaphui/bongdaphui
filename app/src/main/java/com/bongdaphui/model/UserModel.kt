@@ -2,6 +2,7 @@ package com.bongdaphui.model
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import android.support.annotation.NonNull
 import com.google.firebase.database.IgnoreExtraProperties
 import java.io.Serializable
 
@@ -9,7 +10,7 @@ import java.io.Serializable
 @IgnoreExtraProperties
 data class UserModel(
     @PrimaryKey
-    var id: String = "",
+    @NonNull var id: String = "",
     var photoUrl: String = "",
     var name: String = "",
     var email: String = "",

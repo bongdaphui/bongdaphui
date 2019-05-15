@@ -26,7 +26,7 @@ import com.bongdaphui.utils.Enum
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.android.synthetic.main.fragment_update_account.*
+import kotlinx.android.synthetic.main.frg_update_account.*
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -67,7 +67,7 @@ class UpdateAccountScreen : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_update_account, container, false)
+        return inflater.inflate(R.layout.frg_update_account, container, false)
 
     }
 
@@ -222,6 +222,8 @@ class UpdateAccountScreen : BaseFragment() {
 
         if (validate()) {
 
+            hideKeyBoard()
+
             disableItem()
 
             showProgress(true)
@@ -229,19 +231,19 @@ class UpdateAccountScreen : BaseFragment() {
             //no image
             if (null == filePathUri) {
 
-                if (userModel!!.photoUrl!!.isEmpty()) {
+                if (userModel!!.photoUrl.isEmpty()) {
 
                     storageData("")
                 } else {
-                    storageData(userModel!!.photoUrl!!)
+                    storageData(userModel!!.photoUrl)
                 }
 
                 //has image
             } else {
 
                 //remove Image old if have
-                if (!Utils().isEmpty(userModel!!.photoUrl!!)) {
-                    BaseRequest().removeImage(userModel!!.photoUrl!!)
+                if (!Utils().isEmpty(userModel!!.photoUrl)) {
+                    BaseRequest().removeImage(userModel!!.photoUrl)
                 }
 
                 // Assign FirebaseStorage instance to storageReference.
@@ -307,6 +309,10 @@ class UpdateAccountScreen : BaseFragment() {
         BaseRequest().saveOrUpdateUser(userModel, object : UpdateListener {
             override fun onUpdateSuccess() {
                 //cache data
+                if (!isFirstTime) {
+
+                    getDatabase().getUserDAO().deleteTable()
+                }
                 getDatabase().getUserDAO().insert(userModel)
 
                 showProgress(false)
@@ -320,6 +326,7 @@ class UpdateAccountScreen : BaseFragment() {
 
                         } else {
 
+                            onBackPressed()
                         }
                     }
                 })
@@ -334,13 +341,10 @@ class UpdateAccountScreen : BaseFragment() {
 
                         if (isFirstTime) {
                             openClubs()
-                        } else {
-
                         }
                     }
                 })
             }
-
         })
     }
 
@@ -355,7 +359,7 @@ class UpdateAccountScreen : BaseFragment() {
 
     }
 
-    private val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+    private val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
         cal.set(Calendar.YEAR, year)
         cal.set(Calendar.MONTH, monthOfYear)
         cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
@@ -373,15 +377,15 @@ class UpdateAccountScreen : BaseFragment() {
 
         Glide.with(context!!).load(
             if (Utils().isEmpty(userModel.photoUrl))
-                Utils().getDrawable(context!!, R.drawable.ic_profile) else userModel.photoUrl
+                Utils().getDrawable(context!!, R.drawable.ic_person_grey) else userModel.photoUrl
         ).into(frg_update_account_iv_photo)
 
-        frg_update_account_et_full_name.text = userModel.name!!.toEditable()
-        frg_update_account_et_email.text = userModel.email!!.toEditable()
-        frg_update_account_et_phone.text = userModel.phone!!.toEditable()
-        frg_update_account_et_dob.text = userModel.dob!!.toEditable()
-        frg_update_account_et_height.text = userModel.height!!.toEditable()
-        frg_update_account_et_weight.text = userModel.weight!!.toEditable()
+        frg_update_account_et_full_name.text = userModel.name.toEditable()
+        frg_update_account_et_email.text = userModel.email.toEditable()
+        frg_update_account_et_phone.text = userModel.phone.toEditable()
+        frg_update_account_et_dob.text = userModel.dob.toEditable()
+        frg_update_account_et_height.text = userModel.height.toEditable()
+        frg_update_account_et_weight.text = userModel.weight.toEditable()
 
         when {
             userModel.position == Enum.EnumPosition.GK.namePos -> frg_update_account_sp_position.setSelection(Enum.EnumPosition.GK.value)

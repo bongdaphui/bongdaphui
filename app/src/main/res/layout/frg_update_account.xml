@@ -35,7 +35,7 @@
                     android:layout_width="match_parent"
                     android:scaleType="centerCrop"
                     android:layout_margin="@dimen/fs_1"
-                    android:src="@drawable/ic_picture"
+                    android:src="@drawable/ic_person_grey"
                     android:layout_height="match_parent"/>
             <ImageView
                     android:id="@+id/frg_update_account_iv_camera"
@@ -318,7 +318,7 @@
                 android:id="@+id/frg_update_account_tv_input"
                 style="@style/bt_single_c_accent"
                 android:layout_gravity="center_horizontal"
-                android:text="@string/input"/>
+                android:text="@string/update"/>
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

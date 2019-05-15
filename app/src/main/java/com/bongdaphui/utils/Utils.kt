@@ -488,7 +488,7 @@ class Utils {
 
     }
 
-     fun getListCity(context: Context): ArrayList<CityModel> {
+    fun getListCity(context: Context): ArrayList<CityModel> {
 
         val listCity = ArrayList<CityModel>()
 
@@ -595,4 +595,5 @@ class Utils {
 
         return listField
     }
+
 }

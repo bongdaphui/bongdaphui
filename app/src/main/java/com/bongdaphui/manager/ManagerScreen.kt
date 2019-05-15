@@ -1,5 +1,6 @@
 package com.bongdaphui.manager
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.profile.ProfileScreen
 import com.bongdaphui.utils.Enum
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.frg_manager.*
 
@@ -40,10 +42,24 @@ class ManagerScreen : BaseFragment() {
 
     override fun onBindView() {
 
+        userModel = getDatabase().getUserDAO().getItems()
+
+        fillData()
+
         checkLogin()
 
         onClick()
 
+    }
+
+    private fun fillData() {
+        frg_manager_tv_name_user.text = userModel.name
+
+        if (userModel.photoUrl.isNotEmpty()) {
+            Glide.with(activity!!).asBitmap().load(userModel.photoUrl)
+                .placeholder(activity!!.resources.getDrawable(R.drawable.ic_person_grey))
+                .into(frg_manager_iv_user)
+        }
     }
 
     private fun checkLogin() {
@@ -82,5 +98,8 @@ class ManagerScreen : BaseFragment() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+    }
 
 }

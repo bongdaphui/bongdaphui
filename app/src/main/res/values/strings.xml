@@ -33,6 +33,7 @@
     <string name="list_fc_manager">Đội bóng bạn quản lý</string>
     <string name="join_club">Gia nhập đội</string>
     <string name="update_info">Cập nhật thông tin</string>
+    <string name="update">Cập nhật</string>
     <string name="add_fc">Thêm đội bóng</string>
     <string name="members">Thành viên</string>
     <string name="football_field">Sân banh</string>
@@ -50,7 +51,7 @@
     <string name="add_football_field">Thêm sân bóng</string>
     <string name="login_with_facebook">Facebook</string>
     <string name="use_app_to_login">Bạn cần đăng nhập để vào ứng dụng</string>
-    <string name="info_user">Thông tin của bạn</string>
+    <string name="info_user">Thông tin</string>
     <string name="manager">Quản lý</string>
     <string name="login">Đăng nhập</string>
     <string name="please_enter_your_name">Vui lòng nhập họ và tên của bạn</string>
@@ -85,12 +86,15 @@
     <string name="add_field_success">Thêm sân bóng thành công</string>
     <string name="update_success">Cập nhật thành công</string>
     <string name="update_fail">Có lỗi khi cập nhật. Vui lòng thực hiện lại.</string>
-    <string name="add_field_is_available">Sân bóng này đã có trên hệ thống.\n Nếu bạn muốn thay đổi thông tin sân hãy gửi thông tin về
-    địa chỉ email bongdaphui.247@gmail.com\n Chúng tôi sẽ cập nhật thông tin cho bạn.</string>
+    <string name="add_field_is_available">Sân bóng này đã có trên hệ thống.\n Nếu bạn muốn thay đổi thông tin sân hãy
+        gửi thông tin về
+        địa chỉ email bongdaphui.247@gmail.com\n Chúng tôi sẽ cập nhật thông tin cho bạn.
+    </string>
     <string name="album">Hình ảnh</string>
     <string name="missing_position">Vị trí ưu tiên</string>
     <string name="info_team">Thông tin đội</string>
     <string name="player">Cầu thủ</string>
+    <string name="three_dot">...</string>
 
 
 </resources>
