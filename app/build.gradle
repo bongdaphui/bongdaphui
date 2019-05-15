@@ -92,4 +92,7 @@ dependencies {
 
     // Test helpers
     testImplementation "androidx.room:room-testing:$room_version"*/
+
+    // third party dependencies -------------------------------------------------------------------
+    implementation 'com.mikhaellopez:circularimageview:3.2.0'          // circle image view
 }

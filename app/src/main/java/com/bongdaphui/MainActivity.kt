@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentActivity
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import com.bongdaphui.account.AccountScreen
 import com.bongdaphui.addField.SpinnerAdapter
 import com.bongdaphui.base.BaseActivity
 import com.bongdaphui.base.BaseApplication
@@ -15,6 +14,7 @@ import com.bongdaphui.dao.AppDatabase
 import com.bongdaphui.footballClub.ClubScreen
 import com.bongdaphui.footballField.FieldScreen
 import com.bongdaphui.footballField.SpinnerSelectInterface
+import com.bongdaphui.manager.ManagerScreen
 import com.bongdaphui.model.CityModel
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.model.FbFieldModel
@@ -102,7 +102,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
         activity_main_v_menu_football_field.setOnClickListener(this)
 
-        activity_main_v_menu_settings.setOnClickListener(this)
+        activity_main_v_menu_manager.setOnClickListener(this)
 
     }
 
@@ -184,7 +184,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             R.id.activity_main_iv_filter -> openFilterPanel()
             R.id.activity_main_v_menu_club -> openClubs()
             R.id.activity_main_v_menu_football_field -> openFootballField()
-            R.id.activity_main_v_menu_settings -> openSettings()
+            R.id.activity_main_v_menu_manager -> openManager()
 
         }
     }
@@ -213,9 +213,9 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         activity_main_tv_menu_settings.isSelected = false
     }
 
-    private fun openSettings() {
+    private fun openManager() {
 
-        replaceFragment(AccountScreen(), true)
+        replaceFragment(ManagerScreen(), true)
 
         activity_main_iv_menu_club.isSelected = false
         activity_main_tv_menu_club.isSelected = false
