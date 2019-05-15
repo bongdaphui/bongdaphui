@@ -15,14 +15,18 @@ import android.view.View
 import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
+import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.listener.ConfirmListener
+import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.utils.*
 import com.bongdaphui.utils.Enum
 import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.fragment_add_fc.*
@@ -383,10 +387,6 @@ class AddClubScreen : BaseFragment() {
         } else {
             "${frg_add_fc_sp_district.selectedItem}, ${frg_add_fc_sp_city.selectedItem}"
         }
-
-        // Assign FirebaseDatabase instance with root database name.
-        val databaseReference = FirebaseDatabase.getInstance().getReference(Constant().DATABASE_CLUB)
-
         val id = "${idLastFC + 1}"
 
         val clubModel =
@@ -404,22 +404,19 @@ class AddClubScreen : BaseFragment() {
                 idCity,
                 "", "", "", "", ArrayList(), ArrayList()
             )
-
-        // Adding image upload id s child element into dataReference.
-        databaseReference.child(id).setValue(clubModel)
-
-            .addOnCompleteListener {
-
+        BaseRequest().saveOrUpdateClub(clubModel,object : UpdateListener{
+            override fun onUpdateSuccess() {
                 showProgress(false)
                 Utils().alertInsertSuccess(activity)
-
             }
-            .addOnFailureListener {
 
+            override fun onUpdateFail() {
                 showProgress(false)
                 Utils().alertInsertFail(activity)
-
             }
+
+        })
+
     }
 
     private fun disableItem() {

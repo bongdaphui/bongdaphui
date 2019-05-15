@@ -1,6 +1,6 @@
 package com.bongdaphui.listener
 
-interface UpdateUserListener {
+interface UpdateListener {
 
     fun onUpdateSuccess()
 

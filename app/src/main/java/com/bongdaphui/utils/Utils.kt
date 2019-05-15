@@ -569,7 +569,7 @@ class Utils {
 
                     val id = jsonObjectComment.getString("id")
 
-                    val idUser = jsonObjectComment.getString("idUser")
+                    val idUser = jsonObjectComment.getString("idCaptain")
 
                     val nameUser = jsonObjectComment.getString("nameUser")
 

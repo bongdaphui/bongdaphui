@@ -12,6 +12,8 @@ class Constant {
 
     val userPathField = "users"
 
+    val clubPathField = "clubs"
+
     val pathStorageField = "field_image/"
 
     var pathStorageUser = "user_image/"

@@ -83,7 +83,7 @@ class ClubManageScreen : BaseFragment() {
 
                         listFullClub.add(club!!)
 
-                        if (getUIDUser() == club.idUser) {
+                        if (getUIDUser() == club.idCaptain) {
 
                             listManagerClub.add(club)
                         }

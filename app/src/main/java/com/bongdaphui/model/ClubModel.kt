@@ -6,7 +6,7 @@ import java.io.Serializable
 @IgnoreExtraProperties
 data class ClubModel(
     val id: String? = "",
-    val idUser: String? = "",
+    val idCaptain: String? = "",
     val photo: String? = "",
     val name: String? = "",
     val caption: String? = "",

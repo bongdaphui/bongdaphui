@@ -11,10 +11,7 @@ import android.widget.Toast
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
-import com.bongdaphui.listener.CheckUserListener
-import com.bongdaphui.listener.FireBaseSuccessListener
 import com.bongdaphui.listener.GetDataListener
-import com.bongdaphui.listener.UpdateUserListener
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.register.RegisterWithEmailScreen
 import com.bongdaphui.updateAccount.UpdateAccountScreen
@@ -26,7 +23,6 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -36,11 +32,9 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.database.DataSnapshot
 import kotlinx.android.synthetic.main.fragment_login_screen.*
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.system.exitProcess
 
 
 class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {

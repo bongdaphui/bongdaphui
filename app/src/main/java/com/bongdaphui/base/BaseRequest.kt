@@ -3,11 +3,11 @@ package com.bongdaphui.base
 import android.content.Context
 import android.util.Log
 import com.bongdaphui.MainActivity
-import com.bongdaphui.dao.AppDatabase
 import com.bongdaphui.listener.CheckUserListener
 import com.bongdaphui.listener.FireBaseSuccessListener
 import com.bongdaphui.listener.GetDataListener
-import com.bongdaphui.listener.UpdateUserListener
+import com.bongdaphui.listener.UpdateListener
+import com.bongdaphui.model.ClubModel
 import com.bongdaphui.model.FbFieldModel
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.utils.Constant
@@ -17,7 +17,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.auth.User
 import com.google.firebase.storage.FirebaseStorage
 
 
@@ -183,7 +182,7 @@ class BaseRequest {
 
     fun saveOrUpdateUser(
         userModel: UserModel,
-        listener: UpdateUserListener
+        listener: UpdateListener
     ) {
         val db = FirebaseFirestore.getInstance().collection(Constant().userPathField).document(userModel.id.toString())
         db.set(userModel, SetOptions.merge())
@@ -192,6 +191,40 @@ class BaseRequest {
             }
             .addOnFailureListener { _ ->
                 listener.onUpdateFail()
+            }
+    }
+
+    fun saveOrUpdateClub(
+        clubModel: ClubModel,
+        listener: UpdateListener
+    ) {
+        val db = FirebaseFirestore.getInstance().collection(Constant().clubPathField).document(clubModel.id.toString())
+        db.set(clubModel, SetOptions.merge())
+            .addOnSuccessListener {
+                listener.onUpdateSuccess()
+            }
+            .addOnFailureListener { _ ->
+                listener.onUpdateFail()
+            }
+    }
+
+    fun getClubs(
+        listener: GetDataListener<ClubModel>
+    ) {
+        val db = FirebaseFirestore.getInstance().collection(Constant().clubPathField)
+        db.get()
+            .addOnSuccessListener { document ->
+                val value = document?.toObjects(ClubModel::class.java)
+                if (value != null) {
+                    listener.onSuccess(ArrayList(value))
+                } else {
+                    listener.onFail("Not Found")
+                }
+
+
+            }
+            .addOnFailureListener { exception ->
+                listener.onFail(exception.localizedMessage)
             }
     }
 }

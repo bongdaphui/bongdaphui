@@ -77,9 +77,9 @@ class PlayerScreen : BaseFragment() {
             setTitle(String.format("Cầu thủ %s ", clubModel!!.name))
         }
 
-        Log.d(Constant().TAG, clubModel!!.idUser + " : " + getUIDUser())
+        Log.d(Constant().TAG, clubModel!!.idCaptain + " : " + getUIDUser())
 
-        if (clubModel!!.idUser == getUIDUser()) {
+        if (clubModel!!.idCaptain == getUIDUser()) {
 
             fragment_member_club_fab.visibility = View.VISIBLE
 
@@ -116,7 +116,7 @@ class PlayerScreen : BaseFragment() {
 
                         val memberModel = i.getValue<PlayerModel>(PlayerModel::class.java)
 
-                        if (memberModel!!.idUser == clubModel!!.idUser && memberModel.idClub == clubModel!!.id
+                        if (memberModel!!.idUser == clubModel!!.idCaptain && memberModel.idClub == clubModel!!.id
                         ) {
 
                             listPlayer.add(memberModel)

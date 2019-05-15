@@ -13,15 +13,13 @@ import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.clubInfo.ClubInfoScreen
 import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.ConfirmListener
-import com.bongdaphui.listener.FireBaseSuccessListener
+import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
 import kotlinx.android.synthetic.main.fragment_club.*
 
 
@@ -48,6 +46,8 @@ class ClubScreen : BaseFragment() {
 
         showFooter(true)
 
+        loadListClub()
+
     }
 
     override fun onBindView() {
@@ -67,9 +67,9 @@ class ClubScreen : BaseFragment() {
                 Log.d(Constant().TAG, "token $token")
             })*/
 
-//        initAdapter()
+        initAdapter()
 //
-//        loadListClub()
+        loadListClub()
 
         onClick()
 
@@ -103,54 +103,27 @@ class ClubScreen : BaseFragment() {
 
     private fun loadListClub() {
 
-        /*if (getListField().size > 0) {
+        BaseRequest().getClubs(object : GetDataListener<ClubModel>{
+            override fun onSuccess(list: ArrayList<ClubModel>) {
+                listClubModel.clear()
+                listClubModel.addAll(list)
+                Log.d(Constant().TAG, "club size: ${listClubModel.size}")
+                setListClub(listClubModel)
+                adapterClub!!.notifyDataSetChanged()
+            }
 
-            setData()
-
-        } else {
-*/
-        BaseRequest().loadData(activity!!, Constant().DATABASE_CLUB, object :
-            FireBaseSuccessListener {
-            override fun onSuccess(data: DataSnapshot) {
-
-                if (data.exists()) {
-
-                    listClubModel.clear()
-
-                    for (i in data.children) {
-
-                        val club = i.getValue<ClubModel>(ClubModel::class.java)
-
-                        listClubModel.add(club!!)
-
-                    }
-
-                    Log.d(Constant().TAG, "club size: ${listClubModel.size}")
-
-                    //set list field to global
-                    val clubFull: ArrayList<ClubModel> = ArrayList()
-                    clubFull.addAll(listClubModel)
-                    setListClub(clubFull)
-
-                    setData()
-
-                }
+            override fun onSuccess(item: ClubModel) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onFail(message: String) {
-
                 Log.d(Constant().TAG, "firebase field fail, message: $message")
             }
+
         })
-//        }
+
     }
 
-    private fun setData() {
-
-//        listClubModel = getListClub()
-
-        adapterClub!!.notifyDataSetChanged()
-    }
 
     private fun onClick() {
 

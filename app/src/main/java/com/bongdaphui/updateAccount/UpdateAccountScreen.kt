@@ -19,7 +19,7 @@ import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.ConfirmListener
-import com.bongdaphui.listener.UpdateUserListener
+import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.utils.*
 import com.bongdaphui.utils.Enum
@@ -299,7 +299,7 @@ class UpdateAccountScreen : BaseFragment() {
 
         val userModel = UserModel(getUIDUser(), uriPhoto, name, email, phone, dob, height, weight, position)
 
-        BaseRequest().saveOrUpdateUser(userModel, object : UpdateUserListener {
+        BaseRequest().saveOrUpdateUser(userModel, object : UpdateListener {
             override fun onUpdateSuccess() {
                 //cache data
                 getDatabase().getUserDAO().insert(userModel)

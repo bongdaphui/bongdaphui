@@ -9,7 +9,7 @@ import android.widget.Toast
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
-import com.bongdaphui.listener.UpdateUserListener
+import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Utils
@@ -92,8 +92,8 @@ class RegisterWithEmailScreen : BaseFragment() {
                     Log.d(Constant().TAG, "register email uid: " + user!!.uid)
 
 
-                    val userModel = UserModel(user.uid,user.photoUrl.toString(),user.displayName,user.email,user.phoneNumber)
-                    BaseRequest().saveOrUpdateUser(userModel, object : UpdateUserListener {
+                    val userModel = UserModel(user.uid,user.photoUrl.toString(), user.displayName ?: "",user.email ?: "",user.phoneNumber ?: "")
+                    BaseRequest().saveOrUpdateUser(userModel, object : UpdateListener {
                         override fun onUpdateSuccess() {
                             //cache data
                             getDatabase().getUserDAO().insert(userModel)

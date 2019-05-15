@@ -105,7 +105,9 @@ class FieldScreen : BaseFragment() {
 
             override fun onSuccess(list: ArrayList<FbFieldModel>) {
 
-                if (frg_field_refresh_view.isRefreshing) frg_field_refresh_view.isRefreshing = false
+                if (frg_field_refresh_view!=null && frg_field_refresh_view.isRefreshing) {
+                    frg_field_refresh_view.isRefreshing = false
+                }
 
                 fieldListFull.clear()
 
@@ -205,15 +207,16 @@ class FieldScreen : BaseFragment() {
     }
 
     private fun showNoData(isShow: Boolean) {
+        if(isAdded) {
+            if (isShow) {
 
-        if (isShow) {
+                frg_field_tv_no_data.visibility = View.VISIBLE
+                frg_field_rcv.visibility = View.GONE
 
-            frg_field_tv_no_data.visibility = View.VISIBLE
-            frg_field_rcv.visibility = View.GONE
-
-        } else {
-            frg_field_tv_no_data.visibility = View.GONE
-            frg_field_rcv.visibility = View.VISIBLE
+            } else {
+                frg_field_tv_no_data.visibility = View.GONE
+                frg_field_rcv.visibility = View.VISIBLE
+            }
         }
     }
 
