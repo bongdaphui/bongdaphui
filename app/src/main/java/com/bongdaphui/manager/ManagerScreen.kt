@@ -11,6 +11,7 @@ import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.ConfirmListener
 import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.UserModel
+import com.bongdaphui.profile.ProfileScreen
 import com.bongdaphui.utils.Enum
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.frg_manager.*
@@ -56,6 +57,10 @@ class ManagerScreen : BaseFragment() {
     }
 
     private fun onClick() {
+
+        frg_manager_profile.setOnClickListener {
+            addFragment(ProfileScreen())
+        }
 
         frg_manager_logout.setOnClickListener {
 

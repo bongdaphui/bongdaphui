@@ -39,14 +39,17 @@ class UpdateAccountScreen : BaseFragment() {
     // Creating URI.
     private var filePathUri: Uri? = null
     private var userModel: UserModel? = null
+    private var isFirstTime: Boolean = true
 
     companion object {
 
         private const val USER_MODEL = "USER_MODEL"
+        private const val IS_FIRST_TIME = "IS_FIRST_TIME"
 
         fun getInstance(
 
-            userModel: UserModel
+            userModel: UserModel,
+            isFirstTime: Boolean
 
         ): UpdateAccountScreen {
 
@@ -55,6 +58,7 @@ class UpdateAccountScreen : BaseFragment() {
             val bundle = Bundle()
 
             bundle.putSerializable(USER_MODEL, userModel)
+            bundle.putBoolean(IS_FIRST_TIME, isFirstTime)
 
             screen.arguments = bundle
 
@@ -84,6 +88,7 @@ class UpdateAccountScreen : BaseFragment() {
         if (bundle != null) {
 
             userModel = bundle.getSerializable(USER_MODEL) as UserModel?
+            isFirstTime = bundle.getBoolean(IS_FIRST_TIME)
 
         }
         Utils().initPositionSpinner(activity!!, frg_update_account_sp_position)
@@ -308,6 +313,14 @@ class UpdateAccountScreen : BaseFragment() {
 
                 AlertDialog().showDialog(activity!!, Enum.EnumConfirmYes.UpdateSuccess.value, object : ConfirmListener {
                     override fun onConfirm(id: Int) {
+
+                        if (isFirstTime) {
+
+                            openClubs()
+
+                        } else {
+
+                        }
                     }
                 })
             }
@@ -318,9 +331,14 @@ class UpdateAccountScreen : BaseFragment() {
 
                 AlertDialog().showDialog(activity!!, Enum.EnumConfirmYes.UpdateFail.value, object : ConfirmListener {
                     override fun onConfirm(id: Int) {
+
+                        if (isFirstTime) {
+                            openClubs()
+                        } else {
+
+                        }
                     }
                 })
-
             }
 
         })
