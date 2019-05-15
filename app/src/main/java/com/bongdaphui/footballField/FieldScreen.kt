@@ -123,8 +123,6 @@ class FieldScreen : BaseFragment() {
 
                 initSpinnerFieldBox()
 
-                deleteCache()
-
                 saveCache(fieldListFull)
 
             }
@@ -146,13 +144,6 @@ class FieldScreen : BaseFragment() {
 
         }
     }
-
-    private fun deleteCache() {
-
-        getDatabase().getFieldDAO().deleteTable()
-
-    }
-
 
     private fun initSpinnerFieldBox() {
 

@@ -40,19 +40,15 @@ class UpdateAccountScreen : BaseFragment() {
     // Creating URI.
     private var filePathUri: Uri? = null
     private var userModel: UserModel? = null
-    private var isFirstTime: Boolean = true
-
 
     companion object {
 
         private const val USER_MODEL = "USER_MODEL"
-        private const val IS_FIRST_TIME = "IS_FIRST_TIME"
 
 
         fun getInstance(
 
-            userModel: UserModel,
-            isFirstTime: Boolean
+            userModel: UserModel
 
         ): UpdateAccountScreen {
 
@@ -61,7 +57,6 @@ class UpdateAccountScreen : BaseFragment() {
             val bundle = Bundle()
 
             bundle.putSerializable(USER_MODEL, userModel)
-            bundle.putBoolean(IS_FIRST_TIME, isFirstTime)
 
             screen.arguments = bundle
 
@@ -311,10 +306,7 @@ class UpdateAccountScreen : BaseFragment() {
         BaseRequest().saveOrUpdateUser(userModel, object : UpdateListener {
             override fun onUpdateSuccess() {
                 //cache data
-                if (!isFirstTime) {
 
-                    getDatabase().getUserDAO().deleteTable()
-                }
                 getDatabase().getUserDAO().insert(userModel)
 
                 showProgress(false)
@@ -322,11 +314,10 @@ class UpdateAccountScreen : BaseFragment() {
                 AlertDialog().showDialog(activity!!, Enum.EnumConfirmYes.UpdateSuccess.value, object : ConfirmListener {
                     override fun onConfirm(id: Int) {
                         //if back stack has more than 1 then go back else open club screen
-                        if((activity as BaseActivity).containers.size>1){
+                        if ((activity as BaseActivity).containers.size > 1) {
                             onBackPressed()
-                        }else{
+                        } else {
                             openClubs()
-
                         }
                     }
                 })
@@ -339,12 +330,9 @@ class UpdateAccountScreen : BaseFragment() {
                 AlertDialog().showDialog(activity!!, Enum.EnumConfirmYes.UpdateFail.value, object : ConfirmListener {
                     override fun onConfirm(id: Int) {
 
-                        if (isFirstTime) {
-                            openClubs()
-                        }
+                        openClubs()
                     }
                 })
-
             }
         })
     }

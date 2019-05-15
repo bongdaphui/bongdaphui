@@ -48,7 +48,7 @@ class ProfileScreen : BaseFragment() {
 
         frg_profile_fb_update.setOnClickListener {
 
-            addFragment(UpdateAccountScreen.getInstance(userModel, false))
+            addFragment(UpdateAccountScreen.getInstance(userModel))
         }
     }
 

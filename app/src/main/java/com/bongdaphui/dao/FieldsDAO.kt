@@ -6,7 +6,7 @@ import com.bongdaphui.model.FbFieldModel
 @Dao
 interface FieldsDAO {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(item: FbFieldModel)
 
     @Update

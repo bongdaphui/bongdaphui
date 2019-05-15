@@ -186,7 +186,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
                     //update account for first time
                     showProgress(false)
 
-                    replaceFragment(UpdateAccountScreen.getInstance(item, true), true)
+                    replaceFragment(UpdateAccountScreen.getInstance(item), true)
                 } else {
                     openClub()
                 }
@@ -200,7 +200,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
                 showProgress(false)
 
                 val userModel = UserModel(uid)
-                replaceFragment(UpdateAccountScreen.getInstance(userModel, true), true)
+                replaceFragment(UpdateAccountScreen.getInstance(userModel), true)
             }
 
         })
