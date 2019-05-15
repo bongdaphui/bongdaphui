@@ -1,5 +1,6 @@
 package com.bongdaphui.clubInfo
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
@@ -23,7 +24,7 @@ import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.fragment_club_info_creen.*
+import kotlinx.android.synthetic.main.fragment_club_info_screen.*
 
 
 class ClubInfoScreen : BaseFragment() {
@@ -52,7 +53,7 @@ class ClubInfoScreen : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_club_info_creen, container, false)
+        return inflater.inflate(R.layout.fragment_club_info_screen, container, false)
 
     }
 
@@ -85,12 +86,12 @@ class ClubInfoScreen : BaseFragment() {
     private fun initView() {
 
         if (activity is AppCompatActivity) {
-            (activity as AppCompatActivity).setSupportActionBar(frg_club_info_toolbar)
+            (activity as AppCompatActivity).setSupportActionBar(toolbar)
             (activity as AppCompatActivity).supportActionBar!!.setHomeButtonEnabled(true)
             (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         }
 
-        frg_club_info_collapsing_toolbar.title = clubModel!!.name
+        collapsing_toolbar.title = clubModel!!.name
         Glide.with(context!!).load(
             if (clubModel!!.photo!!.isEmpty()) Utils().getDrawable(
                 context!!,
@@ -101,9 +102,10 @@ class ClubInfoScreen : BaseFragment() {
 
     }
 
+    @SuppressLint("RestrictedApi")
     private fun onClick() {
 
-        frg_club_info_toolbar.setOnClickListener {
+        toolbar.setOnClickListener {
 
             onBackPressed()
 
@@ -111,11 +113,11 @@ class ClubInfoScreen : BaseFragment() {
 
         if (clubModel!!.idCaptain == getUIDUser()) {
 
-            frg_club_info_v_join_club.visibility = View.GONE
+            fab_join_club.visibility = View.GONE
 
         } else {
 
-            frg_club_info_v_join_club.setOnClickListener {
+            fab_join_club.setOnClickListener {
 
                 checkAreYouRequest()
 
