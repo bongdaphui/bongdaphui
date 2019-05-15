@@ -51,6 +51,7 @@
     <string name="login_with_facebook">Facebook</string>
     <string name="use_app_to_login">Bạn cần đăng nhập để vào ứng dụng</string>
     <string name="info_user">Thông tin của bạn</string>
+    <string name="manager">Quản lý</string>
     <string name="login">Đăng nhập</string>
     <string name="please_enter_your_name">Vui lòng nhập họ và tên của bạn</string>
     <string name="please_enter_your_password">Vui lòng nhập mật khẩu của bạn</string>

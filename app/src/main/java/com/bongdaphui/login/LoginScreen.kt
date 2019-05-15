@@ -182,7 +182,10 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
 
             override fun onSuccess(item: UserModel) {
                 if (TextUtils.isEmpty(item.phone)) {
+
                     //update account for first time
+                    showProgress(false)
+
                     replaceFragment(UpdateAccountScreen.getInstance(item), true)
                 } else {
                     openClub()
@@ -193,6 +196,9 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
 
             override fun onFail(message: String) {
                 //for case not found
+
+                showProgress(false)
+
                 val userModel = UserModel(uid)
                 replaceFragment(UpdateAccountScreen.getInstance(userModel), true)
             }

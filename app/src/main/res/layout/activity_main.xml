@@ -139,7 +139,7 @@
 
         </LinearLayout>
         <LinearLayout
-                android:id="@+id/activity_main_v_menu_settings"
+                android:id="@+id/activity_main_v_menu_manager"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
