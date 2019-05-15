@@ -90,9 +90,9 @@ abstract class BaseActivity : AppCompatActivity(), BaseInterface {
 
 //            containers[containerId] = tags
 
-            containers.put(containerId, tags)
+            containers[containerId] = tags
 
-            tags.add(tag)
+            tags.add(tag!!)
 
             ft.setCustomAnimations(fragment.getEnterAnimation(), 0, 0, 0)
             ft.add(containerId, fragment, tag)
@@ -104,7 +104,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseInterface {
 
             top?.onPause()
 
-            tags.add(tag)
+            tags.add(tag!!)
 
             val transaction = supportFragmentManager
                 .beginTransaction()
@@ -175,7 +175,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseInterface {
 
                             if (top != null && !Utils().isEmpty(top.javaClass.canonicalName))
 
-                                removeFragment(containerId, top.javaClass.canonicalName)
+                                removeFragment(containerId, top.javaClass.canonicalName!!)
                         } else {
 
                             popAllBackStack(containerId)
@@ -221,9 +221,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseInterface {
 
             var removed = getTopFragment(containerId)
 
-            if (removed != null && null != removed.javaClass.canonicalName && removed.javaClass.canonicalName.equals(
-                    tag
-                )
+            if (removed != null && null != removed.javaClass.canonicalName && removed.javaClass.canonicalName!! == tag
             ) {
 
                 backStack(containerId)
@@ -234,9 +232,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseInterface {
 
                     removed = supportFragmentManager.findFragmentByTag(tags[i]) as BaseFragment?
 
-                    if (null != removed && null != removed.javaClass.canonicalName && removed.javaClass.getCanonicalName().equals(
-                            tag
-                        )
+                    if (null != removed && null != removed.javaClass.canonicalName && removed.javaClass.canonicalName!! == tag
                     ) {
 
                         val transaction = supportFragmentManager.beginTransaction().remove(removed)

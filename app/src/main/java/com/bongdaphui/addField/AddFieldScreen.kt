@@ -80,8 +80,6 @@ class AddFieldScreen : BaseFragment() {
 
         showTitle(true)
 
-        showButtonFilter(false)
-
         setTitle(activity!!.resources.getString(R.string.add_football_field))
 
         showFooter(false)

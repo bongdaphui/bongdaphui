@@ -150,7 +150,7 @@ class JoinClubScreen : BaseFragment() {
 
         frg_join_club_v_input_dob.setOnClickListener {
             DatePickerDialog(
-                activity,
+                activity!!,
                 dateSetListener,
                 // set DatePickerDialog to point to today's date when it loads up
                 cal.get(Calendar.YEAR),
@@ -381,7 +381,7 @@ class JoinClubScreen : BaseFragment() {
 
     }
 
-    private val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+    private val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
         cal.set(Calendar.YEAR, year)
         cal.set(Calendar.MONTH, monthOfYear)
         cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)

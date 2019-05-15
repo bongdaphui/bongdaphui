@@ -28,33 +28,8 @@
                 android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:textAllCaps="true"
-                android:layout_height="wrap_content" tools:ignore="UnusedAttribute"/>
-
-        <RelativeLayout
-                android:visibility="gone"
-                android:id="@+id/activity_main_v_filter"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/fs_46"
-                android:layout_toStartOf="@+id/activity_main_iv_filter"
-                android:layout_toEndOf="@+id/activity_main_iv_back">
-
-            <Spinner
-                    android:id="@+id/activity_main_filter"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:overlapAnchor="false"
-                    tools:ignore="HardcodedText,UnusedAttribute"/>
-
-        </RelativeLayout>
-
-        <ImageView
-                android:id="@+id/activity_main_iv_filter"
-                android:src="@drawable/ic_filter"
-                android:visibility="gone"
-                android:layout_width="@dimen/fs_46"
-                android:layout_alignParentEnd="true"
-                android:scaleType="centerInside"
-                android:layout_height="match_parent" tools:ignore="ContentDescription"/>
+                android:layout_height="wrap_content"
+                tools:ignore="UnusedAttribute"/>
 
     </RelativeLayout>
 
@@ -81,9 +56,6 @@
             android:layout_height="wrap_content"
             android:visibility="gone"
             android:layout_centerInParent="true"/>
-
-    <include layout="@layout/view_empty"/>
-
 
     <LinearLayout
             android:id="@+id/activity_main_v_footer"

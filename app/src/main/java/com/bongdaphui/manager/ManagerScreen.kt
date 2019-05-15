@@ -1,6 +1,5 @@
 package com.bongdaphui.manager
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -11,6 +10,7 @@ import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.ConfirmListener
 import com.bongdaphui.login.LoginScreen
+import com.bongdaphui.matchSchedule.SchedulePlayerScreen
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.profile.ProfileScreen
 import com.bongdaphui.utils.Enum
@@ -95,10 +95,10 @@ class ManagerScreen : BaseFragment() {
         frg_manager_bt_login_account.setOnClickListener {
             addFragment(LoginScreen())
         }
-    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-    }
+        frg_manager_match_schedule.setOnClickListener {
 
+            addFragment(SchedulePlayerScreen())
+        }
+    }
 }

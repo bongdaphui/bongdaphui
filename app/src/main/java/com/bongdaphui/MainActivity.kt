@@ -3,9 +3,7 @@ package com.bongdaphui
 import android.arch.persistence.room.Room
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
-import android.util.Log
 import android.view.View
-import android.widget.AdapterView
 import com.bongdaphui.addField.SpinnerAdapter
 import com.bongdaphui.base.BaseActivity
 import com.bongdaphui.base.BaseApplication
@@ -15,20 +13,16 @@ import com.bongdaphui.findClub.FindClubScreen
 import com.bongdaphui.findPlayer.FindPlayerScreen
 import com.bongdaphui.footballClub.ClubScreen
 import com.bongdaphui.footballField.FieldScreen
-import com.bongdaphui.footballField.SpinnerSelectInterface
 import com.bongdaphui.manager.ManagerScreen
 import com.bongdaphui.model.CityModel
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.model.FbFieldModel
-import com.bongdaphui.model.UserModel
 import com.bongdaphui.splash.SplashScreen
 import com.bongdaphui.utils.Constant
-import com.bongdaphui.utils.Utils
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.view_empty.*
 
 class MainActivity : BaseActivity(), View.OnClickListener {
 
@@ -49,8 +43,6 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     private var listClubModel: ArrayList<ClubModel> = ArrayList()
 
     private lateinit var spinnerSearchAdapter: SpinnerAdapter
-
-    private lateinit var userModel: UserModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,8 +91,6 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
         activity_main_iv_back.setOnClickListener(this)
 
-        activity_main_iv_filter.setOnClickListener(this)
-
         activity_main_v_menu_club.setOnClickListener(this)
 
         activity_main_v_menu_find_player.setOnClickListener(this)
@@ -129,16 +119,6 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             activity_main_v_footer.visibility = View.VISIBLE
         } else {
             activity_main_v_footer.visibility = View.GONE
-
-        }
-    }
-
-    fun showFilter(isShow: Boolean) {
-
-        if (isShow) {
-            activity_main_v_filter.visibility = View.VISIBLE
-        } else {
-            activity_main_v_filter.visibility = View.GONE
 
         }
     }
@@ -175,28 +155,9 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
-    fun showEmpty(isShow: Boolean) {
-        if (isShow) {
-            view_empty.visibility = View.VISIBLE
-        } else {
-            view_empty.visibility = View.GONE
-        }
-    }
-
-    fun showButtonFilter(isShow: Boolean) {
-
-        if (isShow) {
-            activity_main_iv_filter.visibility = View.VISIBLE
-        } else {
-            activity_main_iv_filter.visibility = View.GONE
-
-        }
-    }
-
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.activity_main_iv_back -> onBackPressed()
-            R.id.activity_main_iv_filter -> openFilterPanel()
             R.id.activity_main_v_menu_club -> openClubs()
             R.id.activity_main_v_menu_find_player -> openFindPlayer()
             R.id.activity_main_v_menu_find_club -> openFindClub()
@@ -334,59 +295,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         return listClubModel
     }
 
-    fun setUserModel(user: UserModel) {
-
-        userModel = user
-    }
-
-    fun getUserModel(): UserModel {
-
-        return userModel
-    }
-
-    private fun openFilterPanel() {
-
-        if (getTopFragment() is FieldScreen) {
-
-            val footballFieldScreen = getTopFragment() as FieldScreen
-
-//            footballFieldScreen.openFilter()
-        }
-    }
-
-    fun initSpinnerBox(listCityModel: ArrayList<CityModel>, spinnerSelectInterface: SpinnerSelectInterface) {
-
-        val listCityName = ArrayList<String>()
-
-        for (i in 0 until listCityModel.size) {
-
-            val ciTyModel = listCityModel[i]
-
-            listCityName.add(ciTyModel.name!!)
-        }
-        spinnerSearchAdapter = SpinnerAdapter(this, R.layout.item_spinner, listCityName)
-
-        activity_main_filter.adapter = spinnerSearchAdapter
-
-        activity_main_filter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-
-                val nameCity: String = parent.getItemAtPosition(position) as String
-
-                spinnerSelectInterface.onSelect(Utils().getIdCityFromNameCity(nameCity, listCityModel))
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                Log.d(Constant().TAG, "onNothingSelected")
-
-            }
-        }
-    }
-
     fun getDatabase(): AppDatabase {
 
         return database
     }
-
 }

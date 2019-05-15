@@ -118,11 +118,11 @@ class AddClubScreen : BaseFragment() {
             frg_add_fc_sp_district,
             object :
                 BaseSpinnerSelectInterface {
-                override fun onSelectCity(cityId: String, districtId: String) {
+                override fun onSelectCity(_idCity: String, _idDistrict: String) {
 
-                    idCity = cityId
+                    idCity = _idCity
 
-                    idDistrict = districtId
+                    idDistrict = _idDistrict
 
                     Log.d(Constant().TAG, "spinner onSelectCity with idCity: $idCity - idDistrict : $idDistrict")
 
@@ -162,7 +162,7 @@ class AddClubScreen : BaseFragment() {
 
         frg_add_fc_v_input_dob.setOnClickListener {
             DatePickerDialog(
-                activity,
+                activity!!,
                 dateSetListener,
                 // set DatePickerDialog to point to today's date when it loads up
                 cal.get(Calendar.YEAR),
@@ -433,7 +433,7 @@ class AddClubScreen : BaseFragment() {
 
     }
 
-    private val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+    private val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
 
         cal.set(Calendar.YEAR, year)
         cal.set(Calendar.MONTH, monthOfYear)

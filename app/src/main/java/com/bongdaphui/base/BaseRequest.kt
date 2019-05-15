@@ -9,6 +9,7 @@ import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.model.FbFieldModel
+import com.bongdaphui.model.SchedulePlayerModel
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.utils.Constant
 import com.google.firebase.database.DataSnapshot
@@ -163,6 +164,48 @@ class BaseRequest {
             }
             .addOnFailureListener { exception ->
                 listener.onFail(exception.localizedMessage)
+            }
+    }
+
+    fun getSchedulePlayer(
+        listener: GetDataListener<SchedulePlayerModel>
+    ) {
+
+        val db = FirebaseFirestore.getInstance().collection(Constant().schedulePlayerPathField)
+        val schedulePlayerList: ArrayList<SchedulePlayerModel> = ArrayList()
+
+        db.get()
+            .addOnSuccessListener { result ->
+
+                for (document in result) {
+
+                    val schedulePlayerModel = SchedulePlayerModel(
+                        document.data["id"] as String?,
+                        document.data["date"] as String?,
+                        document.data["time"] as String?,
+                        document.data["idCityArea"] as String?,
+                        document.data["idDistrictArea"] as String?,
+                        document.data["userModel"] as UserModel
+                    )
+
+                    schedulePlayerList.add(schedulePlayerModel)
+
+                }
+
+                Log.d(Constant().TAG, "schedule player size: ${schedulePlayerList.size}")
+
+                if (schedulePlayerList.size > 0) {
+
+                    listener.onSuccess(schedulePlayerList)
+
+                } else {
+
+                    listener.onFail("Chưa có dữ liệu")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d(Constant().TAG, "Error getting documents: ", exception)
+                listener.onFail("${exception.message}")
             }
     }
 

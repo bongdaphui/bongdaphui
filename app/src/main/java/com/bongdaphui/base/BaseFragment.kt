@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentActivity
 import android.view.View
 import com.bongdaphui.MainActivity
 import com.bongdaphui.dao.AppDatabase
-import com.bongdaphui.footballField.SpinnerSelectInterface
 import com.bongdaphui.model.CityModel
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.model.FbFieldModel
@@ -109,12 +108,6 @@ abstract class BaseFragment : Fragment(), BaseInterface {
         }
     }
 
-    fun showFilter(isShow: Boolean) {
-        if (activity is MainActivity) {
-            (activity as MainActivity).showFilter(isShow)
-        }
-    }
-
     fun showTitle(isShow: Boolean) {
         if (activity is MainActivity) {
             (activity as MainActivity).showTitle(isShow)
@@ -140,22 +133,6 @@ abstract class BaseFragment : Fragment(), BaseInterface {
         if (null != activity && activity is MainActivity) {
 
             (activity as MainActivity).showProgress(isShow)
-        }
-    }
-
-    fun showEmpty(isShow: Boolean) {
-
-        if (null != activity && activity is MainActivity) {
-
-            (activity as MainActivity).showEmpty(isShow)
-        }
-    }
-
-    fun showButtonFilter(isShow: Boolean) {
-
-        if (activity is MainActivity) {
-
-            (activity as MainActivity).showButtonFilter(isShow)
         }
     }
 
@@ -244,26 +221,6 @@ abstract class BaseFragment : Fragment(), BaseInterface {
     fun hideKeyBoard() {
         KeyboardManager.hideSoftKeyboard(activeActivity!!)
     }
-
-    fun initSpinnerBox(spinnerSelectInterface: SpinnerSelectInterface) {
-
-        if (activity != null && activity is MainActivity)
-
-            (activity as MainActivity).initSpinnerBox(getListCity(), spinnerSelectInterface)
-    }
-
-    /*fun setUserModel(userModel: UserModel) {
-
-        if (null != activity && activity is MainActivity)
-
-            (activity as MainActivity).setUserModel(userModel)
-
-    }
-
-    fun getUserModel(): UserModel {
-
-        return (activity as MainActivity).getListCityModel()
-    }*/
 
     fun getDatabase(): AppDatabase {
 

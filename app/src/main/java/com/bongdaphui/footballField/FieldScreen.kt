@@ -19,6 +19,7 @@ import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import kotlinx.android.synthetic.main.fragment_field.*
+import kotlinx.android.synthetic.main.frg_schedule_player.*
 
 class FieldScreen : BaseFragment() {
 
@@ -37,8 +38,6 @@ class FieldScreen : BaseFragment() {
         super.onResume()
 
         showHeader(false)
-
-        showButtonFilter(true)
 
         showFooter(true)
     }
@@ -105,9 +104,7 @@ class FieldScreen : BaseFragment() {
 
             override fun onSuccess(list: ArrayList<FbFieldModel>) {
 
-                if (frg_field_refresh_view!=null && frg_field_refresh_view.isRefreshing) {
-                    frg_field_refresh_view.isRefreshing = false
-                }
+                hiddenRefresh()
 
                 fieldListFull.clear()
 
@@ -128,6 +125,7 @@ class FieldScreen : BaseFragment() {
             }
 
             override fun onFail(message: String) {
+                hiddenRefresh()
                 showProgress(false)
                 showNoData(true)
             }
@@ -190,7 +188,7 @@ class FieldScreen : BaseFragment() {
 
     private fun onClick() {
 
-        frg_field_tv_no_data_fab.setOnClickListener {
+        frg_field_fab.setOnClickListener {
 
             addFragment(AddFieldScreen())
 
@@ -225,6 +223,12 @@ class FieldScreen : BaseFragment() {
         }
     }
 
+    private fun hiddenRefresh() {
+
+        if (frg_field_refresh_view!=null && frg_field_refresh_view.isRefreshing) {
+            frg_field_refresh_view.isRefreshing = false
+        }
+    }
     override fun onDestroy() {
         super.onDestroy()
 
