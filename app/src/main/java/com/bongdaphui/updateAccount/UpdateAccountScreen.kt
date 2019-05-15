@@ -15,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bongdaphui.R
+import com.bongdaphui.base.BaseActivity
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.dialog.AlertDialog
@@ -308,6 +309,12 @@ class UpdateAccountScreen : BaseFragment() {
 
                 AlertDialog().showDialog(activity!!, Enum.EnumConfirmYes.UpdateSuccess.value, object : ConfirmListener {
                     override fun onConfirm(id: Int) {
+                        //if back stack has more than 1 then go back else open club screen
+                        if((activity as BaseActivity).containers.size>1){
+                            onBackPressed()
+                        }else{
+                            openClubs()
+                        }
                     }
                 })
             }

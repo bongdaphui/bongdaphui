@@ -7,7 +7,7 @@ import com.bongdaphui.model.UserModel
 @Dao
 interface UsersDAO {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(item: UserModel)
 
     @Update

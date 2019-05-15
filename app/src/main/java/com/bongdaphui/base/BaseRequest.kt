@@ -94,20 +94,6 @@ class BaseRequest {
         }
     }
 
-    fun saveDataField(context: Context, path: String, fbFieldModel: FbFieldModel) {
-
-        val db = FirebaseFirestore.getInstance().document(path)
-
-        db.set(fbFieldModel)
-            .addOnSuccessListener {
-                Log.d(Constant().TAG, "upload field success")
-
-            }
-            .addOnFailureListener {
-                Log.d(Constant().TAG, "upload field fail : $it")
-
-            }
-    }
 
     fun getDataField(
         listener: GetDataListener<FbFieldModel>
