@@ -11,6 +11,7 @@ import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.model.UserModel
+import com.bongdaphui.updateAccount.UpdateAccountScreen
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Utils
 import kotlinx.android.synthetic.main.fragment_register_with_email_screen.*
@@ -97,15 +98,12 @@ class RegisterWithEmailScreen : BaseFragment() {
                         override fun onUpdateSuccess() {
                             //cache data
                             getDatabase().getUserDAO().insert(userModel)
-
-                            openClub()
                         }
 
                         override fun onUpdateFail() {
-
-                            openClub()
                         }
                     })
+                    replaceFragment(UpdateAccountScreen.getInstance(userModel), true)
 
                 } else {
 

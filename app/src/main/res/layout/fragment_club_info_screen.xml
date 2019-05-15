@@ -256,7 +256,7 @@
                                         android:layout_marginEnd="@dimen/spacing_medium"
                                         android:layout_marginRight="@dimen/spacing_medium"
                                         android:scaleType="centerCrop"
-                                        android:src="@drawable/ic_launcher" />
+                                        android:src="@drawable/ic_picture" />
 
                                 <ImageView
                                         android:id="@+id/image_2"
@@ -265,7 +265,7 @@
                                         android:layout_marginEnd="@dimen/spacing_medium"
                                         android:layout_marginRight="@dimen/spacing_medium"
                                         android:scaleType="centerCrop"
-                                        android:src="@drawable/ic_launcher" />
+                                        android:src="@drawable/ic_picture" />
 
                                 <ImageView
                                         android:id="@+id/image_3"
@@ -274,7 +274,7 @@
                                         android:layout_marginEnd="@dimen/spacing_medium"
                                         android:layout_marginRight="@dimen/spacing_medium"
                                         android:scaleType="centerCrop"
-                                        android:src="@drawable/ic_launcher" />
+                                        android:src="@drawable/ic_picture" />
 
                                 <ImageView
                                         android:id="@+id/image_4"
@@ -283,7 +283,7 @@
                                         android:layout_marginEnd="@dimen/spacing_medium"
                                         android:layout_marginRight="@dimen/spacing_medium"
                                         android:scaleType="centerCrop"
-                                        android:src="@drawable/ic_launcher" />
+                                        android:src="@drawable/ic_picture" />
 
                                 <ImageView
                                         android:id="@+id/image_5"
@@ -292,7 +292,7 @@
                                         android:layout_marginEnd="@dimen/spacing_medium"
                                         android:layout_marginRight="@dimen/spacing_medium"
                                         android:scaleType="centerCrop"
-                                        android:src="@drawable/ic_launcher" />
+                                        android:src="@drawable/ic_picture" />
 
                             </LinearLayout>
 
