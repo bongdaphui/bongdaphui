@@ -188,6 +188,8 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
 
                     replaceFragment(UpdateAccountScreen.getInstance(item), true)
                 } else {
+                    //cache data
+                    getDatabase().getUserDAO().insert(item)
                     openClub()
                 }
 
