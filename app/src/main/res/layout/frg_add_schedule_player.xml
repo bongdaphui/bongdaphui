@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:background="@color/grey_5"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_height="match_parent">
+
+    <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/frg_add_schedule_player_tv_input"
+            android:scrollbars="none"
+            android:fillViewport="true"
+            android:scrollingCache="true">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_middle"
+                android:layout_marginEnd="@dimen/spacing_middle"
+                android:orientation="vertical">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:text="Chọn khu vực bạn muốn đá"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/grey_60"/>
+
+            <android.support.v7.widget.CardView
+                    android:id="@+id/frg_add_schedule_player_cv_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    app:cardCornerRadius="2dp"
+                    app:cardElevation="1dp">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/fs_46"
+                        android:orientation="horizontal">
+
+                    <Spinner
+                            android:id="@+id/frg_add_schedule_player_sp_city"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:overlapAnchor="false"
+                            tools:ignore="HardcodedText,UnusedAttribute"/>
+                    <View
+                            android:layout_width="0.1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/c_2d2d2d"/>
+                    <Spinner
+                            android:id="@+id/frg_add_schedule_player_sp_district"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:overlapAnchor="false"
+                            tools:ignore="HardcodedText,UnusedAttribute"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spacing_large"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_xsmall"
+                    android:text="Thời gian bắt đầu"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/grey_60"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <Button
+                        android:id="@+id/frg_add_schedule_player_spn_from_date"
+                        style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="19/5/2019"
+                        android:paddingStart="@dimen/spacing_middle"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/grey_80"
+                        tools:ignore="RtlSymmetry"/>
+
+                <View
+                        android:layout_width="@dimen/spacing_large"
+                        android:layout_height="0dp"/>
+
+                <Button
+                        android:id="@+id/frg_add_schedule_player_spn_from_time"
+                        style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:singleLine="true"
+                        android:spinnerMode="dialog"
+                        android:text="16:00"
+                        android:paddingStart="@dimen/spacing_middle"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/grey_80"
+                        tools:ignore="RtlSymmetry"/>
+
+            </LinearLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spacing_large"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_xsmall"
+                    android:text="Thời gian kết thúc"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/grey_60"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <Button
+                        android:id="@+id/frg_add_schedule_player_spn_to_date"
+                        style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                        android:layout_width="0dp"
+                        android:layout_height="?attr/actionBarSize"
+                        android:layout_weight="2"
+                        android:text="19/5/2019"
+                        android:paddingStart="@dimen/spacing_middle"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/grey_80"/>
+
+                <View
+                        android:layout_width="@dimen/spacing_large"
+                        android:layout_height="0dp"/>
+
+                <Button
+                        android:id="@+id/frg_add_schedule_player_spn_to_time"
+                        style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                        android:layout_width="0dp"
+                        android:layout_height="?attr/actionBarSize"
+                        android:layout_weight="1"
+                        android:singleLine="true"
+                        android:spinnerMode="dialog"
+                        android:text="22:00"
+                        android:paddingStart="@dimen/spacing_middle"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/grey_80"/>
+
+            </LinearLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spacing_large"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+    <TextView
+            android:id="@+id/frg_add_schedule_player_tv_input"
+            android:layout_width="@dimen/fs_150"
+            android:layout_height="@dimen/fs_46"
+            android:layout_marginBottom="@dimen/fs_20"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/fs_15"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/bg_accent_solid_no_border_30_radius"
+            android:gravity="center"
+            android:paddingEnd="@dimen/fs_20"
+            android:paddingStart="@dimen/fs_20"
+            android:text="@string/input"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/ts_16"
+            android:textAllCaps="true"/>
+</RelativeLayout>
+

@@ -27,6 +27,11 @@ android {
 }
 
 dependencies {
+
+    configurations {
+        all*.exclude group: 'com.android.support', module: 'support-v13'
+    }
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     //noinspection GradleCompatible
@@ -95,4 +100,6 @@ dependencies {
 
     // third party dependencies -------------------------------------------------------------------
     implementation 'com.mikhaellopez:circularimageview:3.2.0'          // circle image view
+    implementation 'com.wdullaer:materialdatetimepicker:3.2.0'         // date & time picker
+
 }

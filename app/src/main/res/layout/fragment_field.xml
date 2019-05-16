@@ -19,18 +19,19 @@
         <android.support.v7.widget.CardView
                 android:id="@+id/frg_field_cv_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/fs_46"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/spacing_medium"
                 android:layout_marginLeft="@dimen/spacing_middle"
                 android:layout_marginRight="@dimen/spacing_middle"
                 android:layout_marginTop="@dimen/spacing_medium"
-                android:visibility="gone"
                 app:cardCornerRadius="2dp"
                 app:cardElevation="1dp">
 
             <LinearLayout
+                    android:id="@+id/frg_field_v_spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:layout_height="@dimen/fs_46"
                     android:orientation="horizontal">
 
                 <Spinner
@@ -46,7 +47,6 @@
                         android:background="@color/c_2d2d2d"/>
                 <Spinner
                         android:id="@+id/frg_field_sp_district"
-
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="match_parent"

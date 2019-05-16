@@ -53,7 +53,8 @@ class ManagerScreen : BaseFragment() {
     }
 
     private fun fillData() {
-        frg_manager_tv_name_user.text = userModel.name
+        frg_manager_tv_name_user.text =
+            if (userModel.name.isEmpty()) activity!!.resources.getText(R.string.three_dot) else userModel.name
 
         if (userModel.photoUrl.isNotEmpty()) {
             Glide.with(activity!!).asBitmap().load(userModel.photoUrl)

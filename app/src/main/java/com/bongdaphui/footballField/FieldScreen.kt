@@ -19,7 +19,6 @@ import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import kotlinx.android.synthetic.main.fragment_field.*
-import kotlinx.android.synthetic.main.frg_schedule_player.*
 
 class FieldScreen : BaseFragment() {
 
@@ -145,7 +144,7 @@ class FieldScreen : BaseFragment() {
 
     private fun initSpinnerFieldBox() {
 
-        frg_field_cv_spinner.visibility = View.VISIBLE
+        frg_field_v_spinner.visibility = View.VISIBLE
 
         Utils().initSpinnerCity(
             activity!!,
@@ -213,7 +212,7 @@ class FieldScreen : BaseFragment() {
 
         frg_field_refresh_view.setOnRefreshListener {
 
-            frg_field_cv_spinner.visibility = View.GONE
+            frg_field_v_spinner.visibility = View.GONE
 
             frg_field_tv_no_data.visibility = View.GONE
 
