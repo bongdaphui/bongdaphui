@@ -10,7 +10,7 @@ import com.bongdaphui.R
 import com.bongdaphui.addPlayer.JoinClubScreen
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.model.ClubModel
-import com.bongdaphui.model.PlayerModel
+import com.bongdaphui.model.UserModel
 import com.bongdaphui.utils.Constant
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -42,7 +42,7 @@ class PlayerScreen : BaseFragment() {
     }
 
 
-    private val listPlayer: ArrayList<PlayerModel> = ArrayList()
+    private val listPlayer: ArrayList<UserModel> = ArrayList()
 
     var adapterPlayer: PlayerAdapter? = null
 
@@ -114,9 +114,9 @@ class PlayerScreen : BaseFragment() {
 
                     for (i in p0.children) {
 
-                        val memberModel = i.getValue<PlayerModel>(PlayerModel::class.java)
+                        val memberModel = i.getValue<UserModel>(UserModel::class.java)
 
-                        if (memberModel!!.idUser == clubModel!!.idCaptain && memberModel.idClub == clubModel!!.id
+                        if (memberModel!!.id == clubModel!!.idCaptain && memberModel.clubs.contains(clubModel!!.id)
                         ) {
 
                             listPlayer.add(memberModel)

@@ -20,8 +20,7 @@ data class ClubModel(
     val matchLose: String? = "",
     val countRating: String? = "",
     val rating: String? = "",
-    val players: ArrayList<PlayerModel> = ArrayList(),
-    val comments: ArrayList<CommentModel> = ArrayList()
+    val players: ArrayList<String> = ArrayList()
 
 ) : Serializable {
 

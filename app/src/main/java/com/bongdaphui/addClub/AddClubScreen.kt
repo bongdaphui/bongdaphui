@@ -214,11 +214,14 @@ class AddClubScreen : BaseFragment() {
 
             } else {
 
-                AlertDialog().showDialog(activity!!, Enum.EnumConfirmYes.DeniedPermission.value, object : ConfirmListener {
-                    override fun onConfirm(id: Int) {
+                AlertDialog().showDialog(
+                    activity!!,
+                    Enum.EnumConfirmYes.DeniedPermission.value,
+                    object : ConfirmListener {
+                        override fun onConfirm(id: Int) {
 
-                    }
-                })
+                        }
+                    })
             }
         }
     }
@@ -388,6 +391,7 @@ class AddClubScreen : BaseFragment() {
             "${frg_add_fc_sp_district.selectedItem}, ${frg_add_fc_sp_city.selectedItem}"
         }
         val id = "${idLastFC + 1}"
+        var listPlayer = arrayListOf<String>(getUIDUser())
 
         val clubModel =
             ClubModel(
@@ -402,9 +406,9 @@ class AddClubScreen : BaseFragment() {
                 address,
                 idDistrict,
                 idCity,
-                "", "", "", "", ArrayList(), ArrayList()
+                "", "", "", "", listPlayer
             )
-        BaseRequest().saveOrUpdateClub(clubModel,object : UpdateListener{
+        BaseRequest().saveOrUpdateClub(clubModel, object : UpdateListener {
             override fun onUpdateSuccess() {
                 showProgress(false)
                 Utils().alertInsertSuccess(activity)

@@ -15,7 +15,6 @@ import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.model.ClubModel
-import com.bongdaphui.model.PlayerModel
 import com.bongdaphui.utils.*
 import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
@@ -329,40 +328,23 @@ class JoinClubScreen : BaseFragment() {
 
 //        val memberId = databaseReference.push().key
 
-        val playersModel =
-            PlayerModel(
-                idPlayer,
-                getUIDUser(),
-                clubModel.id,
-                uriPhoto,
-                name,
-                email,
-                phone,
-                dob,
-                address,
-                height,
-                weight,
-                position,
-                clother_number,
-                ArrayList()
-            )
-
-        // Adding image upload id s child element into databaseReference.
-        databaseReference.child(clubModel.id!!).child(Constant().CHILD_PLAYERS).child(idPlayer).setValue(playersModel)
-
-            .addOnCompleteListener {
-
-                showProgress(false)
-                Utils().alertInsertSuccess(activity)
-                hideKeyBoard()
-
-            }
-            .addOnFailureListener {
-
-                showProgress(false)
-                Utils().alertInsertFail(activity)
-
-            }
+//
+//        // Adding image upload id s child element into databaseReference.
+//        databaseReference.child(clubModel.id!!).child(Constant().CHILD_PLAYERS).child(idPlayer).setValue(playersModel)
+//
+//            .addOnCompleteListener {
+//
+//                showProgress(false)
+//                Utils().alertInsertSuccess(activity)
+//                hideKeyBoard()
+//
+//            }
+//            .addOnFailureListener {
+//
+//                showProgress(false)
+//                Utils().alertInsertFail(activity)
+//
+//            }
     }
 
     private fun disableItem() {
@@ -447,17 +429,14 @@ class JoinClubScreen : BaseFragment() {
 
     fun getIdLastPlayer(): String {
 
-        var id = ""
-
         for (i in 0 until clubModel.players.size) {
 
             if (i == clubModel.players.size - 1) {
-
-                id = clubModel.players[i].id!!
+                return clubModel.players[i]
 
             }
         }
 
-        return id
+        return ""
     }
 }

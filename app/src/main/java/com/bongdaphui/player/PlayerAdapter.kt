@@ -6,12 +6,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bongdaphui.R
-import com.bongdaphui.model.PlayerModel
+import com.bongdaphui.model.UserModel
 import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class PlayerAdapter(var context: Context?, val items: ArrayList<PlayerModel>) :
+class PlayerAdapter(var context: Context?, val items: ArrayList<UserModel>) :
 
     RecyclerView.Adapter<PlayerHolder>() {
 
@@ -28,12 +28,12 @@ class PlayerAdapter(var context: Context?, val items: ArrayList<PlayerModel>) :
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: PlayerHolder, position: Int) {
 
-        val player: PlayerModel = items[position]
+        val player: UserModel = items[position]
 
 
         Glide.with(context!!).load(
-            if (Utils().isEmpty(player.photo))
-                Utils().getDrawable(context!!, R.drawable.ic_personal) else player.photo
+            if (Utils().isEmpty(player.photoUrl))
+                Utils().getDrawable(context!!, R.drawable.ic_personal) else player.photoUrl
         )
             .apply(RequestOptions.circleCropTransform())
             .into(viewHolder.photo)
@@ -54,7 +54,7 @@ class PlayerAdapter(var context: Context?, val items: ArrayList<PlayerModel>) :
 
         viewHolder.positon.text = player.position
 
-        viewHolder.clotherNumber.text = player.clothesNumber
+//        viewHolder.clotherNumber.text = player.clothesNumber
     }
 
 }
