@@ -19,7 +19,7 @@
                 android:id="@+id/frg_manager_v_manager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:paddingTop="@dimen/spacing_xxlarge"
                 android:orientation="vertical">
 
@@ -240,21 +240,17 @@
                     android:background="@color/grey_10"/>
         </LinearLayout>
 
-        <RelativeLayout
-                android:id="@+id/frg_manager_v_login"
-                android:layout_width="match_parent"
-                android:visibility="gone"
-                android:layout_height="match_parent">
 
-            <Button android:layout_width="@dimen/fs_250"
-                    android:layout_gravity="center"
-                    android:id="@+id/frg_manager_bt_login_account"
-                    style="@style/tv_ts_15_c_white_bold"
-                    android:text="@string/login"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/bg_button_login_primary_dark"
-                    android:layout_height="wrap_content"/>
-        </RelativeLayout>
+        <Button android:layout_width="@dimen/fs_250"
+                android:layout_gravity="center"
+                android:id="@+id/frg_manager_bt_login_account"
+                style="@style/tv_ts_15_c_white_bold"
+                android:text="@string/login"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:background="@drawable/bg_button_login_primary_dark"
+                android:layout_height="wrap_content"/>
+
 
     </RelativeLayout>
 
