@@ -143,46 +143,49 @@ class FieldScreen : BaseFragment() {
     }
 
     private fun initSpinnerFieldBox() {
+        if (isAdded) {
 
-        frg_field_v_spinner.visibility = View.VISIBLE
 
-        Utils().initSpinnerCity(
-            activity!!,
-            frg_field_sp_city,
-            frg_field_sp_district,
-            object :
-                BaseSpinnerSelectInterface {
-                override fun onSelectCity(_idCity: String, _idDistrict: String) {
+            frg_field_v_spinner.visibility = View.VISIBLE
 
-                    Log.d(Constant().TAG, "spinner onSelectCity with idCity: $_idCity - idDistrict : $_idDistrict")
+            Utils().initSpinnerCity(
+                activity!!,
+                frg_field_sp_city,
+                frg_field_sp_district,
+                object :
+                    BaseSpinnerSelectInterface {
+                    override fun onSelectCity(_idCity: String, _idDistrict: String) {
 
-                    val fieldListTemp: ArrayList<FbFieldModel> = ArrayList()
+                        Log.d(Constant().TAG, "spinner onSelectCity with idCity: $_idCity - idDistrict : $_idDistrict")
 
-                    for (i in 0 until fieldListFull.size) {
+                        val fieldListTemp: ArrayList<FbFieldModel> = ArrayList()
 
-                        if (_idCity == fieldListFull[i].idCity!! && _idDistrict == fieldListFull[i].idDistrict!!) {
+                        for (i in 0 until fieldListFull.size) {
 
-                            fieldListTemp.add(fieldListFull[i])
+                            if (_idCity == fieldListFull[i].idCity!! && _idDistrict == fieldListFull[i].idDistrict!!) {
+
+                                fieldListTemp.add(fieldListFull[i])
+                            }
+                        }
+
+                        fieldList.clear()
+                        fieldList.addAll(fieldListTemp)
+
+                        Log.d(Constant().TAG, "fieldList sort size: ${fieldList.size}")
+
+                        if (fieldList.size > 0) {
+
+                            showNoData(false)
+
+                            fieldAdapter.notifyDataSetChanged()
+
+                        } else {
+
+                            showNoData(true)
                         }
                     }
-
-                    fieldList.clear()
-                    fieldList.addAll(fieldListTemp)
-
-                    Log.d(Constant().TAG, "fieldList sort size: ${fieldList.size}")
-
-                    if (fieldList.size > 0) {
-
-                        showNoData(false)
-
-                        fieldAdapter.notifyDataSetChanged()
-
-                    } else {
-
-                        showNoData(true)
-                    }
-                }
-            })
+                })
+        }
     }
 
     private fun onClick() {
@@ -195,7 +198,7 @@ class FieldScreen : BaseFragment() {
     }
 
     private fun showNoData(isShow: Boolean) {
-        if(isAdded) {
+        if (isAdded) {
             if (isShow) {
 
                 frg_field_tv_no_data.visibility = View.VISIBLE
@@ -224,10 +227,11 @@ class FieldScreen : BaseFragment() {
 
     private fun hiddenRefresh() {
 
-        if (frg_field_refresh_view!=null && frg_field_refresh_view.isRefreshing) {
+        if (frg_field_refresh_view != null && frg_field_refresh_view.isRefreshing) {
             frg_field_refresh_view.isRefreshing = false
         }
     }
+
     override fun onDestroy() {
         super.onDestroy()
 
