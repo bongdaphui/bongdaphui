@@ -180,12 +180,13 @@ class BaseRequest {
                 for (document in result) {
 
                     val schedulePlayerModel = SchedulePlayerModel(
-                        document.data["id"] as String?,
-                        document.data["date"] as String?,
-                        document.data["time"] as String?,
-                        document.data["idCityArea"] as String?,
-                        document.data["idDistrictArea"] as String?,
-                        document.data["userModel"] as UserModel
+                        document.data["idCity"] as String?,
+                        document.data["idDistrict"] as String?,
+                        document.data["startTime"] as String?,
+                        document.data["endTime"] as String?,
+                        document.data["idPlayer"] as String?,
+                        document.data["namePlayer"] as String?,
+                        document.data["photoUrlPlayer"] as String?
                     )
 
                     schedulePlayerList.add(schedulePlayerModel)

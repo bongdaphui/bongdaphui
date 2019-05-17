@@ -33,7 +33,10 @@ class Enum {
         AddFieldFail(6),
         AddFieldSuccess(7),
         UpdateSuccess(8),
-        UpdateFail(9)
+        UpdateFail(9),
+        ValidDateSchedule(10),
+        AddSchedulePlayerSuccess(11),
+        AddSchedulePlayerFail(12)
 
     }
 

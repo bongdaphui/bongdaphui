@@ -5,10 +5,11 @@ import com.google.firebase.database.IgnoreExtraProperties
 
 @IgnoreExtraProperties
 data class SchedulePlayerModel(
-    val id: String? = "",
-    val date: String? = "",
-    val time: String? = "",
-    val idCityArea: String? = "",
-    val idDistrictArea: String? = "",
-    val userModel: UserModel
+    val idCity: String? = "",
+    val idDistrict: String? = "",
+    val startTime: String? = "",
+    val endTime: String? = "",
+    val idPlayer: String? = "",
+    val namePlayer: String? = "",
+    val photoUrlPlayer: String? = ""
 )

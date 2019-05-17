@@ -69,7 +69,7 @@ class ProfileScreen : BaseFragment() {
 
         frg_profile_tv_age.text =
             if (userModel.dob.isEmpty()) activity!!.resources.getString(R.string.three_dot) else DateTimeUtil().getAge(
-                userModel.dob
+                userModel.dob, DateTimeUtil.DateFormatDefinition.DD_MM_YYYY.format
             )
 
         frg_profile_tv_dob.text =

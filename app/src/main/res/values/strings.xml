@@ -96,7 +96,10 @@
     <string name="player">Cầu thủ</string>
     <string name="three_dot">...</string>
     <string name="schedule_of_you">Lịch thi đấu</string>
-    <string name="add_schedule_of_you">Thêm lịch thi đấu</string>
+    <string name="add_schedule_of_you">Thêm khung giờ muốn đá</string>
+    <string name="valid_input_date_schedule">Thời gian kết thúc phải sau thời gian bắt đầu</string>
+    <string name="add_schedule_player_success">Thêm thời gian thành công</string>
+    <string name="add_schedule_player_fail">Thêm thời gian thất bại. Bạn vui lòng thực hiện lại</string>
 
 
 </resources>
