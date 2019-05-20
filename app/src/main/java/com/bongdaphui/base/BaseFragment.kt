@@ -59,7 +59,7 @@ abstract class BaseFragment : Fragment(), BaseInterface {
              (getActiveActivity() as BaseActivity)
                  .getFragmentContainerResId()*/
         else
-            activeActivity!!.getFragmentContainerResId()
+            activeActivity?.getFragmentContainerResId() ?: 0
     }
 
     protected fun addFragment(fragment: BaseFragment) {
@@ -68,14 +68,14 @@ abstract class BaseFragment : Fragment(), BaseInterface {
         /*else if (getActiveActivity() is BaseActivity)
             (getActiveActivity() as BaseActivity).addFragment(getMainContainerId(), fragment)*/
         else
-            activeActivity!!.addFragment(getMainContainerId(), fragment)
+            activeActivity?.addFragment(getMainContainerId(), fragment)
     }
 
     protected fun replaceFragment(fragment: BaseFragment, clearStack: Boolean) {
         if (activity != null && activity is MainActivity)
             (activity as BaseActivity).replaceFragment(getMainContainerId(), fragment, clearStack)
         else
-            activeActivity!!.replaceFragment(getMainContainerId(), fragment, clearStack)
+            activeActivity?.replaceFragment(getMainContainerId(), fragment, clearStack)
     }
 
     fun onBackPressed() {
@@ -90,7 +90,7 @@ abstract class BaseFragment : Fragment(), BaseInterface {
             if (KeyboardManager.isShowSoftKeyboard(activeActivity!!)) {
                 KeyboardManager.hideSoftKeyboard(activeActivity!!)
             } else {
-                activeActivity!!.onBackPressed()
+                activeActivity?.onBackPressed()
             }
 
         }

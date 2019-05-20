@@ -152,8 +152,8 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
 
         val credential = FacebookAuthProvider.getCredential(token.token)
 
-        getFireBaseAuth()!!.signInWithCredential(credential)
-            .addOnCompleteListener {
+        getFireBaseAuth()?.signInWithCredential(credential)
+            ?.addOnCompleteListener {
                 if (it.isSuccessful) {
 
                     val user = getFireBaseAuth()!!.currentUser
@@ -169,7 +169,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
                 }
             }
 
-            .addOnFailureListener {
+            ?.addOnFailureListener {
 
                 loginFail(it.localizedMessage)
             }
