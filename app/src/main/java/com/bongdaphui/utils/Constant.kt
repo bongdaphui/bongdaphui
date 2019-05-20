@@ -14,6 +14,8 @@ class Constant {
 
     val clubPathField = "clubs"
 
+    val requestJoinPathField = "requests"
+
     val schedulePlayerPathField = "schedule_player"
 
     val pathStorageField = "field_image/"

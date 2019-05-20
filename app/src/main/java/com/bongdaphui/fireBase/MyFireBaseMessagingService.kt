@@ -1,13 +1,24 @@
 package com.bongdaphui.fireBase
 
-//import com.google.firebase.messaging.FirebaseMessagingService
-//import com.google.firebase.messaging.RemoteMessage
+import android.annotation.SuppressLint
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.media.RingtoneManager
+import android.support.v4.app.NotificationCompat
+import android.util.Log
+import com.bongdaphui.MainActivity
+import com.bongdaphui.R
+import com.bongdaphui.utils.Constant
+import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.firebase.messaging.RemoteMessage
 
 
-//@SuppressLint("Registered")
-class MyFireBaseMessagingService /*: FirebaseMessagingService() */{
+@SuppressLint("Registered")
+class MyFireBaseMessagingService : FirebaseMessagingService() {
 
-    /*override fun onNewToken(token: String?) {
+    override fun onNewToken(token: String?) {
         Log.d(Constant().TAG, "Refreshed token: " + token!!)
 
         // If you want to send messages to this application instance or
@@ -26,17 +37,6 @@ class MyFireBaseMessagingService /*: FirebaseMessagingService() */{
         // Check if message contains a data payload.
         if (remoteMessage.data.isNotEmpty()) {
             Log.d(Constant().TAG, "Message data payload: " + remoteMessage.data)
-
-            if (*//* Check if data needs to be processed by long running job *//* true) {
-                // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
-
-                //todo
-//                scheduleJob()
-            } else {
-                // Handle message within 10 seconds
-                //todo
-//                handleNow()
-            }
 
         }
 
@@ -68,6 +68,6 @@ class MyFireBaseMessagingService /*: FirebaseMessagingService() */{
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(0, notificationBuilder.build())
-    }*/
+    }
 
 }
