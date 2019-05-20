@@ -87,21 +87,16 @@ class SchedulePlayerScreen : BaseFragment() {
 
             override fun onSuccess(list: ArrayList<SchedulePlayerModel>) {
 
-                scheduleList.clear()
-
                 scheduleList.addAll(list)
 
                 showEmptyView(false)
 
                 schedulePlayerAdapter.notifyDataSetChanged()
 
-
                 showProgress(false)
-
             }
 
             override fun onFail(message: String) {
-
 
                 showProgress(false)
 

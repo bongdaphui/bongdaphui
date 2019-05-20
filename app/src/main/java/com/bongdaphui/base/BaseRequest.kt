@@ -180,6 +180,7 @@ class BaseRequest {
                 for (document in result) {
 
                     val schedulePlayerModel = SchedulePlayerModel(
+                        document.data["id"] as String?,
                         document.data["idCity"] as String?,
                         document.data["idDistrict"] as String?,
                         document.data["startTime"] as String?,
@@ -191,7 +192,6 @@ class BaseRequest {
                     )
 
                     schedulePlayerList.add(schedulePlayerModel)
-
                 }
 
                 Log.d(Constant().TAG, "schedule player size: ${schedulePlayerList.size}")

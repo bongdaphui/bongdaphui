@@ -172,18 +172,18 @@ class AddSchedulePlayerScreen : BaseFragment() {
 
         val userModel = getDatabase().getUserDAO().getItems()
 
-        val schedulePlayerModel = SchedulePlayerModel(
-            idCity, idDistrict, startTime, endTime, userModel.id, userModel.name, userModel.phone, userModel.photoUrl
-        )
-
         enableItem(false)
 
         showProgress(true)
 
         val db = FirebaseFirestore.getInstance().collection(Constant().schedulePlayerPathField)
 
-        val id = Utils().getRandomNumberString()
+        val currentTime = Calendar.getInstance().timeInMillis
 
+        val id = "${Utils().getRandomNumberString()}$currentTime"
+        val schedulePlayerModel = SchedulePlayerModel(
+            id, idCity, idDistrict, startTime, endTime, userModel.id, userModel.name, userModel.phone, userModel.photoUrl
+        )
         db.document(id!!).set(schedulePlayerModel)
             .addOnSuccessListener {
 
