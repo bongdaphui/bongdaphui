@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.frg_manager.*
 
 class ManagerScreen : BaseFragment() {
 
-    private lateinit var userModel: UserModel
+    private var userModel: UserModel? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.frg_manager, container, false)
@@ -54,11 +54,13 @@ class ManagerScreen : BaseFragment() {
 
     private fun fillData() {
         frg_manager_tv_name_user.text =
-            if (userModel.name.isEmpty()) activity!!.resources.getText(R.string.three_dot) else userModel.name
+            if (TextUtils.isEmpty(userModel?.name)) activity?.resources?.getText(R.string.three_dot) else userModel?.name
 
-        if (userModel.photoUrl.isNotEmpty()) {
-            Glide.with(activity!!).asBitmap().load(userModel.photoUrl)
-                .into(frg_manager_iv_user)
+        if (TextUtils.isEmpty(userModel?.photoUrl)) {
+            activity?.let {
+                Glide.with(it).asBitmap().load(userModel?.photoUrl)
+                    .into(frg_manager_iv_user)
+            }
         }
     }
 
