@@ -29,6 +29,10 @@ class SchedulePlayerAdapter(
 
         val schedulePlayerModel: SchedulePlayerModel = items[position]
 
+        viewPlayerHolder.timeStart.text = schedulePlayerModel.startTime
+
+        viewPlayerHolder.timeEnd.text = schedulePlayerModel.endTime
+
 
     }
 

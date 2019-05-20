@@ -30,7 +30,6 @@ import com.bongdaphui.model.CommentModel
 import com.bongdaphui.model.DistrictModel
 import com.bongdaphui.model.FbFieldModel
 import com.google.firebase.storage.UploadTask
-import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import org.json.JSONArray
 import org.json.JSONException
 import java.io.ByteArrayOutputStream
@@ -149,13 +148,13 @@ class Utils {
     }
 
     fun getRandomNumberString(): String? {
-        // It will generate 6 digit random Number.
-        // from 0 to 999999
+        // It will generate 9 digit random Number.
+        // from 0 to 999999999
         val rnd = Random()
-        val number = rnd.nextInt(999999)
+        val number = rnd.nextInt(999999999)
 
         // this will convert any number sequence into 6 character.
-        return String.format("%06d", number)
+        return String.format("%09d", number)
     }
 
     fun validatePhoneNumber(number: String): Boolean {

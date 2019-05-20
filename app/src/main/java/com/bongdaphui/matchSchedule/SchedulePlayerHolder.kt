@@ -8,8 +8,8 @@ import com.bongdaphui.R
 class SchedulePlayerHolder(row: View) : RecyclerView.ViewHolder(row) {
 
 
-    var date: TextView = row.findViewById(R.id.item_match_schedule_tv_date)
+    var timeStart: TextView = row.findViewById(R.id.item_schedule_player_time_start)
 
-    var time: TextView = row.findViewById(R.id.item_match_schedule_tv_time)
+    var timeEnd: TextView = row.findViewById(R.id.item_schedule_player_time_end)
 
 }

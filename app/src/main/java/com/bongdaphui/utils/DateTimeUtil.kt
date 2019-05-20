@@ -16,8 +16,8 @@ class DateTimeUtil {
 
     enum class DateFormatDefinition(val format: String) {
         DD_MM_YYYY("dd/MM/yyyy"),
-        DD_MM_YYYY_HH_MM("dd/MM/yyyy hh:mm"),
-        HH_MM("hh:mm");
+        DD_MM_YYYY_HH_MM("dd/MM/yyyy HH:mm"),
+        HH_MM("HH:mm");
 
 
         override fun toString(): String {

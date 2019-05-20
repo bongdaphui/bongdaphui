@@ -69,7 +69,7 @@ class ClubScreen : BaseFragment() {
 
         initAdapter()
 //
-        loadListClub()
+//        loadListClub()
 
         onClick()
 

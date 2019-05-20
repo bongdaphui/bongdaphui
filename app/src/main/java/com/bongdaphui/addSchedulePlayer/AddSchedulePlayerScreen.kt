@@ -155,7 +155,10 @@ class AddSchedulePlayerScreen : BaseFragment() {
             frg_add_schedule_player_bt_to_date.text.toString() + " " + frg_add_schedule_player_bt_to_time.text.toString()
 
         if (DateTimeUtil().getTimeInMilliseconds(endTime, DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format)
-            <= DateTimeUtil().getTimeInMilliseconds(startTime, DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format)
+            <= DateTimeUtil().getTimeInMilliseconds(
+                startTime,
+                DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format
+            )
         ) {
 
             AlertDialog().showDialog(activity!!, Enum.EnumConfirmYes.ValidDateSchedule.value, object : ConfirmListener {
@@ -179,7 +182,9 @@ class AddSchedulePlayerScreen : BaseFragment() {
 
         val db = FirebaseFirestore.getInstance().collection(Constant().schedulePlayerPathField)
 
-        db.document(db.id).set(schedulePlayerModel)
+        val id = Utils().getRandomNumberString()
+
+        db.document(id!!).set(schedulePlayerModel)
             .addOnSuccessListener {
 
                 Log.d(Constant().TAG, "add schedule player success")
@@ -190,7 +195,7 @@ class AddSchedulePlayerScreen : BaseFragment() {
             }
             .addOnFailureListener {
 
-                Log.d(Constant().TAG, "upload field fail : $it")
+                Log.d(Constant().TAG, "add schedule player fail : $it")
 
                 showAlertAdd(Enum.EnumConfirmYes.AddSchedulePlayerFail.value)
             }

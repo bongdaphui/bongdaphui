@@ -6,60 +6,74 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_medium"
         android:layout_weight="1"
-        app:cardBackgroundColor="@color/teal_700"
+        app:cardBackgroundColor="@color/colorAccent"
         app:cardCornerRadius="2dp"
         app:cardElevation="2dp">
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal">
+
+        <ImageButton
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:tint="@android:color/white"
+                app:srcCompat="@drawable/ic_event"
+                android:layout_gravity="center_vertical"
+                tools:ignore="VectorDrawableCompat"/>
 
         <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:orientation="vertical"
                 android:gravity="center_vertical"
                 android:layout_height="wrap_content">
 
-            <ImageButton
-                    android:layout_width="?attr/actionBarSize"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:tint="@android:color/white"
-                    app:srcCompat="@drawable/ic_event"
-                    tools:ignore="VectorDrawableCompat"/>
             <TextView
-                    android:id="@+id/item_match_schedule_tv_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/spacing_large"
-                    android:text="20/5/2019"
+                    android:text="Bắt đầu: "
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/white"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_marginEnd="@dimen/spacing_large"
+                    android:layout_marginBottom="@dimen/spacing_large"
+                    android:text="Kết thúc:"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@android:color/white"/>
 
         </LinearLayout>
 
-        <View
+        <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:background="@color/grey_40"/>
-
-        <RelativeLayout
-                android:layout_width="match_parent"
+                android:orientation="vertical"
                 android:gravity="center_vertical"
-                android:layout_height="?attr/actionBarSize">
+                android:layout_height="wrap_content">
 
             <TextView
-                    android:id="@+id/item_match_schedule_tv_time"
+                    android:id="@+id/item_schedule_player_time_start"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="19:00 - 23:00"
-                    android:layout_marginEnd="@dimen/fs_46"
-                    android:layout_alignParentEnd="true"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:layout_margin="@dimen/spacing_large"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@android:color/white"/>
 
-        </RelativeLayout>
+            <TextView
+                    android:id="@+id/item_schedule_player_time_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_marginEnd="@dimen/spacing_large"
+                    android:layout_marginBottom="@dimen/spacing_large"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/white"/>
+        </LinearLayout>
+
 
     </LinearLayout>
 </android.support.v7.widget.CardView>
