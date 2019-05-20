@@ -103,7 +103,7 @@ class FieldScreen : BaseFragment() {
 
             override fun onSuccess(list: ArrayList<FbFieldModel>) {
 
-                hiddenRefresh()
+                Utils().hiddenRefresh(frg_field_refresh_view)
 
                 fieldListFull.clear()
 
@@ -124,7 +124,7 @@ class FieldScreen : BaseFragment() {
             }
 
             override fun onFail(message: String) {
-                hiddenRefresh()
+                Utils().hiddenRefresh(frg_field_refresh_view)
                 showProgress(false)
                 showNoData(true)
             }
@@ -144,7 +144,6 @@ class FieldScreen : BaseFragment() {
 
     private fun initSpinnerFieldBox() {
         if (isAdded) {
-
 
             frg_field_v_spinner.visibility = View.VISIBLE
 
@@ -222,13 +221,6 @@ class FieldScreen : BaseFragment() {
             frg_field_rcv.visibility = View.GONE
 
             getData()
-        }
-    }
-
-    private fun hiddenRefresh() {
-
-        if (frg_field_refresh_view != null && frg_field_refresh_view.isRefreshing) {
-            frg_field_refresh_view.isRefreshing = false
         }
     }
 

@@ -1,14 +1,18 @@
 package com.bongdaphui.profile
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
+import com.bongdaphui.base.BaseRequest
+import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.updateAccount.UpdateAccountScreen
 import com.bongdaphui.utils.DateTimeUtil
+import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.frg_profile.*
 
@@ -16,6 +20,18 @@ import kotlinx.android.synthetic.main.frg_profile.*
 class ProfileScreen : BaseFragment() {
 
     private lateinit var userModel: UserModel
+
+    companion object {
+
+        private var uidUser: String = ""
+
+        fun getInstance(uid: String): ProfileScreen {
+
+            uidUser = uid
+
+            return ProfileScreen()
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.frg_profile, container, false)
@@ -31,17 +47,56 @@ class ProfileScreen : BaseFragment() {
 
         setTitle(activity!!.resources.getString(R.string.info_user))
 
-        showFooter(true)
+        showFooter(false)
     }
 
+    @SuppressLint("RestrictedApi")
     override fun onBindView() {
 
-        userModel = getDatabase().getUserDAO().getItemById(getUIDUser())
+        if (uidUser.isNotEmpty()) {
 
-        fillData()
+            getInfoUser()
+
+            frg_profile_fb_update.visibility = View.GONE
+
+        } else {
+
+            frg_profile_container.visibility = View.VISIBLE
+
+            frg_profile_fb_update.visibility = View.VISIBLE
+
+            userModel = getDatabase().getUserDAO().getItemById(getUIDUser())
+
+            fillData()
+        }
 
         onClick()
 
+    }
+
+    private fun getInfoUser() {
+
+        showProgress(true)
+
+        BaseRequest().getUserInfo(getUIDUser(), object : GetDataListener<UserModel> {
+            override fun onSuccess(list: ArrayList<UserModel>) {
+            }
+
+            override fun onSuccess(item: UserModel) {
+
+                frg_profile_container.visibility = View.VISIBLE
+
+                showProgress(false)
+
+                userModel = item
+
+                fillData()
+            }
+
+            override fun onFail(message: String) {
+                showProgress(false)
+            }
+        })
     }
 
     private fun onClick() {
@@ -49,6 +104,10 @@ class ProfileScreen : BaseFragment() {
         frg_profile_fb_update.setOnClickListener {
 
             addFragment(UpdateAccountScreen.getInstance(userModel))
+        }
+
+        frg_profile_tv_phone.setOnClickListener {
+            Utils().openDial(activity!!, userModel.phone)
         }
     }
 

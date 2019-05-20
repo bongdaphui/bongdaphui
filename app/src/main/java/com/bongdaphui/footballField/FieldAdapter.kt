@@ -18,7 +18,7 @@ import com.bumptech.glide.request.RequestOptions
 class FieldAdapter(
     var context: Context?,
     private val items: ArrayList<FbFieldModel>,
-    val isLoggedUser: Boolean = true,
+    private val isLoggedUser: Boolean = true,
     var itemClickInterface: OnItemClickListener<FbFieldModel>
 ) : RecyclerView.Adapter<FieldHolder>() {
 

@@ -11,5 +11,6 @@ data class SchedulePlayerModel(
     val endTime: String? = "",
     val idPlayer: String? = "",
     val namePlayer: String? = "",
+    val phonePlayer: String? = "",
     val photoUrlPlayer: String? = ""
 )

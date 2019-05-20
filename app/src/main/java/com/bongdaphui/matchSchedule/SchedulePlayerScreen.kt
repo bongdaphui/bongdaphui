@@ -50,8 +50,6 @@ class SchedulePlayerScreen : BaseFragment() {
 
         onClick()
 
-        refreshData()
-
     }
 
     private fun onClick() {
@@ -91,8 +89,6 @@ class SchedulePlayerScreen : BaseFragment() {
 
                 scheduleList.clear()
 
-                hiddenRefresh()
-
                 scheduleList.addAll(list)
 
                 showEmptyView(false)
@@ -106,7 +102,6 @@ class SchedulePlayerScreen : BaseFragment() {
 
             override fun onFail(message: String) {
 
-                hiddenRefresh()
 
                 showProgress(false)
 
@@ -121,19 +116,5 @@ class SchedulePlayerScreen : BaseFragment() {
 
         view_empty.visibility = if (isShow) View.VISIBLE else View.GONE
 
-    }
-
-    private fun refreshData() {
-        frg_schedule_player_refresh.setOnRefreshListener {
-
-            getData()
-        }
-    }
-
-    private fun hiddenRefresh() {
-
-        if (frg_schedule_player_refresh != null && frg_schedule_player_refresh.isRefreshing) {
-            frg_schedule_player_refresh.isRefreshing = false
-        }
     }
 }

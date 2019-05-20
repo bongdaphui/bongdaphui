@@ -186,6 +186,7 @@ class BaseRequest {
                         document.data["endTime"] as String?,
                         document.data["idPlayer"] as String?,
                         document.data["namePlayer"] as String?,
+                        document.data["phonePlayer"] as String?,
                         document.data["photoUrlPlayer"] as String?
                     )
 

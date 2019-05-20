@@ -75,7 +75,7 @@ class ManagerScreen : BaseFragment() {
     private fun onClick() {
 
         frg_manager_profile.setOnClickListener {
-            addFragment(ProfileScreen())
+            addFragment(ProfileScreen.getInstance(""))
         }
 
         frg_manager_logout.setOnClickListener {

@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.support.v4.content.ContextCompat
+import android.support.v4.widget.SwipeRefreshLayout
 import android.telephony.PhoneNumberUtils
 import android.text.Editable
 import android.text.TextWatcher
@@ -488,7 +489,7 @@ class Utils {
 
     }
 
-    fun getListCity(context: Context): ArrayList<CityModel> {
+    private fun getListCity(context: Context): ArrayList<CityModel> {
 
         val listCity = ArrayList<CityModel>()
 
@@ -594,5 +595,36 @@ class Utils {
         }
 
         return listField
+    }
+
+    fun hiddenRefresh(swipeRefreshLayout: SwipeRefreshLayout) {
+
+        if (swipeRefreshLayout.isRefreshing) {
+            swipeRefreshLayout.isRefreshing = false
+        }
+    }
+
+    fun getAddress(context: Context, idCity: String, idDistrict: String): String {
+
+        var cityName = ""
+        var districtName = ""
+        val listCity = getListCity(context)
+
+        for (i in 0 until listCity.size) {
+
+            if (idCity == listCity[i].id) {
+
+                cityName = listCity[i].name!!
+
+                for (j in 0 until listCity[i].districts!!.size) {
+
+                    if (idDistrict == listCity[i].districts!![j].id) {
+
+                        districtName = listCity[i].districts!![j].name!!
+                    }
+                }
+            }
+        }
+        return "$districtName, $cityName"
     }
 }

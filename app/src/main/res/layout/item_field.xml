@@ -69,17 +69,20 @@
                         android:gravity="center_vertical"
                         android:layout_height="wrap_content">
 
-                    <ImageView
+                    <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/fs_10"
-                            android:src="@drawable/ic_phone_call_white"/>
+                            android:background="@android:color/transparent"
+                            android:tint="@android:color/white"
+                            app:srcCompat="@drawable/ic_phone"
+                            tools:ignore="VectorDrawableCompat"/>
 
                     <TextView
                             android:id="@+id/item_football_field_phone"
                             android:layout_width="wrap_content"
                             android:textSize="@dimen/ts_14"
                             android:text="0988422495"
+                            android:padding="@dimen/fs_5"
                             android:fontFamily="@font/axis_std_regular"
                             android:textColor="@android:color/white"
                             android:layout_height="wrap_content"/>

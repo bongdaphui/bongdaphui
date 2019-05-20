@@ -1,21 +1,31 @@
 package com.bongdaphui.findPlayer
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
-import com.bongdaphui.footballClub.ClubAdapter
-import com.bongdaphui.model.ClubModel
+import com.bongdaphui.base.BaseRequest
+import com.bongdaphui.listener.BaseSpinnerSelectInterface
+import com.bongdaphui.listener.GetDataListener
+import com.bongdaphui.listener.OnItemClickListener
+import com.bongdaphui.model.SchedulePlayerModel
+import com.bongdaphui.profile.ProfileScreen
+import com.bongdaphui.utils.Enum
+import com.bongdaphui.utils.Utils
+import kotlinx.android.synthetic.main.frg_find_player.*
 import kotlinx.android.synthetic.main.view_empty.*
 
 
 class FindPlayerScreen : BaseFragment() {
 
-    private var listClubModel: ArrayList<ClubModel> = ArrayList()
+    private var scheduleListFull: ArrayList<SchedulePlayerModel> = ArrayList()
 
-    var adapterClub: ClubAdapter? = null
+    private var scheduleList: ArrayList<SchedulePlayerModel> = ArrayList()
+
+    private lateinit var findPlayerAdapter: FindPlayerAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -30,11 +40,138 @@ class FindPlayerScreen : BaseFragment() {
 
         showFooter(true)
 
+        getData()
+
     }
 
     override fun onBindView() {
 
-        view_empty.visibility = View.VISIBLE
+        initListSchedule()
+
+        refreshData()
+
+    }
+
+    private fun initListSchedule() {
+
+        val isLoggedUser = !TextUtils.isEmpty(getUIDUser())
+
+        findPlayerAdapter =
+            FindPlayerAdapter(context, isLoggedUser, scheduleList, object : OnItemClickListener<SchedulePlayerModel> {
+                override fun onItemClick(item: SchedulePlayerModel, position: Int, type: Int) {
+                    if (type == Enum.EnumTypeClick.Phone.value) {
+                        if (isLoggedUser) {
+                            Utils().openDial(activity!!, "${item.phonePlayer}")
+                        }
+                    } else {
+                        addFragment(ProfileScreen.getInstance(item.idPlayer!!))
+                    }
+                }
+            })
+
+        frg_find_player_rcv.setHasFixedSize(true)
+        frg_find_player_rcv.setItemViewCacheSize(20)
+
+        findPlayerAdapter.setHasStableIds(true)
+
+        frg_find_player_rcv.adapter = findPlayerAdapter
+
+    }
+
+    private fun getData() {
+
+        showProgress(true)
+
+        BaseRequest().getSchedulePlayer(object : GetDataListener<SchedulePlayerModel> {
+            override fun onSuccess(item: SchedulePlayerModel) {
+            }
+
+            override fun onSuccess(list: ArrayList<SchedulePlayerModel>) {
+
+                showProgress(false)
+
+                Utils().hiddenRefresh(frg_find_player_refresh_view)
+
+                scheduleListFull.clear()
+
+                scheduleListFull.addAll(list)
+
+                showEmptyView(false)
+
+                initFilterBox()
+
+            }
+
+            override fun onFail(message: String) {
+
+                showProgress(false)
+
+                Utils().hiddenRefresh(frg_find_player_refresh_view)
+
+                showEmptyView(true)
+            }
+        })
+    }
+
+    private fun initFilterBox() {
+        if (isAdded) {
+
+            frg_find_player_v_spinner.visibility = View.VISIBLE
+
+            Utils().initSpinnerCity(
+                activity!!,
+                frg_find_player_sp_city,
+                frg_find_player_sp_district,
+                object :
+                    BaseSpinnerSelectInterface {
+                    override fun onSelectCity(_idCity: String, _idDistrict: String) {
+
+                        scheduleList.clear()
+
+                        for (i in 0 until scheduleListFull.size) {
+
+                            if (_idCity == scheduleListFull[i].idCity
+                                && _idDistrict == scheduleListFull[i].idDistrict
+                                && getUIDUser() != scheduleListFull[i].idPlayer
+                            ) {
+
+                                scheduleList.add(scheduleListFull[i])
+                            }
+                        }
+
+                        if (scheduleList.size > 0) {
+
+                            showEmptyView(false)
+
+                        } else {
+
+                            showEmptyView(true)
+                        }
+
+                        findPlayerAdapter.notifyDataSetChanged()
+                    }
+                })
+        }
+    }
+
+    private fun refreshData() {
+
+        frg_find_player_refresh_view.setOnRefreshListener {
+
+            frg_find_player_v_spinner.visibility = View.GONE
+
+            frg_find_player_rcv.visibility = View.GONE
+
+            getData()
+        }
+    }
+
+    private fun showEmptyView(isShow: Boolean) {
+
+        frg_find_player_rcv.visibility = if (isShow) View.GONE else View.VISIBLE
+
+        view_empty.visibility = if (isShow) View.VISIBLE else View.GONE
+
     }
 
     override fun onDestroy() {
@@ -42,5 +179,4 @@ class FindPlayerScreen : BaseFragment() {
 
         showProgress(false)
     }
-
 }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.model.SchedulePlayerModel
+import com.bongdaphui.utils.Utils
 
 class SchedulePlayerAdapter(
     var context: Context?,
@@ -33,8 +34,11 @@ class SchedulePlayerAdapter(
 
         viewPlayerHolder.timeEnd.text = schedulePlayerModel.endTime
 
+        viewPlayerHolder.address.text =
+            Utils().getAddress(context!!, schedulePlayerModel.idCity!!, schedulePlayerModel.idDistrict!!)
 
     }
+
 
 }
 

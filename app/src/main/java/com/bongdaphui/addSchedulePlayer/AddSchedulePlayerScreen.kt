@@ -173,7 +173,7 @@ class AddSchedulePlayerScreen : BaseFragment() {
         val userModel = getDatabase().getUserDAO().getItems()
 
         val schedulePlayerModel = SchedulePlayerModel(
-            idCity, idDistrict, startTime, endTime, userModel.id, userModel.name, userModel.photoUrl
+            idCity, idDistrict, startTime, endTime, userModel.id, userModel.name, userModel.phone, userModel.photoUrl
         )
 
         enableItem(false)

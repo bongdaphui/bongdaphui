@@ -1,39 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:id="@+id/frg_schedule_player_refresh"
-        android:layout_height="match_parent"
         android:background="@color/grey_5"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:layout_height="match_parent">
 
-    <RelativeLayout
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/frg_schedule_player_rcv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            tools:listitem="@layout/item_schedule_player"
+            android:scrollbars="vertical"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            android:layout_height="match_parent"/>
 
-        <android.support.v7.widget.RecyclerView
-                android:id="@+id/frg_schedule_player_rcv"
-                android:layout_width="match_parent"
-                tools:listitem="@layout/item_schedule_player"
-                android:scrollbars="vertical"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                android:layout_height="match_parent"/>
+    <include layout="@layout/view_empty"/>
 
-        <include layout="@layout/view_empty"/>
-
-        <android.support.design.widget.FloatingActionButton
-                android:id="@+id/frg_schedule_player_fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_plus"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="16dp"
-                android:visibility="visible"
-                android:layout_alignParentRight="true"
-                tools:ignore="RtlHardcoded"/>
-    </RelativeLayout>
-</android.support.v4.widget.SwipeRefreshLayout>
+    <android.support.design.widget.FloatingActionButton
+            android:id="@+id/frg_schedule_player_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_plus"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="16dp"
+            android:visibility="visible"
+            android:layout_alignParentRight="true"
+            tools:ignore="RtlHardcoded"/>
+</RelativeLayout>
