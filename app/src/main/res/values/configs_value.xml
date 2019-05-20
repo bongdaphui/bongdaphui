@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_notification_channel_id">bongdaphui</string>
+    <string name="facebook_app_id">2352385625041592</string>
+    <string name="google_client_id">940999611140-v8bko25t93n2fsrjadbll0bpkc5h4ltm.apps.googleusercontent.com</string>
+</resources>

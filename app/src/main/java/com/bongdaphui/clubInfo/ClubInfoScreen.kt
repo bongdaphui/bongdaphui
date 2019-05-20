@@ -5,9 +5,11 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
@@ -22,8 +24,10 @@ import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.fragment_club_info_screen.*
 
 
@@ -126,6 +130,21 @@ class ClubInfoScreen : BaseFragment() {
     }
 
     private fun checkAreYouRequest() {
+
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w("test", "getInstanceId failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                // Get new Instance ID token
+                val token = task.result?.token
+
+                // Log and toast
+                Log.d("test", token)
+                Toast.makeText(activity, token, Toast.LENGTH_SHORT).show()
+            })
 
         BaseRequest().loadData(activity!!, Constant().DATABASE_JOIN_CLUB, object :
             FireBaseSuccessListener {
