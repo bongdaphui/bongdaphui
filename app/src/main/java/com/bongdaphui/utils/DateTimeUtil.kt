@@ -54,18 +54,18 @@ class DateTimeUtil {
     }
 
     @SuppressLint("SimpleDateFormat")
-    fun getTimeInMilliseconds(date: String, type: String): Long {
+    fun getTimeInMilliseconds(date: String, type: String): Long? {
 
-        var timeInMilliseconds = 0
+        var timeInMilliseconds = 0L
         val sdf = SimpleDateFormat(type)
 
         try {
             val mDate = sdf.parse(date)
-            timeInMilliseconds = mDate.time.toInt()
+            timeInMilliseconds = mDate.time
         } catch (e: ParseException) {
             Log.d(Constant().TAG, "getTimeInMilliseconds : ${e.message}")
         }
-        return timeInMilliseconds.toLong()
+        return timeInMilliseconds
     }
 
     fun dialogDatePickerLight(context: Activity, bt: Button, type: String) {
@@ -94,7 +94,7 @@ class DateTimeUtil {
     fun dialogTimePickerLight(context: Activity, bt: Button) {
         val curCalender = Calendar.getInstance()
         val datePicker = TimePickerDialog.newInstance({ view, hourOfDay, minute, second ->
-            bt.text = "$hourOfDay : $minute"
+            bt.text = "$hourOfDay:$minute"
         }, curCalender.get(Calendar.HOUR_OF_DAY), curCalender.get(Calendar.MINUTE), true)
         //set dark light
         datePicker.isThemeDark = false

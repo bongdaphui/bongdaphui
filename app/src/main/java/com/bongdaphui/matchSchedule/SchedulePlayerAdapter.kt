@@ -35,7 +35,13 @@ class SchedulePlayerAdapter(
         viewPlayerHolder.timeEnd.text = schedulePlayerModel.endTime
 
         viewPlayerHolder.address.text =
-            Utils().getAddress(context!!, schedulePlayerModel.idCity!!, schedulePlayerModel.idDistrict!!)
+            context?.let { schedulePlayerModel.idCity?.let { it1 ->
+                schedulePlayerModel.idDistrict?.let { it2 ->
+                    Utils().getAddress(it,
+                        it1, it2
+                    )
+                }
+            } }
 
     }
 

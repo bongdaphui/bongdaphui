@@ -3,10 +3,7 @@ package com.bongdaphui.base
 import android.content.Context
 import android.util.Log
 import com.bongdaphui.MainActivity
-import com.bongdaphui.listener.CheckUserListener
-import com.bongdaphui.listener.FireBaseSuccessListener
-import com.bongdaphui.listener.GetDataListener
-import com.bongdaphui.listener.UpdateListener
+import com.bongdaphui.listener.*
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.model.FbFieldModel
 import com.bongdaphui.model.SchedulePlayerModel
@@ -210,6 +207,23 @@ class BaseRequest {
                 listener.onFail("${exception.message}")
             }
     }
+
+    fun deletaDocument(
+        collection: String, document: String, listener: DeleteDataDataListener
+    ) {
+
+        val db = FirebaseFirestore.getInstance().collection(collection).document(document)
+        db.delete()
+            .addOnSuccessListener {
+                Log.d(Constant().TAG, "DocumentSnapshot successfully deleted!")
+                listener.onSuccess()
+            }
+            .addOnFailureListener {
+                Log.w(Constant().TAG, "Error deleting document ${it.message}")
+                listener.onFail("${it.message}")
+            }
+    }
+
 
     fun saveOrUpdateUser(
         userModel: UserModel,

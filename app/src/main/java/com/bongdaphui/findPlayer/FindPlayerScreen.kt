@@ -141,6 +141,8 @@ class FindPlayerScreen : BaseFragment() {
 
                         if (scheduleList.size > 0) {
 
+                            scheduleList.sortBy { it.id }
+
                             showEmptyView(false)
 
                         } else {

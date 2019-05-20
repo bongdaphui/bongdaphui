@@ -39,15 +39,17 @@ class FindPlayerAdapter(
 
         viewPlayerHolder.timeEnd.text = schedulePlayerModel.endTime
 
-        if (schedulePlayerModel.photoUrlPlayer!!.isNotEmpty()) {
-            Glide.with(context!!).asBitmap().load(schedulePlayerModel.photoUrlPlayer)
-                .into(viewPlayerHolder.imageView)
+        if (schedulePlayerModel.photoUrlPlayer?.isNotEmpty()!!) {
+            context?.let {
+                Glide.with(it).asBitmap().load(schedulePlayerModel.photoUrlPlayer)
+                    .into(viewPlayerHolder.imageView)
+            }
         }
 
         viewPlayerHolder.tvName.text = schedulePlayerModel.namePlayer
 
         viewPlayerHolder.tvPhone.text =
-            Html.fromHtml("<u> ${if (isLoggedUser) schedulePlayerModel.phonePlayer else context!!.getString(R.string.need_login_to_see)}</u>")
+            Html.fromHtml("<u> ${if (isLoggedUser) schedulePlayerModel.phonePlayer else context?.getString(R.string.need_login_to_see)}</u>")
 
         viewPlayerHolder.tvPhone.setOnClickListener {
             itemClickInterface.onItemClick(schedulePlayerModel, position, Enum.EnumTypeClick.Phone.value)

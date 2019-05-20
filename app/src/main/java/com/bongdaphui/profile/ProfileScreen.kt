@@ -117,7 +117,7 @@ class ProfileScreen : BaseFragment() {
             if (userModel.name.isEmpty()) activity!!.resources.getString(R.string.three_dot) else userModel.name
 
         if (userModel.photoUrl.isNotEmpty()) {
-            Glide.with(activity!!).load(userModel.photoUrl).into(frg_profile_iv_user)
+            activity?.let { Glide.with(it).load(userModel.photoUrl).into(frg_profile_iv_user) }
         }
 
         frg_profile_tv_height.text =

@@ -52,7 +52,7 @@ class AddSchedulePlayerScreen : BaseFragment() {
 
         showFooter(false)
 
-        setTitle(activity!!.resources.getString(R.string.add_schedule_of_you))
+        activity?.resources?.getString(R.string.add_schedule_of_you)?.let { setTitle(it) }
     }
 
     override fun onBindView() {
@@ -85,48 +85,54 @@ class AddSchedulePlayerScreen : BaseFragment() {
     }
 
     private fun initSpinner() {
-        Utils().initSpinnerCity(
-            activity!!,
-            frg_add_schedule_player_sp_city,
-            frg_add_schedule_player_sp_district,
-            object :
-                BaseSpinnerSelectInterface {
-                override fun onSelectCity(_idCity: String, _idDistrict: String) {
-                    idCity = _idCity
-                    idDistrict = _idDistrict
-                }
-            })
+        activity?.let {
+            Utils().initSpinnerCity(
+                it,
+                frg_add_schedule_player_sp_city,
+                frg_add_schedule_player_sp_district,
+                object :
+                    BaseSpinnerSelectInterface {
+                    override fun onSelectCity(_idCity: String, _idDistrict: String) {
+                        idCity = _idCity
+                        idDistrict = _idDistrict
+                    }
+                })
+        }
     }
 
     private fun onClick() {
 
         frg_add_schedule_player_bt_from_date.setOnClickListener {
 
-            DateTimeUtil().dialogDatePickerLight(
-                activity!!,
-                frg_add_schedule_player_bt_from_date,
-                DateTimeUtil.DateFormatDefinition.DD_MM_YYYY.format
-            )
+            activity?.let { it1 ->
+                DateTimeUtil().dialogDatePickerLight(
+                    it1,
+                    frg_add_schedule_player_bt_from_date,
+                    DateTimeUtil.DateFormatDefinition.DD_MM_YYYY.format
+                )
+            }
         }
 
         frg_add_schedule_player_bt_from_time.setOnClickListener {
 
-            DateTimeUtil().dialogTimePickerLight(activity!!, frg_add_schedule_player_bt_from_time)
+            activity?.let { it1 -> DateTimeUtil().dialogTimePickerLight(it1, frg_add_schedule_player_bt_from_time) }
 
         }
 
         frg_add_schedule_player_bt_to_date.setOnClickListener {
 
-            DateTimeUtil().dialogDatePickerLight(
-                activity!!,
-                frg_add_schedule_player_bt_to_date,
-                DateTimeUtil.DateFormatDefinition.DD_MM_YYYY.format
-            )
+            activity?.let { it1 ->
+                DateTimeUtil().dialogDatePickerLight(
+                    it1,
+                    frg_add_schedule_player_bt_to_date,
+                    DateTimeUtil.DateFormatDefinition.DD_MM_YYYY.format
+                )
+            }
         }
 
         frg_add_schedule_player_bt_to_time.setOnClickListener {
 
-            DateTimeUtil().dialogTimePickerLight(activity!!, frg_add_schedule_player_bt_to_time)
+            activity?.let { it1 -> DateTimeUtil().dialogTimePickerLight(it1, frg_add_schedule_player_bt_to_time) }
         }
 
         frg_add_schedule_player_tv_input.setOnClickListener {
@@ -154,18 +160,20 @@ class AddSchedulePlayerScreen : BaseFragment() {
         val endTime =
             frg_add_schedule_player_bt_to_date.text.toString() + " " + frg_add_schedule_player_bt_to_time.text.toString()
 
-        if (DateTimeUtil().getTimeInMilliseconds(endTime, DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format)
+        if (DateTimeUtil().getTimeInMilliseconds(endTime, DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format)!!
             <= DateTimeUtil().getTimeInMilliseconds(
                 startTime,
                 DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format
-            )
+            )!!
         ) {
 
-            AlertDialog().showDialog(activity!!, Enum.EnumConfirmYes.ValidDateSchedule.value, object : ConfirmListener {
-                override fun onConfirm(id: Int) {
+            activity?.let {
+                AlertDialog().showDialog(it, Enum.EnumConfirmYes.ValidDateSchedule.value, object : ConfirmListener {
+                    override fun onConfirm(id: Int) {
 
-                }
-            })
+                    }
+                })
+            }
 
             return
         }
@@ -178,20 +186,32 @@ class AddSchedulePlayerScreen : BaseFragment() {
 
         val db = FirebaseFirestore.getInstance().collection(Constant().schedulePlayerPathField)
 
-        val currentTime = Calendar.getInstance().timeInMillis
+        val id =
+            DateTimeUtil().getTimeInMilliseconds(startTime, DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format)
 
-        val id = "${Utils().getRandomNumberString()}$currentTime"
         val schedulePlayerModel = SchedulePlayerModel(
-            id, idCity, idDistrict, startTime, endTime, userModel.id, userModel.name, userModel.phone, userModel.photoUrl
+            "$id",
+            idCity,
+            idDistrict,
+            startTime,
+            endTime,
+            userModel.id,
+            userModel.name,
+            userModel.phone,
+            userModel.photoUrl
         )
-        db.document(id!!).set(schedulePlayerModel)
+
+        val currentTime = Calendar.getInstance().timeInMillis
+        val idDocument = "${Utils().getRandomNumberString()}$currentTime"
+
+        db.document(idDocument).set(schedulePlayerModel)
             .addOnSuccessListener {
 
                 Log.d(Constant().TAG, "add schedule player success")
 
                 showAlertAdd(Enum.EnumConfirmYes.AddSchedulePlayerSuccess.value)
 
-                addScheduleListener!!.onSuccess()
+                addScheduleListener?.onSuccess()
             }
             .addOnFailureListener {
 
@@ -206,12 +226,14 @@ class AddSchedulePlayerScreen : BaseFragment() {
 
         showProgress(false)
 
-        AlertDialog().showDialog(activity!!, type, object : ConfirmListener {
-            override fun onConfirm(id: Int) {
+        activity?.let {
+            AlertDialog().showDialog(it, type, object : ConfirmListener {
+                override fun onConfirm(id: Int) {
 
-                enableItem(true)
-            }
-        })
+                    enableItem(true)
+                }
+            })
+        }
     }
 
 

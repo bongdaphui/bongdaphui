@@ -38,7 +38,7 @@ class SchedulePlayerScreen : BaseFragment() {
 
         showFooter(false)
 
-        setTitle(activity!!.resources.getString(R.string.schedule_of_you))
+        activity?.resources?.getString(R.string.schedule_of_you)?.let { setTitle(it) }
     }
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
@@ -87,7 +87,17 @@ class SchedulePlayerScreen : BaseFragment() {
 
             override fun onSuccess(list: ArrayList<SchedulePlayerModel>) {
 
-                scheduleList.addAll(list)
+                scheduleList.clear()
+
+                for (i in 0 until list.size) {
+
+                    if (getUIDUser() == list[i].idPlayer) {
+
+                        scheduleList.add(list[i])
+                    }
+                }
+
+                scheduleList.sortBy { it.id }
 
                 showEmptyView(false)
 
