@@ -21,7 +21,7 @@ class FindPlayerAdapter(
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): FindPlayerHolder {
 
-        return FindPlayerHolder(LayoutInflater.from(context).inflate(R.layout.item_find_player, p0, false))
+        return FindPlayerHolder(LayoutInflater.from(context).inflate(R.layout.item_find, p0, false))
 
     }
 

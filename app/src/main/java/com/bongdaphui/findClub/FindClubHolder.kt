@@ -1,4 +1,4 @@
-package com.bongdaphui.findPlayer
+package com.bongdaphui.findClub
 
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bongdaphui.R
 
-class FindPlayerHolder(row: View) : RecyclerView.ViewHolder(row) {
+class FindClubHolder(row: View) : RecyclerView.ViewHolder(row) {
 
 
     var containerView: CardView = row.findViewById(R.id.item_find_container)

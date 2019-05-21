@@ -1,21 +1,30 @@
 package com.bongdaphui.findClub
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
-import com.bongdaphui.club.ClubAdapter
-import com.bongdaphui.model.ClubModel
+import com.bongdaphui.base.BaseRequest
+import com.bongdaphui.listener.BaseSpinnerSelectInterface
+import com.bongdaphui.listener.GetDataListener
+import com.bongdaphui.listener.OnItemClickListener
+import com.bongdaphui.model.ScheduleClubModel
+import com.bongdaphui.utils.Enum
+import com.bongdaphui.utils.Utils
+import kotlinx.android.synthetic.main.frg_find_club.*
 import kotlinx.android.synthetic.main.view_empty.*
 
 
 class FindClubScreen : BaseFragment() {
 
-    private var listClubModel: ArrayList<ClubModel> = ArrayList()
+    private var scheduleListFull: ArrayList<ScheduleClubModel> = ArrayList()
 
-    var adapterClub: ClubAdapter? = null
+    private var scheduleList: ArrayList<ScheduleClubModel> = ArrayList()
+
+    private lateinit var findClubAdapter: FindClubAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -30,11 +39,139 @@ class FindClubScreen : BaseFragment() {
 
         showFooter(true)
 
+        getData()
+
     }
 
     override fun onBindView() {
 
-        view_empty.visibility = View.VISIBLE
+        initListSchedule()
+
+        refreshData()
+
+    }
+
+    private fun initListSchedule() {
+
+        val isLoggedUser = !TextUtils.isEmpty(getUIDUser())
+
+        findClubAdapter =
+            FindClubAdapter(context, isLoggedUser, scheduleList, object : OnItemClickListener<ScheduleClubModel> {
+                override fun onItemClick(item: ScheduleClubModel, position: Int, type: Int) {
+                    if (type == Enum.EnumTypeClick.Phone.value) {
+                        if (isLoggedUser) {
+                            Utils().openDial(activity!!, "${item.phone}")
+                        }
+                    } else {
+//                        addFragment(ClubInfoScreen.getInstance(item))
+                    }
+                }
+            })
+
+        frg_find_club_rcv.setHasFixedSize(true)
+        frg_find_club_rcv.setItemViewCacheSize(20)
+
+        findClubAdapter.setHasStableIds(true)
+
+        frg_find_club_rcv.adapter = findClubAdapter
+
+    }
+
+    private fun getData() {
+
+        showProgress(true)
+
+        BaseRequest().getScheduleClub(object : GetDataListener<ScheduleClubModel> {
+            override fun onSuccess(item: ScheduleClubModel) {
+            }
+
+            override fun onSuccess(list: ArrayList<ScheduleClubModel>) {
+
+                showProgress(false)
+
+                Utils().hiddenRefresh(frg_find_club_refresh_view)
+
+                scheduleListFull.clear()
+
+                scheduleListFull.addAll(list)
+
+                showEmptyView(false)
+
+                initFilterBox()
+
+            }
+
+            override fun onFail(message: String) {
+
+                showProgress(false)
+
+                Utils().hiddenRefresh(frg_find_club_refresh_view)
+
+                showEmptyView(true)
+            }
+        })
+    }
+
+    private fun initFilterBox() {
+        if (isAdded) {
+
+            frg_find_club_v_spinner.visibility = View.VISIBLE
+
+            Utils().initSpinnerCity(
+                activity!!,
+                frg_find_club_sp_city,
+                frg_find_club_sp_district,
+                object :
+                    BaseSpinnerSelectInterface {
+                    override fun onSelectCity(_idCity: String, _idDistrict: String) {
+
+                        scheduleList.clear()
+
+                        for (i in 0 until scheduleListFull.size) {
+
+                            if (_idCity == scheduleListFull[i].idCity
+                                && _idDistrict == scheduleListFull[i].idDistrict
+                                && getUIDUser() != scheduleListFull[i].idCaptain
+                            ) {
+
+                                scheduleList.add(scheduleListFull[i])
+                            }
+                        }
+
+                        if (scheduleList.size > 0) {
+
+                            scheduleList.sortBy { it.id }
+
+                            showEmptyView(false)
+
+                        } else {
+
+                            showEmptyView(true)
+                        }
+
+                        findClubAdapter.notifyDataSetChanged()
+                    }
+                })
+        }
+    }
+
+    private fun refreshData() {
+
+        frg_find_club_refresh_view.setOnRefreshListener {
+
+            frg_find_club_v_spinner.visibility = View.GONE
+
+            frg_find_club_rcv.visibility = View.GONE
+
+            getData()
+        }
+    }
+
+    private fun showEmptyView(isShow: Boolean) {
+
+        frg_find_club_rcv?.visibility = if (isShow) View.GONE else View.VISIBLE
+
+        view_empty?.visibility = if (isShow) View.VISIBLE else View.GONE
 
     }
 
@@ -43,5 +180,4 @@ class FindClubScreen : BaseFragment() {
 
         showProgress(false)
     }
-
 }
