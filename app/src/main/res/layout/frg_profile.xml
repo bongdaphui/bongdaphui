@@ -2,7 +2,7 @@
 <android.support.v4.widget.NestedScrollView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nested_content"
+        android:id="@+id/nested_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
@@ -56,14 +56,13 @@
                         android:layout_margin="@dimen/spacing_middle"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:tint="@color/light_green_600"
-                        app:srcCompat="@drawable/ic_chat"
-                        tools:ignore="VectorDrawableCompat"/>
+                        app:srcCompat="@drawable/ic_chat"/>
 
                 <com.mikhaellopez.circularimageview.CircularImageView
                         android:id="@+id/frg_profile_iv_user"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:src="@drawable/ic_person_grey"
+                        app:srcCompat="@drawable/ic_person_grey"
                         app:civ_border="true"
                         app:civ_shadow="true"
                         app:civ_shadow_radius="0"
@@ -77,8 +76,7 @@
                         android:layout_margin="@dimen/spacing_middle"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:tint="@color/light_green_600"
-                        app:srcCompat="@drawable/ic_call"
-                        tools:ignore="VectorDrawableCompat"/>
+                        app:srcCompat="@drawable/ic_call"/>
 
             </LinearLayout>
 
@@ -394,8 +392,7 @@
                 app:backgroundTint="@color/colorAccent"
                 app:fabSize="normal"
                 app:rippleColor="@color/grey_5"
-                app:srcCompat="@drawable/ic_create"
-                tools:ignore="VectorDrawableCompat"/>
+                app:srcCompat="@drawable/ic_create"/>
     </RelativeLayout>
 
 </android.support.v4.widget.NestedScrollView>

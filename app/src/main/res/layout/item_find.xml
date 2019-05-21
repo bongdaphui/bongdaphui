@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_medium"
         android:layout_weight="1"
@@ -22,7 +22,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_person_grey"
+                app:srcCompat="@drawable/ic_person_grey"
                 app:civ_shadow="true"
                 app:civ_shadow_radius="0"
                 app:civ_border="true"
@@ -59,8 +59,7 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:tint="@android:color/white"
-                        app:srcCompat="@drawable/ic_phone"
-                        tools:ignore="VectorDrawableCompat"/>
+                        app:srcCompat="@drawable/ic_phone"/>
 
                 <TextView
                         android:id="@+id/item_find_tv_phone"
