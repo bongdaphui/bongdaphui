@@ -16,7 +16,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
@@ -151,18 +150,8 @@ class BaseRequest {
         uid: String,
         listener: GetDataListener<UserModel>
     ) {
-
-        //avoid crash multi process fire base => add setting
-        //setting FirebaseFirestore
-        val fireStore = FirebaseFirestore.getInstance()
-
-        val setting = FirebaseFirestoreSettings.Builder().setPersistenceEnabled(false).build()
-
-        fireStore.firestoreSettings = setting
-
-//        val db = FirebaseFirestore.getInstance().collection(Constant().userPathField).document(uid)
-
-        fireStore.collection(Constant().userPathField).document(uid).get()
+        val db = FirebaseFirestore.getInstance().collection(Constant().userPathField).document(uid)
+        db.get()
             .addOnSuccessListener { document ->
                 val value = document?.toObject(UserModel::class.java)
                 if (value != null) {
