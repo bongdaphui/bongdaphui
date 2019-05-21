@@ -5,12 +5,13 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.GridLayoutManager
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.dialog.AlertDialog
@@ -20,6 +21,8 @@ import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.model.RequestJoinClubModel
 import com.bongdaphui.model.UserModel
+import com.bongdaphui.model.UserStickModel
+import com.bongdaphui.player.PlayerStickAdapter
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
@@ -28,11 +31,14 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.iid.FirebaseInstanceId
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_club_info_screen.*
 
 
 class ClubInfoScreen : BaseFragment() {
 
+    private val listStickPlayer: ArrayList<UserStickModel> = ArrayList()
+    private var adapterStickPlayer: PlayerStickAdapter? = null
     private var clubModel: ClubModel? = null
 
     val listJoinClub: ArrayList<RequestJoinClubModel> = ArrayList()
@@ -57,7 +63,7 @@ class ClubInfoScreen : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_club_info_screen, container, false)
+        return inflater.inflate(com.bongdaphui.R.layout.fragment_club_info_screen, container, false)
 
     }
 
@@ -83,8 +89,19 @@ class ClubInfoScreen : BaseFragment() {
         }
 
         initView()
-
+        loadData()
         onClick()
+    }
+
+    private fun loadData() {
+
+        clubModel?.let {
+            for (item in it.players) {
+                listStickPlayer.add(Gson().fromJson(item, UserStickModel::class.java))
+            }
+        }
+        adapterStickPlayer?.notifyDataSetChanged()
+
     }
 
     private fun initView() {
@@ -97,12 +114,22 @@ class ClubInfoScreen : BaseFragment() {
 
         collapsing_toolbar.title = clubModel!!.name
         Glide.with(context!!).load(
-            if (clubModel!!.photo!!.isEmpty()) Utils().getDrawable(
+            if (TextUtils.isEmpty(clubModel?.photo)) Utils().getDrawable(
                 context!!,
-                R.drawable.ic_picture
-            ) else clubModel!!.photo
+                com.bongdaphui.R.drawable.ic_picture
+            ) else clubModel?.photo
         )
             .into(frg_club_info_iv_logo)
+
+
+        adapterStickPlayer = activity?.let { PlayerStickAdapter(it, listStickPlayer) }
+
+        recycler_list_player.layoutManager = GridLayoutManager(activity, 3)
+        recycler_list_player.setHasFixedSize(true)
+        recycler_list_player.setItemViewCacheSize(5)
+        adapterStickPlayer?.setHasStableIds(true)
+
+        recycler_list_player.adapter = adapterStickPlayer
 
     }
 
@@ -271,3 +298,5 @@ class ClubInfoScreen : BaseFragment() {
         })
     }
 }
+
+

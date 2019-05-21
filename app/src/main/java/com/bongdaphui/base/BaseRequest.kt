@@ -1,6 +1,8 @@
 package com.bongdaphui.base
 
 import android.content.Context
+import android.support.annotation.NonNull
+import android.support.annotation.Nullable
 import android.util.Log
 import com.bongdaphui.MainActivity
 import com.bongdaphui.listener.*
@@ -14,6 +16,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 
@@ -265,6 +268,7 @@ class BaseRequest {
                 } else {
                     listener.onFail("Not Found")
                 }
+                Log.d("Tien",document.metadata.toString())
 
 
             }
@@ -272,4 +276,6 @@ class BaseRequest {
                 listener.onFail(exception.localizedMessage)
             }
     }
+
+
 }

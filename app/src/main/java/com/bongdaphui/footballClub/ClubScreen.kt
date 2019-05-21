@@ -95,7 +95,7 @@ class ClubScreen : BaseFragment() {
                 }
             }
         })
-        adapterClub!!.setHasStableIds(true)
+        adapterClub?.setHasStableIds(true)
         frg_football_club_rcv.adapter = adapterClub
         frg_football_club_rcv.setHasFixedSize(true)
         frg_football_club_rcv.setItemViewCacheSize(20)

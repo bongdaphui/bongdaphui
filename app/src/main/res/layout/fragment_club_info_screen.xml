@@ -195,7 +195,6 @@
                                 android:id="@+id/recycler_list_player"
                                 android:layout_marginTop="@dimen/fs_10"
                                 android:layout_marginBottom="@dimen/fs_10"
-                                android:background="@drawable/bg_transparent_solid_gray_border_5_radius"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"/>
 

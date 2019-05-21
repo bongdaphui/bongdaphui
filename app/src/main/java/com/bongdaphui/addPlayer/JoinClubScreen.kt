@@ -15,11 +15,13 @@ import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.model.ClubModel
+import com.bongdaphui.model.UserStickModel
 import com.bongdaphui.utils.*
 import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_join_club.*
 import java.io.File
 import java.text.SimpleDateFormat
@@ -432,7 +434,8 @@ class JoinClubScreen : BaseFragment() {
         for (i in 0 until clubModel.players.size) {
 
             if (i == clubModel.players.size - 1) {
-                return clubModel.players[i]
+                val userStickModel = Gson().fromJson(clubModel.players[i],UserStickModel::class.java)
+                return userStickModel.id
 
             }
         }
