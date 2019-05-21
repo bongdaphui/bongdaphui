@@ -21,6 +21,7 @@ import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.listener.ConfirmListener
 import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.model.ClubModel
+import com.bongdaphui.model.UserStickModel
 import com.bongdaphui.utils.*
 import com.bongdaphui.utils.Enum
 import com.bumptech.glide.Glide
@@ -29,6 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_add_fc.*
 import java.io.File
 import java.text.SimpleDateFormat
@@ -391,7 +393,10 @@ class AddClubScreen : BaseFragment() {
             "${frg_add_fc_sp_district.selectedItem}, ${frg_add_fc_sp_city.selectedItem}"
         }
         val id = "${idLastFC + 1}"
-        var listPlayer = arrayListOf<String>(getUIDUser())
+
+        var userCurrent = getDatabase().getUserDAO().getItems()
+        val userStickModel = UserStickModel(userCurrent.id,userCurrent.photoUrl,userCurrent.name,userCurrent.position)
+        var listPlayer = arrayListOf(Gson().toJson(userStickModel))
 
         val clubModel =
             ClubModel(
