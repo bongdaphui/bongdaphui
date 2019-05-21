@@ -170,9 +170,9 @@ class FindPlayerScreen : BaseFragment() {
 
     private fun showEmptyView(isShow: Boolean) {
 
-        frg_find_player_rcv.visibility = if (isShow) View.GONE else View.VISIBLE
+        frg_find_player_rcv?.visibility = if (isShow) View.GONE else View.VISIBLE
 
-        view_empty.visibility = if (isShow) View.VISIBLE else View.GONE
+        view_empty?.visibility = if (isShow) View.VISIBLE else View.GONE
 
     }
 
