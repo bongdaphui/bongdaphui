@@ -2,10 +2,11 @@
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     <android.support.v4.widget.NestedScrollView
+            android:id="@+id/frg_manager_nested_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
@@ -75,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
-                    android:minHeight="50dp"
+                    android:minHeight="@dimen/spacing_xxlarge"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingLeft="@dimen/spacing_large"
@@ -90,75 +91,91 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
                         android:textColor="@color/grey_90"/>
 
+                <ImageButton
+                        android:id="@+id/frg_manager_bt_toggle_info"
+                        android:layout_width="?attr/actionBarSize"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:tint="@color/grey_40"
+                        app:srcCompat="@drawable/ic_arrow_drop"
+                        tools:ignore="VectorDrawableCompat"/>
+
             </LinearLayout>
 
             <LinearLayout
-                    android:id="@+id/frg_manager_my_club_list"
+                    android:id="@+id/frg_manager_expand_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:gravity="center_vertical"
-                    android:minHeight="50dp"
-                    android:layout_marginStart="@dimen/fs_46"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/spacing_large"
-                    android:paddingRight="@dimen/spacing_large" android:focusable="true">
-
-                <TextView
-                        android:layout_width="0dp"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+                <LinearLayout
+                        android:id="@+id/frg_manager_my_club_list"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif-light"
-                        android:text="Danh sách"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/grey_80"/>
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center_vertical"
+                        android:minHeight="50dp"
+                        android:layout_marginStart="@dimen/fs_46"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/spacing_large"
+                        android:paddingRight="@dimen/spacing_large" android:focusable="true">
 
-                <View
-                        android:layout_width="@dimen/spacing_large"
-                        android:layout_height="wrap_content"/>
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-light"
+                            android:text="Danh sách"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/grey_80"/>
 
-                <ImageButton
-                        android:layout_width="@dimen/spacing_xmlarge"
-                        android:layout_height="@dimen/spacing_xmlarge"
-                        android:background="@android:color/transparent"
-                        android:tint="@color/grey_60"
-                        app:srcCompat="@drawable/ic_next"/>
+                    <View
+                            android:layout_width="@dimen/spacing_large"
+                            android:layout_height="wrap_content"/>
 
-            </LinearLayout>
-            <LinearLayout
-                    android:id="@+id/frg_manager_my_club_schedule"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:gravity="center_vertical"
-                    android:minHeight="50dp"
-                    android:layout_marginStart="@dimen/fs_46"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/spacing_large"
-                    android:paddingRight="@dimen/spacing_large" android:focusable="true">
+                    <ImageButton
+                            android:layout_width="@dimen/spacing_xmlarge"
+                            android:layout_height="@dimen/spacing_xmlarge"
+                            android:background="@android:color/transparent"
+                            android:tint="@color/grey_60"
+                            app:srcCompat="@drawable/ic_next"/>
 
-                <TextView
-                        android:layout_width="0dp"
+                </LinearLayout>
+                <LinearLayout
+                        android:id="@+id/frg_manager_my_club_schedule"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif-light"
-                        android:text="Lịch thi đấu"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/grey_80"/>
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center_vertical"
+                        android:minHeight="50dp"
+                        android:layout_marginStart="@dimen/fs_46"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/spacing_large"
+                        android:paddingRight="@dimen/spacing_large" android:focusable="true">
 
-                <View
-                        android:layout_width="@dimen/spacing_large"
-                        android:layout_height="wrap_content"/>
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-light"
+                            android:text="Lịch thi đấu"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/grey_80"/>
 
-                <ImageButton
-                        android:layout_width="@dimen/spacing_xmlarge"
-                        android:layout_height="@dimen/spacing_xmlarge"
-                        android:background="@android:color/transparent"
-                        android:tint="@color/grey_60"
-                        app:srcCompat="@drawable/ic_next"/>
+                    <View
+                            android:layout_width="@dimen/spacing_large"
+                            android:layout_height="wrap_content"/>
 
+                    <ImageButton
+                            android:layout_width="@dimen/spacing_xmlarge"
+                            android:layout_height="@dimen/spacing_xmlarge"
+                            android:background="@android:color/transparent"
+                            android:tint="@color/grey_60"
+                            app:srcCompat="@drawable/ic_next"/>
+
+                </LinearLayout>
             </LinearLayout>
 
             <View
