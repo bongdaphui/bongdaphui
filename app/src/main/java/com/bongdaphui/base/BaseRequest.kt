@@ -234,7 +234,7 @@ class BaseRequest {
         userModel: UserModel,
         listener: UpdateListener
     ) {
-        val db = FirebaseFirestore.getInstance().collection(Constant().userPathField).document(userModel.id.toString())
+        val db = FirebaseFirestore.getInstance().collection(Constant().userPathField).document(userModel.id)
         db.set(userModel, SetOptions.merge())
             .addOnSuccessListener {
                 listener.onUpdateSuccess()

@@ -67,10 +67,14 @@ class ManagerScreen : BaseFragment() {
     private fun checkLogin() {
 
         if (TextUtils.isEmpty(getUIDUser())) {
-            frg_manager_bt_login_account.visibility = View.VISIBLE
-        } else {
-            frg_manager_v_manager.visibility = View.VISIBLE
 
+            frg_manager_bt_login_account.visibility = View.VISIBLE
+            frg_manager_v_manager.visibility = View.GONE
+
+        } else {
+
+            frg_manager_bt_login_account.visibility = View.GONE
+            frg_manager_v_manager.visibility = View.VISIBLE
         }
     }
 

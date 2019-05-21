@@ -597,30 +597,32 @@ class Utils {
         return listField
     }
 
-    fun hiddenRefresh(swipeRefreshLayout: SwipeRefreshLayout) {
+    fun hiddenRefresh(swipeRefreshLayout: SwipeRefreshLayout?) {
 
-        if (swipeRefreshLayout.isRefreshing) {
+        if (null != swipeRefreshLayout && swipeRefreshLayout.isRefreshing) {
             swipeRefreshLayout.isRefreshing = false
         }
     }
 
-    fun getAddress(context: Context, idCity: String, idDistrict: String): String {
+    fun getAddress(context: Context?, idCity: String?, idDistrict: String?): String {
 
         var cityName = ""
         var districtName = ""
-        val listCity = getListCity(context)
+        val listCity = context?.let { getListCity(it) }
 
-        for (i in 0 until listCity.size) {
+        if (listCity != null) {
+            for (i in 0 until listCity.size) {
 
-            if (idCity == listCity[i].id) {
+                if (idCity == listCity[i].id) {
 
-                cityName = listCity[i].name!!
+                    cityName = listCity[i].name!!
 
-                for (j in 0 until listCity[i].districts!!.size) {
+                    for (j in 0 until listCity[i].districts!!.size) {
 
-                    if (idDistrict == listCity[i].districts!![j].id) {
+                        if (idDistrict == listCity[i].districts!![j].id) {
 
-                        districtName = listCity[i].districts!![j].name!!
+                            districtName = listCity[i].districts!![j].name!!
+                        }
                     }
                 }
             }
