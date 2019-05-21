@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.dialog.AlertDialog
-import com.bongdaphui.listener.AddScheduleListener
+import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.listener.ConfirmListener
 import com.bongdaphui.model.SchedulePlayerModel
@@ -28,11 +28,11 @@ class AddSchedulePlayerScreen : BaseFragment() {
 
     companion object {
 
-        private var addScheduleListener: AddScheduleListener? = null
+        private var addDataListener: AddDataListener? = null
 
-        fun getInstance(listener: AddScheduleListener): AddSchedulePlayerScreen {
+        fun getInstance(listener: AddDataListener): AddSchedulePlayerScreen {
 
-            addScheduleListener = listener
+            addDataListener = listener
 
             return AddSchedulePlayerScreen()
 
@@ -211,7 +211,7 @@ class AddSchedulePlayerScreen : BaseFragment() {
 
                 showAlertAdd(Enum.EnumConfirmYes.AddSchedulePlayerSuccess.value)
 
-                addScheduleListener?.onSuccess()
+                addDataListener?.onSuccess()
             }
             .addOnFailureListener {
 
@@ -235,7 +235,5 @@ class AddSchedulePlayerScreen : BaseFragment() {
             })
         }
     }
-
-
 }
 

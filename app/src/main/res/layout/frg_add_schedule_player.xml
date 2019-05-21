@@ -31,7 +31,7 @@
                     android:layout_marginBottom="@dimen/spacing_medium"
                     android:gravity="center_horizontal"
                     android:text="Chọn khu vực bạn muốn đá"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse"
                     android:textColor="@color/grey_60"/>
 
             <android.support.v7.widget.CardView
@@ -76,10 +76,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_large"
-                    android:layout_marginBottom="@dimen/spacing_medium"
                     android:gravity="center_horizontal"
                     android:text="Chọn khung giờ bạn muốn đá"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse"
                     android:textColor="@color/grey_60"/>
             <View
                     android:layout_width="match_parent"

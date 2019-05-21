@@ -17,6 +17,7 @@ import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.dialog.AlertDialog
+import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.listener.ConfirmListener
 import com.bongdaphui.listener.UpdateListener
@@ -25,9 +26,6 @@ import com.bongdaphui.model.UserStickModel
 import com.bongdaphui.utils.*
 import com.bongdaphui.utils.Enum
 import com.bumptech.glide.Glide
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.gson.Gson
@@ -35,7 +33,6 @@ import kotlinx.android.synthetic.main.fragment_add_fc.*
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class AddClubScreen : BaseFragment() {
@@ -44,27 +41,20 @@ class AddClubScreen : BaseFragment() {
 
     var idDistrict: String = ""
 
-    var idLastFC: Int = 9999
-
     private var cal = Calendar.getInstance()
 
     private var filePathUri: Uri? = null
 
     companion object {
 
-        private const val ID_LAST_FC = "ID_LAST_FC"
+        private var addDataListener: AddDataListener? = null
 
-        fun getInstance(idFC: Int): AddClubScreen {
+        fun getInstance(listener: AddDataListener): AddClubScreen {
 
-            val screen = AddClubScreen()
+            addDataListener = listener
 
-            val bundle = Bundle()
+            return AddClubScreen()
 
-            bundle.putInt(ID_LAST_FC, idFC)
-
-            screen.arguments = bundle
-
-            return screen
         }
     }
 
@@ -86,14 +76,6 @@ class AddClubScreen : BaseFragment() {
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onBindView() {
-
-        val bundle = arguments
-
-        if (bundle != null) {
-
-            idLastFC = bundle.getInt(ID_LAST_FC)
-
-        }
 
         initSpinner()
 
@@ -256,19 +238,6 @@ class AddClubScreen : BaseFragment() {
             validate = false
         }
 
-        /*if (frg_add_fc_et_full_name.text.toString().isEmpty()) {
-            frg_add_fc_tv_error_input_full_name.visibility = View.VISIBLE
-            frg_add_fc_et_full_name.requestFocus()
-
-            validate = false
-        }*/
-
-        /*if (frg_add_fc_et_email.text.toString().isEmpty()) {
-            frg_add_fc_tv_error_input_email.visibility = View.VISIBLE
-
-            validate = false
-        }*/
-
         if (!Utils().validatePhoneNumber(frg_add_fc_et_phone.text.toString())) {
             frg_add_fc_tv_error_input_phone.visibility = View.VISIBLE
             frg_add_fc_tv_error_input_phone.text = activity!!.getString(R.string.please_enter_your_phone_valid)
@@ -298,19 +267,6 @@ class AddClubScreen : BaseFragment() {
             validate = false
 
         }
-
-        /*if (frg_add_football_field_et_address.text.toString().isEmpty()) {
-            frg_add_football_field_tv_error_input_address.visibility = View.VISIBLE
-            frg_add_football_field_et_address.requestFocus()
-            validate = false
-        }*/
-
-
-        /*if (frg_add_fc_et_dob.text.toString().isEmpty()) {
-            frg_add_fc_tv_error_input_dob.visibility = View.VISIBLE
-
-            validate = false
-        }*/
 
         return validate
 
@@ -392,12 +348,17 @@ class AddClubScreen : BaseFragment() {
         } else {
             "${frg_add_fc_sp_district.selectedItem}, ${frg_add_fc_sp_city.selectedItem}"
         }
-        val id = "${idLastFC + 1}"
 
-        var userCurrent = getDatabase().getUserDAO().getItems()
+        val currentTime = Calendar.getInstance().timeInMillis
+
+        val id = "${Utils().getRandomNumberString()}$currentTime"
+
+        val userCurrent = getDatabase().getUserDAO().getItems()
+
         val userStickModel =
             UserStickModel(userCurrent.id, userCurrent.photoUrl, userCurrent.name, userCurrent.position)
-        var listPlayer = arrayListOf(Gson().toJson(userStickModel))
+
+        val listPlayer = arrayListOf(Gson().toJson(userStickModel))
 
         val clubModel =
             ClubModel(
@@ -416,17 +377,20 @@ class AddClubScreen : BaseFragment() {
             )
         BaseRequest().saveOrUpdateClub(clubModel, object : UpdateListener {
             override fun onUpdateSuccess() {
+
+                addDataListener?.onSuccess()
+
                 showProgress(false)
+
                 Utils().alertInsertSuccess(activity)
+
             }
 
             override fun onUpdateFail(err: String) {
                 showProgress(false)
                 Utils().alertInsertFail(activity)
             }
-
         })
-
     }
 
     private fun disableItem() {
@@ -456,5 +420,4 @@ class AddClubScreen : BaseFragment() {
         val sdf = SimpleDateFormat(myFormat, Locale.US)
         frg_add_fc_et_dob!!.text = sdf.format(cal.time)
     }
-
 }

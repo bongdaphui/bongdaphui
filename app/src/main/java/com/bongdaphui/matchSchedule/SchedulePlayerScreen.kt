@@ -10,7 +10,7 @@ import com.bongdaphui.R
 import com.bongdaphui.addSchedulePlayer.AddSchedulePlayerScreen
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
-import com.bongdaphui.listener.AddScheduleListener
+import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.model.SchedulePlayerModel
 import kotlinx.android.synthetic.main.frg_schedule_player.*
@@ -54,7 +54,7 @@ class SchedulePlayerScreen : BaseFragment() {
 
     private fun onClick() {
         frg_schedule_player_fab.setOnClickListener {
-            addFragment(AddSchedulePlayerScreen.getInstance(object : AddScheduleListener {
+            addFragment(AddSchedulePlayerScreen.getInstance(object : AddDataListener {
                 override fun onSuccess() {
                     getData()
                 }

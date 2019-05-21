@@ -12,6 +12,7 @@ import com.bongdaphui.listener.ConfirmListener
 import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.matchSchedule.SchedulePlayerScreen
 import com.bongdaphui.model.UserModel
+import com.bongdaphui.myClub.MyClubScreen
 import com.bongdaphui.profile.ProfileScreen
 import com.bongdaphui.utils.Enum
 import com.bumptech.glide.Glide
@@ -82,6 +83,10 @@ class ManagerScreen : BaseFragment() {
 
         frg_manager_profile.setOnClickListener {
             addFragment(ProfileScreen.getInstance(""))
+        }
+
+        frg_manager_my_club.setOnClickListener {
+            addFragment(MyClubScreen())
         }
 
         frg_manager_logout.setOnClickListener {

@@ -1,4 +1,4 @@
-package com.bongdaphui.footballClub
+package com.bongdaphui.club
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

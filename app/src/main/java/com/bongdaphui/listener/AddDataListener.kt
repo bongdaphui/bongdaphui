@@ -1,6 +1,6 @@
 package com.bongdaphui.listener
 
-interface AddScheduleListener {
+interface AddDataListener {
 
     fun onSuccess()
 }

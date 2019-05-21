@@ -29,6 +29,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.fragment_add_field.*
 import java.io.File
+import java.util.*
 
 
 class AddFieldScreen : BaseFragment() {
@@ -37,34 +38,6 @@ class AddFieldScreen : BaseFragment() {
     private var idDistrict: String = ""
 
     private var filePathUri: Uri? = null
-
-    /*companion object {
-
-        const val LIST_CITY_MODEL = "LIST_CITY_MODEL"
-
-        const val LIST_DISTRICT_MODEL = "LIST_DISTRICT_MODEL"
-
-        fun getInstance(
-
-            listCityModel: ArrayList<CityModel>,
-
-            listDistrictModel: ArrayList<DistrictModel>
-
-        ): AddFieldScreen {
-
-            val screen = AddFieldScreen()
-
-            val bundle = Bundle()
-
-            bundle.putSerializable(LIST_CITY_MODEL, listCityModel)
-
-            bundle.putSerializable(LIST_DISTRICT_MODEL, listDistrictModel)
-
-            screen.arguments = bundle
-
-            return screen
-        }
-    }*/
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_add_field, container, false)
@@ -148,32 +121,16 @@ class AddFieldScreen : BaseFragment() {
 
                 override fun onSuccess(list: ArrayList<FbFieldModel>) {
 
-                    var idMaxFieldList = 0L
-
                     for (i in 0 until list.size) {
 
                         if (list[i].name == frg_add_field_et_name.text.toString() || list[i].phone == frg_add_field_et_phone.text.toString()) {
 
                             showAlertFieldIsAvailable()
 
-                            idMaxFieldList = 0L
-
                             break
                         }
-
-                        if (list[i].id!!.toLong() > idMaxFieldList) {
-                            idMaxFieldList = list[i].id!!.toLong()
-                        }
                     }
-
-                    if (idMaxFieldList > 0L) {
-
-                        // plus 1 for id of field
-                        startInsertField(idMaxFieldList + 1)
-
-                        Log.d(Constant().TAG, "idOfField: ${idMaxFieldList + 1}")
-
-                    }
+                    startInsertField()
                 }
 
                 override fun onFail(message: String) {
@@ -232,12 +189,12 @@ class AddFieldScreen : BaseFragment() {
 
     }
 
-    private fun startInsertField(idField: Long) {
+    private fun startInsertField() {
 
         //no image
         if (null == filePathUri) {
 
-            setData(idField, "")
+            setData("")
 
             //has image
         } else {
@@ -264,7 +221,7 @@ class AddFieldScreen : BaseFragment() {
 
                     storageReference2nd.downloadUrl.addOnSuccessListener {
 
-                        setData(idField, "$it")
+                        setData("$it")
                     }
                 }
                 // If something goes wrong .
@@ -283,7 +240,7 @@ class AddFieldScreen : BaseFragment() {
         }
     }
 
-    private fun setData(idField: Long, uriPhoto: String) {
+    private fun setData(uriPhoto: String) {
 
         val name = frg_add_field_et_name.text.toString()
         val phone = frg_add_field_et_phone.text.toString()
@@ -294,6 +251,8 @@ class AddFieldScreen : BaseFragment() {
 
         val amountField = frg_add_field_et_count_field.text.toString()
         val priceField = frg_add_field_et_price_field.text.toString()
+
+        val idField = Calendar.getInstance().timeInMillis
 
         val fieldModel = FbFieldModel(
             idField,

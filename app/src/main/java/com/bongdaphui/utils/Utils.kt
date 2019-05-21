@@ -149,13 +149,13 @@ class Utils {
     }
 
     fun getRandomNumberString(): String? {
-        // It will generate 9 digit random Number.
-        // from 0 to 999999999
+        // It will generate 3 digit random Number.
+        // from 0 to 999
         val rnd = Random()
-        val number = rnd.nextInt(999999999)
+        val number = rnd.nextInt(999)
 
         // this will convert any number sequence into 6 character.
-        return String.format("%09d", number)
+        return String.format("%03d", number)
     }
 
     fun validatePhoneNumber(number: String): Boolean {

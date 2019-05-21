@@ -16,6 +16,8 @@
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             android:layout_height="match_parent"/>
 
+    <include layout="@layout/view_empty"/>
+
     <android.support.design.widget.FloatingActionButton
             android:id="@+id/frg_football_club_fab"
             android:layout_width="wrap_content"

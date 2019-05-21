@@ -11,7 +11,7 @@ import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.dao.AppDatabase
 import com.bongdaphui.findClub.FindClubScreen
 import com.bongdaphui.findPlayer.FindPlayerScreen
-import com.bongdaphui.footballClub.ClubScreen
+import com.bongdaphui.club.ClubScreen
 import com.bongdaphui.footballField.FieldScreen
 import com.bongdaphui.manager.ManagerScreen
 import com.bongdaphui.model.CityModel

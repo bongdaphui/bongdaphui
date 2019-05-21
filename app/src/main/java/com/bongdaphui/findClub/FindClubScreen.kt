@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
-import com.bongdaphui.footballClub.ClubAdapter
+import com.bongdaphui.club.ClubAdapter
 import com.bongdaphui.model.ClubModel
 import kotlinx.android.synthetic.main.view_empty.*
 
