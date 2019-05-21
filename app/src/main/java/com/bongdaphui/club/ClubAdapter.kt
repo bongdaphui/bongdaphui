@@ -54,7 +54,7 @@ class ClubAdapter(
 
         viewHolder.phone.text = Html.fromHtml("<u>${club.phone}</u>")
 
-        viewHolder.phone.setOnClickListener {
+        viewHolder.callClub.setOnClickListener {
             onItemClickListener.onItemClick(club, position, Enum.EnumTypeClick.Phone.value)
         }
 

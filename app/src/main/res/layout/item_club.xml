@@ -88,16 +88,23 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fs_110"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:layout_marginEnd="@dimen/fs_20"
+                android:layout_marginLeft="@dimen/fs_20"
+                android:layout_marginStart="@dimen/fs_20"
                 android:layout_marginBottom="@dimen/fs_10"
-                android:layout_marginLeft="@dimen/fs_110"
                 android:layout_marginRight="@dimen/fs_20">
+            <ImageView
+                    android:id="@+id/img_call_club"
+                    android:layout_width="@dimen/fs_71"
+                    android:src="@drawable/ic_phone"
+                    android:padding="@dimen/fs_20"
+                    android:layout_height="@dimen/fs_71"/>
             <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:layout_marginStart="@dimen/fs_20"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                 <TextView
