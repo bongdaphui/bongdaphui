@@ -18,6 +18,7 @@ import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.ConfirmListener
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.UpdateListener
+import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.model.RequestJoinClubModel
 import com.bongdaphui.model.UserModel
@@ -156,35 +157,40 @@ class ClubInfoScreen : BaseFragment() {
     }
 
 
-    private fun check(): Boolean {
-
-        var isRequest = false
-
-        for (i in 0 until listJoinClub.size) {
-            if (listJoinClub[i].user.id == getUIDUser() && listJoinClub[i].idClub == clubModel!!.id) {
-                isRequest = true
-            }
-        }
-        return isRequest
-
-    }
-
-
     private fun requestJoinGroup() {
         val idPlayer = getUIDUser()
-        val idClub = clubModel?.id ?: ""
-        BaseRequest().registerJoinClub(idClub, idPlayer, object : UpdateListener {
-            override fun onUpdateSuccess() {
-                //pending button
-                fab_join_club.isEnabled = false
-                showAlertSuccessJoinGroup()
+        if (!TextUtils.isEmpty(idPlayer)) {
+
+            val idClub = clubModel?.id ?: ""
+            BaseRequest().registerJoinClub(idClub, idPlayer, object : UpdateListener {
+                override fun onUpdateSuccess() {
+                    //pending button
+                    fab_join_club.isEnabled = false
+                    showAlertSuccessJoinGroup()
+                }
+
+                override fun onUpdateFail(err: String) {
+                    showAlertFailJoinGroup(err)
+                }
+
+            })
+        } else {
+            //require to login
+            //non account
+            activity?.let {
+                AlertDialog().showDialog(
+                    it,
+                    Enum.EnumConfirmYes.FeatureNeedLogin.value,
+                    object : ConfirmListener {
+                        override fun onConfirm(id: Int) {
+                            if (id == Enum.EnumConfirmYes.FeatureNeedLogin.value) {
+                                addFragment(LoginScreen())
+                            }
+                        }
+                    })
             }
 
-            override fun onUpdateFail(err: String) {
-                showAlertFailJoinGroup(err)
-            }
-
-        })
+        }
     }
 
 
