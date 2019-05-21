@@ -67,7 +67,7 @@
                         app:civ_border="true"
                         app:civ_shadow="true"
                         app:civ_shadow_radius="0"
-                        app:civ_border_color="@color/c_b2973f"
+                        app:civ_border_color="@color/colorAccent"
                         app:civ_border_width="2dp"/>
 
                 <ImageButton
@@ -115,7 +115,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="178 cm"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                                android:textColor="@color/c_b2973f"/>
+                                android:textColor="@color/colorAccent"/>
 
                         <TextView
                                 android:layout_width="wrap_content"
@@ -142,7 +142,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="68 kg"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                                android:textColor="@color/c_b2973f"/>
+                                android:textColor="@color/colorAccent"/>
 
                         <TextView
                                 android:layout_width="wrap_content"
@@ -169,7 +169,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="29"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                                android:textColor="@color/c_b2973f"/>
+                                android:textColor="@color/colorAccent"/>
 
                         <TextView
                                 android:layout_width="wrap_content"
@@ -209,7 +209,7 @@
                             android:layout_height="wrap_content"
                             android:text="Ngày sinh"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@color/c_b2973f"
+                            android:textColor="@color/colorAccent"
                             android:textStyle="bold"/>
 
                     <TextView
@@ -234,7 +234,7 @@
                             android:layout_height="wrap_content"
                             android:text="Email"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@color/c_b2973f"
+                            android:textColor="@color/colorAccent"
                             android:textStyle="bold"/>
 
                     <TextView
@@ -270,7 +270,7 @@
                             android:layout_height="wrap_content"
                             android:text="Phone"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@color/c_b2973f"
+                            android:textColor="@color/colorAccent"
                             android:textStyle="bold"/>
 
                     <TextView
@@ -295,7 +295,7 @@
                             android:layout_height="wrap_content"
                             android:text="Sở trường"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@color/c_b2973f"
+                            android:textColor="@color/colorAccent"
                             android:textStyle="bold"/>
 
                     <TextView
@@ -330,7 +330,7 @@
                             android:layout_height="wrap_content"
                             android:text="Bình luận"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@color/c_b2973f"
+                            android:textColor="@color/colorAccent"
                             android:textStyle="bold"/>
 
                     <TextView
@@ -355,7 +355,7 @@
                             android:layout_height="wrap_content"
                             android:text=""
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@color/c_b2973f"
+                            android:textColor="@color/colorAccent"
                             android:textStyle="bold"/>
 
                     <TextView
