@@ -10,9 +10,7 @@ import com.bongdaphui.R
 import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.utils.Enum
-import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 
 class MyClubAdapter(
     var context: Context?,
@@ -35,11 +33,9 @@ class MyClubAdapter(
 
         val club: ClubModel = items[position]
 
-        Glide.with(context!!).load(
-            if (club.photo!!.isEmpty()) Utils().getDrawable(context!!, R.drawable.ic_picture) else club.photo
-        )
-            .apply(RequestOptions.circleCropTransform())
-            .into(viewHolder.photo)
+        if (club.photo?.isNotEmpty()!!) {
+            Glide.with(context!!).asBitmap().load(club.photo).into(viewHolder.photo)
+        }
 
         viewHolder.nameFC.text = club.name
 

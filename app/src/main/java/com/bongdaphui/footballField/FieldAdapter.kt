@@ -13,13 +13,12 @@ import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 
 class FieldAdapter(
     var context: Context?,
     private val items: ArrayList<FbFieldModel>,
     private val isLoggedUser: Boolean = true,
-    var itemClickInterface: OnItemClickListener<FbFieldModel>
+    private var itemClickInterface: OnItemClickListener<FbFieldModel>
 ) : RecyclerView.Adapter<FieldHolder>() {
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): FieldHolder {
@@ -38,12 +37,9 @@ class FieldAdapter(
 
         val fbFieldModel: FbFieldModel = items[position]
 
-        Glide.with(context!!).load(
-            if (Utils().isEmpty(fbFieldModel.photoUrl))
-                Utils().getDrawable(context!!, R.drawable.ic_picture) else fbFieldModel.photoUrl
-        )
-            .apply(RequestOptions.circleCropTransform())
-            .into(viewHolder.image)
+        if (fbFieldModel.photoUrl?.isNotEmpty()!!) {
+            Glide.with(this.context!!).asBitmap().load(fbFieldModel.photoUrl).into(viewHolder.image)
+        }
 
         viewHolder.name.text = "Sân bóng đá ${fbFieldModel.name}"
 

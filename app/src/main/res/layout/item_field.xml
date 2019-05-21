@@ -27,16 +27,17 @@
                 android:layout_marginLeft="@dimen/fs_20"
                 android:orientation="horizontal">
 
-            <FrameLayout
-                    android:layout_width="@dimen/fs_71"
-                    android:background="@drawable/bg_oval_solid_transparent_border_white"
-                    android:layout_height="@dimen/fs_71">
-                <ImageView
-                        android:layout_gravity="center"
-                        android:id="@+id/item_football_field_image"
-                        android:layout_width="@dimen/fs_70"
-                        android:layout_height="@dimen/fs_70"/>
-            </FrameLayout>
+            <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/item_football_field_image"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/ic_picture"
+                    app:civ_shadow="true"
+                    app:civ_background_color="@color/colorAccent"
+                    app:civ_shadow_radius="0"
+                    app:civ_border="true"
+                    app:civ_border_width="1dp"
+                    app:civ_border_color="@android:color/white"/>
 
             <LinearLayout
                     android:layout_width="match_parent"
