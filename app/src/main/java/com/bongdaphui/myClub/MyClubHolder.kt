@@ -22,4 +22,6 @@ class MyClubHolder(row: View) : RecyclerView.ViewHolder(row) {
 
     var amountPlayer: TextView = row.findViewById(R.id.item_club_amount_player)
 
+    var addSchedule: TextView = row.findViewById(R.id.item_club_tv_add_schedule)
+
 }

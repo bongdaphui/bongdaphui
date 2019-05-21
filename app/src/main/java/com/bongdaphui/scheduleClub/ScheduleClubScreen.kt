@@ -1,5 +1,6 @@
-package com.bongdaphui.matchSchedule
+package com.bongdaphui.scheduleClub
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
@@ -7,24 +8,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bongdaphui.R
-import com.bongdaphui.addSchedulePlayer.AddSchedulePlayerScreen
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
-import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.GetDataListener
-import com.bongdaphui.model.SchedulePlayerModel
-import kotlinx.android.synthetic.main.frg_schedule_player.*
+import com.bongdaphui.model.ScheduleClubModel
+import kotlinx.android.synthetic.main.frg_schedule.*
 import kotlinx.android.synthetic.main.view_empty.*
 
 
-class SchedulePlayerScreen : BaseFragment() {
+class ScheduleClubScreen : BaseFragment() {
 
-    private lateinit var schedulePlayerAdapter: SchedulePlayerAdapter
+    private lateinit var scheduleClubAdapter: ScheduleClubAdapter
 
-    private var scheduleList: ArrayList<SchedulePlayerModel> = ArrayList()
+    private var scheduleList: ArrayList<ScheduleClubModel> = ArrayList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.frg_schedule_player, container, false)
+        return inflater.inflate(R.layout.frg_schedule, container, false)
 
     }
 
@@ -41,6 +40,7 @@ class SchedulePlayerScreen : BaseFragment() {
         activity?.resources?.getString(R.string.schedule_of_you)?.let { setTitle(it) }
     }
 
+    @SuppressLint("RestrictedApi")
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onBindView() {
 
@@ -48,31 +48,20 @@ class SchedulePlayerScreen : BaseFragment() {
 
         getData()
 
-        onClick()
+        frg_schedule_fab.visibility = View.GONE
 
-    }
-
-    private fun onClick() {
-        frg_schedule_player_fab.setOnClickListener {
-            addFragment(AddSchedulePlayerScreen.getInstance(object : AddDataListener {
-                override fun onSuccess() {
-                    getData()
-                }
-
-            }))
-        }
     }
 
     private fun initListSchedule() {
 
-        schedulePlayerAdapter = SchedulePlayerAdapter(context, scheduleList)
+        scheduleClubAdapter = ScheduleClubAdapter(context, scheduleList)
 
-        frg_schedule_player_rcv.setHasFixedSize(true)
-        frg_schedule_player_rcv.setItemViewCacheSize(20)
+        frg_schedule_rcv.setHasFixedSize(true)
+        frg_schedule_rcv.setItemViewCacheSize(20)
 
-        schedulePlayerAdapter.setHasStableIds(true)
+        scheduleClubAdapter.setHasStableIds(true)
 
-        frg_schedule_player_rcv.adapter = schedulePlayerAdapter
+        frg_schedule_rcv.adapter = scheduleClubAdapter
 
     }
 
@@ -81,17 +70,17 @@ class SchedulePlayerScreen : BaseFragment() {
 
         showProgress(true)
 
-        BaseRequest().getSchedulePlayer(object : GetDataListener<SchedulePlayerModel> {
-            override fun onSuccess(item: SchedulePlayerModel) {
+        BaseRequest().getScheduleClub(object : GetDataListener<ScheduleClubModel> {
+            override fun onSuccess(item: ScheduleClubModel) {
             }
 
-            override fun onSuccess(list: ArrayList<SchedulePlayerModel>) {
+            override fun onSuccess(list: ArrayList<ScheduleClubModel>) {
 
                 scheduleList.clear()
 
                 for (i in 0 until list.size) {
 
-                    if (getUIDUser() == list[i].idPlayer) {
+                    if (getUIDUser() == list[i].idCaptain) {
 
                         scheduleList.add(list[i])
                     }
@@ -101,7 +90,7 @@ class SchedulePlayerScreen : BaseFragment() {
 
                 showEmptyView(false)
 
-                schedulePlayerAdapter.notifyDataSetChanged()
+                scheduleClubAdapter.notifyDataSetChanged()
 
                 showProgress(false)
             }
@@ -117,7 +106,7 @@ class SchedulePlayerScreen : BaseFragment() {
 
     private fun showEmptyView(isShow: Boolean) {
 
-        frg_schedule_player_rcv.visibility = if (isShow) View.GONE else View.VISIBLE
+        frg_schedule_rcv.visibility = if (isShow) View.GONE else View.VISIBLE
 
         view_empty.visibility = if (isShow) View.VISIBLE else View.GONE
 

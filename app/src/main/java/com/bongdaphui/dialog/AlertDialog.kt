@@ -24,8 +24,8 @@ class AlertDialog {
                 Enum.EnumConfirmYes.UpdateSuccess.value -> message = context.resources.getString(R.string.update_success)
                 Enum.EnumConfirmYes.UpdateFail.value -> message = context.resources.getString(R.string.update_fail)
                 Enum.EnumConfirmYes.ValidDateSchedule.value -> message = context.resources.getString(R.string.valid_input_date_schedule)
-                Enum.EnumConfirmYes.AddSchedulePlayerSuccess.value -> message = context.resources.getString(R.string.add_schedule_player_success)
-                Enum.EnumConfirmYes.AddSchedulePlayerFail.value -> message = context.resources.getString(R.string.add_schedule_player_fail)
+                Enum.EnumConfirmYes.AddScheduleSuccess.value -> message = context.resources.getString(R.string.add_schedule_player_success)
+                Enum.EnumConfirmYes.AddScheduleFail.value -> message = context.resources.getString(R.string.add_schedule_player_fail)
             }
 
         }

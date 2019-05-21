@@ -1,4 +1,4 @@
-package com.bongdaphui.addSchedulePlayer
+package com.bongdaphui.addScheduleClub
 
 import android.os.Bundle
 import android.util.Log
@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.dialog.AlertDialog
-import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.listener.ConfirmListener
-import com.bongdaphui.model.SchedulePlayerModel
+import com.bongdaphui.model.ClubModel
+import com.bongdaphui.model.ScheduleClubModel
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.DateTimeUtil
 import com.bongdaphui.utils.Enum
@@ -21,20 +21,20 @@ import kotlinx.android.synthetic.main.frg_add_schedule.*
 import java.util.*
 
 
-class AddSchedulePlayerScreen : BaseFragment() {
+class AddScheduleClubScreen : BaseFragment() {
 
     private var idCity: String = ""
     private var idDistrict: String = ""
 
     companion object {
 
-        private var addDataListener: AddDataListener? = null
+        private var clubModel: ClubModel? = null
 
-        fun getInstance(listener: AddDataListener): AddSchedulePlayerScreen {
+        fun getInstance(model: ClubModel): AddScheduleClubScreen {
 
-            addDataListener = listener
+            clubModel = model
 
-            return AddSchedulePlayerScreen()
+            return AddScheduleClubScreen()
 
         }
     }
@@ -174,52 +174,48 @@ class AddSchedulePlayerScreen : BaseFragment() {
                     }
                 })
             }
-
             return
         }
-
-        val userModel = getDatabase().getUserDAO().getItems()
 
         enableItem(false)
 
         showProgress(true)
 
-        val db = FirebaseFirestore.getInstance().collection(Constant().schedulePlayerPathField)
+        val db = FirebaseFirestore.getInstance().collection(Constant().scheduleClubPathField)
 
         val id =
             DateTimeUtil().getTimeInMilliseconds(startTime, DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format)
 
-        val schedulePlayerModel = SchedulePlayerModel(
+        val scheduleClubModel = ScheduleClubModel(
             "$id",
+            clubModel?.id,
+            clubModel?.idCaptain,
             idCity,
             idDistrict,
             startTime,
             endTime,
-            userModel.id,
-            userModel.name,
-            userModel.phone,
-            userModel.photoUrl
+            clubModel?.name,
+            clubModel?.phone,
+            clubModel?.photo
         )
 
         val currentTime = Calendar.getInstance().timeInMillis
         val idDocument = "${Utils().getRandomNumberString()}$currentTime"
 
-        db.document(idDocument).set(schedulePlayerModel)
+        db.document(idDocument).set(scheduleClubModel)
             .addOnSuccessListener {
 
-                Log.d(Constant().TAG, "add schedule player success")
+                Log.d(Constant().TAG, "add schedule club success")
 
                 showAlertAdd(Enum.EnumConfirmYes.AddScheduleSuccess.value)
 
-                addDataListener?.onSuccess()
             }
             .addOnFailureListener {
 
-                Log.d(Constant().TAG, "add schedule player fail : $it")
+                Log.d(Constant().TAG, "add schedule club fail : $it")
 
                 showAlertAdd(Enum.EnumConfirmYes.AddScheduleFail.value)
             }
-
     }
 
     private fun showAlertAdd(type: Int) {

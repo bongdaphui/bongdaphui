@@ -1,4 +1,4 @@
-package com.bongdaphui.matchSchedule
+package com.bongdaphui.schedulePlayer
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -16,7 +16,7 @@ class SchedulePlayerAdapter(
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): SchedulePlayerHolder {
 
-        return SchedulePlayerHolder(LayoutInflater.from(context).inflate(R.layout.item_schedule_player, p0, false))
+        return SchedulePlayerHolder(LayoutInflater.from(context).inflate(R.layout.item_schedule, p0, false))
 
     }
 

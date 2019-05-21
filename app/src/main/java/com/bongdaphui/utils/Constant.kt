@@ -18,6 +18,8 @@ class Constant {
 
     val schedulePlayerPathField = "schedule_player"
 
+    val scheduleClubPathField = "schedule_club"
+
     val pathStorageField = "field_image/"
 
     var pathStorageUser = "user_image/"

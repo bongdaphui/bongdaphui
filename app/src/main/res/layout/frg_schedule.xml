@@ -10,9 +10,9 @@
         android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
-            android:id="@+id/frg_schedule_player_rcv"
+            android:id="@+id/frg_schedule_rcv"
             android:layout_width="match_parent"
-            tools:listitem="@layout/item_schedule_player"
+            tools:listitem="@layout/item_schedule"
             android:scrollbars="vertical"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             android:layout_height="match_parent"/>
@@ -20,7 +20,7 @@
     <include layout="@layout/view_empty"/>
 
     <android.support.design.widget.FloatingActionButton
-            android:id="@+id/frg_schedule_player_fab"
+            android:id="@+id/frg_schedule_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_plus"

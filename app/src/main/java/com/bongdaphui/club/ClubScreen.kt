@@ -42,8 +42,6 @@ class ClubScreen : BaseFragment() {
 
         showFooter(true)
 
-        loadListClub()
-
     }
 
     @SuppressLint("RestrictedApi")
@@ -52,6 +50,8 @@ class ClubScreen : BaseFragment() {
         initAdapter()
 
         frg_football_club_fab.visibility = View.GONE
+
+        loadListClub()
 
     }
 

@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.addClub.AddClubScreen
+import com.bongdaphui.addScheduleClub.AddScheduleClubScreen
+import com.bongdaphui.addSchedulePlayer.AddSchedulePlayerScreen
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.clubInfo.ClubInfoScreen
@@ -70,7 +72,11 @@ class MyClubScreen : BaseFragment() {
 
                         Utils().openDial(activity!!, "${item.phone}")
 
-                } else if (type == Enum.EnumTypeClick.View.value) {
+                } else if (type == Enum.EnumTypeClick.AddSchedule.value) {
+
+                    addFragment(AddScheduleClubScreen.getInstance(item))
+
+                }else if (type == Enum.EnumTypeClick.View.value) {
 
                     addFragment(ClubInfoScreen.getInstance(item))
                 }

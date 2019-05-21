@@ -1,7 +1,6 @@
 <resources>
 
 
-
     <string name="app_name">Bóng Đá Phủi</string>
     <string name="please_enter_your_photo">Vui lòng chọn hình đại diện</string>
     <string name="please_enter_your_full_name">Vui lòng nhập họ và tên của bạn</string>
@@ -95,10 +94,12 @@
     <string name="player">Cầu thủ</string>
     <string name="three_dot">...</string>
     <string name="schedule_of_you">Lịch tìm trận đấu của bạn</string>
+    <string name="schedule_of_club">Lịch tìm trận đấu của đội</string>
     <string name="add_schedule_of_you">Thêm khung giờ muốn đá</string>
     <string name="valid_input_date_schedule">Thời gian kết thúc phải sau thời gian bắt đầu</string>
-    <string name="add_schedule_player_success">Thêm thời gian thành công</string>
-    <string name="add_schedule_player_fail">Thêm thời gian thất bại. Bạn vui lòng thực hiện lại</string>
+    <string name="add_schedule_player_success">Thêm lịch thi đấu thành công</string>
+    <string name="add_schedule_player_fail">Thêm lịch thi đấu thất bại. Bạn vui lòng thực hiện lại</string>
+    <string name="add_schedule_club">Thêm lịch thi đấu >>></string>
 
 
 </resources>

@@ -13,7 +13,8 @@ class Enum {
     enum class EnumTypeClick(val value: Int) {
         View(1),
         Phone(2),
-        JoinClub(3)
+        JoinClub(3),
+        AddSchedule(4)
     }
 
     enum class EnumPosition(val value: Int, val namePos: String) {
@@ -35,8 +36,8 @@ class Enum {
         UpdateSuccess(8),
         UpdateFail(9),
         ValidDateSchedule(10),
-        AddSchedulePlayerSuccess(11),
-        AddSchedulePlayerFail(12)
+        AddScheduleSuccess(11),
+        AddScheduleFail(12)
 
     }
 

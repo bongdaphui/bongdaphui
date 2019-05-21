@@ -1,25 +1,18 @@
 package com.bongdaphui.base
 
 import android.content.Context
-import android.support.annotation.NonNull
-import android.support.annotation.Nullable
 import android.util.Log
 import com.bongdaphui.MainActivity
 import com.bongdaphui.listener.*
-import com.bongdaphui.model.ClubModel
-import com.bongdaphui.model.FbFieldModel
-import com.bongdaphui.model.SchedulePlayerModel
-import com.bongdaphui.model.UserModel
+import com.bongdaphui.model.*
 import com.bongdaphui.utils.Constant
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.RemoteMessage
 import com.google.firebase.storage.FirebaseStorage
 
 
@@ -213,6 +206,51 @@ class BaseRequest {
             }
     }
 
+    fun getScheduleClub(
+        listener: GetDataListener<ScheduleClubModel>
+    ) {
+
+        val db = FirebaseFirestore.getInstance().collection(Constant().scheduleClubPathField)
+        val scheduleClubList: ArrayList<ScheduleClubModel> = ArrayList()
+
+        db.get()
+            .addOnSuccessListener { result ->
+
+                for (document in result) {
+
+                    val scheduleClubModel = ScheduleClubModel(
+                        document.data["id"] as String?,
+                        document.data["idClub"] as String?,
+                        document.data["idCaptain"] as String?,
+                        document.data["idCity"] as String?,
+                        document.data["idDistrict"] as String?,
+                        document.data["startTime"] as String?,
+                        document.data["endTime"] as String?,
+                        document.data["nameClub"] as String?,
+                        document.data["phone"] as String?,
+                        document.data["photoUrl"] as String?
+                    )
+
+                    scheduleClubList.add(scheduleClubModel)
+                }
+
+                Log.d(Constant().TAG, "schedule club size: ${scheduleClubList.size}")
+
+                if (scheduleClubList.size > 0) {
+
+                    listener.onSuccess(scheduleClubList)
+
+                } else {
+
+                    listener.onFail("Chưa có dữ liệu")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d(Constant().TAG, "Error getting documents: ", exception)
+                listener.onFail("${exception.message}")
+            }
+    }
+
     fun deletaDocument(
         collection: String, document: String, listener: DeleteDataDataListener
     ) {
@@ -286,10 +324,10 @@ class BaseRequest {
     ) {
         val db = FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField)
         //check exist
-        db.document(idClub+idPlayer).get().addOnCompleteListener { task ->
+        db.document(idClub + idPlayer).get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val document = task.result
-                val isExist = document?.exists()?:false
+                val isExist = document?.exists() ?: false
                 if (isExist) {
                     listener.onUpdateFail("Yêu cầu của bạn đang chờ duyệt, vui lòng đợi.")
                 } else {

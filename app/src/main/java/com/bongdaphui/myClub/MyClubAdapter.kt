@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.listener.OnItemClickListener
@@ -59,6 +60,13 @@ class MyClubAdapter(
         }
 
         viewHolder.amountPlayer.text = "${club.getAmountPlayer()}"
+
+        viewHolder.addSchedule.visibility = View.VISIBLE
+        viewHolder.addSchedule.text = Html.fromHtml("<u>${context!!.resources.getText(R.string.add_schedule_club)}</u>")
+        viewHolder.addSchedule.setOnClickListener {
+
+            onItemClickListener.onItemClick(club, position, Enum.EnumTypeClick.AddSchedule.value)
+        }
 
         viewHolder.container.setOnClickListener {
             onItemClickListener.onItemClick(club, position, Enum.EnumTypeClick.View.value)

@@ -149,5 +149,18 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <TextView
+                android:id="@+id/item_club_tv_add_schedule"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/ts_16"
+                android:text="Thêm lịch thi đấu >>>"
+                android:padding="@dimen/fs_10"
+                android:layout_gravity="end"
+                android:visibility="gone"
+                android:layout_marginBottom="@dimen/fs_5"
+                android:fontFamily="@font/axis_std_bold"
+                android:textColor="@android:color/white"
+                android:layout_height="wrap_content"/>
     </LinearLayout>
 </android.support.v7.widget.CardView>
