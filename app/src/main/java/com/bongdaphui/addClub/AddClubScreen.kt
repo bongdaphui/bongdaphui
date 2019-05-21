@@ -395,7 +395,8 @@ class AddClubScreen : BaseFragment() {
         val id = "${idLastFC + 1}"
 
         var userCurrent = getDatabase().getUserDAO().getItems()
-        val userStickModel = UserStickModel(userCurrent.id,userCurrent.photoUrl,userCurrent.name,userCurrent.position)
+        val userStickModel =
+            UserStickModel(userCurrent.id, userCurrent.photoUrl, userCurrent.name, userCurrent.position)
         var listPlayer = arrayListOf(Gson().toJson(userStickModel))
 
         val clubModel =
@@ -419,7 +420,7 @@ class AddClubScreen : BaseFragment() {
                 Utils().alertInsertSuccess(activity)
             }
 
-            override fun onUpdateFail() {
+            override fun onUpdateFail(err: String) {
                 showProgress(false)
                 Utils().alertInsertFail(activity)
             }

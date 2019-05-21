@@ -323,7 +323,7 @@ class UpdateAccountScreen : BaseFragment() {
                 })
             }
 
-            override fun onUpdateFail() {
+            override fun onUpdateFail(err: String) {
 
                 showProgress(false)
 

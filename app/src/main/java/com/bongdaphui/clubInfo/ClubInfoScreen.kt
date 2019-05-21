@@ -16,8 +16,8 @@ import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.ConfirmListener
-import com.bongdaphui.listener.FireBaseSuccessListener
 import com.bongdaphui.listener.GetDataListener
+import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.model.RequestJoinClubModel
 import com.bongdaphui.model.UserModel
@@ -28,7 +28,6 @@ import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.gson.Gson
@@ -150,66 +149,12 @@ class ClubInfoScreen : BaseFragment() {
 
             fab_join_club.setOnClickListener {
 
-                checkAreYouRequest()
+                requestJoinGroup()
 
             }
         }
     }
 
-    private fun checkAreYouRequest() {
-
-        FirebaseInstanceId.getInstance().instanceId
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Log.w("test", "getInstanceId failed", task.exception)
-                    return@OnCompleteListener
-                }
-
-                // Get new Instance ID token
-                val token = task.result?.token
-
-                // Log and toast
-                Log.d("test", token)
-                Toast.makeText(activity, token, Toast.LENGTH_SHORT).show()
-            })
-
-        BaseRequest().loadData(activity!!, Constant().DATABASE_JOIN_CLUB, object :
-            FireBaseSuccessListener {
-            override fun onSuccess(data: DataSnapshot) {
-
-                if (data.exists()) {
-
-                    listJoinClub.clear()
-
-                    for (i in data.children) {
-
-                        val requestJoinClubModel = i.getValue<RequestJoinClubModel>(RequestJoinClubModel::class.java)
-
-                        listJoinClub.add(requestJoinClubModel!!)
-
-                    }
-
-                    if (check()) {
-
-                        showAlertSuccessJoinGroup()
-
-                    } else {
-
-                        loadUserInfo()
-
-                    }
-
-                }
-            }
-
-            override fun onFail(message: String) {
-
-                showAlertFailJoinGroup()
-
-            }
-        })
-
-    }
 
     private fun check(): Boolean {
 
@@ -224,57 +169,26 @@ class ClubInfoScreen : BaseFragment() {
 
     }
 
-    private fun loadUserInfo() {
 
-        showProgress(true)
-
-        var userModel: UserModel
-
-
-        BaseRequest().getUserInfo(getUIDUser(), object : GetDataListener<UserModel> {
-            override fun onSuccess(list: ArrayList<UserModel>) {
+    private fun requestJoinGroup() {
+        val idPlayer = getUIDUser()
+        val idClub = clubModel?.id ?: ""
+        BaseRequest().registerJoinClub(idClub, idPlayer, object : UpdateListener {
+            override fun onUpdateSuccess() {
+                //pending button
+                fab_join_club.isEnabled = false
+                showAlertSuccessJoinGroup()
             }
 
-            override fun onSuccess(item: UserModel) {
-                userModel = item
-                showProgress(false)
-
-                requestJoinGroup(userModel)
-
-            }
-
-            override fun onFail(message: String) {
-                showAlertFailJoinGroup()
+            override fun onUpdateFail(err: String) {
+                showAlertFailJoinGroup(err)
             }
 
         })
-
     }
 
-    private fun requestJoinGroup(userModel: UserModel) {
 
-        // Assign FirebaseDatabase instance with root database name.
-        val databaseReference = FirebaseDatabase.getInstance().getReference(Constant().DATABASE_JOIN_CLUB)
-
-        val id = databaseReference.push().key
-
-        val requestJoinClubModel = RequestJoinClubModel(id, clubModel!!.id, userModel)
-
-        databaseReference.child(id!!).setValue(requestJoinClubModel)
-
-            .addOnCompleteListener {
-
-                showAlertSuccessJoinGroup()
-
-            }
-            .addOnFailureListener {
-
-                showAlertFailJoinGroup()
-
-            }
-    }
-
-    private fun showAlertFailJoinGroup() {
+    private fun showAlertFailJoinGroup(err: String) {
 
         showProgress(false)
 
@@ -283,7 +197,7 @@ class ClubInfoScreen : BaseFragment() {
             override fun onConfirm(id: Int) {
 
             }
-        })
+        }, err)
     }
 
     private fun showAlertSuccessJoinGroup() {

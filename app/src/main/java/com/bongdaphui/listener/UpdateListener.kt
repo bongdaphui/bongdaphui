@@ -4,5 +4,6 @@ interface UpdateListener {
 
     fun onUpdateSuccess()
 
-    fun onUpdateFail()
+    fun onUpdateFail(err : String ="")
+
 }

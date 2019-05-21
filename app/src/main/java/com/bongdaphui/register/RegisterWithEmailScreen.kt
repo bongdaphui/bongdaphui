@@ -100,7 +100,7 @@ class RegisterWithEmailScreen : BaseFragment() {
                             getDatabase().getUserDAO().insert(userModel)
                         }
 
-                        override fun onUpdateFail() {
+                        override fun onUpdateFail(err: String) {
                         }
                     })
                     replaceFragment(UpdateAccountScreen.getInstance(userModel), true)

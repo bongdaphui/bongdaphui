@@ -18,6 +18,8 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.RemoteMessage
 import com.google.firebase.storage.FirebaseStorage
 
 
@@ -268,13 +270,50 @@ class BaseRequest {
                 } else {
                     listener.onFail("Not Found")
                 }
-                Log.d("Tien",document.metadata.toString())
+                Log.d("Tien", document.metadata.toString())
 
 
             }
             .addOnFailureListener { exception ->
                 listener.onFail(exception.localizedMessage)
             }
+    }
+
+    fun registerJoinClub(
+        idClub: String,
+        idPlayer: String,
+        listener: UpdateListener
+    ) {
+        val db = FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField)
+        //check exist
+        db.document(idClub+idPlayer).get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val document = task.result
+                val isExist = document?.exists()?:false
+                if (isExist) {
+                    listener.onUpdateFail("Yêu cầu của bạn đang chờ duyệt, vui lòng đợi.")
+                } else {
+                    //subscribe club
+                    FirebaseMessaging.getInstance().subscribeToTopic(idClub)
+                    //save request
+                    val requestMap = HashMap<String, Any>()
+                    requestMap["idClub"] = idClub
+                    requestMap["idPlayer"] = idPlayer
+                    requestMap["isAccepted"] = 2
+
+                    db.document(idClub + idPlayer).set(requestMap, SetOptions.merge())
+                        .addOnSuccessListener {
+                            //send message to captain
+                            listener.onUpdateSuccess()
+                        }
+                        .addOnFailureListener { e ->
+                            listener.onUpdateFail(e.localizedMessage)
+                        }
+                }
+            }
+        }
+
+
     }
 
 
