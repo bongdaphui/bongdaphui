@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.model.ScheduleClubModel
-import com.bongdaphui.model.SchedulePlayerModel
 import com.bongdaphui.utils.Enum
 import com.bumptech.glide.Glide
 
@@ -43,6 +42,7 @@ class FindClubAdapter(
         if (scheduleClubModel.photoUrl?.isNotEmpty()!!) {
             context?.let {
                 Glide.with(it).asBitmap().load(scheduleClubModel.photoUrl)
+                    .placeholder(context?.resources?.getDrawable(R.drawable.ic_person_grey))
                     .into(viewPlayerHolder.imageView)
             }
         }

@@ -34,7 +34,9 @@ class MyClubAdapter(
         val club: ClubModel = items[position]
 
         if (club.photo?.isNotEmpty()!!) {
-            Glide.with(context!!).asBitmap().load(club.photo).into(viewHolder.photo)
+            Glide.with(context!!).asBitmap().load(club.photo)
+                .placeholder(context?.resources?.getDrawable(R.drawable.ic_picture))
+                .into(viewHolder.photo)
         }
 
         viewHolder.nameFC.text = club.name

@@ -63,6 +63,7 @@ class ManagerScreen : BaseFragment() {
         if (!TextUtils.isEmpty(userModel?.photoUrl)) {
             activity?.let {
                 Glide.with(it).asBitmap().load(userModel?.photoUrl)
+                    .placeholder(context?.resources?.getDrawable(R.drawable.ic_person_grey))
                     .into(frg_manager_iv_user)
             }
         }

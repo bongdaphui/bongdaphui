@@ -42,6 +42,7 @@ class FindPlayerAdapter(
         if (schedulePlayerModel.photoUrlPlayer?.isNotEmpty()!!) {
             context?.let {
                 Glide.with(it).asBitmap().load(schedulePlayerModel.photoUrlPlayer)
+                    .placeholder(context?.resources?.getDrawable(R.drawable.ic_person_grey))
                     .into(viewPlayerHolder.imageView)
             }
         }

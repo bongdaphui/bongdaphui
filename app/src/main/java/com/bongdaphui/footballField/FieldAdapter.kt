@@ -38,7 +38,9 @@ class FieldAdapter(
         val fbFieldModel: FbFieldModel = items[position]
 
         if (fbFieldModel.photoUrl?.isNotEmpty()!!) {
-            Glide.with(this.context!!).asBitmap().load(fbFieldModel.photoUrl).into(viewHolder.image)
+            Glide.with(this.context!!).asBitmap().load(fbFieldModel.photoUrl)
+                .placeholder(context?.resources?.getDrawable(R.drawable.ic_person_grey))
+                .into(viewHolder.image)
         }
 
         viewHolder.name.text = "Sân bóng đá ${fbFieldModel.name}"
