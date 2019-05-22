@@ -8,6 +8,7 @@
     <string name="todo">TODO</string>
     <string name="email">Email:</string>
     <string name="please_enter_your_email">Vui lòng nhập email của bạn</string>
+    <string name="please_enter_your_email_first">Bạn chưa nhập email hoặc email không hợp lệ</string>
     <string name="email_not_valid">Email của bạn không phù hợp</string>
     <string name="phone">Số điện thoại:</string>
     <string name="please_enter_your_phone">Vui lòng nhập số điện thoại của bạn</string>
@@ -63,6 +64,8 @@
     <string name="not_update">Chưa cập nhật</string>
     <string name="alert">Thông báo</string>
     <string name="no">Không</string>
+    <string name="cancel">Huỷ</string>
+    <string name="agree">Đồng ý</string>
     <string name="yes">Có</string>
     <string name="close">Đóng</string>
     <string name="are_you_want_logout">Bạn có muốn đăng xuất không?</string>
@@ -101,6 +104,9 @@
     <string name="add_schedule_player_success">Thêm lịch thi đấu thành công</string>
     <string name="add_schedule_player_fail">Thêm lịch thi đấu thất bại. Bạn vui lòng thực hiện lại</string>
     <string name="add_schedule_club">Thêm lịch thi đấu >>></string>
-
+    <string name="alert_reset_pass">Một mật khẩu mới sẽ được gửi đến địa chỉ email: %s.\n\n Bạn có đồng ý không?</string>
+    <string name="please_check_email">Email đã được gửi đến: %s \n\n Bạn vui lòng kiểm tra email để nhận mật khẩu mới
+    </string>
+    <string name="send_mail_fail">Gửi mail thất bại. Vui lòng thực hiện lại</string>
 
 </resources>

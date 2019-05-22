@@ -11,6 +11,8 @@ import android.widget.Toast
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
+import com.bongdaphui.dialog.AlertDialog
+import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.register.RegisterWithEmailScreen
@@ -31,10 +33,10 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FacebookAuthProvider
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.frg_login.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
@@ -52,7 +54,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
     private lateinit var callbackManager: CallbackManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(com.bongdaphui.R.layout.frg_login, container, false)
+        return inflater.inflate(R.layout.frg_login, container, false)
 
     }
 
@@ -110,6 +112,19 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
             openClubs()
         }
 
+        forgot_password.setOnClickListener {
+
+            if (frg_login_with_email_et_email.text.isNullOrEmpty()
+                || !Utils().validateEmail("${frg_login_with_email_et_email.text}")
+            ) {
+
+                dialogInputPass()
+
+            } else {
+
+                dialogResetPass("${frg_login_with_email_et_email.text}")
+            }
+        }
     }
 
     private fun initFacebook() {
@@ -176,7 +191,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
     }
 
     private fun checkForFirstUpdate(uid: String) {
-        BaseRequest().getUserInfo(uid,object : GetDataListener<UserModel>{
+        BaseRequest().getUserInfo(uid, object : GetDataListener<UserModel> {
             override fun onSuccess(list: ArrayList<UserModel>) {
             }
 
@@ -365,5 +380,71 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
         }
 
         return true
+    }
+
+    private fun dialogInputPass() {
+        AlertDialog().showCustomDialog(
+            activity!!,
+            activity!!.resources.getString(R.string.alert),
+            activity!!.resources.getString(R.string.please_enter_your_email_first),
+            "",
+            activity!!.resources.getString(R.string.close),
+            object : AcceptListener {
+                override fun onAccept() {
+
+                }
+            }
+        )
+    }
+
+    private fun dialogResetPass(email: String) {
+        AlertDialog().showCustomDialog(
+            activity!!,
+            activity!!.resources.getString(R.string.alert),
+            String.format(activity!!.resources.getString(R.string.alert_reset_pass), email),
+            activity!!.resources.getString(R.string.cancel),
+            activity!!.resources.getString(R.string.agree),
+            object : AcceptListener {
+                override fun onAccept() {
+
+                    sendMail(email)
+                }
+            }
+        )
+    }
+
+    private fun sendMail(email: String) {
+
+        showProgress(true)
+
+        FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+            .addOnCompleteListener {
+
+                showProgress(false)
+
+                dialogSendMail(email, it.isSuccessful)
+            }
+            .addOnFailureListener {
+
+                showProgress(false)
+            }
+    }
+
+    private fun dialogSendMail(email: String, isSuccess: Boolean) {
+        AlertDialog().showCustomDialog(
+            activity!!,
+            activity!!.resources.getString(R.string.alert),
+            if (isSuccess)
+                String.format(activity!!.resources.getString(R.string.please_check_email), email)
+            else
+                activity!!.resources.getString(R.string.send_mail_fail),
+            "",
+            activity!!.resources.getString(R.string.agree),
+            object : AcceptListener {
+                override fun onAccept() {
+
+                }
+            }
+        )
     }
 }
