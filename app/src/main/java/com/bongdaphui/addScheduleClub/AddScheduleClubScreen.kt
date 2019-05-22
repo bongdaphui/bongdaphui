@@ -14,6 +14,7 @@ import com.bongdaphui.model.ClubModel
 import com.bongdaphui.model.ScheduleClubModel
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.DateTimeUtil
+import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.frg_add_schedule.*
@@ -181,6 +182,30 @@ class AddScheduleClubScreen : BaseFragment() {
             return
         }
 
+        if (!frg_add_schedule_cb_5.isChecked && !frg_add_schedule_cb_7.isChecked && !frg_add_schedule_cb_11.isChecked) {
+
+            activity?.let { it ->
+                AlertDialog().showCustomDialog(
+                    it,
+                    activity!!.resources.getString(R.string.alert),
+                    activity!!.resources.getString(R.string.please_choose_type_field),
+                    "",
+                    activity!!.resources.getString(R.string.close),
+                    object : AcceptListener {
+                        override fun onAccept() {
+                        }
+                    }
+                )
+            }
+            return
+        }
+
+        val typeField = StringBuilder()
+        if (frg_add_schedule_cb_5.isChecked) typeField.append(Enum.EnumTypeField.FivePeople.value)
+        if (frg_add_schedule_cb_7.isChecked) typeField.append(Enum.EnumTypeField.SevenPeople.value)
+        if (frg_add_schedule_cb_11.isChecked) typeField.append(Enum.EnumTypeField.ElevenPeople.value)
+
+
         enableItem(false)
 
         showProgress(true)
@@ -200,7 +225,8 @@ class AddScheduleClubScreen : BaseFragment() {
             endTime,
             clubModel?.name,
             clubModel?.phone,
-            clubModel?.photo
+            clubModel?.photo,
+            typeField.toString()
         )
 
         val currentTime = Calendar.getInstance().timeInMillis
@@ -239,5 +265,6 @@ class AddScheduleClubScreen : BaseFragment() {
             )
         }
     }
+
 }
 

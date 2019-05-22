@@ -28,20 +28,25 @@ class SchedulePlayerAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewPlayerHolder: SchedulePlayerHolder, position: Int) {
 
-        val schedulePlayerModel: SchedulePlayerModel = items[position]
+        val model: SchedulePlayerModel = items[position]
 
-        viewPlayerHolder.timeStart.text = schedulePlayerModel.startTime
+        viewPlayerHolder.timeStart.text = model.startTime
 
-        viewPlayerHolder.timeEnd.text = schedulePlayerModel.endTime
+        viewPlayerHolder.timeEnd.text = model.endTime
+
+        viewPlayerHolder.typeField.text = model.typeField?.let { Utils().getTypeField(it) }
 
         viewPlayerHolder.address.text =
-            context?.let { schedulePlayerModel.idCity?.let { it1 ->
-                schedulePlayerModel.idDistrict?.let { it2 ->
-                    Utils().getNameCityDistrictFromId(it,
-                        it1, it2
-                    )
+            context?.let {
+                model.idCity?.let { it1 ->
+                    model.idDistrict?.let { it2 ->
+                        Utils().getNameCityDistrictFromId(
+                            it,
+                            it1, it2
+                        )
+                    }
                 }
-            } }
+            }
 
     }
 

@@ -14,4 +14,7 @@ class SchedulePlayerHolder(row: View) : RecyclerView.ViewHolder(row) {
 
     var address: TextView = row.findViewById(R.id.item_schedule_tv_address)
 
+    var typeField: TextView = row.findViewById(R.id.item_schedule_type_field)
+
+
 }

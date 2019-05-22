@@ -22,4 +22,6 @@ class FindClubHolder(row: View) : RecyclerView.ViewHolder(row) {
 
     var tvPhone: TextView = row.findViewById(R.id.item_find_tv_phone)
 
+    var typeField: TextView = row.findViewById(R.id.item_find_type_field)
+
 }

@@ -24,9 +24,10 @@ class Enum {
         SK(3, "Tiền Đạo")
     }
 
-    enum class EnumConfirmYes(val value: Int) {
-        AddScheduleSuccess(11),
-        AddScheduleFail(12)
+    enum class EnumTypeField(val value: String) {
+        FivePeople("5"),
+        SevenPeople("7"),
+        ElevenPeople("11")
 
     }
 

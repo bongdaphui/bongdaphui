@@ -14,10 +14,12 @@ import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.model.SchedulePlayerModel
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.DateTimeUtil
+import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.frg_add_schedule.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class AddSchedulePlayerScreen : BaseFragment() {
@@ -183,6 +185,28 @@ class AddSchedulePlayerScreen : BaseFragment() {
             return
         }
 
+        if (!frg_add_schedule_cb_5.isChecked && !frg_add_schedule_cb_7.isChecked && !frg_add_schedule_cb_11.isChecked) {
+
+            activity?.let { it ->
+                AlertDialog().showCustomDialog(
+                    it,
+                    activity!!.resources.getString(R.string.alert),
+                    activity!!.resources.getString(R.string.please_choose_type_field),
+                    "",
+                    activity!!.resources.getString(R.string.close),
+                    object : AcceptListener {
+                        override fun onAccept() {
+                        }
+                    }
+                )
+            }
+            return
+        }
+
+        val typeField = StringBuilder()
+        if (frg_add_schedule_cb_5.isChecked) typeField.append(Enum.EnumTypeField.FivePeople.value)
+        if (frg_add_schedule_cb_7.isChecked) typeField.append(Enum.EnumTypeField.SevenPeople.value)
+        if (frg_add_schedule_cb_11.isChecked) typeField.append(Enum.EnumTypeField.ElevenPeople.value)
         val userModel = getDatabase().getUserDAO().getItems()
 
         enableItem(false)
@@ -203,7 +227,8 @@ class AddSchedulePlayerScreen : BaseFragment() {
             userModel.id,
             userModel.name,
             userModel.phone,
-            userModel.photoUrl
+            userModel.photoUrl,
+            typeField.toString()
         )
 
         val currentTime = Calendar.getInstance().timeInMillis

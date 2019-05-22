@@ -114,7 +114,8 @@ class BaseRequest {
                         document.data["idPlayer"] as String?,
                         document.data["namePlayer"] as String?,
                         document.data["phonePlayer"] as String?,
-                        document.data["photoUrlPlayer"] as String?
+                        document.data["photoUrlPlayer"] as String?,
+                        document.data["typeField"] as String?
                     )
                     schedulePlayerList.add(schedulePlayerModel)
                 }
@@ -155,7 +156,8 @@ class BaseRequest {
                         document.data["endTime"] as String?,
                         document.data["nameClub"] as String?,
                         document.data["phone"] as String?,
-                        document.data["photoUrl"] as String?
+                        document.data["photoUrl"] as String?,
+                        document.data["typeField"] as String?
                     )
 
                     scheduleClubList.add(scheduleClubModel)

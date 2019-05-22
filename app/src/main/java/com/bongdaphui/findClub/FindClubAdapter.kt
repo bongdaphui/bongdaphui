@@ -10,6 +10,7 @@ import com.bongdaphui.R
 import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.model.ScheduleClubModel
 import com.bongdaphui.utils.Enum
+import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
 
 class FindClubAdapter(
@@ -33,31 +34,33 @@ class FindClubAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewPlayerHolder: FindClubHolder, position: Int) {
 
-        val scheduleClubModel: ScheduleClubModel = items[position]
+        val model: ScheduleClubModel = items[position]
 
-        viewPlayerHolder.timeStart.text = scheduleClubModel.startTime
+        viewPlayerHolder.timeStart.text = model.startTime
 
-        viewPlayerHolder.timeEnd.text = scheduleClubModel.endTime
+        viewPlayerHolder.timeEnd.text = model.endTime
 
-        if (scheduleClubModel.photoUrl?.isNotEmpty()!!) {
+        viewPlayerHolder.typeField.text = "Loại sân: ${model.typeField?.let { Utils().getTypeField(it) }}"
+
+        if (model.photoUrl?.isNotEmpty()!!) {
             context?.let {
-                Glide.with(it).asBitmap().load(scheduleClubModel.photoUrl)
+                Glide.with(it).asBitmap().load(model.photoUrl)
                     .placeholder(context?.resources?.getDrawable(R.drawable.ic_person_grey))
                     .into(viewPlayerHolder.imageView)
             }
         }
 
-        viewPlayerHolder.tvName.text = scheduleClubModel.nameClub
+        viewPlayerHolder.tvName.text = model.nameClub
 
         viewPlayerHolder.tvPhone.text =
-            Html.fromHtml("<u> ${if (isLoggedUser) scheduleClubModel.phone else context?.getString(R.string.need_login_to_see)}</u>")
+            Html.fromHtml("<u> ${if (isLoggedUser) model.phone else context?.getString(R.string.need_login_to_see)}</u>")
 
         viewPlayerHolder.tvPhone.setOnClickListener {
-            itemClickInterface.onItemClick(scheduleClubModel, position, Enum.EnumTypeClick.Phone.value)
+            itemClickInterface.onItemClick(model, position, Enum.EnumTypeClick.Phone.value)
         }
 
         viewPlayerHolder.containerView.setOnClickListener {
-            itemClickInterface.onItemClick(scheduleClubModel, position, Enum.EnumTypeClick.View.value)
+            itemClickInterface.onItemClick(model, position, Enum.EnumTypeClick.View.value)
 
         }
     }

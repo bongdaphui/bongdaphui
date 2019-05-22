@@ -29,24 +29,29 @@ class ScheduleClubAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewPlayerHolder: ScheduleClubHolder, position: Int) {
 
-        val scheduleClubModel: ScheduleClubModel = items[position]
+        val model: ScheduleClubModel = items[position]
 
         viewPlayerHolder.nameClub.visibility = View.VISIBLE
 
-        viewPlayerHolder.nameClub.text = scheduleClubModel.nameClub
+        viewPlayerHolder.nameClub.text = model.nameClub
 
-        viewPlayerHolder.timeStart.text = scheduleClubModel.startTime
+        viewPlayerHolder.timeStart.text = model.startTime
 
-        viewPlayerHolder.timeEnd.text = scheduleClubModel.endTime
+        viewPlayerHolder.timeEnd.text = model.endTime
+
+        viewPlayerHolder.typeField.text = model.typeField?.let { Utils().getTypeField(it) }
 
         viewPlayerHolder.address.text =
-            context?.let { scheduleClubModel.idCity?.let { it1 ->
-                scheduleClubModel.idDistrict?.let { it2 ->
-                    Utils().getNameCityDistrictFromId(it,
-                        it1, it2
-                    )
+            context?.let {
+                model.idCity?.let { it1 ->
+                    model.idDistrict?.let { it2 ->
+                        Utils().getNameCityDistrictFromId(
+                            it,
+                            it1, it2
+                        )
+                    }
                 }
-            } }
+            }
 
     }
 

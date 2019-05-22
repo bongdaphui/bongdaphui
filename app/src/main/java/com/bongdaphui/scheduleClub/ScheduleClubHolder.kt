@@ -14,6 +14,8 @@ class ScheduleClubHolder(row: View) : RecyclerView.ViewHolder(row) {
 
     var timeEnd: TextView = row.findViewById(R.id.item_schedule_time_end)
 
+    var typeField: TextView = row.findViewById(R.id.item_schedule_type_field)
+
     var address: TextView = row.findViewById(R.id.item_schedule_tv_address)
 
 }

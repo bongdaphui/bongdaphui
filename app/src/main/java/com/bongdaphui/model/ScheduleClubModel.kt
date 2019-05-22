@@ -14,5 +14,6 @@ data class ScheduleClubModel(
     val nameClub: String? = "",
     val endTime: String? = "",
     val phone: String? = "",
-    val photoUrl: String? = ""
+    val photoUrl: String? = "",
+    val typeField: String? = ""
 )

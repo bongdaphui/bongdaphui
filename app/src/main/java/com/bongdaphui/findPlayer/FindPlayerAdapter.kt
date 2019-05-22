@@ -10,6 +10,7 @@ import com.bongdaphui.R
 import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.model.SchedulePlayerModel
 import com.bongdaphui.utils.Enum
+import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
 
 class FindPlayerAdapter(
@@ -33,31 +34,33 @@ class FindPlayerAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewPlayerHolder: FindPlayerHolder, position: Int) {
 
-        val schedulePlayerModel: SchedulePlayerModel = items[position]
+        val model: SchedulePlayerModel = items[position]
 
-        viewPlayerHolder.timeStart.text = schedulePlayerModel.startTime
+        viewPlayerHolder.timeStart.text = model.startTime
 
-        viewPlayerHolder.timeEnd.text = schedulePlayerModel.endTime
+        viewPlayerHolder.timeEnd.text = model.endTime
 
-        if (schedulePlayerModel.photoUrlPlayer?.isNotEmpty()!!) {
+        viewPlayerHolder.typeField.text = "Loại sân: ${model.typeField?.let { Utils().getTypeField(it) }}"
+
+        if (model.photoUrlPlayer?.isNotEmpty()!!) {
             context?.let {
-                Glide.with(it).asBitmap().load(schedulePlayerModel.photoUrlPlayer)
+                Glide.with(it).asBitmap().load(model.photoUrlPlayer)
                     .placeholder(context?.resources?.getDrawable(R.drawable.ic_person_grey))
                     .into(viewPlayerHolder.imageView)
             }
         }
 
-        viewPlayerHolder.tvName.text = schedulePlayerModel.namePlayer
+        viewPlayerHolder.tvName.text = model.namePlayer
 
         viewPlayerHolder.tvPhone.text =
-            Html.fromHtml("<u> ${if (isLoggedUser) schedulePlayerModel.phonePlayer else context?.getString(R.string.need_login_to_see)}</u>")
+            Html.fromHtml("<u> ${if (isLoggedUser) model.phonePlayer else context?.getString(R.string.need_login_to_see)}</u>")
 
         viewPlayerHolder.tvPhone.setOnClickListener {
-            itemClickInterface.onItemClick(schedulePlayerModel, position, Enum.EnumTypeClick.Phone.value)
+            itemClickInterface.onItemClick(model, position, Enum.EnumTypeClick.Phone.value)
         }
 
         viewPlayerHolder.containerView.setOnClickListener {
-            itemClickInterface.onItemClick(schedulePlayerModel, position, Enum.EnumTypeClick.View.value)
+            itemClickInterface.onItemClick(model, position, Enum.EnumTypeClick.View.value)
 
         }
     }

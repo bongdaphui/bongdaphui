@@ -72,6 +72,15 @@
                         android:layout_height="wrap_content"/>
             </LinearLayout>
 
+            <TextView
+                    android:id="@+id/item_find_type_field"
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/ts_14"
+                    android:layout_marginTop="@dimen/fs_5"
+                    android:fontFamily="@font/axis_std_regular"
+                    android:textColor="@android:color/white"
+                    android:layout_height="wrap_content"/>
+
             <LinearLayout
                     android:layout_marginTop="@dimen/fs_5"
                     android:layout_width="match_parent"
