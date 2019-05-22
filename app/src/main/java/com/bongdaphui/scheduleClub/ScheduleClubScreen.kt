@@ -100,7 +100,7 @@ class ScheduleClubScreen : BaseFragment() {
 
                 scheduleList.sortBy { it.id }
 
-                showEmptyView(false)
+                showEmptyView(scheduleList.size > 0)
 
                 scheduleClubAdapter.notifyDataSetChanged()
 
@@ -118,9 +118,9 @@ class ScheduleClubScreen : BaseFragment() {
 
     private fun showEmptyView(isShow: Boolean) {
 
-        frg_schedule_rcv.visibility = if (isShow) View.GONE else View.VISIBLE
+        frg_schedule_rcv.visibility = if (!isShow) View.GONE else View.VISIBLE
 
-        view_empty.visibility = if (isShow) View.VISIBLE else View.GONE
+        view_empty.visibility = if (!isShow) View.VISIBLE else View.GONE
 
     }
 }

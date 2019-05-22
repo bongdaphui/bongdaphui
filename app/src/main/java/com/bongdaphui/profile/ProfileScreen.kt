@@ -78,7 +78,8 @@ class ProfileScreen : BaseFragment() {
 
         showProgress(true)
 
-        BaseRequest().getUserInfo(getUIDUser(), object : GetDataListener<UserModel> {
+        BaseRequest().getUserInfo(uidUser, object : GetDataListener<UserModel> {
+
             override fun onSuccess(list: ArrayList<UserModel>) {
             }
 

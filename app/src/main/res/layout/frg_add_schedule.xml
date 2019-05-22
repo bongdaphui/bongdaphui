@@ -179,23 +179,14 @@
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
-
-    <TextView
+    <Button
             android:id="@+id/frg_add_schedule_tv_input"
-            android:layout_width="@dimen/fs_150"
-            android:layout_height="@dimen/fs_46"
-            android:layout_marginBottom="@dimen/fs_20"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/fs_15"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/bg_accent_solid_no_border_30_radius"
-            android:gravity="center"
-            android:paddingEnd="@dimen/fs_20"
-            android:paddingStart="@dimen/fs_20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_rounded_primary"
             android:text="@string/input"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/ts_16"
-            android:textAllCaps="true"/>
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/fs_20"
+            android:textColor="@android:color/white"/>
 </RelativeLayout>
 
