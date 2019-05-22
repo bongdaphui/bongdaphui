@@ -32,7 +32,7 @@
                     android:layout_width="@dimen/spacing_xxlarge"
                     android:layout_height="@dimen/spacing_xxlarge"
                     android:background="@android:color/transparent"
-                    android:tint="@color/grey_60"
+                    android:tint="@color/c_d2d2d2"
                     app:srcCompat="@drawable/ic_email"/>
 
             <EditText
@@ -96,11 +96,15 @@
                 android:text="@string/please_enter_your_password"
                 android:visibility="invisible"/>
 
-        <TextView
+        <Button
                 android:id="@+id/frg_login_with_email_tv_login"
-                style="@style/bt_single_c_accent"
-                android:layout_gravity="center_horizontal"
-                android:text="Đăng nhập"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_rounded_primary"
+                android:text="@string/login"
+                android:layout_marginTop="@dimen/fs_20"
+                android:layout_marginBottom="@dimen/fs_20"
+                android:textColor="@android:color/white"/>
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

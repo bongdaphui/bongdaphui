@@ -142,22 +142,6 @@
         <item name="android:fontFamily" tools:ignore="NewApi">@font/axis_std_bold</item>
     </style>
 
-    <style name="bt_single_c_accent">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">@dimen/fs_46</item>
-        <item name="android:paddingStart">@dimen/fs_46</item>
-        <item name="android:paddingEnd">@dimen/fs_46</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">@dimen/ts_15</item>
-        <item name="android:fontFamily" tools:ignore="NewApi">@font/axis_std_bold</item>
-        <item name="android:layout_marginBottom">@dimen/fs_20</item>
-        <item name="android:layout_marginTop">@dimen/fs_15</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:background">@drawable/bg_accent_solid_no_border_30_radius</item>
-        <item name="android:maxLines">1</item>
-    </style>
-
     <style name="ExpandedTitle" parent="@android:style/TextAppearance">
         <item name="android:textSize">25sp</item>
         <item name="android:textColor">@android:color/white</item>

@@ -41,24 +41,27 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/fs_15"
                 android:paddingEnd="@dimen/fs_15"
+                android:paddingBottom="@dimen/fs_15"
                 android:orientation="horizontal">
 
-            <TextView
+            <Button
                     android:id="@+id/dialog_yes_no_tv_no"
-                    style="@style/bt_single_c_accent"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_marginEnd="@dimen/fs_15"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/no"/>
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_rounded_primary"
+                    android:text="@string/no"
+                    android:textColor="@android:color/white"/>
 
-            <TextView
+
+            <Button
                     android:id="@+id/dialog_yes_no_tv_yes"
-                    style="@style/bt_single_c_accent"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/yes"/>
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_rounded_primary"
+                    android:text="@string/yes"
+                    android:textColor="@android:color/white"/>
 
         </LinearLayout>
     </LinearLayout>

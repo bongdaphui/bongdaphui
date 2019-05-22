@@ -18,7 +18,7 @@ import com.bongdaphui.model.FbFieldModel
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
-import kotlinx.android.synthetic.main.fragment_field.*
+import kotlinx.android.synthetic.main.frg_field.*
 import kotlinx.android.synthetic.main.view_empty.*
 
 class FieldScreen : BaseFragment() {
@@ -30,7 +30,7 @@ class FieldScreen : BaseFragment() {
     private lateinit var fieldAdapter: FieldAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_field, container, false)
+        return inflater.inflate(R.layout.frg_field, container, false)
 
     }
 

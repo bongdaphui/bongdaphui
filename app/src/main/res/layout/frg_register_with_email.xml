@@ -135,11 +135,16 @@
                 android:id="@+id/frg_register_with_email_tv_error_input_confirm_password"
                 style="@style/tv_error_item_input"
                 android:text="@string/please_re_enter_your_password"/>
-        <TextView
+
+        <Button
                 android:id="@+id/frg_register_with_email_tv_register"
-                style="@style/bt_single_c_accent"
-                android:layout_gravity="center_horizontal"
-                android:text="Đăng ký"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_rounded_primary"
+                android:text="@string/register_account"
+                android:layout_marginTop="@dimen/fs_20"
+                android:layout_marginBottom="@dimen/fs_20"
+                android:textColor="@android:color/white"/>
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

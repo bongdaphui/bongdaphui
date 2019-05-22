@@ -27,7 +27,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.android.synthetic.main.fragment_add_field.*
+import kotlinx.android.synthetic.main.frg_add_field.*
 import java.io.File
 import java.util.*
 
@@ -40,7 +40,7 @@ class AddFieldScreen : BaseFragment() {
     private var filePathUri: Uri? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_add_field, container, false)
+        return inflater.inflate(R.layout.frg_add_field, container, false)
 
     }
 
@@ -234,8 +234,7 @@ class AddFieldScreen : BaseFragment() {
                 // On progress change upload time.
                 .addOnProgressListener {
 
-                    //                    frg_add_field_progress.visibility = View.GONE
-                    frg_add_field_progress.progress = Utils().progressTask(it)
+                    //frg_add_field_progress.progress = Utils().progressTask(it)
                 }
         }
     }

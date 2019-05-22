@@ -95,12 +95,15 @@
                 android:layout_marginStart="@dimen/fs_20"
                 android:layout_marginBottom="@dimen/fs_10"
                 android:layout_marginRight="@dimen/fs_20">
-            <ImageView
-                    android:id="@+id/img_call_club"
+
+            <ImageButton
+                    android:id="@+id/frg_join_club_iv_phone"
                     android:layout_width="@dimen/fs_71"
-                    android:src="@drawable/ic_phone"
-                    android:padding="@dimen/fs_20"
-                    android:layout_height="@dimen/fs_71"/>
+                    android:layout_height="@dimen/spacing_xxlarge"
+                    android:background="@android:color/transparent"
+                    android:tint="@android:color/white"
+                    app:srcCompat="@drawable/ic_phone"/>
+
             <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"

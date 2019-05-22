@@ -29,7 +29,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_add_fc.*
+import kotlinx.android.synthetic.main.frg_add_club.*
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -59,7 +59,7 @@ class AddClubScreen : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_add_fc, container, false)
+        return inflater.inflate(R.layout.frg_add_club, container, false)
 
     }
 
@@ -81,12 +81,12 @@ class AddClubScreen : BaseFragment() {
 
         initView()
 
-        frg_add_fc_tv_input.setOnClickListener {
+        frg_add_club_tv_input.setOnClickListener {
 
             startInsertData()
         }
 
-        frg_add_fc_v_container.setOnTouchListener { _, _ ->
+        frg_add_club_v_container.setOnTouchListener { _, _ ->
 
             hideKeyBoard()
 
@@ -98,8 +98,8 @@ class AddClubScreen : BaseFragment() {
     private fun initSpinner() {
         Utils().initSpinnerCity(
             activity!!,
-            frg_add_fc_sp_city,
-            frg_add_fc_sp_district,
+            frg_add_club_sp_city,
+            frg_add_club_sp_district,
             object :
                 BaseSpinnerSelectInterface {
                 override fun onSelectCity(_idCity: String, _idDistrict: String) {
@@ -116,35 +116,35 @@ class AddClubScreen : BaseFragment() {
 
     private fun initView() {
 
-        frg_add_fc_v_photo.setOnClickListener {
+        frg_add_club_v_photo.setOnClickListener {
             checkPermissionStore()
         }
 
         Utils().editTextTextChange(
-            frg_add_fc_et_name_fc,
-            frg_add_fc_iv_clear_input_name_fc,
-            frg_add_fc_tv_error_input_name_fc
+            frg_add_club_et_name_fc,
+            frg_add_club_iv_clear_input_name_fc,
+            frg_add_club_tv_error_input_name_fc
         )
 
         Utils().editTextTextChange(
-            frg_add_fc_et_full_name,
-            frg_add_fc_iv_clear_input_full_name,
-            frg_add_fc_tv_error_input_full_name
+            frg_add_club_et_full_name,
+            frg_add_club_iv_clear_input_full_name,
+            frg_add_club_tv_error_input_full_name
         )
 
         Utils().editTextTextChange(
-            frg_add_fc_et_email,
-            frg_add_fc_iv_clear_input_email,
-            frg_add_fc_tv_error_input_email
+            frg_add_club_et_email,
+            frg_add_club_iv_clear_input_email,
+            frg_add_club_tv_error_input_email
         )
 
         Utils().editTextTextChange(
-            frg_add_fc_et_phone,
-            frg_add_fc_iv_clear_input_phone,
-            frg_add_fc_tv_error_input_phone
+            frg_add_club_et_phone,
+            frg_add_club_iv_clear_input_phone,
+            frg_add_club_tv_error_input_phone
         )
 
-        frg_add_fc_v_input_dob.setOnClickListener {
+        frg_add_club_v_input_dob.setOnClickListener {
             DatePickerDialog(
                 activity!!,
                 dateSetListener,
@@ -156,9 +156,9 @@ class AddClubScreen : BaseFragment() {
         }
 
         Utils().editTextTextChange(
-            frg_add_fc_et_address,
-            frg_add_fc_iv_clear_input_address,
-            frg_add_fc_tv_error_input_address
+            frg_add_club_et_address,
+            frg_add_club_iv_clear_input_address,
+            frg_add_club_tv_error_input_address
         )
 
     }
@@ -218,11 +218,11 @@ class AddClubScreen : BaseFragment() {
 
             if (null != filePathUri) {
 
-                Glide.with(activity!!).load(filePathUri).into(frg_add_fc_iv_photo)
+                Glide.with(activity!!).load(filePathUri).into(frg_add_club_iv_photo)
 
-                frg_add_fc_iv_camera.visibility = View.GONE
+                frg_add_club_iv_camera.visibility = View.GONE
 
-                frg_add_fc_tv_error_select_photo.visibility = View.INVISIBLE
+                frg_add_club_tv_error_select_photo.visibility = View.INVISIBLE
             }
         }
     }
@@ -231,38 +231,38 @@ class AddClubScreen : BaseFragment() {
 
         var validate = true
 
-        if (frg_add_fc_et_name_fc.text.toString().isEmpty()) {
-            frg_add_fc_tv_error_input_name_fc.visibility = View.VISIBLE
-            frg_add_fc_et_name_fc.requestFocus()
+        if (frg_add_club_et_name_fc.text.toString().isEmpty()) {
+            frg_add_club_tv_error_input_name_fc.visibility = View.VISIBLE
+            frg_add_club_et_name_fc.requestFocus()
 
             validate = false
         }
 
-        if (!Utils().validatePhoneNumber(frg_add_fc_et_phone.text.toString())) {
-            frg_add_fc_tv_error_input_phone.visibility = View.VISIBLE
-            frg_add_fc_tv_error_input_phone.text = activity!!.getString(R.string.please_enter_your_phone_valid)
-            frg_add_fc_et_phone.requestFocus()
+        if (!Utils().validatePhoneNumber(frg_add_club_et_phone.text.toString())) {
+            frg_add_club_tv_error_input_phone.visibility = View.VISIBLE
+            frg_add_club_tv_error_input_phone.text = activity!!.getString(R.string.please_enter_your_phone_valid)
+            frg_add_club_et_phone.requestFocus()
 
             validate = false
         }
 
-        if (frg_add_fc_et_phone.text.toString().isEmpty()) {
-            frg_add_fc_tv_error_input_phone.visibility = View.VISIBLE
-            frg_add_fc_tv_error_input_phone.text = activity!!.getString(R.string.please_enter_your_phone)
-            frg_add_fc_et_phone.requestFocus()
+        if (frg_add_club_et_phone.text.toString().isEmpty()) {
+            frg_add_club_tv_error_input_phone.visibility = View.VISIBLE
+            frg_add_club_tv_error_input_phone.text = activity!!.getString(R.string.please_enter_your_phone)
+            frg_add_club_et_phone.requestFocus()
 
             validate = false
         }
 
-        if (!Utils().isEmpty(frg_add_fc_et_email.text.toString())
-            && !Utils().validateEmail(frg_add_fc_et_email.text.toString())
+        if (!Utils().isEmpty(frg_add_club_et_email.text.toString())
+            && !Utils().validateEmail(frg_add_club_et_email.text.toString())
         ) {
 
-            frg_add_fc_tv_error_input_email.visibility = View.VISIBLE
-            frg_add_fc_tv_error_input_email.text =
+            frg_add_club_tv_error_input_email.visibility = View.VISIBLE
+            frg_add_club_tv_error_input_email.text =
                 activity!!.getString(R.string.email_not_valid)
 
-            frg_add_fc_et_email.requestFocus()
+            frg_add_club_et_email.requestFocus()
 
             validate = false
 
@@ -327,8 +327,8 @@ class AddClubScreen : BaseFragment() {
                     // On progress change upload time.
                     .addOnProgressListener {
 
-                        /*frg_add_fc_progress.visibility = View.VISIBLE
-                        frg_add_fc_progress.progress = Utils().progressTask(it)*/
+                        /*frg_add_club_progress.visibility = View.VISIBLE
+                        frg_add_club_progress.progress = Utils().progressTask(it)*/
                     }
             }
         }
@@ -338,15 +338,15 @@ class AddClubScreen : BaseFragment() {
 
         Log.d(Constant().TAG, uri)
 
-        val name = frg_add_fc_et_name_fc.text.toString()
-        val caption = frg_add_fc_et_full_name.text.toString()
-        val email = frg_add_fc_et_email.text.toString()
-        val phone = frg_add_fc_et_phone.text.toString()
-        val dob = frg_add_fc_et_dob.text.toString()
-        val address: String = if (frg_add_fc_et_address.text.toString().isNotEmpty()) {
-            "${frg_add_fc_et_address.text}, ${frg_add_fc_sp_district.selectedItem}, ${frg_add_fc_sp_city.selectedItem}"
+        val name = frg_add_club_et_name_fc.text.toString()
+        val caption = frg_add_club_et_full_name.text.toString()
+        val email = frg_add_club_et_email.text.toString()
+        val phone = frg_add_club_et_phone.text.toString()
+        val dob = frg_add_club_et_dob.text.toString()
+        val address: String = if (frg_add_club_et_address.text.toString().isNotEmpty()) {
+            "${frg_add_club_et_address.text}, ${frg_add_club_sp_district.selectedItem}, ${frg_add_club_sp_city.selectedItem}"
         } else {
-            "${frg_add_fc_sp_district.selectedItem}, ${frg_add_fc_sp_city.selectedItem}"
+            "${frg_add_club_sp_district.selectedItem}, ${frg_add_club_sp_city.selectedItem}"
         }
 
         val currentTime = Calendar.getInstance().timeInMillis
@@ -395,15 +395,15 @@ class AddClubScreen : BaseFragment() {
 
     private fun disableItem() {
 
-        frg_add_fc_v_photo.isEnabled = false
-        frg_add_fc_et_name_fc.isEnabled = false
-        frg_add_fc_et_full_name.isEnabled = false
-        frg_add_fc_et_email.isEnabled = false
-        frg_add_fc_et_phone.isEnabled = false
-        frg_add_fc_iv_dob.isEnabled = false
-        frg_add_fc_sp_district.isEnabled = false
-        frg_add_fc_sp_city.isEnabled = false
-        frg_add_fc_tv_input.isEnabled = false
+        frg_add_club_v_photo.isEnabled = false
+        frg_add_club_et_name_fc.isEnabled = false
+        frg_add_club_et_full_name.isEnabled = false
+        frg_add_club_et_email.isEnabled = false
+        frg_add_club_et_phone.isEnabled = false
+        frg_add_club_iv_dob.isEnabled = false
+        frg_add_club_sp_district.isEnabled = false
+        frg_add_club_sp_city.isEnabled = false
+        frg_add_club_tv_input.isEnabled = false
 
     }
 
@@ -418,6 +418,6 @@ class AddClubScreen : BaseFragment() {
     private fun updateDateInView() {
         val myFormat = "dd/MM/yyyy" // mention the format you need
         val sdf = SimpleDateFormat(myFormat, Locale.US)
-        frg_add_fc_et_dob!!.text = sdf.format(cal.time)
+        frg_add_club_et_dob!!.text = sdf.format(cal.time)
     }
 }

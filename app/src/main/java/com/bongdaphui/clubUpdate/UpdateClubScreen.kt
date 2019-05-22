@@ -82,7 +82,7 @@ class UpdateClubScreen : BaseFragment() {
 
         initView()
 
-        frg_update_club_tv_input.setOnClickListener {
+        frg_update_club_btn_update.setOnClickListener {
 
             startInsertData()
         }
@@ -404,7 +404,7 @@ class UpdateClubScreen : BaseFragment() {
         frg_update_club_iv_dob.isEnabled = false
         frg_update_club_sp_district.isEnabled = false
         frg_update_club_sp_city.isEnabled = false
-        frg_update_club_tv_input.isEnabled = false
+        frg_update_club_btn_update.isEnabled = false
 
     }
 

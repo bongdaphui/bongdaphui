@@ -32,7 +32,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.GoogleAuthProvider
-import kotlinx.android.synthetic.main.fragment_login_screen.*
+import kotlinx.android.synthetic.main.frg_login.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -52,7 +52,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
     private lateinit var callbackManager: CallbackManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(com.bongdaphui.R.layout.fragment_login_screen, container, false)
+        return inflater.inflate(com.bongdaphui.R.layout.frg_login, container, false)
 
     }
 

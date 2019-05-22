@@ -19,7 +19,7 @@ import com.bongdaphui.utils.Constant
 class SplashScreen : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_splash_screen, container, false)
+        return inflater.inflate(R.layout.frg_splash, container, false)
 
     }
 

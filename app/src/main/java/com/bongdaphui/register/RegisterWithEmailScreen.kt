@@ -14,13 +14,13 @@ import com.bongdaphui.model.UserModel
 import com.bongdaphui.updateAccount.UpdateAccountScreen
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Utils
-import kotlinx.android.synthetic.main.fragment_register_with_email_screen.*
+import kotlinx.android.synthetic.main.frg_register_with_email.*
 
 
 class RegisterWithEmailScreen : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_register_with_email_screen, container, false)
+        return inflater.inflate(R.layout.frg_register_with_email, container, false)
 
     }
 

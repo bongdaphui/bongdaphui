@@ -26,7 +26,7 @@ import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_club_info_screen.*
+import kotlinx.android.synthetic.main.frg_club_info.*
 
 
 class ClubInfoScreen : BaseFragment() {
@@ -57,7 +57,7 @@ class ClubInfoScreen : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(com.bongdaphui.R.layout.fragment_club_info_screen, container, false)
+        return inflater.inflate(com.bongdaphui.R.layout.frg_club_info, container, false)
 
     }
 
