@@ -25,12 +25,11 @@
                 android:layout_marginRight="@dimen/spacing_middle"
                 android:layout_marginTop="@dimen/spacing_medium"
                 app:cardCornerRadius="2dp"
+                android:visibility="gone"
                 app:cardElevation="1dp">
 
             <LinearLayout
-                    android:id="@+id/frg_field_v_spinner"
                     android:layout_width="match_parent"
-                    android:visibility="gone"
                     android:layout_height="@dimen/fs_46"
                     android:orientation="horizontal">
 
@@ -65,16 +64,7 @@
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                 android:layout_height="match_parent"/>
 
-        <TextView
-                android:id="@+id/frg_field_tv_no_data"
-                android:layout_width="wrap_content"
-                android:fontFamily="@font/axis_std_regular"
-                android:textColor="@color/c_2d2d2d"
-                android:text="@string/not_yet_data"
-                android:textSize="@dimen/ts_16"
-                android:visibility="gone"
-                android:layout_centerInParent="true"
-                android:layout_height="wrap_content"/>
+        <include layout="@layout/view_empty"/>
 
         <android.support.design.widget.FloatingActionButton
                 android:id="@+id/frg_field_fab"

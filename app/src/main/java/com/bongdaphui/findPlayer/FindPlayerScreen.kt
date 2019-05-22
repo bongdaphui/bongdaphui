@@ -40,13 +40,13 @@ class FindPlayerScreen : BaseFragment() {
 
         showFooter(true)
 
-        getData()
-
     }
 
     override fun onBindView() {
 
         initListSchedule()
+
+        getData()
 
         refreshData()
 
@@ -114,9 +114,10 @@ class FindPlayerScreen : BaseFragment() {
     }
 
     private fun initFilterBox() {
+
         if (isAdded) {
 
-            frg_find_player_v_spinner.visibility = View.VISIBLE
+            frg_find_player_cv_spinner.visibility = View.VISIBLE
 
             Utils().initSpinnerCity(
                 activity!!,
@@ -160,7 +161,7 @@ class FindPlayerScreen : BaseFragment() {
 
         frg_find_player_refresh_view.setOnRefreshListener {
 
-            frg_find_player_v_spinner.visibility = View.GONE
+            frg_find_player_cv_spinner.visibility = View.GONE
 
             frg_find_player_rcv.visibility = View.GONE
 
@@ -170,10 +171,9 @@ class FindPlayerScreen : BaseFragment() {
 
     private fun showEmptyView(isShow: Boolean) {
 
-        frg_find_player_rcv?.visibility = if (isShow) View.GONE else View.VISIBLE
-
         view_empty?.visibility = if (isShow) View.VISIBLE else View.GONE
 
+        frg_find_player_rcv?.visibility = if (isShow) View.GONE else View.VISIBLE
     }
 
     override fun onDestroy() {

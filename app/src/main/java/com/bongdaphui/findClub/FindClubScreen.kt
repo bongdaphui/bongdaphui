@@ -39,13 +39,13 @@ class FindClubScreen : BaseFragment() {
 
         showFooter(true)
 
-        getData()
-
     }
 
     override fun onBindView() {
 
         initListSchedule()
+
+        getData()
 
         refreshData()
 
@@ -115,7 +115,7 @@ class FindClubScreen : BaseFragment() {
     private fun initFilterBox() {
         if (isAdded) {
 
-            frg_find_club_v_spinner.visibility = View.VISIBLE
+            frg_find_club_cv_spinner.visibility = View.VISIBLE
 
             Utils().initSpinnerCity(
                 activity!!,
@@ -159,7 +159,7 @@ class FindClubScreen : BaseFragment() {
 
         frg_find_club_refresh_view.setOnRefreshListener {
 
-            frg_find_club_v_spinner.visibility = View.GONE
+            frg_find_club_cv_spinner.visibility = View.GONE
 
             frg_find_club_rcv.visibility = View.GONE
 
@@ -169,9 +169,9 @@ class FindClubScreen : BaseFragment() {
 
     private fun showEmptyView(isShow: Boolean) {
 
-        frg_find_club_rcv?.visibility = if (isShow) View.GONE else View.VISIBLE
-
         view_empty?.visibility = if (isShow) View.VISIBLE else View.GONE
+
+        frg_find_club_rcv?.visibility = if (isShow) View.GONE else View.VISIBLE
 
     }
 

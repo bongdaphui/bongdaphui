@@ -37,7 +37,7 @@ class ScheduleClubScreen : BaseFragment() {
 
         showFooter(false)
 
-        activity?.resources?.getString(R.string.schedule_of_you)?.let { setTitle(it) }
+        activity?.resources?.getString(R.string.schedule_of_club)?.let { setTitle(it) }
     }
 
     @SuppressLint("RestrictedApi")

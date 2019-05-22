@@ -19,6 +19,7 @@ import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import kotlinx.android.synthetic.main.fragment_field.*
+import kotlinx.android.synthetic.main.view_empty.*
 
 class FieldScreen : BaseFragment() {
 
@@ -115,7 +116,7 @@ class FieldScreen : BaseFragment() {
 
                 showProgress(false)
 
-                showNoData(false)
+                showEmptyView(false)
 
                 initSpinnerFieldBox()
 
@@ -126,7 +127,7 @@ class FieldScreen : BaseFragment() {
             override fun onFail(message: String) {
                 Utils().hiddenRefresh(frg_field_refresh_view)
                 showProgress(false)
-                showNoData(true)
+                showEmptyView(true)
             }
         })
     }
@@ -143,9 +144,10 @@ class FieldScreen : BaseFragment() {
     }
 
     private fun initSpinnerFieldBox() {
+
         if (isAdded) {
 
-            frg_field_v_spinner.visibility = View.VISIBLE
+            frg_field_cv_spinner.visibility = View.VISIBLE
 
             Utils().initSpinnerCity(
                 activity!!,
@@ -174,13 +176,13 @@ class FieldScreen : BaseFragment() {
 
                         if (fieldList.size > 0) {
 
-                            showNoData(false)
+                            showEmptyView(false)
 
                             fieldAdapter.notifyDataSetChanged()
 
                         } else {
 
-                            showNoData(true)
+                            showEmptyView(true)
                         }
                     }
                 })
@@ -192,21 +194,17 @@ class FieldScreen : BaseFragment() {
         frg_field_fab.setOnClickListener {
 
             addFragment(AddFieldScreen())
-
         }
     }
 
-    private fun showNoData(isShow: Boolean) {
+    private fun showEmptyView(isShow: Boolean) {
+
         if (isAdded) {
-            if (isShow) {
 
-                frg_field_tv_no_data.visibility = View.VISIBLE
-                frg_field_rcv.visibility = View.GONE
+            view_empty?.visibility = if (isShow) View.VISIBLE else View.GONE
 
-            } else {
-                frg_field_tv_no_data.visibility = View.GONE
-                frg_field_rcv.visibility = View.VISIBLE
-            }
+            frg_field_rcv?.visibility = if (isShow) View.GONE else View.VISIBLE
+
         }
     }
 
@@ -214,9 +212,9 @@ class FieldScreen : BaseFragment() {
 
         frg_field_refresh_view.setOnRefreshListener {
 
-            frg_field_v_spinner.visibility = View.GONE
+            frg_field_cv_spinner.visibility = View.GONE
 
-            frg_field_tv_no_data.visibility = View.GONE
+            view_empty.visibility = View.GONE
 
             frg_field_rcv.visibility = View.GONE
 

@@ -25,12 +25,11 @@
                 android:layout_marginRight="@dimen/spacing_middle"
                 android:layout_marginTop="@dimen/spacing_medium"
                 app:cardCornerRadius="2dp"
+                android:visibility="gone"
                 app:cardElevation="1dp">
 
             <LinearLayout
-                    android:id="@+id/frg_find_player_v_spinner"
                     android:layout_width="match_parent"
-                    android:visibility="gone"
                     android:layout_height="@dimen/fs_46"
                     android:orientation="horizontal">
 
