@@ -13,8 +13,11 @@ import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.model.SchedulePlayerModel
+import com.bongdaphui.utils.DateTimeUtil
 import kotlinx.android.synthetic.main.frg_schedule.*
 import kotlinx.android.synthetic.main.view_empty.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class SchedulePlayerScreen : BaseFragment() {
@@ -91,7 +94,16 @@ class SchedulePlayerScreen : BaseFragment() {
 
                 for (i in 0 until list.size) {
 
-                    if (getUIDUser() == list[i].idPlayer) {
+                    if (getUIDUser() == list[i].idPlayer
+
+                        //check end time is valid with current time
+                        && list[i].endTime?.let {
+                            DateTimeUtil().getTimeInMilliseconds(
+                                it,
+                                DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format
+                            )
+                        }!! >= Calendar.getInstance().timeInMillis
+                    ) {
 
                         scheduleList.add(list[i])
                     }

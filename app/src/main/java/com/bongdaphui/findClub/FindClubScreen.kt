@@ -12,10 +12,13 @@ import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.model.ScheduleClubModel
+import com.bongdaphui.utils.DateTimeUtil
 import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import kotlinx.android.synthetic.main.frg_find_club.*
 import kotlinx.android.synthetic.main.view_empty.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class FindClubScreen : BaseFragment() {
@@ -132,6 +135,14 @@ class FindClubScreen : BaseFragment() {
                             if (_idCity == scheduleListFull[i].idCity
                                 && _idDistrict == scheduleListFull[i].idDistrict
                                 && getUIDUser() != scheduleListFull[i].idCaptain
+
+                                //check end time is valid with current time
+                                && scheduleListFull[i].endTime?.let {
+                                    DateTimeUtil().getTimeInMilliseconds(
+                                        it,
+                                        DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format
+                                    )
+                                }!! >= Calendar.getInstance().timeInMillis
                             ) {
 
                                 scheduleList.add(scheduleListFull[i])

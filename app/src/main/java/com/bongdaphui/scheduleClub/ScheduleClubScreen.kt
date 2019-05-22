@@ -12,8 +12,11 @@ import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.model.ScheduleClubModel
+import com.bongdaphui.utils.DateTimeUtil
 import kotlinx.android.synthetic.main.frg_schedule.*
 import kotlinx.android.synthetic.main.view_empty.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ScheduleClubScreen : BaseFragment() {
@@ -80,7 +83,16 @@ class ScheduleClubScreen : BaseFragment() {
 
                 for (i in 0 until list.size) {
 
-                    if (getUIDUser() == list[i].idCaptain) {
+                    if (getUIDUser() == list[i].idCaptain
+
+                        //check end time is valid with current time
+                        && list[i].endTime?.let {
+                            DateTimeUtil().getTimeInMilliseconds(
+                                it,
+                                DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format
+                            )
+                        }!! >= Calendar.getInstance().timeInMillis
+                    ) {
 
                         scheduleList.add(list[i])
                     }
