@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.view.View
 import com.bongdaphui.addField.SpinnerAdapter
+import com.bongdaphui.approvePlayer.ApproveJoinClubScreen
 import com.bongdaphui.base.BaseActivity
 import com.bongdaphui.base.BaseApplication
 import com.bongdaphui.base.BaseFragment
@@ -19,6 +20,7 @@ import com.bongdaphui.model.ClubModel
 import com.bongdaphui.model.FbFieldModel
 import com.bongdaphui.splash.SplashScreen
 import com.bongdaphui.utils.Constant
+import com.bongdaphui.utils.IntentExtraName
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -67,7 +69,14 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             .allowMainThreadQueries()
             .build()
 
-        replaceFragment(SplashScreen(), true)
+        //check intent
+        val isOpenFromRequestJoinTeam = intent.extras?.getBoolean(IntentExtraName.REQUEST_JOIN_TEAM, false) ?: false
+        if (isOpenFromRequestJoinTeam) {
+            addFragment(getFragmentContainerResId(),ApproveJoinClubScreen())
+        } else {
+            replaceFragment(SplashScreen(), true)
+        }
+
 
     }
 

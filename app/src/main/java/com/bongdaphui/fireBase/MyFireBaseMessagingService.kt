@@ -11,6 +11,7 @@ import android.util.Log
 import com.bongdaphui.MainActivity
 import com.bongdaphui.R
 import com.bongdaphui.utils.Constant
+import com.bongdaphui.utils.IntentExtraName
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -43,14 +44,19 @@ class MyFireBaseMessagingService : FirebaseMessagingService() {
         // Check if message contains a notification payload.
         if (remoteMessage.notification != null) {
             Log.d(Constant().TAG, "Message Notification Body: " + remoteMessage.notification!!.body!!)
+            showNotification(remoteMessage)
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
 
-    private fun showNotification(title: String?, body: String?) {
+    private fun showNotification(remoteMessage: RemoteMessage?) {
+        if (remoteMessage == null) {
+            return
+        }
         val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra(IntentExtraName.REQUEST_JOIN_TEAM,true)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(
             this, 0, intent,
@@ -60,8 +66,8 @@ class MyFireBaseMessagingService : FirebaseMessagingService() {
         val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this)
             .setSmallIcon(R.drawable.ic_launcher)
-            .setContentTitle(title)
-            .setContentText(body)
+            .setContentTitle(remoteMessage.notification?.title)
+            .setContentText(remoteMessage.notification?.body)
             .setAutoCancel(true)
             .setSound(soundUri)
             .setContentIntent(pendingIntent)
