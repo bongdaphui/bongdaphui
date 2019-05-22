@@ -2,7 +2,6 @@ package com.bongdaphui.updateAccount
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.DatePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -27,10 +26,8 @@ import com.bongdaphui.utils.Enum
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.android.synthetic.main.frg_add_club.*
 import kotlinx.android.synthetic.main.frg_update_account.*
 import java.io.File
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -266,24 +263,14 @@ class UpdateAccountScreen : BaseFragment() {
                         storageReference2nd.downloadUrl.addOnSuccessListener {
 
                             storageData("$it")
-
                         }
-
                     }
                     // If something goes wrong .
                     .addOnFailureListener {
 
                         showProgress(false)
 
-                        Utils().alertUpdateFail(activity)
-
-                    }
-
-                    // On progress change upload time.
-                    .addOnProgressListener {
-
-                        //                        frg_update_account_progress.visibility = View.VISIBLE
-//                        frg_update_account_progress.progress = Utils().progressTask(it)
+                        Utils().showToastUpdate(activity, false)
                     }
             }
         }

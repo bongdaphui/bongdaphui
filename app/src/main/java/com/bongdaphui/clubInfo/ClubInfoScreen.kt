@@ -35,9 +35,6 @@ class ClubInfoScreen : BaseFragment() {
     private var adapterStickPlayer: PlayerStickAdapter? = null
     private var clubModel: ClubModel? = null
 
-    val listJoinClub: ArrayList<RequestJoinClubModel> = ArrayList()
-
-
     companion object {
 
         private const val CLUB_MODEL = "CLUB_MODEL"
@@ -159,8 +156,8 @@ class ClubInfoScreen : BaseFragment() {
             addFragment(UpdateClubScreen.getInstance(clubModel!!, object : AddDataListener {
                 override fun onSuccess() {
 
-                }
 
+                }
             }))
         }
     }

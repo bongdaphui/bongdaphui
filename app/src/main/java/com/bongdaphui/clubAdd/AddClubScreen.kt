@@ -1,7 +1,6 @@
 package com.bongdaphui.clubAdd
 
 import android.Manifest
-import android.app.DatePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -30,9 +29,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.frg_add_club.*
-import kotlinx.android.synthetic.main.frg_update_club.*
 import java.io.File
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -320,15 +317,8 @@ class AddClubScreen : BaseFragment() {
                     // If something goes wrong .
                     .addOnFailureListener {
 
-                        Utils().alertInsertFail(activity)
+                        Utils().showToastInsert(activity, false)
 
-                    }
-
-                    // On progress change upload time.
-                    .addOnProgressListener {
-
-                        /*frg_add_club_progress.visibility = View.VISIBLE
-                        frg_add_club_progress.progress = Utils().progressTask(it)*/
                     }
             }
         }
@@ -378,13 +368,13 @@ class AddClubScreen : BaseFragment() {
 
                 showProgress(false)
 
-                Utils().alertInsertSuccess(activity)
+                Utils().showToastInsert(activity, true)
 
             }
 
             override fun onUpdateFail(err: String) {
                 showProgress(false)
-                Utils().alertInsertFail(activity)
+                Utils().showToastInsert(activity, false)
             }
         })
     }

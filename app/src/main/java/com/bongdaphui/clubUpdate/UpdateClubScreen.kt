@@ -28,7 +28,6 @@ import com.google.firebase.storage.StorageReference
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.frg_update_club.*
 import java.io.File
-import java.util.*
 
 
 class UpdateClubScreen : BaseFragment() {
@@ -36,8 +35,6 @@ class UpdateClubScreen : BaseFragment() {
     var idCity: String = ""
 
     var idDistrict: String = ""
-
-    private var cal = Calendar.getInstance()
 
     private var filePathUri: Uri? = null
 
@@ -347,20 +344,11 @@ class UpdateClubScreen : BaseFragment() {
 
                             storageData("$it")
                         }
-
                     }
                     // If something goes wrong .
                     .addOnFailureListener {
 
-                        Utils().alertInsertFail(activity)
-
-                    }
-
-                    // On progress change upload time.
-                    .addOnProgressListener {
-
-                        /*frg_update_club_progress.visibility = View.VISIBLE
-                        frg_update_club_progress.progress = Utils().progressTask(it)*/
+                        Utils().showToastInsert(activity, false)
                     }
             }
         }
@@ -385,25 +373,24 @@ class UpdateClubScreen : BaseFragment() {
 
         val listPlayer = arrayListOf(Gson().toJson(clubModel?.players))
 
-        val model =
-            ClubModel(
-                id,
-                getUIDUser(),
-                uri,
-                name,
-                caption,
-                email,
-                phone,
-                dob,
-                address,
-                idDistrict,
-                idCity,
-                clubModel?.matchWin,
-                clubModel?.matchLose,
-                clubModel?.countRating,
-                clubModel?.rating,
-                listPlayer
-            )
+        val model = ClubModel(
+            id,
+            getUIDUser(),
+            uri,
+            name,
+            caption,
+            email,
+            phone,
+            dob,
+            address,
+            idDistrict,
+            idCity,
+            clubModel?.matchWin,
+            clubModel?.matchLose,
+            clubModel?.countRating,
+            clubModel?.rating,
+            listPlayer
+        )
         BaseRequest().saveOrUpdateClub(model, object : UpdateListener {
             override fun onUpdateSuccess() {
 
@@ -411,13 +398,13 @@ class UpdateClubScreen : BaseFragment() {
 
                 showProgress(false)
 
-                Utils().alertInsertSuccess(activity)
-
+                Utils().showToastUpdate(activity, true)
             }
 
             override fun onUpdateFail(err: String) {
                 showProgress(false)
-                Utils().alertInsertFail(activity)
+                Utils().showToastUpdate(activity, false)
+
             }
         })
     }
@@ -435,5 +422,4 @@ class UpdateClubScreen : BaseFragment() {
         frg_update_club_btn_update.isEnabled = false
 
     }
-
 }

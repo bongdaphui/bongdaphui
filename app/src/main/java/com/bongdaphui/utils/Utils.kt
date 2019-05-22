@@ -96,26 +96,26 @@ class Utils {
         return PhoneNumberUtils.isGlobalPhoneNumber(number)
     }
 
-    fun alertInsertFail(activity: Activity?) {
+    fun showToastInsert(activity: Activity?, isSuccess: Boolean) {
 
-        Toast.makeText(activity, "Thêm thất bại. Bạn vui lòng thực hiện lại.", Toast.LENGTH_LONG).show()
-
-        activity!!.onBackPressed()
-    }
-
-    fun alertUpdateFail(activity: Activity?) {
-
-        Toast.makeText(activity, "Cập nhật thất bại. Bạn vui lòng thực hiện lại.", Toast.LENGTH_LONG).show()
+        Toast.makeText(
+            activity,
+            if (isSuccess) "Thêm thành công" else "Thêm thất bại. Vui lòng thực hiện lại",
+            Toast.LENGTH_LONG
+        ).show()
 
         activity!!.onBackPressed()
     }
 
-    fun alertInsertSuccess(activity: Activity?) {
+    fun showToastUpdate(activity: Activity?, isSuccess: Boolean) {
 
-        Toast.makeText(activity, "Thêm thành công", Toast.LENGTH_LONG).show()
+        Toast.makeText(
+            activity,
+            if (isSuccess) "Cập nhật thông tin thành công" else "Cập nhật thất bại. Vui lòng thực hiện lại",
+            Toast.LENGTH_LONG
+        ).show()
 
         activity!!.onBackPressed()
-
     }
 
     // Creating Method to get the selected image file Extension from File Path URI.
