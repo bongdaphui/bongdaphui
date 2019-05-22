@@ -383,34 +383,38 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
     }
 
     private fun dialogInputPass() {
-        AlertDialog().showCustomDialog(
-            activity!!,
-            activity!!.resources.getString(R.string.alert),
-            activity!!.resources.getString(R.string.please_enter_your_email_first),
-            "",
-            activity!!.resources.getString(R.string.close),
-            object : AcceptListener {
-                override fun onAccept() {
+        activity?.let {
+            AlertDialog().showCustomDialog(
+                it,
+                activity!!.resources.getString(R.string.alert),
+                activity!!.resources.getString(R.string.please_enter_your_email_first),
+                "",
+                activity!!.resources.getString(R.string.close),
+                object : AcceptListener {
+                    override fun onAccept() {
 
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 
     private fun dialogResetPass(email: String) {
-        AlertDialog().showCustomDialog(
-            activity!!,
-            activity!!.resources.getString(R.string.alert),
-            String.format(activity!!.resources.getString(R.string.alert_reset_pass), email),
-            activity!!.resources.getString(R.string.cancel),
-            activity!!.resources.getString(R.string.agree),
-            object : AcceptListener {
-                override fun onAccept() {
+        activity?.let {
+            AlertDialog().showCustomDialog(
+                it,
+                activity!!.resources.getString(R.string.alert),
+                String.format(activity!!.resources.getString(R.string.alert_reset_pass), email),
+                activity!!.resources.getString(R.string.cancel),
+                activity!!.resources.getString(R.string.agree),
+                object : AcceptListener {
+                    override fun onAccept() {
 
-                    sendMail(email)
+                        sendMail(email)
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 
     private fun sendMail(email: String) {
@@ -431,20 +435,22 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
     }
 
     private fun dialogSendMail(email: String, isSuccess: Boolean) {
-        AlertDialog().showCustomDialog(
-            activity!!,
-            activity!!.resources.getString(R.string.alert),
-            if (isSuccess)
-                String.format(activity!!.resources.getString(R.string.please_check_email), email)
-            else
-                activity!!.resources.getString(R.string.send_mail_fail),
-            "",
-            activity!!.resources.getString(R.string.agree),
-            object : AcceptListener {
-                override fun onAccept() {
+        activity?.let {
+            AlertDialog().showCustomDialog(
+                it,
+                activity!!.resources.getString(R.string.alert),
+                if (isSuccess)
+                    String.format(activity!!.resources.getString(R.string.please_check_email), email)
+                else
+                    activity!!.resources.getString(R.string.send_mail_fail),
+                "",
+                activity!!.resources.getString(R.string.agree),
+                object : AcceptListener {
+                    override fun onAccept() {
 
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 }

@@ -17,12 +17,11 @@ import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.dialog.AlertDialog
+import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
-import com.bongdaphui.listener.ConfirmListener
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.model.FbFieldModel
 import com.bongdaphui.utils.*
-import com.bongdaphui.utils.Enum
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -125,7 +124,7 @@ class AddFieldScreen : BaseFragment() {
 
                         if (list[i].name == frg_add_field_et_name.text.toString() || list[i].phone == frg_add_field_et_phone.text.toString()) {
 
-                            showAlertFieldIsAvailable()
+                            showAlertAddField(activity!!.resources.getString(R.string.add_field_is_available))
 
                             break
                         }
@@ -135,7 +134,7 @@ class AddFieldScreen : BaseFragment() {
 
                 override fun onFail(message: String) {
 
-                    showAlertAddFail()
+                    showAlertAddField(activity!!.resources.getString(R.string.add_field_fail))
                 }
             })
         }
@@ -227,8 +226,7 @@ class AddFieldScreen : BaseFragment() {
                 // If something goes wrong .
                 .addOnFailureListener {
 
-                    showAlertAddFail()
-
+                    showAlertAddField(activity!!.resources.getString(R.string.add_field_fail))
                 }
 
                 // On progress change upload time.
@@ -276,58 +274,35 @@ class AddFieldScreen : BaseFragment() {
 
                 getDatabase().getFieldDAO().insert(fieldModel)
 
-                showAlertAddSuccess()
+                showAlertAddField(activity!!.resources.getString(R.string.add_field_success))
             }
             .addOnFailureListener {
 
                 Log.d(Constant().TAG, "upload field fail : $it")
 
-                showAlertAddFail()
+                showAlertAddField(activity!!.resources.getString(R.string.add_field_fail))
             }
     }
 
-    private fun showAlertFieldIsAvailable() {
+    private fun showAlertAddField(message: String) {
 
         showProgress(false)
 
         enableItem(true)
 
-        AlertDialog().showDialog(activity!!, Enum.EnumConfirmYes.FieldIsAvailable.value, object : ConfirmListener {
-            override fun onConfirm(id: Int) {
-
-            }
-        })
-    }
-
-    private fun showAlertAddFail() {
-
-        showProgress(false)
-
-        enableItem(true)
-
-        AlertDialog().showDialog(activity!!, Enum.EnumConfirmYes.AddFieldFail.value, object : ConfirmListener {
-            override fun onConfirm(id: Int) {
-
-            }
-        })
-    }
-
-    private fun showAlertAddSuccess() {
-
-        showProgress(false)
-
-        AlertDialog().showDialog(activity!!, Enum.EnumConfirmYes.AddFieldSuccess.value, object : ConfirmListener {
-            override fun onConfirm(id: Int) {
-
-                enableItem(true)
-
-                frg_add_field_et_name.text.clear()
-                frg_add_field_et_phone.text.clear()
-                frg_add_field_et_address.text.clear()
-                frg_add_field_et_count_field.text.clear()
-                frg_add_field_et_price_field.text.clear()
-            }
-        })
+        activity?.let { it ->
+            AlertDialog().showCustomDialog(
+                it,
+                activity!!.resources.getString(R.string.alert),
+                message,
+                "",
+                activity!!.resources.getString(R.string.close),
+                object : AcceptListener {
+                    override fun onAccept() {
+                    }
+                }
+            )
+        }
     }
 
     private fun initView() {

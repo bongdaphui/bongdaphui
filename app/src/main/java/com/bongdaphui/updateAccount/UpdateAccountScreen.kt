@@ -14,11 +14,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bongdaphui.R
-import com.bongdaphui.base.BaseActivity
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.dialog.AlertDialog
-import com.bongdaphui.listener.ConfirmListener
+import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.utils.*
@@ -296,32 +295,35 @@ class UpdateAccountScreen : BaseFragment() {
 
                 getDatabase().getUserDAO().insert(userModel)
 
-                showProgress(false)
+                showDialogUpdate(activity!!.resources.getString(R.string.update_success))
 
-                AlertDialog().showDialog(activity!!, Enum.EnumConfirmYes.UpdateSuccess.value, object : ConfirmListener {
-                    override fun onConfirm(id: Int) {
-                        //if back stack has more than 1 then go back else open club screen
-                        if ((activity as BaseActivity).containers.size > 1) {
-                            onBackPressed()
-                        } else {
-                            openClubs()
-                        }
-                    }
-                })
             }
 
             override fun onUpdateFail(err: String) {
 
-                showProgress(false)
-
-                AlertDialog().showDialog(activity!!, Enum.EnumConfirmYes.UpdateFail.value, object : ConfirmListener {
-                    override fun onConfirm(id: Int) {
-
-                        openClubs()
-                    }
-                })
+                showDialogUpdate(activity!!.resources.getString(R.string.update_fail))
             }
         })
+    }
+
+    private fun showDialogUpdate(message: String) {
+
+        showProgress(false)
+
+        activity?.let { it ->
+            AlertDialog().showCustomDialog(
+                it,
+                activity!!.resources.getString(R.string.alert),
+                message,
+                "",
+                activity!!.resources.getString(R.string.close),
+                object : AcceptListener {
+                    override fun onAccept() {
+                        onBackPressed()
+                    }
+                }
+            )
+        }
     }
 
     private fun disableItem() {

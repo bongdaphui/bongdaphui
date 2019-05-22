@@ -15,13 +15,12 @@ import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.dialog.AlertDialog
+import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
-import com.bongdaphui.listener.ConfirmListener
 import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.utils.*
-import com.bongdaphui.utils.Enum
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -218,14 +217,19 @@ class UpdateClubScreen : BaseFragment() {
 
             } else {
 
-                AlertDialog().showDialog(
-                    activity!!,
-                    Enum.EnumConfirmYes.DeniedPermission.value,
-                    object : ConfirmListener {
-                        override fun onConfirm(id: Int) {
-
+                activity?.let {
+                    AlertDialog().showCustomDialog(
+                        it,
+                        activity!!.resources.getString(R.string.alert),
+                        activity!!.resources.getString(R.string.alert_denied_permission),
+                        "",
+                        activity!!.resources.getString(R.string.close),
+                        object : AcceptListener {
+                            override fun onAccept() {
+                            }
                         }
-                    })
+                    )
+                }
             }
         }
     }

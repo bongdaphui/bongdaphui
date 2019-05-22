@@ -8,14 +8,13 @@ import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.dialog.AlertDialog
-import com.bongdaphui.listener.ConfirmListener
+import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.myClub.MyClubScreen
 import com.bongdaphui.profile.ProfileScreen
 import com.bongdaphui.scheduleClub.ScheduleClubScreen
 import com.bongdaphui.schedulePlayer.SchedulePlayerScreen
-import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Tools
 import com.bongdaphui.utils.ViewAnimation
 import com.bumptech.glide.Glide
@@ -104,17 +103,23 @@ class ManagerScreen : BaseFragment() {
 
         frg_manager_logout.setOnClickListener {
 
-            AlertDialog().showDialog(activity!!, Enum.EnumConfirmYes.Logout.value, object : ConfirmListener {
-                override fun onConfirm(id: Int) {
+            activity?.let { it ->
+                AlertDialog().showCustomDialog(
+                    it,
+                    activity!!.resources.getString(R.string.alert),
+                    activity!!.resources.getString(R.string.are_you_want_logout),
+                    activity!!.resources.getString(R.string.no),
+                    activity!!.resources.getString(R.string.yes),
+                    object : AcceptListener {
+                        override fun onAccept() {
 
-                    if (id == Enum.EnumConfirmYes.Logout.value) {
+                            FirebaseAuth.getInstance().signOut()
 
-                        FirebaseAuth.getInstance().signOut()
-
-                        replaceFragment(LoginScreen(), true)
+                            replaceFragment(LoginScreen(), true)
+                        }
                     }
-                }
-            })
+                )
+            }
         }
 
         frg_manager_bt_login_account.setOnClickListener {

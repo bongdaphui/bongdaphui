@@ -25,17 +25,6 @@ class Enum {
     }
 
     enum class EnumConfirmYes(val value: Int) {
-        Logout(0),
-        DeniedPermission(1),
-        RequestJoinClubFail(2),
-        RequestJoinClubSuccess(3),
-        FeatureNeedLogin(4),
-        FieldIsAvailable(5),
-        AddFieldFail(6),
-        AddFieldSuccess(7),
-        UpdateSuccess(8),
-        UpdateFail(9),
-        ValidDateSchedule(10),
         AddScheduleSuccess(11),
         AddScheduleFail(12)
 

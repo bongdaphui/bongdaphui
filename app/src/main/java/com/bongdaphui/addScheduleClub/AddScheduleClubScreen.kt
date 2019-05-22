@@ -8,13 +8,12 @@ import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.dialog.AlertDialog
+import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
-import com.bongdaphui.listener.ConfirmListener
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.model.ScheduleClubModel
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.DateTimeUtil
-import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.frg_add_schedule.*
@@ -166,13 +165,18 @@ class AddScheduleClubScreen : BaseFragment() {
                 DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format
             )!!
         ) {
-
-            activity?.let {
-                AlertDialog().showDialog(it, Enum.EnumConfirmYes.ValidDateSchedule.value, object : ConfirmListener {
-                    override fun onConfirm(id: Int) {
-
+            activity?.let { it ->
+                AlertDialog().showCustomDialog(
+                    it,
+                    activity!!.resources.getString(R.string.alert),
+                    activity!!.resources.getString(R.string.valid_input_date_schedule),
+                    "",
+                    activity!!.resources.getString(R.string.close),
+                    object : AcceptListener {
+                        override fun onAccept() {
+                        }
                     }
-                })
+                )
             }
             return
         }
@@ -205,30 +209,34 @@ class AddScheduleClubScreen : BaseFragment() {
         db.document(idDocument).set(scheduleClubModel)
             .addOnSuccessListener {
 
-                Log.d(Constant().TAG, "add schedule club success")
-
-                showAlertAdd(Enum.EnumConfirmYes.AddScheduleSuccess.value)
-
+                showDialogAddScheduleClub(activity!!.resources.getString(R.string.add_schedule_player_success))
             }
             .addOnFailureListener {
 
                 Log.d(Constant().TAG, "add schedule club fail : $it")
 
-                showAlertAdd(Enum.EnumConfirmYes.AddScheduleFail.value)
+                showDialogAddScheduleClub(activity!!.resources.getString(R.string.add_schedule_player_fail))
             }
     }
 
-    private fun showAlertAdd(type: Int) {
+    private fun showDialogAddScheduleClub(message: String) {
 
         showProgress(false)
 
-        activity?.let {
-            AlertDialog().showDialog(it, type, object : ConfirmListener {
-                override fun onConfirm(id: Int) {
+        enableItem(true)
 
-                    enableItem(true)
+        activity?.let { it ->
+            AlertDialog().showCustomDialog(
+                it,
+                activity!!.resources.getString(R.string.alert),
+                message,
+                "",
+                activity!!.resources.getString(R.string.close),
+                object : AcceptListener {
+                    override fun onAccept() {
+                    }
                 }
-            })
+            )
         }
     }
 }

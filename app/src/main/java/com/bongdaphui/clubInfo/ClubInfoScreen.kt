@@ -10,19 +10,18 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.clubUpdate.UpdateClubScreen
 import com.bongdaphui.dialog.AlertDialog
+import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.listener.AddDataListener
-import com.bongdaphui.listener.ConfirmListener
 import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.ClubModel
-import com.bongdaphui.model.RequestJoinClubModel
 import com.bongdaphui.model.UserStickModel
 import com.bongdaphui.player.PlayerStickAdapter
-import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
@@ -172,56 +171,58 @@ class ClubInfoScreen : BaseFragment() {
                 override fun onUpdateSuccess() {
                     //pending button
                     fab_join_club.isEnabled = false
-                    showAlertSuccessJoinGroup()
+                    showAlertJoinGroup(true)
                 }
 
                 override fun onUpdateFail(err: String) {
-                    showAlertFailJoinGroup(err)
+                    showAlertJoinGroup(false)
+
                 }
 
             })
         } else {
             //require to login
             //non account
-            activity?.let {
-                AlertDialog().showDialog(
-                    it,
-                    Enum.EnumConfirmYes.FeatureNeedLogin.value,
-                    object : ConfirmListener {
-                        override fun onConfirm(id: Int) {
-                            if (id == Enum.EnumConfirmYes.FeatureNeedLogin.value) {
-                                addFragment(LoginScreen())
-                            }
-                        }
-                    })
-            }
 
+            activity?.let { it ->
+                AlertDialog().showCustomDialog(
+                    it,
+                    activity!!.resources.getString(R.string.alert),
+                    activity!!.resources.getString(R.string.this_feature_need_login),
+                    activity!!.resources.getString(R.string.cancel),
+                    activity!!.resources.getString(R.string.agree),
+                    object : AcceptListener {
+                        override fun onAccept() {
+
+                            addFragment(LoginScreen())
+                        }
+                    }
+                )
+            }
         }
     }
 
 
-    private fun showAlertFailJoinGroup(err: String) {
+    private fun showAlertJoinGroup(isSuccess: Boolean) {
 
         showProgress(false)
 
-        AlertDialog().showDialog(activity!!, Enum.EnumConfirmYes.RequestJoinClubFail.value, object :
-            ConfirmListener {
-            override fun onConfirm(id: Int) {
-
-            }
-        }, err)
-    }
-
-    private fun showAlertSuccessJoinGroup() {
-
-        showProgress(false)
-
-        AlertDialog().showDialog(activity!!, Enum.EnumConfirmYes.RequestJoinClubSuccess.value, object :
-            ConfirmListener {
-            override fun onConfirm(id: Int) {
-
-            }
-        })
+        activity?.let { it ->
+            AlertDialog().showCustomDialog(
+                it,
+                activity!!.resources.getString(R.string.alert),
+                if (isSuccess)
+                    activity!!.resources.getString(R.string.request_join_club_success)
+                else
+                    activity!!.resources.getString(R.string.request_join_club_fail),
+                "",
+                activity!!.resources.getString(R.string.close),
+                object : AcceptListener {
+                    override fun onAccept() {
+                    }
+                }
+            )
+        }
     }
 }
 
