@@ -12,7 +12,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
+import com.bongdaphui.clubUpdate.UpdateClubScreen
 import com.bongdaphui.dialog.AlertDialog
+import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.ConfirmListener
 import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.login.LoginScreen
@@ -96,6 +98,7 @@ class ClubInfoScreen : BaseFragment() {
 
     }
 
+    @SuppressLint("RestrictedApi")
     private fun initView() {
 
         if (activity is AppCompatActivity) {
@@ -123,6 +126,10 @@ class ClubInfoScreen : BaseFragment() {
 
         recycler_list_player.adapter = adapterStickPlayer
 
+        if (clubModel?.idCaptain == getUIDUser()) {
+            frg_club_info_fb_update.visibility = View.VISIBLE
+        }
+
     }
 
     @SuppressLint("RestrictedApi")
@@ -145,6 +152,16 @@ class ClubInfoScreen : BaseFragment() {
                 requestJoinGroup()
 
             }
+        }
+
+        frg_club_info_fb_update.setOnClickListener {
+
+            addFragment(UpdateClubScreen.getInstance(clubModel!!, object : AddDataListener {
+                override fun onSuccess() {
+
+                }
+
+            }))
         }
     }
 

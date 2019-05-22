@@ -33,6 +33,7 @@
     <string name="update_info">Cập nhật thông tin</string>
     <string name="update">Cập nhật</string>
     <string name="add_fc">Thêm đội bóng</string>
+    <string name="update_fc">Cập nhật %s</string>
     <string name="members">Thành viên</string>
     <string name="football_field">Sân banh</string>
     <string name="user">Tài khoản</string>
