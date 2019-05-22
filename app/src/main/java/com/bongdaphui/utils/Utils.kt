@@ -1,18 +1,12 @@
 package com.bongdaphui.utils
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.Build
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.telephony.PhoneNumberUtils
@@ -30,11 +24,8 @@ import com.bongdaphui.model.CityModel
 import com.bongdaphui.model.CommentModel
 import com.bongdaphui.model.DistrictModel
 import com.bongdaphui.model.FbFieldModel
-import com.google.firebase.storage.UploadTask
 import org.json.JSONArray
 import org.json.JSONException
-import java.io.ByteArrayOutputStream
-import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.charset.Charset
 import java.text.DecimalFormat
@@ -52,10 +43,6 @@ class Utils {
 
     fun validateEmail(email: String): Boolean {
         return email.matches(Constant().emailRegularExpression.toRegex())
-    }
-
-    fun getDrawable(resourceID: Int): Drawable? {
-        return BaseApplication().getContext()?.let { ContextCompat.getDrawable(it, resourceID) }
     }
 
     fun editTextTextChange(editText: EditText, ivClear: ImageView, tvError: TextView) {
@@ -78,29 +65,6 @@ class Utils {
         ivClear.setOnClickListener { editText.setText("") }
     }
 
-    @SuppressLint("SetTextI18n")
-    fun showDatePicker(texbox: TextView) {
-        val c = Calendar.getInstance()
-        val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH)
-        val day = c.get(Calendar.DAY_OF_MONTH)
-
-
-        val dpd = DatePickerDialog(
-            BaseApplication().getActiveActivity(),
-            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-
-                // Display Selected date in textbox
-                texbox.text = "$dayOfMonth/$monthOfYear/$year"
-            },
-            year,
-            month,
-            day
-        )
-
-        dpd.show()
-    }
-
     fun getSharedPreferenceKey(): String {
         val pInfo: PackageInfo
         try {
@@ -116,36 +80,6 @@ class Utils {
         }
 
         return Constant().sharePreferenceName
-    }
-
-    fun checkPermisstionPhoto(activity: Activity?) {
-        if (ContextCompat.checkSelfPermission(
-                activity!!,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                activity.requestPermissions(
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    RequestCode().readExternalStorage
-                )
-            }
-        } else if (ContextCompat.checkSelfPermission(
-                activity,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            choosePhoto(activity)
-        }
-    }
-
-    private fun choosePhoto(activity: Activity?) {
-
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-
-        activity!!.startActivityForResult(Intent.createChooser(intent, "Select Picture"), RequestCode().pickPhoto)
     }
 
     fun getRandomNumberString(): String? {
@@ -184,79 +118,6 @@ class Utils {
 
     }
 
-    fun alertUpdateSuccess(activity: Activity?) {
-
-        Toast.makeText(activity, "Cập nhật thành công", Toast.LENGTH_LONG).show()
-
-        activity!!.onBackPressed()
-
-    }
-
-    fun convertImageToByte(activity: Activity, uri: Uri): ByteArray? {
-        var data: ByteArray? = null
-        try {
-            val cr = activity.baseContext.contentResolver
-
-            val inputStream = cr.openInputStream(uri)
-
-
-            val bitmap = BitmapFactory.decodeStream(inputStream)
-
-
-            Log.d(Constant().TAG, "realImage.width before  ${bitmap.width}")
-            Log.d(Constant().TAG, "realImage.height before ${bitmap.height}")
-
-//            val bitmapScale = scaleDown(bitmap, Constant().sizeImage, false)
-
-            val baos = ByteArrayOutputStream()
-
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-
-//            val mb = (baos.size() / 1024f) / 1024f
-
-//            Log.d(Constant().TAG, "before $mb : ${baos.size()}")
-
-
-//            if (baos.size() > Constant().sizeImage) {
-//
-//                bitmap.compress(Bitmap.CompressFormat.JPEG, (Constant().sizeImage * 100) / baos.size(), baos)
-//            }
-
-            val mb1 = (baos.size() / 1024f) / 1024f
-
-            Log.d(Constant().TAG, "after mb: $mb1 -  byte: ${baos.size()} ")
-
-            data = baos.toByteArray()
-
-
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-        }
-
-        return data
-    }
-
-    private fun scaleDown(realImage: Bitmap, maxImageSize: Float, filter: Boolean): Bitmap {
-
-        Log.d(Constant().TAG, "realImage.width  ${realImage.width}")
-        Log.d(Constant().TAG, "realImage.height  ${realImage.height}")
-
-
-        val ratio = Math.min(maxImageSize / realImage.width, maxImageSize / realImage.height)
-
-        Log.d(Constant().TAG, "ratio  $ratio")
-
-        val width = Math.round(ratio * realImage.width)
-
-        Log.d(Constant().TAG, "width  $width")
-
-        val height = Math.round(ratio * realImage.height)
-
-        Log.d(Constant().TAG, "height  $height")
-
-        return Bitmap.createScaledBitmap(realImage, width, height, filter)
-    }
-
     // Creating Method to get the selected image file Extension from File Path URI.
     fun getFileExtension(activity: Activity?, uri: Uri): String? {
 
@@ -267,10 +128,6 @@ class Utils {
         // Returning the file Extension.
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri))
 
-    }
-
-    fun progressTask(it: UploadTask.TaskSnapshot): Int {
-        return ((100.0 * it.bytesTransferred) / it.totalByteCount).toInt()
     }
 
     fun getDrawable(context: Context, resourceID: Int): Drawable? {
@@ -328,7 +185,9 @@ class Utils {
     fun initSpinnerCity(
         context: Context,
         spCity: Spinner,
+        itemCity: Int,
         spDistrict: Spinner,
+        itemDistrict: Int,
         spInterface: BaseSpinnerSelectInterface
     ) {
 
@@ -362,6 +221,11 @@ class Utils {
 
                 spDistrict.adapter = spDistrictAdapter
 
+                if (itemCity.toString() == idCity) {
+
+                    spDistrict.setSelection(itemDistrict)
+                }
+
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -369,6 +233,7 @@ class Utils {
 
             }
         }
+        spCity.setSelection(itemCity)
 
         spDistrict.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
@@ -389,6 +254,7 @@ class Utils {
 
             }
         }
+
     }
 
     fun getListDistrictNameFromIdCity(listCity: ArrayList<CityModel>, idCity: String): ArrayList<String> {
@@ -443,6 +309,28 @@ class Utils {
         }
 
         return idDistrict
+    }
+
+    fun getNameCityDistrictFromId(context: Context, idCity: String, idDistrict: String?): String {
+
+        var s = ""
+
+        val listCity = getListCity(context)
+
+        for (i in 0 until listCity.size) {
+
+            if (idCity == listCity[i].id) {
+
+                for (j in 0 until (listCity[i].districts!!.size)) {
+
+                    if (idDistrict == listCity[i].districts!![j].id) {
+
+                        s = "${listCity[i].districts!![j].name}, ${listCity[i].name}"
+                    }
+                }
+            }
+        }
+        return s
     }
 
     fun openDial(context: Context, phone: String) {
@@ -602,31 +490,5 @@ class Utils {
         if (null != swipeRefreshLayout && swipeRefreshLayout.isRefreshing) {
             swipeRefreshLayout.isRefreshing = false
         }
-    }
-
-    fun getAddress(context: Context?, idCity: String?, idDistrict: String?): String {
-
-        var cityName = ""
-        var districtName = ""
-        val listCity = context?.let { getListCity(it) }
-
-        if (listCity != null) {
-            for (i in 0 until listCity.size) {
-
-                if (idCity == listCity[i].id) {
-
-                    cityName = listCity[i].name!!
-
-                    for (j in 0 until listCity[i].districts!!.size) {
-
-                        if (idDistrict == listCity[i].districts!![j].id) {
-
-                            districtName = listCity[i].districts!![j].name!!
-                        }
-                    }
-                }
-            }
-        }
-        return "$districtName, $cityName"
     }
 }

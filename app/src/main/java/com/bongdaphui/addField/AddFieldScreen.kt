@@ -72,8 +72,8 @@ class AddFieldScreen : BaseFragment() {
     private fun initSpinner() {
         Utils().initSpinnerCity(
             activity!!,
-            frg_add_field_sp_city,
-            frg_add_field_sp_district,
+            frg_add_field_sp_city, 0,
+            frg_add_field_sp_district, 0,
             object :
                 BaseSpinnerSelectInterface {
                 override fun onSelectCity(_idCity: String, _idDistrict: String) {

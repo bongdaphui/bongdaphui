@@ -30,6 +30,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.frg_add_club.*
+import kotlinx.android.synthetic.main.frg_update_club.*
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -98,8 +99,8 @@ class AddClubScreen : BaseFragment() {
     private fun initSpinner() {
         Utils().initSpinnerCity(
             activity!!,
-            frg_add_club_sp_city,
-            frg_add_club_sp_district,
+            frg_add_club_sp_city, 0,
+            frg_add_club_sp_district, 0,
             object :
                 BaseSpinnerSelectInterface {
                 override fun onSelectCity(_idCity: String, _idDistrict: String) {
@@ -145,14 +146,13 @@ class AddClubScreen : BaseFragment() {
         )
 
         frg_add_club_v_input_dob.setOnClickListener {
-            DatePickerDialog(
-                activity!!,
-                dateSetListener,
-                // set DatePickerDialog to point to today's date when it loads up
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)
-            ).show()
+            activity?.let { it1 ->
+                DateTimeUtil().dialogDatePickerLight(
+                    it1,
+                    frg_add_club_et_dob,
+                    DateTimeUtil.DateFormatDefinition.DD_MM_YYYY.format
+                )
+            }
         }
 
         Utils().editTextTextChange(
@@ -343,11 +343,7 @@ class AddClubScreen : BaseFragment() {
         val email = frg_add_club_et_email.text.toString()
         val phone = frg_add_club_et_phone.text.toString()
         val dob = frg_add_club_et_dob.text.toString()
-        val address: String = if (frg_add_club_et_address.text.toString().isNotEmpty()) {
-            "${frg_add_club_et_address.text}, ${frg_add_club_sp_district.selectedItem}, ${frg_add_club_sp_city.selectedItem}"
-        } else {
-            "${frg_add_club_sp_district.selectedItem}, ${frg_add_club_sp_city.selectedItem}"
-        }
+        val address: String = frg_add_club_et_address.text.toString()
 
         val currentTime = Calendar.getInstance().timeInMillis
 
@@ -405,19 +401,5 @@ class AddClubScreen : BaseFragment() {
         frg_add_club_sp_city.isEnabled = false
         frg_add_club_tv_input.isEnabled = false
 
-    }
-
-    private val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-
-        cal.set(Calendar.YEAR, year)
-        cal.set(Calendar.MONTH, monthOfYear)
-        cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-        updateDateInView()
-    }
-
-    private fun updateDateInView() {
-        val myFormat = "dd/MM/yyyy" // mention the format you need
-        val sdf = SimpleDateFormat(myFormat, Locale.US)
-        frg_add_club_et_dob!!.text = sdf.format(cal.time)
     }
 }

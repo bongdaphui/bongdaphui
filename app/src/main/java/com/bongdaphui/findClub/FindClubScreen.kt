@@ -119,8 +119,8 @@ class FindClubScreen : BaseFragment() {
 
             Utils().initSpinnerCity(
                 activity!!,
-                frg_find_club_sp_city,
-                frg_find_club_sp_district,
+                frg_find_club_sp_city, 0,
+                frg_find_club_sp_district, 0,
                 object :
                     BaseSpinnerSelectInterface {
                     override fun onSelectCity(_idCity: String, _idDistrict: String) {

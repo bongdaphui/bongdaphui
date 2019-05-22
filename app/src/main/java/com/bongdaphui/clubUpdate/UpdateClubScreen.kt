@@ -1,12 +1,12 @@
 package com.bongdaphui.clubUpdate
 
 import android.Manifest
-import android.app.DatePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +20,6 @@ import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.listener.ConfirmListener
 import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.model.ClubModel
-import com.bongdaphui.model.UserStickModel
 import com.bongdaphui.utils.*
 import com.bongdaphui.utils.Enum
 import com.bumptech.glide.Glide
@@ -29,7 +28,6 @@ import com.google.firebase.storage.StorageReference
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.frg_update_club.*
 import java.io.File
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -51,9 +49,9 @@ class UpdateClubScreen : BaseFragment() {
 
         fun getInstance(model: ClubModel, listener: AddDataListener): UpdateClubScreen {
 
-            clubModel = model
+            this.clubModel = model
 
-            addDataListener = listener
+            this.addDataListener = listener
 
             return UpdateClubScreen()
         }
@@ -78,6 +76,8 @@ class UpdateClubScreen : BaseFragment() {
 
     override fun onBindView() {
 
+        fillData()
+
         initSpinner()
 
         initView()
@@ -95,12 +95,33 @@ class UpdateClubScreen : BaseFragment() {
         }
     }
 
+    private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
+
+    private fun fillData() {
+
+        if (clubModel?.photo?.isNotEmpty()!!) {
+            this.context?.let { Glide.with(it).asBitmap().load(clubModel!!.photo).into(frg_update_club_iv_photo) }
+        }
+
+        frg_update_club_et_name_fc.text = clubModel?.name?.toEditable()
+
+        frg_update_club_et_captain.text = clubModel?.caption?.toEditable()
+
+        frg_update_club_et_email.text = clubModel?.email?.toEditable()
+
+        frg_update_club_et_phone.text = clubModel?.phone?.toEditable()
+
+        frg_update_club_et_dob.text = clubModel?.dob
+
+        frg_update_club_et_address.text = clubModel?.address?.toEditable()
+    }
+
     private fun initSpinner() {
 
         Utils().initSpinnerCity(
             activity!!,
-            frg_update_club_sp_city,
-            frg_update_club_sp_district,
+            frg_update_club_sp_city, clubModel!!.idCity!!.toInt(),
+            frg_update_club_sp_district, clubModel!!.idDistrict!!.toInt(),
             object :
                 BaseSpinnerSelectInterface {
                 override fun onSelectCity(_idCity: String, _idDistrict: String) {
@@ -113,6 +134,8 @@ class UpdateClubScreen : BaseFragment() {
 
                 }
             })
+        clubModel?.idCity?.toInt()?.let { frg_update_club_sp_city.setSelection(it) }
+
     }
 
     private fun initView() {
@@ -128,7 +151,7 @@ class UpdateClubScreen : BaseFragment() {
         )
 
         Utils().editTextTextChange(
-            frg_update_club_et_full_name,
+            frg_update_club_et_captain,
             frg_update_club_iv_clear_input_full_name,
             frg_update_club_tv_error_input_full_name
         )
@@ -146,14 +169,13 @@ class UpdateClubScreen : BaseFragment() {
         )
 
         frg_update_club_v_input_dob.setOnClickListener {
-            DatePickerDialog(
-                activity!!,
-                dateSetListener,
-                // set DatePickerDialog to point to today's date when it loads up
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)
-            ).show()
+            activity?.let { it1 ->
+                DateTimeUtil().dialogDatePickerLight(
+                    it1,
+                    frg_update_club_et_dob,
+                    DateTimeUtil.DateFormatDefinition.DD_MM_YYYY.format
+                )
+            }
         }
 
         Utils().editTextTextChange(
@@ -266,11 +288,8 @@ class UpdateClubScreen : BaseFragment() {
             frg_update_club_et_email.requestFocus()
 
             validate = false
-
         }
-
         return validate
-
     }
 
     private fun startInsertData() {
@@ -284,10 +303,22 @@ class UpdateClubScreen : BaseFragment() {
             //no image
             if (null == filePathUri) {
 
-                storageData("")
+                if (clubModel!!.photo?.isEmpty()!!) {
+
+                    storageData("")
+
+                } else {
+
+                    clubModel!!.photo?.let { storageData(it) }
+                }
 
                 //has image
             } else {
+
+                //remove Image old if have
+                if (clubModel?.photo?.isNotEmpty()!!) {
+                    clubModel?.photo?.let { BaseRequest().removeImage(it) }
+                }
 
                 // Assign FirebaseStorage instance to storageReference.
                 val storageReference = FirebaseStorage.getInstance().reference
@@ -340,7 +371,7 @@ class UpdateClubScreen : BaseFragment() {
         Log.d(Constant().TAG, uri)
 
         val name = frg_update_club_et_name_fc.text.toString()
-        val caption = frg_update_club_et_full_name.text.toString()
+        val caption = frg_update_club_et_captain.text.toString()
         val email = frg_update_club_et_email.text.toString()
         val phone = frg_update_club_et_phone.text.toString()
         val dob = frg_update_club_et_dob.text.toString()
@@ -350,18 +381,11 @@ class UpdateClubScreen : BaseFragment() {
             "${frg_update_club_sp_district.selectedItem}, ${frg_update_club_sp_city.selectedItem}"
         }
 
-        val currentTime = Calendar.getInstance().timeInMillis
+        val id = "${clubModel?.id}"
 
-        val id = "${Utils().getRandomNumberString()}$currentTime"
+        val listPlayer = arrayListOf(Gson().toJson(clubModel?.players))
 
-        val userCurrent = getDatabase().getUserDAO().getItems()
-
-        val userStickModel =
-            UserStickModel(userCurrent.id, userCurrent.photoUrl, userCurrent.name, userCurrent.position)
-
-        val listPlayer = arrayListOf(Gson().toJson(userStickModel))
-
-        val clubModel =
+        val model =
             ClubModel(
                 id,
                 getUIDUser(),
@@ -374,9 +398,13 @@ class UpdateClubScreen : BaseFragment() {
                 address,
                 idDistrict,
                 idCity,
-                "", "", "", "", listPlayer
+                clubModel?.matchWin,
+                clubModel?.matchLose,
+                clubModel?.countRating,
+                clubModel?.rating,
+                listPlayer
             )
-        BaseRequest().saveOrUpdateClub(clubModel, object : UpdateListener {
+        BaseRequest().saveOrUpdateClub(model, object : UpdateListener {
             override fun onUpdateSuccess() {
 
                 addDataListener?.onSuccess()
@@ -398,7 +426,7 @@ class UpdateClubScreen : BaseFragment() {
 
         frg_update_club_v_photo.isEnabled = false
         frg_update_club_et_name_fc.isEnabled = false
-        frg_update_club_et_full_name.isEnabled = false
+        frg_update_club_et_captain.isEnabled = false
         frg_update_club_et_email.isEnabled = false
         frg_update_club_et_phone.isEnabled = false
         frg_update_club_iv_dob.isEnabled = false
@@ -408,17 +436,4 @@ class UpdateClubScreen : BaseFragment() {
 
     }
 
-    private val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-
-        cal.set(Calendar.YEAR, year)
-        cal.set(Calendar.MONTH, monthOfYear)
-        cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-        updateDateInView()
-    }
-
-    private fun updateDateInView() {
-        val myFormat = "dd/MM/yyyy" // mention the format you need
-        val sdf = SimpleDateFormat(myFormat, Locale.US)
-        frg_update_club_et_dob!!.text = sdf.format(cal.time)
-    }
 }

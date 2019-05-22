@@ -27,6 +27,7 @@ import com.bongdaphui.utils.Enum
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import kotlinx.android.synthetic.main.frg_add_club.*
 import kotlinx.android.synthetic.main.frg_update_account.*
 import java.io.File
 import java.text.SimpleDateFormat
@@ -134,14 +135,13 @@ class UpdateAccountScreen : BaseFragment() {
         )
 
         frg_update_account_v_input_dob.setOnClickListener {
-            DatePickerDialog(
-                activity!!,
-                dateSetListener,
-                // set DatePickerDialog to point to today's date when it loads up
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)
-            ).show()
+            activity?.let { it1 ->
+                DateTimeUtil().dialogDatePickerLight(
+                    it1,
+                    frg_update_account_et_dob,
+                    DateTimeUtil.DateFormatDefinition.DD_MM_YYYY.format
+                )
+            }
         }
 
     }
@@ -346,19 +346,6 @@ class UpdateAccountScreen : BaseFragment() {
         frg_update_account_iv_dob.isEnabled = false
         frg_update_account_tv_input.isEnabled = false
 
-    }
-
-    private val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-        cal.set(Calendar.YEAR, year)
-        cal.set(Calendar.MONTH, monthOfYear)
-        cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-        updateDateInView()
-    }
-
-    private fun updateDateInView() {
-        val myFormat = "dd/MM/yyyy" // mention the format you need
-        val sdf = SimpleDateFormat(myFormat, Locale.US)
-        frg_update_account_et_dob!!.text = sdf.format(cal.time)
     }
 
     @SuppressLint("CheckResult")

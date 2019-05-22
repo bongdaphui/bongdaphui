@@ -1,15 +1,11 @@
 package com.bongdaphui.base
 
-import android.content.Context
 import android.util.Log
-import com.bongdaphui.MainActivity
-import com.bongdaphui.listener.*
+import com.bongdaphui.listener.DeleteDataDataListener
+import com.bongdaphui.listener.GetDataListener
+import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.model.*
 import com.bongdaphui.utils.Constant
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.messaging.FirebaseMessaging
@@ -18,67 +14,8 @@ import com.google.firebase.storage.FirebaseStorage
 
 class BaseRequest {
 
-    fun loadData(context: Context, reference: String, listener: FireBaseSuccessListener) {
-
-        if (context is MainActivity) {
-
-            context.showProgress(true)
-        }
-
-        val ref = FirebaseDatabase.getInstance().getReference(reference)
-
-        ref.addValueEventListener(object : ValueEventListener {
-
-            override fun onCancelled(p0: DatabaseError) {
-                if (context is MainActivity) {
-
-                    context.showProgress(false)
-                }
-
-                listener.onFail("Load Data Cancel")
-
-            }
-
-            override fun onDataChange(p0: DataSnapshot) {
-
-                if (p0.exists()) {
-
-                    listener.onSuccess(p0)
-
-                } else {
-
-                    listener.onFail("Load Data Fail")
-
-                }
-
-                if (context is MainActivity) {
-
-                    context.showProgress(false)
-                }
-            }
-        })
-    }
-
-
-    fun checkUserExistsOnFireBase(id: String, checkUserListener: CheckUserListener) {
-        val rootRef = FirebaseDatabase.getInstance().getReference(Constant().DATABASE_USER)
-            .child(id)
-
-        rootRef.addValueEventListener(object : ValueEventListener {
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                checkUserListener.onCheck(dataSnapshot.exists())
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                checkUserListener.onCancel()
-            }
-        })
-    }
-
-
     fun removeImage(urlImage: String) {
+
         val photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(urlImage)
 
         photoRef.delete().addOnSuccessListener {
@@ -90,12 +27,10 @@ class BaseRequest {
         }
     }
 
-
-    fun getDataField(
-        listener: GetDataListener<FbFieldModel>
-    ) {
+    fun getDataField(listener: GetDataListener<FbFieldModel>) {
 
         val db = FirebaseFirestore.getInstance().collection(Constant().collectionPathField)
+
         val fieldList: ArrayList<FbFieldModel> = ArrayList()
 
         db.orderBy("name").get()
@@ -117,11 +52,8 @@ class BaseRequest {
                         document.data["lng"] as String?,
                         document.data["countRating"] as String?,
                         document.data["rating"] as String?
-//                        document.data["comment"] as ArrayList<CommentModel>?
                     )
-
                     fieldList.add(fbFieldModel)
-
                 }
 
                 Log.d(Constant().TAG, "field size: ${fieldList.size}")
@@ -141,35 +73,34 @@ class BaseRequest {
             }
     }
 
-    fun getUserInfo(
-        uid: String,
-        listener: GetDataListener<UserModel>
-    ) {
-        val db = FirebaseFirestore.getInstance().collection(Constant().userPathField).document(uid)
-        db.get()
+    fun getUserInfo(uid: String, listener: GetDataListener<UserModel>) {
+
+        FirebaseFirestore.getInstance().collection(Constant().userPathField).document(uid).get()
+
             .addOnSuccessListener { document ->
+
                 val value = document?.toObject(UserModel::class.java)
+
                 if (value != null) {
+
                     listener.onSuccess(value)
+
                 } else {
+
                     listener.onFail("Not Found")
                 }
-
-
             }
             .addOnFailureListener { exception ->
                 listener.onFail(exception.localizedMessage)
             }
     }
 
-    fun getSchedulePlayer(
-        listener: GetDataListener<SchedulePlayerModel>
-    ) {
+    fun getSchedulePlayer(listener: GetDataListener<SchedulePlayerModel>) {
 
-        val db = FirebaseFirestore.getInstance().collection(Constant().schedulePlayerPathField)
         val schedulePlayerList: ArrayList<SchedulePlayerModel> = ArrayList()
 
-        db.get()
+        FirebaseFirestore.getInstance().collection(Constant().schedulePlayerPathField).get()
+
             .addOnSuccessListener { result ->
 
                 for (document in result) {
@@ -185,10 +116,8 @@ class BaseRequest {
                         document.data["phonePlayer"] as String?,
                         document.data["photoUrlPlayer"] as String?
                     )
-
                     schedulePlayerList.add(schedulePlayerModel)
                 }
-
                 Log.d(Constant().TAG, "schedule player size: ${schedulePlayerList.size}")
 
                 if (schedulePlayerList.size > 0) {
@@ -206,14 +135,12 @@ class BaseRequest {
             }
     }
 
-    fun getScheduleClub(
-        listener: GetDataListener<ScheduleClubModel>
-    ) {
+    fun getScheduleClub(listener: GetDataListener<ScheduleClubModel>) {
 
-        val db = FirebaseFirestore.getInstance().collection(Constant().scheduleClubPathField)
         val scheduleClubList: ArrayList<ScheduleClubModel> = ArrayList()
 
-        db.get()
+        FirebaseFirestore.getInstance().collection(Constant().scheduleClubPathField).get()
+
             .addOnSuccessListener { result ->
 
                 for (document in result) {
@@ -233,7 +160,6 @@ class BaseRequest {
 
                     scheduleClubList.add(scheduleClubModel)
                 }
-
                 Log.d(Constant().TAG, "schedule club size: ${scheduleClubList.size}")
 
                 if (scheduleClubList.size > 0) {
@@ -267,7 +193,6 @@ class BaseRequest {
             }
     }
 
-
     fun saveOrUpdateUser(
         userModel: UserModel,
         listener: UpdateListener
@@ -277,51 +202,50 @@ class BaseRequest {
             .addOnSuccessListener {
                 listener.onUpdateSuccess()
             }
-            .addOnFailureListener { _ ->
+            .addOnFailureListener {
                 listener.onUpdateFail()
             }
     }
 
-    fun saveOrUpdateClub(
-        clubModel: ClubModel,
-        listener: UpdateListener
-    ) {
-        val db = FirebaseFirestore.getInstance().collection(Constant().clubPathField).document(clubModel.id.toString())
-        db.set(clubModel, SetOptions.merge())
+    fun saveOrUpdateClub(clubModel: ClubModel, listener: UpdateListener) {
+
+        FirebaseFirestore.getInstance().collection(Constant().clubPathField).document("${clubModel.id}")
+
+            .set(clubModel, SetOptions.merge())
+
             .addOnSuccessListener {
                 listener.onUpdateSuccess()
             }
-            .addOnFailureListener { _ ->
+            .addOnFailureListener {
                 listener.onUpdateFail()
             }
     }
 
-    fun getClubs(
-        listener: GetDataListener<ClubModel>
-    ) {
-        val db = FirebaseFirestore.getInstance().collection(Constant().clubPathField)
-        db.get()
+    fun getClubs(listener: GetDataListener<ClubModel>) {
+
+        FirebaseFirestore.getInstance().collection(Constant().clubPathField).get()
+
             .addOnSuccessListener { document ->
+
                 val value = document?.toObjects(ClubModel::class.java)
+
                 if (value != null) {
+
                     listener.onSuccess(ArrayList(value))
+
                 } else {
+
                     listener.onFail("Not Found")
                 }
                 Log.d("Tien", document.metadata.toString())
-
-
             }
             .addOnFailureListener { exception ->
                 listener.onFail(exception.localizedMessage)
             }
     }
 
-    fun registerJoinClub(
-        idClub: String,
-        idPlayer: String,
-        listener: UpdateListener
-    ) {
+    fun registerJoinClub(idClub: String, idPlayer: String, listener: UpdateListener) {
+
         val db = FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField)
         //check exist
         db.document(idClub + idPlayer).get().addOnCompleteListener { task ->
@@ -350,9 +274,5 @@ class BaseRequest {
                 }
             }
         }
-
-
     }
-
-
 }

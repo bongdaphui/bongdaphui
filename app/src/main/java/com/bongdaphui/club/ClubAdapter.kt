@@ -9,6 +9,7 @@ import com.bongdaphui.R
 import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.utils.Enum
+import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
 
 class ClubAdapter(
@@ -46,7 +47,15 @@ class ClubAdapter(
             viewHolder.nameCaption.text = Html.fromHtml("Đội trưởng: <b>${club.caption}</b>")
         }
 
-        viewHolder.area.text = Html.fromHtml("Địa chỉ: <b>${club.address}</b>")
+        viewHolder.area.text =
+            Html.fromHtml("Địa chỉ: <b>${club.address}, ${context?.let {
+                club.idCity?.let { it1 ->
+                    Utils().getNameCityDistrictFromId(
+                        it,
+                        it1, club.idDistrict
+                    )
+                }
+            }}</b>")
 
         viewHolder.phone.text = Html.fromHtml("<u>${club.phone}</u>")
 

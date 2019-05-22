@@ -88,8 +88,8 @@ class AddSchedulePlayerScreen : BaseFragment() {
         activity?.let {
             Utils().initSpinnerCity(
                 it,
-                frg_add_schedule_sp_city,
-                frg_add_schedule_sp_district,
+                frg_add_schedule_sp_city, 0,
+                frg_add_schedule_sp_district, 0,
                 object :
                     BaseSpinnerSelectInterface {
                     override fun onSelectCity(_idCity: String, _idDistrict: String) {

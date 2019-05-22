@@ -37,7 +37,7 @@ class SchedulePlayerAdapter(
         viewPlayerHolder.address.text =
             context?.let { schedulePlayerModel.idCity?.let { it1 ->
                 schedulePlayerModel.idDistrict?.let { it2 ->
-                    Utils().getAddress(it,
+                    Utils().getNameCityDistrictFromId(it,
                         it1, it2
                     )
                 }

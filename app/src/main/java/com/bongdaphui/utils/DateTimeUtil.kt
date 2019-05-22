@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import com.bongdaphui.R
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
@@ -87,6 +88,28 @@ class DateTimeUtil {
         datePicker.isThemeDark = false
         datePicker.accentColor = context.resources.getColor(R.color.colorPrimary)
         datePicker.minDate = curCalender
+        datePicker.show(context.fragmentManager, "Datepickerdialog")
+    }
+
+    fun dialogDatePickerLight(context: Activity, textView: TextView, type: String) {
+        val curCalender = Calendar.getInstance()
+        val datePicker = DatePickerDialog.newInstance(
+            { _, year, monthOfYear, dayOfMonth ->
+                val calendar = Calendar.getInstance()
+                calendar.set(Calendar.YEAR, year)
+                calendar.set(Calendar.MONTH, monthOfYear)
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                val dateShipMillis = calendar.timeInMillis
+                textView.text = getFormat(dateShipMillis, type)
+            },
+            curCalender.get(Calendar.YEAR),
+            curCalender.get(Calendar.MONTH),
+            curCalender.get(Calendar.DAY_OF_MONTH)
+        )
+        //set dark theme
+        datePicker.isThemeDark = false
+        datePicker.accentColor = context.resources.getColor(R.color.colorPrimary)
+//        datePicker.minDate = curCalender
         datePicker.show(context.fragmentManager, "Datepickerdialog")
     }
 
