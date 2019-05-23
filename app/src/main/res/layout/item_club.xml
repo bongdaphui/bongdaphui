@@ -59,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sân bóng đá HCA"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/grey_90"/>
 
             <View
@@ -69,7 +69,6 @@
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:gravity="center_vertical"
                     android:layout_height="wrap_content">
 
                 <TextView
@@ -180,7 +179,7 @@
                     android:gravity="end"
                     android:visibility="gone"
                     android:paddingTop="@dimen/fs_10"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
                     android:textColor="@color/colorPrimaryDark"
                     android:textStyle="bold"/>
         </LinearLayout>

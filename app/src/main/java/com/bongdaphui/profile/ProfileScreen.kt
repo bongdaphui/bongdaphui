@@ -1,6 +1,8 @@
 package com.bongdaphui.profile
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +18,6 @@ import com.bongdaphui.utils.DateTimeUtil
 import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.frg_profile.*
-
 
 class ProfileScreen : BaseFragment() {
 
@@ -105,7 +106,7 @@ class ProfileScreen : BaseFragment() {
 
         frg_profile_fb_update.setOnClickListener {
 
-            addFragment(UpdateAccountScreen.getInstance(userModel, object : AddDataListener{
+            addFragment(UpdateAccountScreen.getInstance(userModel, object : AddDataListener {
                 override fun onSuccess() {
 
                     userModel = getDatabase().getUserDAO().getItemById(getUIDUser())
@@ -116,7 +117,11 @@ class ProfileScreen : BaseFragment() {
             }))
         }
 
-        frg_profile_tv_phone.setOnClickListener {
+        frg_profile_ib_message.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("sms:${userModel.phone}")))
+        }
+
+        frg_profile_ib_call.setOnClickListener {
             Utils().openDial(activity!!, userModel.phone)
         }
     }
@@ -152,6 +157,11 @@ class ProfileScreen : BaseFragment() {
 
         frg_profile_tv_position.text =
             if (userModel.position.isEmpty()) activity!!.resources.getString(R.string.three_dot) else userModel.position
+
+        frg_profile_ib_message.visibility = if (userModel.id == getUIDUser()) View.GONE else View.VISIBLE
+
+        frg_profile_ib_call.visibility = if (userModel.id == getUIDUser()) View.GONE else View.VISIBLE
+
     }
 
 

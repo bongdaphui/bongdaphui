@@ -15,7 +15,7 @@
     <RelativeLayout
             android:id="@+id/frg_profile_container"
             android:layout_width="match_parent"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_height="match_parent">
 
         <LinearLayout
@@ -23,24 +23,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
-
-            <TextView
-                    android:id="@+id/frg_profile_tv_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xlarge"
-                    android:text="Julianna Carter"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-                    android:textColor="@color/grey_90"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_medium"
-                    android:text=""
-                    android:visibility="gone"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                    android:textColor="@color/grey_60"/>
 
             <LinearLayout
                     android:layout_width="wrap_content"
@@ -55,7 +37,7 @@
                         android:layout_height="?attr/actionBarSize"
                         android:layout_margin="@dimen/spacing_middle"
                         android:background="?attr/selectableItemBackgroundBorderless"
-                        android:tint="@color/light_green_600"
+                        android:tint="@color/colorPrimaryDark"
                         app:srcCompat="@drawable/ic_chat"/>
 
                 <com.mikhaellopez.circularimageview.CircularImageView
@@ -76,15 +58,23 @@
                         android:layout_height="?attr/actionBarSize"
                         android:layout_margin="@dimen/spacing_middle"
                         android:background="?attr/selectableItemBackgroundBorderless"
-                        android:tint="@color/light_green_600"
+                        android:tint="@color/colorPrimaryDark"
                         app:srcCompat="@drawable/ic_call"/>
 
             </LinearLayout>
 
+            <TextView
+                    android:id="@+id/frg_profile_tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/fs_20"
+                    android:text="Nguyen Tan Linh"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+                    android:textColor="@color/grey_90"/>
+
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_large"
                     android:orientation="vertical">
 
                 <View
@@ -204,19 +194,19 @@
                         android:orientation="vertical">
 
                     <TextView
+                            android:id="@+id/frg_profile_tv_dob"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ngày sinh"
+                            android:text="29/10/1990"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                             android:textColor="@color/colorPrimaryDark"
                             android:textStyle="bold"/>
 
                     <TextView
-                            android:id="@+id/frg_profile_tv_dob"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_medium"
-                            android:text="29/10/1990"
+                            android:text="Ngày sinh"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                             android:textColor="@color/grey_60"/>
 
@@ -227,21 +217,21 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical">
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Email"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textStyle="bold"/>
 
                     <TextView
                             android:id="@+id/frg_profile_tv_email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="abc@gmail.com"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textStyle="bold"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_medium"
-                            android:text="juliana.c@mail.com"
+                            android:text="Email"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                             android:textColor="@color/grey_60"/>
 
@@ -263,21 +253,21 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical">
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Phone"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textStyle="bold"/>
 
                     <TextView
                             android:id="@+id/frg_profile_tv_phone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_medium"
                             android:text="(022)77723287"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textStyle="bold"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_medium"
+                            android:text="Số điện thoại"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                             android:textColor="@color/grey_60"/>
 
@@ -290,19 +280,19 @@
                         android:orientation="vertical">
 
                     <TextView
+                            android:id="@+id/frg_profile_tv_position"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Sở trường"
+                            android:text="Hậu vệ"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                             android:textColor="@color/colorPrimaryDark"
                             android:textStyle="bold"/>
 
                     <TextView
-                            android:id="@+id/frg_profile_tv_position"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_medium"
-                            android:text="Hậu vệ"
+                            android:text="Sở trường"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                             android:textColor="@color/grey_60"/>
 
@@ -327,7 +317,7 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Bình luận"
+                            android:text="0"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                             android:textColor="@color/colorPrimaryDark"
                             android:textStyle="bold"/>
@@ -337,7 +327,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_medium"
-                            android:text="0"
+                            android:text="Bình luận"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                             android:textColor="@color/grey_60"/>
 

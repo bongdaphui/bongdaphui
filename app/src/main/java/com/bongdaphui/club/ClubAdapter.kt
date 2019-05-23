@@ -3,7 +3,6 @@ package com.bongdaphui.club
 import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bongdaphui.R
@@ -36,21 +35,15 @@ class ClubAdapter(
 
         val club: ClubModel = items[position]
 
-        if (club.photo?.isNotEmpty()!!) {
+        if (club.photo.isNotEmpty()) {
             Glide.with(context!!).asBitmap().load(club.photo)
-                .placeholder(context?.resources?.getDrawable(R.drawable.ic_picture))
                 .into(viewHolder.photo)
         }
 
         viewHolder.nameFC.text = club.name
 
-        if (club.caption.isEmpty()) {
-            viewHolder.nameCaption.text =
-                Html.fromHtml("Đội trưởng: <b>${context?.resources?.getText(R.string.not_update)}</b>")
-
-        } else {
-            viewHolder.nameCaption.text = club.caption
-        }
+        viewHolder.nameCaption.text =
+            if (club.caption.isEmpty()) context?.resources?.getText(R.string.not_update) else club.caption
 
         val address = if (club.address.isNotEmpty()) "${club.address}, " else ""
 
