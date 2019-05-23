@@ -258,7 +258,10 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        FirebaseApp.getInstance().delete()
+//        FirebaseApp.getInstance().delete()
+
+        val pid = android.os.Process.myPid()
+        android.os.Process.killProcess(pid)
 
     }
 
