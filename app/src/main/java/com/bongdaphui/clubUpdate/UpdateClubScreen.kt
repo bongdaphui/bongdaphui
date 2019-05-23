@@ -117,8 +117,9 @@ class UpdateClubScreen : BaseFragment() {
 
         Utils().initSpinnerCity(
             activity!!,
-            frg_update_club_sp_city, clubModel!!.idCity!!.toInt(),
-            frg_update_club_sp_district, clubModel!!.idDistrict!!.toInt(),
+            frg_update_club_sp_city, clubModel
+                ?.idCity?.toInt()?:0,
+            frg_update_club_sp_district, clubModel?.idDistrict?.toInt()?:0,
             object :
                 BaseSpinnerSelectInterface {
                 override fun onSelectCity(_idCity: String, _idDistrict: String) {
@@ -226,7 +227,7 @@ class UpdateClubScreen : BaseFragment() {
                         "",
                         activity!!.resources.getString(R.string.close),
                         object : AcceptListener {
-                            override fun onAccept() {
+                            override fun onAccept(inputText: String) {
                             }
                         }
                     )
@@ -390,10 +391,10 @@ class UpdateClubScreen : BaseFragment() {
             address,
             idDistrict,
             idCity,
-            clubModel?.matchWin?:"",
-            clubModel?.matchLose?:"",
-            clubModel?.countRating?:"",
-            clubModel?.rating?:"",
+            clubModel?.matchWin ?: "",
+            clubModel?.matchLose ?: "",
+            clubModel?.countRating ?: "",
+            clubModel?.rating ?: "",
             listPlayer
         )
         BaseRequest().saveOrUpdateClub(model, object : UpdateListener {

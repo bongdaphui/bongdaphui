@@ -388,7 +388,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
                 "",
                 activity!!.resources.getString(R.string.close),
                 object : AcceptListener {
-                    override fun onAccept() {
+                    override fun onAccept(message: String) {
 
                     }
                 }
@@ -405,7 +405,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
                 activity!!.resources.getString(R.string.cancel),
                 activity!!.resources.getString(R.string.agree),
                 object : AcceptListener {
-                    override fun onAccept() {
+                    override fun onAccept(message: String) {
 
                         sendMail(email)
                     }
@@ -443,7 +443,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
                 "",
                 activity!!.resources.getString(R.string.agree),
                 object : AcceptListener {
-                    override fun onAccept() {
+                    override fun onAccept(message: String) {
 
                     }
                 }

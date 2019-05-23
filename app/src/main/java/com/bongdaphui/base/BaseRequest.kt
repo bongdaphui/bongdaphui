@@ -254,7 +254,7 @@ class BaseRequest {
         }
     }
 
-    fun registerJoinClub(clubModel: ClubModel, userModel: UserModel, listener: UpdateListener) {
+    fun registerJoinClub(clubModel: ClubModel, userModel: UserModel,message:String, listener: UpdateListener) {
 
         val db = FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField)
         //check exist
@@ -275,6 +275,7 @@ class BaseRequest {
                         userModel.photoUrl,
                         userModel.name,
                         clubModel.idCaptain,
+                        message,
                         2
                     )
 

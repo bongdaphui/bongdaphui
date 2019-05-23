@@ -319,7 +319,7 @@ class UpdateAccountScreen : BaseFragment() {
                 "",
                 activity!!.resources.getString(R.string.close),
                 object : AcceptListener {
-                    override fun onAccept() {
+                    override fun onAccept(inputText:String) {
                         onBackPressed()
                     }
                 }

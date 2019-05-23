@@ -11,5 +11,6 @@ data class PlayerApprove(
     @NonNull var id: String = "",
     var photoUrl: String = "",
     var name: String = "",
+    var message: String = "",
     var section: Boolean = false
 )
