@@ -334,7 +334,17 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
                 fireBaseAuthWithGoogle(account!!)
 
             } catch (e: ApiException) {
-                Log.d(Constant().TAG, "Google sign in failed", e)
+                Log.e(Constant().TAG, "Google sign in failed", e)
+                activity?.let { it ->
+                    AlertDialog().showCustomDialog(
+                        it,"Lỗi",
+                        e.localizedMessage,"","Đóng",
+                        object : AcceptListener {
+                            override fun onAccept(message: String) {
+                            }
+                        }
+                    )
+                }
             }
         }
 
