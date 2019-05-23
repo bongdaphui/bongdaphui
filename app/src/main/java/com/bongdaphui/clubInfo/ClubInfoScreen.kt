@@ -17,11 +17,13 @@ import com.bongdaphui.clubUpdate.UpdateClubScreen
 import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.listener.AddDataListener
+import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.model.UserStickModel
 import com.bongdaphui.player.PlayerStickAdapter
+import com.bongdaphui.profile.ProfileScreen
 import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
@@ -92,6 +94,7 @@ class ClubInfoScreen : BaseFragment() {
         }
         adapterStickPlayer?.notifyDataSetChanged()
 
+
     }
 
     @SuppressLint("RestrictedApi")
@@ -113,7 +116,14 @@ class ClubInfoScreen : BaseFragment() {
             .into(frg_club_info_iv_logo)
 
 
-        adapterStickPlayer = activity?.let { PlayerStickAdapter(it, listStickPlayer) }
+        adapterStickPlayer = activity?.let {
+            PlayerStickAdapter(it, listStickPlayer, object : OnItemClickListener<UserStickModel> {
+                override fun onItemClick(item: UserStickModel, position: Int, type: Int) {
+                    addFragment(ProfileScreen.getInstance(item.id))
+                }
+
+            })
+        }
 
         recycler_list_player.layoutManager = GridLayoutManager(activity, 3)
         recycler_list_player.setHasFixedSize(true)
@@ -125,6 +135,14 @@ class ClubInfoScreen : BaseFragment() {
         if (clubModel?.idCaptain == getUIDUser()) {
             frg_club_info_fb_update.visibility = View.VISIBLE
         }
+        txt_club_info.text = "Đội trưởng: ${clubModel?.caption}\nĐịa chỉ: ${clubModel?.address},${context?.let {
+            clubModel?.idCity?.let { it1 ->
+                Utils().getNameCityDistrictFromId(
+                    it,
+                    it1, clubModel?.idDistrict
+                )
+            }
+        }}\n${clubModel?.phone}"
 
     }
 
@@ -144,10 +162,23 @@ class ClubInfoScreen : BaseFragment() {
         } else {
 
             fab_join_club.setOnClickListener {
-
-                requestJoinGroup()
-
+                context?.let { it1 ->
+                    AlertDialog().showCustomDialog(
+                        it1,
+                        activity!!.resources.getString(R.string.alert),
+                        activity!!.resources.getString(R.string.join_club),
+                        activity!!.resources.getString(R.string.no),
+                        activity!!.resources.getString(R.string.yes),
+                        object : AcceptListener {
+                            override fun onAccept() {
+                                requestJoinGroup()
+                            }
+                        }
+                    )
+                }
             }
+
+
         }
 
         frg_club_info_fb_update.setOnClickListener {
@@ -175,7 +206,7 @@ class ClubInfoScreen : BaseFragment() {
                 }
 
                 override fun onUpdateFail(err: String) {
-                    showAlertJoinGroup(false)
+                    showAlertJoinGroup(false, err)
 
                 }
 
@@ -203,7 +234,7 @@ class ClubInfoScreen : BaseFragment() {
     }
 
 
-    private fun showAlertJoinGroup(isSuccess: Boolean) {
+    private fun showAlertJoinGroup(isSuccess: Boolean, err: String = "") {
 
         showProgress(false)
 
@@ -213,8 +244,9 @@ class ClubInfoScreen : BaseFragment() {
                 activity!!.resources.getString(R.string.alert),
                 if (isSuccess)
                     activity!!.resources.getString(R.string.request_join_club_success)
-                else
-                    activity!!.resources.getString(R.string.request_join_club_fail),
+                else {
+                    if (TextUtils.isEmpty(err)) activity!!.resources.getString(R.string.request_join_club_fail) else err
+                },
                 "",
                 activity!!.resources.getString(R.string.close),
                 object : AcceptListener {

@@ -295,6 +295,7 @@ class UpdateAccountScreen : BaseFragment() {
                 addDataListener?.onSuccess()
 
                 showDialogUpdate(activity!!.resources.getString(R.string.update_success))
+
             }
 
             override fun onUpdateFail(err: String) {

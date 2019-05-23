@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bongdaphui.R
+import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.model.UserStickModel
+import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -16,7 +18,7 @@ import com.bumptech.glide.request.RequestOptions
 /**
  * Created by ChuTien on ${1/25/2017}.
  */
-class PlayerStickAdapter(var ctx: Context, val items: ArrayList<UserStickModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PlayerStickAdapter(var ctx: Context, val items: ArrayList<UserStickModel>, private var itemClickInterface: OnItemClickListener<UserStickModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return items.size
@@ -33,6 +35,10 @@ class PlayerStickAdapter(var ctx: Context, val items: ArrayList<UserStickModel>)
             )
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.image)
+
+            holder.itemView.setOnClickListener {
+                itemClickInterface.onItemClick(userModule,position,Enum.EnumTypeClick.View.value)
+            }
         }
     }
 
