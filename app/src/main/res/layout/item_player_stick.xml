@@ -3,7 +3,7 @@
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
@@ -11,8 +11,8 @@
 
     <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/player_photo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:src="@drawable/ic_launcher"
             app:civ_border="true"
             app:civ_border_color="@color/grey_10"
@@ -20,23 +20,23 @@
             app:civ_shadow="true"
             app:civ_shadow_radius="0"/>
 
-    <TextView
-            android:id="@+id/player_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_medium"
-            android:text="Adams G"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-            android:textColor="@color/grey_90"
-            app:fontFamily="sans-serif-medium"/>
 
     <TextView
             android:id="@+id/player_position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Executive Officer"
+            android:gravity="center"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
             android:textColor="@color/grey_60"
             app:fontFamily="sans-serif-light"/>
+    <TextView
+            android:id="@+id/player_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Adams G"
+            android:gravity="top"
+            android:paddingBottom="@dimen/spacing_large"
+            app:fontFamily="sans-serif-medium"/>
 
 </LinearLayout>
