@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="120dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -13,30 +11,33 @@
             android:id="@+id/player_photo"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@drawable/ic_launcher"
-            app:civ_border="true"
-            app:civ_border_color="@color/grey_10"
-            app:civ_border_width="2dp"
+            app:srcCompat="@drawable/ic_person_grey"
             app:civ_shadow="true"
-            app:civ_shadow_radius="0"/>
+            app:civ_shadow_radius="0"
+            app:civ_border="true"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/colorPrimaryDark"/>
 
+    <View
+            android:layout_width="1dp"
+            android:layout_height="@dimen/fs_5"/>
 
     <TextView
             android:id="@+id/player_position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Executive Officer"
-            android:gravity="center"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-            android:textColor="@color/grey_60"
-            app:fontFamily="sans-serif-light"/>
+            android:text="@string/three_dot"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:textColor="@color/grey_60"/>
+
     <TextView
             android:id="@+id/player_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Adams G"
-            android:gravity="top"
-            android:paddingBottom="@dimen/spacing_large"
-            app:fontFamily="sans-serif-medium"/>
-
+            android:text="@string/three_dot"
+            android:textColor="@color/grey_80"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+    <View
+            android:layout_width="1dp"
+            android:layout_height="@dimen/fs_15"/>
 </LinearLayout>

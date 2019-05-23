@@ -76,11 +76,7 @@ class ManagerScreen : BaseFragment() {
             if (TextUtils.isEmpty(userModel?.name)) activity?.resources?.getText(R.string.three_dot) else userModel?.name
 
         if (!TextUtils.isEmpty(userModel?.photoUrl)) {
-            activity?.let {
-                Glide.with(it).asBitmap().load(userModel?.photoUrl)
-                    .placeholder(context?.resources?.getDrawable(R.drawable.ic_person_grey))
-                    .into(frg_manager_iv_user)
-            }
+            activity?.let { Glide.with(it).asBitmap().load(userModel?.photoUrl).into(frg_manager_iv_user) }
         }
     }
 
@@ -114,7 +110,6 @@ class ManagerScreen : BaseFragment() {
 
                         fillData()
                     }
-
                 })
             }?.let { it2 -> addFragment(it2) }
         }

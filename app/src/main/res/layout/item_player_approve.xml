@@ -1,30 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/lyt_parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:minHeight="?attr/actionBarSize"
-        android:orientation="horizontal">
+        android:minHeight="70dp"
+        android:orientation="horizontal"
+        android:focusable="true">
 
     <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="@dimen/spacing_large"
             android:layout_marginRight="@dimen/spacing_large"
             android:layout_marginTop="@dimen/spacing_middle"
-            android:src="@drawable/ic_launcher" />
+            app:srcCompat="@drawable/ic_person_grey"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="0"
+            app:civ_border="true"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/colorPrimaryDark"/>
 
     <View
             android:layout_width="@dimen/spacing_medium"
-            android:layout_height="0dp" />
+            android:layout_height="0dp"/>
 
-    <LinearLayout
+    <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
         <LinearLayout
@@ -42,7 +48,7 @@
                     android:layout_marginRight="@dimen/spacing_middle"
                     android:text="People Name"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/grey_90" />
+                    android:textColor="@color/grey_90"/>
 
             <TextView
                     android:id="@+id/message"
@@ -54,15 +60,16 @@
                     android:maxLines="2"
                     android:text="Cho em vào đội với anh"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/grey_40" />
+                    android:textColor="@color/grey_40"/>
 
         </LinearLayout>
 
         <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/grey_10" />
+                android:layout_alignParentBottom="true"
+                android:background="@color/grey_10"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

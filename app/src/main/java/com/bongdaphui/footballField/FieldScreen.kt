@@ -10,6 +10,7 @@ import com.bongdaphui.R
 import com.bongdaphui.addField.AddFieldScreen
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
+import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.OnItemClickListener
@@ -193,7 +194,14 @@ class FieldScreen : BaseFragment() {
 
         frg_field_fab.setOnClickListener {
 
-            addFragment(AddFieldScreen())
+            addFragment(AddFieldScreen.getInstance(object : AddDataListener {
+                override fun onSuccess() {
+
+                    fieldListFull.clear()
+                    fieldList.clear()
+                    getDataFromCache()
+                }
+            }))
         }
     }
 

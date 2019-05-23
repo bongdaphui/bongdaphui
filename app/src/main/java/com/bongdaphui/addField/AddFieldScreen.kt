@@ -18,6 +18,7 @@ import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.AcceptListener
+import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.model.FbFieldModel
@@ -37,6 +38,18 @@ class AddFieldScreen : BaseFragment() {
     private var idDistrict: String = ""
 
     private var filePathUri: Uri? = null
+
+    companion object {
+
+        private var addDataListener: AddDataListener? = null
+
+        fun getInstance(addDataListener: AddDataListener): AddFieldScreen {
+
+            this.addDataListener = addDataListener
+
+            return AddFieldScreen()
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.frg_add_field, container, false)
@@ -268,13 +281,13 @@ class AddFieldScreen : BaseFragment() {
         db.set(fieldModel)
             .addOnSuccessListener {
 
-                Log.d(Constant().TAG, "upload field success")
-
                 //cache data
-
                 getDatabase().getFieldDAO().insert(fieldModel)
 
+                addDataListener?.onSuccess()
+
                 showAlertAddField(activity!!.resources.getString(R.string.add_field_success))
+
             }
             .addOnFailureListener {
 

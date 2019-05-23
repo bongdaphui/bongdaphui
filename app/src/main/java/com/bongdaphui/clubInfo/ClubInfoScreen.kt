@@ -57,7 +57,7 @@ class ClubInfoScreen : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(com.bongdaphui.R.layout.frg_club_info, container, false)
+        return inflater.inflate(R.layout.frg_club_info, container, false)
 
     }
 
@@ -95,11 +95,9 @@ class ClubInfoScreen : BaseFragment() {
             }
         }
         adapterStickPlayer?.notifyDataSetChanged()
-
-
     }
 
-    @SuppressLint("RestrictedApi")
+    @SuppressLint("RestrictedApi", "SetTextI18n")
     private fun initView() {
 
         if (activity is AppCompatActivity) {
@@ -135,14 +133,22 @@ class ClubInfoScreen : BaseFragment() {
         if (clubModel?.idCaptain == getUIDUser()) {
             frg_club_info_fb_update.visibility = View.VISIBLE
         }
-        txt_club_info.text = "Đội trưởng: ${clubModel?.caption}\nĐịa chỉ: ${clubModel?.address},${context?.let {
-            clubModel?.idCity?.let { it1 ->
-                Utils().getNameCityDistrictFromId(
-                    it,
-                    it1, clubModel?.idDistrict
-                )
-            }
-        }}\n${clubModel?.phone}"
+
+        frg_club_info_tv_captain.text =
+            if (clubModel?.caption?.isEmpty()!!) context?.resources?.getText(R.string.not_update) else clubModel?.caption
+
+        val address = if (clubModel?.address?.isNotEmpty()!!) "${clubModel?.address}, " else ""
+
+        frg_club_info_tv_address.text = "$address${activity?.let {
+            Utils().getNameCityDistrictFromId(
+                it,
+                clubModel!!.idCity,
+                clubModel!!.idDistrict
+            )
+        }}"
+
+        frg_club_info_tv_phone.text =
+            if (clubModel?.phone?.isEmpty()!!) context?.resources?.getText(R.string.not_update) else clubModel?.phone
 
     }
 
@@ -171,23 +177,10 @@ class ClubInfoScreen : BaseFragment() {
         } else {
 
             fab_join_club.setOnClickListener {
-                context?.let { it1 ->
-                    AlertDialog().showCustomDialog(
-                        it1,
-                        activity!!.resources.getString(R.string.alert),
-                        activity!!.resources.getString(R.string.join_club),
-                        activity!!.resources.getString(R.string.no),
-                        activity!!.resources.getString(R.string.yes),
-                        object : AcceptListener {
-                            override fun onAccept(message: String) {
-                                requestJoinGroup(message)
-                            }
-                        }, true
-                    )
-                }
+
+                checkUser()
+
             }
-
-
         }
 
         frg_club_info_fb_update.setOnClickListener {
@@ -201,32 +194,72 @@ class ClubInfoScreen : BaseFragment() {
         }
     }
 
-
     private fun requestJoinGroup(message: String) {
+
+        showProgress(true)
+
+        clubModel?.let {
+            userModel?.let { it1 ->
+                BaseRequest().registerJoinClub(it, it1, message, object : UpdateListener {
+                    override fun onUpdateSuccess() {
+                        //pending button
+                        fab_join_club.isEnabled = false
+                        showAlertJoinGroup(true)
+                    }
+
+                    override fun onUpdateFail(err: String) {
+                        showAlertJoinGroup(false, err)
+                    }
+                })
+            }
+        }
+    }
+
+    private fun checkUser() {
+
         val idPlayer = getUIDUser()
+
         if (!TextUtils.isEmpty(idPlayer)) {
 
-            clubModel?.let {
-                userModel?.let { it1 ->
-                    BaseRequest().registerJoinClub(it, it1, message, object : UpdateListener {
-                        override fun onUpdateSuccess() {
-                            //pending button
-                            fab_join_club.isEnabled = false
-                            showAlertJoinGroup(true)
+            val phoneUser = getDatabase().getUserDAO().getItemById(idPlayer).phone
+
+            if (!TextUtils.isEmpty(phoneUser)) {
+
+                context?.let { it1 ->
+                    AlertDialog().showCustomDialog(
+                        it1,
+                        activity!!.resources.getString(R.string.alert),
+                        activity!!.resources.getString(R.string.join_club),
+                        activity!!.resources.getString(R.string.no),
+                        activity!!.resources.getString(R.string.yes),
+
+                        object : AcceptListener {
+                            override fun onAccept(message: String) {
+
+                                requestJoinGroup(message)
+                            }
+                        }, true
+                    )
+                }
+            } else {
+                activity?.let { it ->
+                    AlertDialog().showCustomDialog(
+                        it,
+                        activity!!.resources.getString(R.string.alert),
+                        activity!!.resources.getString(R.string.this_feature_need_update_phone),
+                        "",
+                        activity!!.resources.getString(R.string.agree),
+                        object : AcceptListener {
+                            override fun onAccept(inputText: String) {
+
+                            }
                         }
-
-                        override fun onUpdateFail(err: String) {
-                            showAlertJoinGroup(false, err)
-
-                        }
-
-                    })
+                    )
                 }
             }
         } else {
             //require to login
             //non account
-
             activity?.let { it ->
                 AlertDialog().showCustomDialog(
                     it,
@@ -244,7 +277,6 @@ class ClubInfoScreen : BaseFragment() {
             }
         }
     }
-
 
     private fun showAlertJoinGroup(isSuccess: Boolean, err: String = "") {
 

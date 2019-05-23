@@ -14,7 +14,6 @@ import com.bongdaphui.model.UserModel
 import com.bongdaphui.profile.ProfileScreen
 import com.bongdaphui.utils.IntentExtraName
 import kotlinx.android.synthetic.main.fragment_approve_join_club.*
-import kotlinx.android.synthetic.main.frg_schedule.*
 import kotlinx.android.synthetic.main.view_empty.*
 
 /**
@@ -24,6 +23,19 @@ class ApproveJoinClubScreen : BaseFragment() {
     private val listPlayer: ArrayList<PlayerApprove> = ArrayList()
     private var userModel: UserModel? = null
     private var mAdapter: ApproveAdapterPlayer? = null
+
+    override fun onResume() {
+        super.onResume()
+
+        showHeader(true)
+
+        showButtonBack(true)
+
+        setTitle(activity!!.resources.getString(R.string.player_request))
+
+        showFooter(false)
+    }
+
     override fun onBindView() {
         initView()
         initData()
@@ -64,9 +76,7 @@ class ApproveJoinClubScreen : BaseFragment() {
             override fun onFail(message: String) {
                 showEmptyView(true)
             }
-
         })
-
     }
 
     @SuppressLint("SetTextI18n")

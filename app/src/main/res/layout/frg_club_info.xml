@@ -101,25 +101,93 @@
                                 android:textColor="@color/colorPrimary"
                                 android:textStyle="bold"/>
 
-                        <TextView
-                                android:id="@+id/txt_club_info"
+                        <View
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/fs_10"/>
+
+                        <LinearLayout
+                                android:orientation="horizontal"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/spacing_middle"
-                                android:lineSpacingExtra="2dp"
-                                android:text="20h-22h T2,T4,T6"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                                android:textColor="@color/grey_60"/>
+                                android:gravity="center_vertical"
+                                android:layout_height="wrap_content">
 
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Đội trưởng:  "
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                    android:textColor="@color/grey_60"/>
+
+                            <TextView
+                                    android:id="@+id/frg_club_info_tv_captain"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/three_dot"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textStyle="bold"/>
+                        </LinearLayout>
+
+                        <View
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/fs_5"/>
+
+                        <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Địa chỉ:  "
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                    android:textColor="@color/grey_60"/>
+
+                            <TextView
+                                    android:id="@+id/frg_club_info_tv_address"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/three_dot"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textStyle="bold"/>
+
+                        </LinearLayout>
+
+                        <View
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/fs_5"/>
+
+                        <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Số điện thoại:  "
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                    android:textColor="@color/grey_60"/>
+
+                            <TextView
+                                    android:id="@+id/frg_club_info_tv_phone"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/three_dot"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textStyle="bold"/>
+
+                        </LinearLayout>
                     </LinearLayout>
-
                 </LinearLayout>
-
 
 
                 <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/spacing_large"/>
+                        android:layout_height="@dimen/fs_10"/>
 
                 <LinearLayout
                         android:layout_width="match_parent"
@@ -149,8 +217,6 @@
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                                 android:textColor="@color/colorPrimary"
                                 android:textStyle="bold"/>
-
-
 
 
                     </LinearLayout>

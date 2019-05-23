@@ -41,7 +41,7 @@ class MyClubScreen : BaseFragment() {
 
         showHeader(true)
 
-        setTitle(activity!!.resources.getString(R.string.list_fc_manager))
+        setTitle(activity!!.resources.getString(R.string.list_club))
 
         showButtonBack(true)
 
