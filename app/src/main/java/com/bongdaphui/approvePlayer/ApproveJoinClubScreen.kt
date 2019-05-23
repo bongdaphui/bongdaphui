@@ -31,6 +31,13 @@ class ApproveJoinClubScreen : BaseFragment() {
     override fun onResume() {
         super.onResume()
         initData()
+        showHeader(true)
+
+        setTitle(resources.getString(R.string.list_player_request_join))
+
+        showButtonBack(true)
+
+        showFooter(false)
     }
 
     private fun initData() {
