@@ -172,10 +172,10 @@ class ClubInfoScreen : BaseFragment() {
                         activity!!.resources.getString(R.string.no),
                         activity!!.resources.getString(R.string.yes),
                         object : AcceptListener {
-                            override fun onAccept() {
-                                requestJoinGroup()
+                            override fun onAccept(message: String) {
+                                requestJoinGroup(message)
                             }
-                        }
+                        },true
                     )
                 }
             }
@@ -195,13 +195,13 @@ class ClubInfoScreen : BaseFragment() {
     }
 
 
-    private fun requestJoinGroup() {
+    private fun requestJoinGroup(message: String) {
         val idPlayer = getUIDUser()
         if (!TextUtils.isEmpty(idPlayer)) {
 
             clubModel?.let {
                 userModel?.let { it1 ->
-                    BaseRequest().registerJoinClub(it, it1, object : UpdateListener {
+                    BaseRequest().registerJoinClub(it, it1, message, object : UpdateListener {
                         override fun onUpdateSuccess() {
                             //pending button
                             fab_join_club.isEnabled = false
@@ -228,7 +228,7 @@ class ClubInfoScreen : BaseFragment() {
                     activity!!.resources.getString(R.string.cancel),
                     activity!!.resources.getString(R.string.agree),
                     object : AcceptListener {
-                        override fun onAccept() {
+                        override fun onAccept(inputText: String) {
 
                             addFragment(LoginScreen())
                         }
@@ -255,7 +255,7 @@ class ClubInfoScreen : BaseFragment() {
                 "",
                 activity!!.resources.getString(R.string.close),
                 object : AcceptListener {
-                    override fun onAccept() {
+                    override fun onAccept(inputText: String) {
                     }
                 }
             )

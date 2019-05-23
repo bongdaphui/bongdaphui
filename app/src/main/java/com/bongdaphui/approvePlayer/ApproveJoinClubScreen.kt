@@ -2,7 +2,6 @@ package com.bongdaphui.approvePlayer
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,7 @@ import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.listener.GetDataListener
-import com.bongdaphui.listener.OnApproveListener
+import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.model.UserModel
 import kotlinx.android.synthetic.main.fragment_approve_join_club.*
 
@@ -36,10 +35,10 @@ class ApproveJoinClubScreen : BaseFragment() {
                 for (approvePlayerResponse in list) {
                     var section:PlayerApprove? = null
                     if (!listClub.contains(approvePlayerResponse.idClub)) {
-                        section = PlayerApprove("","",approvePlayerResponse.nameClub,true)
+                        section = PlayerApprove("","",approvePlayerResponse.nameClub,"",true)
                     }
                     section?.let { listPlayer.add(it) }
-                    listPlayer.add(PlayerApprove(approvePlayerResponse.idPlayer,approvePlayerResponse.photoPlayer,approvePlayerResponse.namePlayer,false))
+                    listPlayer.add(PlayerApprove(approvePlayerResponse.idPlayer,approvePlayerResponse.photoPlayer,approvePlayerResponse.namePlayer,approvePlayerResponse.message,false))
                 }
                 mAdapter?.notifyDataSetChanged()
             }
@@ -63,13 +62,9 @@ class ApproveJoinClubScreen : BaseFragment() {
         recycler_approve_player.setItemViewCacheSize(20)
 
         mAdapter = context?.let {
-            ApproveAdapterPlayer(it, listPlayer, object: OnApproveListener<PlayerApprove>{
-                override fun onAccepted(item: PlayerApprove) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                }
+            ApproveAdapterPlayer(it, listPlayer, object: OnItemClickListener<PlayerApprove>{
+                override fun onItemClick(item: PlayerApprove, position: Int, type: Int) {
 
-                override fun onRejected(item: PlayerApprove) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
 
             })

@@ -1,5 +1,5 @@
 package com.bongdaphui.listener
 
 interface AcceptListener {
-    fun onAccept()
+    fun onAccept(message:String ="")
 }

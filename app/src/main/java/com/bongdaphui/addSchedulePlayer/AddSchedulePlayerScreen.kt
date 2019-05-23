@@ -176,7 +176,7 @@ class AddSchedulePlayerScreen : BaseFragment() {
                     "",
                     activity!!.resources.getString(R.string.close),
                     object : AcceptListener {
-                        override fun onAccept() {
+                        override fun onAccept(message: String) {
                         }
                     }
                 )
@@ -195,7 +195,7 @@ class AddSchedulePlayerScreen : BaseFragment() {
                     "",
                     activity!!.resources.getString(R.string.close),
                     object : AcceptListener {
-                        override fun onAccept() {
+                        override fun onAccept(message: String) {
                         }
                     }
                 )
@@ -264,7 +264,7 @@ class AddSchedulePlayerScreen : BaseFragment() {
                 "",
                 activity!!.resources.getString(R.string.close),
                 object : AcceptListener {
-                    override fun onAccept() {
+                    override fun onAccept(message: String) {
                     }
                 }
             )

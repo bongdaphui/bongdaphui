@@ -145,7 +145,7 @@ class ManagerScreen : BaseFragment() {
                     activity!!.resources.getString(R.string.no),
                     activity!!.resources.getString(R.string.yes),
                     object : AcceptListener {
-                        override fun onAccept() {
+                        override fun onAccept(message: String) {
 
                             FirebaseAuth.getInstance().signOut()
 

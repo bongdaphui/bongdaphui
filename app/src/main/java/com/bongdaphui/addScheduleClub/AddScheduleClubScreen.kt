@@ -174,7 +174,7 @@ class AddScheduleClubScreen : BaseFragment() {
                     "",
                     activity!!.resources.getString(R.string.close),
                     object : AcceptListener {
-                        override fun onAccept() {
+                        override fun onAccept(inputText: String) {
                         }
                     }
                 )
@@ -192,7 +192,7 @@ class AddScheduleClubScreen : BaseFragment() {
                     "",
                     activity!!.resources.getString(R.string.close),
                     object : AcceptListener {
-                        override fun onAccept() {
+                        override fun onAccept(inputText: String) {
                         }
                     }
                 )
@@ -259,7 +259,7 @@ class AddScheduleClubScreen : BaseFragment() {
                 "",
                 activity!!.resources.getString(R.string.close),
                 object : AcceptListener {
-                    override fun onAccept() {
+                    override fun onAccept(inputText: String) {
                     }
                 }
             )

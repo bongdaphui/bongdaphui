@@ -2,9 +2,11 @@ package com.bongdaphui.dialog
 
 import android.app.Dialog
 import android.content.Context
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import com.bongdaphui.R
 import com.bongdaphui.listener.AcceptListener
@@ -17,7 +19,8 @@ class AlertDialog {
         content: String,
         decline: String,
         accept: String,
-        acceptListener: AcceptListener
+        acceptListener: AcceptListener,
+        isInput: Boolean= false
     ) {
         val dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -41,8 +44,11 @@ class AlertDialog {
             dialog.dismiss()
         }
 
+        val edInput = dialog.findViewById(R.id.ed_input) as EditText
+        edInput.visibility = if(isInput) View.VISIBLE else View.GONE
+
         (dialog.findViewById(R.id.bt_accept) as Button).setOnClickListener {
-            acceptListener.onAccept()
+            acceptListener.onAccept(edInput.text.toString())
             dialog.dismiss()
         }
 

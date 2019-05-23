@@ -30,7 +30,7 @@
     <string name="list_member">Danh Sách Đội Bóng</string>
     <string name="list_fc">Đội bóng</string>
     <string name="list_fc_manager">Đội bóng bạn quản lý</string>
-    <string name="join_club">Gia nhập đội</string>
+    <string name="join_club">Lời nhắn cho đội trưởng:</string>
     <string name="update_info">Cập nhật thông tin</string>
     <string name="update">Cập nhật</string>
     <string name="add_fc">Thêm đội bóng</string>
@@ -103,7 +103,8 @@
     <string name="add_schedule_player_success">Thêm lịch thi đấu thành công</string>
     <string name="add_schedule_player_fail">Thêm lịch thi đấu thất bại. Bạn vui lòng thực hiện lại</string>
     <string name="add_schedule_club">Thêm lịch thi đấu >>></string>
-    <string name="alert_reset_pass">Một mật khẩu mới sẽ được gửi đến địa chỉ email: %s.\n\n Bạn có đồng ý không?</string>
+    <string name="alert_reset_pass">Một mật khẩu mới sẽ được gửi đến địa chỉ email: %s.\n\n Bạn có đồng ý không?
+    </string>
     <string name="please_check_email">Email đã được gửi đến: %s \n\n Bạn vui lòng kiểm tra email để nhận mật khẩu mới
     </string>
     <string name="send_mail_fail">Gửi mail thất bại. Vui lòng thực hiện lại</string>

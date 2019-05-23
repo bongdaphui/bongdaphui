@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bongdaphui.R
-import com.bongdaphui.listener.OnApproveListener
 import com.bongdaphui.listener.OnItemClickListener
-import com.bongdaphui.model.UserStickModel
 import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
@@ -23,7 +21,7 @@ import com.mikhaellopez.circularimageview.CircularImageView
 class ApproveAdapterPlayer(
     var ctx: Context,
     val items: ArrayList<PlayerApprove>,
-    private var itemClickInterface: OnApproveListener<PlayerApprove>
+    private var itemClickInterface: OnItemClickListener<PlayerApprove>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val VIEW_ITEM = 1
     private val VIEW_SECTION = 0
@@ -36,12 +34,17 @@ class ApproveAdapterPlayer(
         val player = items[position]
         if (holder is OriginalViewHolder) {
             holder.name.setText(player.name)
+            holder.message.setText(player.message)
             Glide.with(ctx).load(
                 if (Utils().isEmpty(player.photoUrl))
                     Utils().getDrawable(ctx, R.drawable.ic_personal) else player.photoUrl
             )
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.image)
+
+            holder.itemView.setOnClickListener {
+                itemClickInterface.onItemClick(player,position,Enum.EnumTypeClick.View.value)
+            }
 
 
         } else {
@@ -66,10 +69,12 @@ class ApproveAdapterPlayer(
     inner class OriginalViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         var image: ImageView
         var name: TextView
+        var message: TextView
 
         init {
             image = v.findViewById(R.id.image) as CircularImageView
             name = v.findViewById(R.id.name) as TextView
+            message = v.findViewById(R.id.message) as TextView
 
         }
     }

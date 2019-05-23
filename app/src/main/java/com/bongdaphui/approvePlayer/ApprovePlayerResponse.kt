@@ -10,5 +10,6 @@ data class ApprovePlayerResponse (
     var photoPlayer:String = "",
     var namePlayer:String = "",
     var idCaptain:String = "",
+    var message:String = "",
     var isAccepted:Int = 2 //2 is pending 1 is approved 0 is rejected
 )
