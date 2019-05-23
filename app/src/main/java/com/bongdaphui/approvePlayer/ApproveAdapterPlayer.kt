@@ -2,6 +2,7 @@ package com.bongdaphui.approvePlayer
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,15 +36,15 @@ class ApproveAdapterPlayer(
         if (holder is OriginalViewHolder) {
             holder.name.setText(player.name)
             holder.message.setText(player.message)
-            Glide.with(ctx).load(
-                if (Utils().isEmpty(player.photoUrl))
-                    Utils().getDrawable(ctx, R.drawable.ic_personal) else player.photoUrl
-            )
-                .apply(RequestOptions.circleCropTransform())
-                .into(holder.image)
+            if (!TextUtils.isEmpty(player.photoUrl)) {
+                Glide.with(ctx).load(
+                    player.photoUrl
+                )
+                    .into(holder.image)
+            }
 
             holder.itemView.setOnClickListener {
-                itemClickInterface.onItemClick(player,position,Enum.EnumTypeClick.View.value)
+                itemClickInterface.onItemClick(player, position, Enum.EnumTypeClick.View.value)
             }
 
 

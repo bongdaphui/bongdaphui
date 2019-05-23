@@ -26,14 +26,17 @@ class ApproveJoinClubScreen : BaseFragment() {
     private var mAdapter: ApproveAdapterPlayer? = null
     override fun onBindView() {
         initView()
+    }
+
+    override fun onResume() {
+        super.onResume()
         initData()
     }
 
     private fun initData() {
-        listPlayer.clear()
         BaseRequest().getListApprovePlayer(getUIDUser(), object : GetDataListener<ApprovePlayerResponse> {
             override fun onSuccess(list: ArrayList<ApprovePlayerResponse>) {
-
+                listPlayer.clear()
                 val listClub = arrayListOf<String>()
                 list.sortBy { it.idClub }
                 for (approvePlayerResponse in list) {

@@ -196,7 +196,7 @@ class BaseRequest {
             }
     }
 
-    fun deletaDocument(
+    fun deleteDocument(
         collection: String, document: String, listener: DeleteDataDataListener
     ) {
 
@@ -277,8 +277,7 @@ class BaseRequest {
                         userModel.photoUrl,
                         userModel.name,
                         clubModel.idCaptain,
-                        message,
-                        2
+                        message
                     )
 
 
@@ -297,8 +296,7 @@ class BaseRequest {
 
     fun getListApprovePlayer(idCaptain: String, listener: GetDataListener<ApprovePlayerResponse>) {
 
-        FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField).whereEqualTo("idCaptain", idCaptain)
-            .whereEqualTo("accepted", 2).get()
+        FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField).whereEqualTo("idCaptain", idCaptain).get()
 
             .addOnSuccessListener { document ->
 
@@ -327,18 +325,22 @@ class BaseRequest {
                 //update clubs db
                 val db = FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField)
                 //check exist
-                db.document(idClub + userModel.id).update("accepted", if (isAccept) 1 else 0)
-                    .addOnSuccessListener {
+                deleteDocument(Constant().requestJoinPathField,idClub+userModel.id,object:  DeleteDataDataListener{
+                    override fun onSuccess() {
                         listener.onUpdateSuccess()
+                    }
 
+                    override fun onFail(message: String) {
+                        listener.onUpdateFail(message)
                     }
-                    .addOnFailureListener {
-                        listener.onUpdateFail(it.localizedMessage)
-                    }
+
+                })
 
             }.addOnFailureListener {
                 listener.onUpdateFail(it.localizedMessage)
             }
 
     }
+
+
 }

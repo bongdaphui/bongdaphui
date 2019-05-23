@@ -149,6 +149,7 @@ class ProfileScreen : BaseFragment() {
     }
 
     private fun processApprove(isAccept: Boolean) {
+
         context?.let { it ->
             AlertDialog().showCustomDialog(
                 it,
@@ -167,8 +168,10 @@ class ProfileScreen : BaseFragment() {
     }
 
     private fun sendRequestApprove(isAccept: Boolean) {
+        showProgress(true)
         BaseRequest().approvePlayer(idClubApprove, userModel, isAccept, object : UpdateListener {
             override fun onUpdateSuccess() {
+                showProgress(false)
                 context?.let { it ->
                     AlertDialog().showCustomDialog(
                         it,
@@ -177,6 +180,7 @@ class ProfileScreen : BaseFragment() {
                         resources.getString(R.string.agree),
                         object : AcceptListener {
                             override fun onAccept(inputText: String) {
+
                             }
                         }
                     )
@@ -185,6 +189,7 @@ class ProfileScreen : BaseFragment() {
             }
 
             override fun onUpdateFail(err: String) {
+                showProgress(false)
                 context?.let { it ->
                     AlertDialog().showCustomDialog(
                         it,

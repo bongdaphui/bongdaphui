@@ -2,6 +2,7 @@ package com.bongdaphui.player
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,11 @@ import com.bumptech.glide.request.RequestOptions
 /**
  * Created by ChuTien on ${1/25/2017}.
  */
-class PlayerStickAdapter(var ctx: Context, val items: ArrayList<UserStickModel>, private var itemClickInterface: OnItemClickListener<UserStickModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PlayerStickAdapter(
+    var ctx: Context,
+    val items: ArrayList<UserStickModel>,
+    private var itemClickInterface: OnItemClickListener<UserStickModel>
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return items.size
@@ -29,15 +34,16 @@ class PlayerStickAdapter(var ctx: Context, val items: ArrayList<UserStickModel>,
         if (holder is OriginalViewHolder) {
             holder.name.setText(userModule.name)
             holder.position.setText(userModule.position)
-            Glide.with(ctx).load(
-                if (Utils().isEmpty(userModule.photoUrl))
-                    Utils().getDrawable(ctx, R.drawable.ic_personal) else userModule.photoUrl
-            )
-                .apply(RequestOptions.circleCropTransform())
-                .into(holder.image)
+            if (!TextUtils.isEmpty(userModule.photoUrl)) {
+                Glide.with(ctx).load(
+                    userModule.photoUrl
+                )
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(holder.image)
+            }
 
             holder.itemView.setOnClickListener {
-                itemClickInterface.onItemClick(userModule,position,Enum.EnumTypeClick.View.value)
+                itemClickInterface.onItemClick(userModule, position, Enum.EnumTypeClick.View.value)
             }
         }
     }
