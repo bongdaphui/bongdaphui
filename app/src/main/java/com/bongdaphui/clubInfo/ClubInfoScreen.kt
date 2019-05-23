@@ -157,7 +157,16 @@ class ClubInfoScreen : BaseFragment() {
 
         }
 
-        if (clubModel!!.idCaptain == getUIDUser()) {
+        val userCurrentStickModel =
+            UserStickModel(
+                userModel?.id ?: "",
+                userModel?.photoUrl ?: "",
+                userModel?.name ?: "",
+                userModel?.position ?: ""
+            )
+
+
+        if (clubModel?.idCaptain.equals(getUIDUser()) || listStickPlayer.contains(userCurrentStickModel)) {
 
             fab_join_club.visibility = View.GONE
 
