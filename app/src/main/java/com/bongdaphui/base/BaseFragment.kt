@@ -8,9 +8,6 @@ import android.support.v4.app.FragmentActivity
 import android.view.View
 import com.bongdaphui.MainActivity
 import com.bongdaphui.dao.AppDatabase
-import com.bongdaphui.model.CityModel
-import com.bongdaphui.model.ClubModel
-import com.bongdaphui.model.FbFieldModel
 import com.bongdaphui.utils.KeyboardManager
 import com.google.firebase.auth.FirebaseAuth
 
@@ -177,46 +174,6 @@ abstract class BaseFragment : Fragment(), BaseInterface {
         }
         return ""
     }
-
-    fun setListCity(list: ArrayList<CityModel>) {
-
-        if (null != activity && activity is MainActivity)
-
-            (activity as MainActivity).setListCityModel(list)
-
-    }
-
-    fun getListCity(): ArrayList<CityModel> {
-
-        return (activity as MainActivity).getListCityModel()
-    }
-
-    fun setListField(list: ArrayList<FbFieldModel>) {
-
-        if (null != activity && activity is MainActivity)
-
-            (activity as MainActivity).setListFieldModel(list)
-
-    }
-
-    fun getListField(): ArrayList<FbFieldModel> {
-
-        return (activity as MainActivity).getListFieldModel()
-    }
-
-    fun setListClub(list: ArrayList<ClubModel>) {
-
-        if (null != activity && activity is MainActivity)
-
-            (activity as MainActivity).setListClubModel(list)
-
-    }
-
-    fun getListClub(): ArrayList<ClubModel> {
-
-        return (activity as MainActivity).getListClubModel()
-    }
-
 
     fun hideKeyBoard() {
         KeyboardManager.hideSoftKeyboard(activeActivity!!)

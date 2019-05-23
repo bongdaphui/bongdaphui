@@ -107,7 +107,7 @@
                     android:layout_width="@dimen/spacing_xxlarge"
                     android:layout_height="@dimen/spacing_xxlarge"
                     android:background="@android:color/transparent"
-                    android:tint="@color/c_d2d2d2"
+                    android:tint="@color/grey_40"
                     app:srcCompat="@drawable/ic_email"/>
 
             <EditText
@@ -146,7 +146,7 @@
                     android:layout_width="@dimen/spacing_xxlarge"
                     android:layout_height="@dimen/spacing_xxlarge"
                     android:background="@android:color/transparent"
-                    android:tint="@color/c_d2d2d2"
+                    android:tint="@color/grey_40"
                     app:srcCompat="@drawable/ic_phone"/>
 
             <EditText

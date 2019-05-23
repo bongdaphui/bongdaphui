@@ -112,18 +112,16 @@ class ClubInfoScreen : BaseFragment() {
         Glide.with(context!!).load(
             if (TextUtils.isEmpty(clubModel?.photo)) Utils().getDrawable(
                 context!!,
-                com.bongdaphui.R.drawable.ic_picture
+                R.drawable.bg_field
             ) else clubModel?.photo
         )
             .into(frg_club_info_iv_logo)
-
 
         adapterStickPlayer = activity?.let {
             PlayerStickAdapter(it, listStickPlayer, object : OnItemClickListener<UserStickModel> {
                 override fun onItemClick(item: UserStickModel, position: Int, type: Int) {
                     addFragment(ProfileScreen.getInstance(item.id))
                 }
-
             })
         }
 

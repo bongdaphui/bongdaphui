@@ -11,6 +11,7 @@ import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.clubInfo.ClubInfoScreen
+import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.login.LoginScreen
@@ -19,13 +20,16 @@ import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import kotlinx.android.synthetic.main.fragment_club.*
+import kotlinx.android.synthetic.main.view_empty.*
 
 
 class ClubScreen : BaseFragment() {
 
-    private var listClubModel: ArrayList<ClubModel> = ArrayList()
+    private var clubListFull: ArrayList<ClubModel> = ArrayList()
 
-    var adapterClub: ClubAdapter? = null
+    private var clubList: ArrayList<ClubModel> = ArrayList()
+
+    var clubAdapter: ClubAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -36,14 +40,8 @@ class ClubScreen : BaseFragment() {
     override fun onResume() {
         super.onResume()
 
-        showHeader(true)
-
-        setTitle(activity!!.resources.getString(R.string.list_fc))
-
-        showButtonBack(false)
-
+        showHeader(false)
         showFooter(true)
-
     }
 
     @SuppressLint("RestrictedApi")
@@ -51,17 +49,16 @@ class ClubScreen : BaseFragment() {
 
         initAdapter()
 
-        frg_football_club_fab.visibility = View.GONE
+        frg_club_fab.visibility = View.GONE
 
         loadListClub()
-
     }
 
     private fun initAdapter() {
 
         val isLoggedUser = !TextUtils.isEmpty(getUIDUser())
 
-        adapterClub = ClubAdapter(context, listClubModel, isLoggedUser, object :
+        clubAdapter = ClubAdapter(context, clubList, isLoggedUser, object :
 
             OnItemClickListener<ClubModel> {
 
@@ -81,43 +78,80 @@ class ClubScreen : BaseFragment() {
                 }
             }
         })
-        adapterClub?.setHasStableIds(true)
-        frg_football_club_rcv.adapter = adapterClub
-        frg_football_club_rcv.setHasFixedSize(true)
-        frg_football_club_rcv.setItemViewCacheSize(20)
+        clubAdapter?.setHasStableIds(true)
+        frg_club_rcv.adapter = clubAdapter
+        frg_club_rcv.setHasFixedSize(true)
+        frg_club_rcv.setItemViewCacheSize(20)
     }
 
     private fun loadListClub() {
 
         showProgress(true)
-        try {
 
-            BaseRequest().getClubs(object : GetDataListener<ClubModel> {
-                override fun onSuccess(list: ArrayList<ClubModel>) {
-                    listClubModel.clear()
-                    listClubModel.addAll(list)
-                    Log.d(Constant().TAG, "club size: ${listClubModel.size}")
-                    setListClub(listClubModel)
-                    adapterClub!!.notifyDataSetChanged()
+        BaseRequest().getClubs(object : GetDataListener<ClubModel> {
+            override fun onSuccess(list: ArrayList<ClubModel>) {
 
+                if (list.size > 0) {
+
+                    clubListFull.clear()
+                    clubListFull.addAll(list)
                     showProgress(false)
+                    initFilterBox()
+
+                } else {
+
+                    showEmptyView(true)
                 }
+            }
 
-                override fun onSuccess(item: ClubModel) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                }
+            override fun onSuccess(item: ClubModel) {
+            }
 
-                override fun onFail(message: String) {
+            override fun onFail(message: String) {
 
-                    showProgress(false)
+                showProgress(false)
 
-                    Log.d(Constant().TAG, "firebase field fail, message: $message")
-                }
-            })
-        } catch (e: Exception) {
-            Log.d(Constant().TAG, "crash >>> ${e.message}")
+                Log.d(Constant().TAG, "firebase field fail, message: $message")
+            }
+        })
+    }
 
+    private fun initFilterBox() {
+
+        if (isAdded) {
+
+            frg_club_cv_spinner.visibility = View.VISIBLE
+
+            Utils().initSpinnerCity(
+                activity!!,
+                frg_club_sp_city, 0,
+                frg_club_sp_district, 0,
+                object :
+                    BaseSpinnerSelectInterface {
+                    override fun onSelectCity(_idCity: String, _idDistrict: String) {
+
+                        clubList.clear()
+
+                        for (i in 0 until clubListFull.size) {
+
+                            if (_idCity == clubListFull[i].idCity && _idDistrict == clubListFull[i].idDistrict) {
+
+                                clubList.add(clubListFull[i])
+                            }
+                        }
+                        showEmptyView(clubList.size == 0)
+
+                        clubAdapter?.notifyDataSetChanged()
+                    }
+                })
         }
+    }
+
+    private fun showEmptyView(isShow: Boolean) {
+
+        view_empty?.visibility = if (isShow) View.VISIBLE else View.GONE
+
+        frg_club_rcv?.visibility = if (isShow) View.GONE else View.VISIBLE
     }
 
     override fun onDestroy() {

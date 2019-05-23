@@ -9,8 +9,48 @@
         android:layout_height="match_parent"
         android:focusable="true">
 
+    <android.support.v7.widget.CardView
+            android:id="@+id/frg_club_cv_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fs_2"
+            android:layout_marginEnd="@dimen/fs_2"
+            android:layout_marginBottom="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_medium"
+            app:cardCornerRadius="2dp"
+            android:visibility="gone"
+            app:cardElevation="2dp">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fs_46"
+                android:orientation="horizontal">
+
+            <Spinner
+                    android:id="@+id/frg_club_sp_city"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:overlapAnchor="false"
+                    tools:ignore="HardcodedText,UnusedAttribute"/>
+            <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/c_2d2d2d"/>
+            <Spinner
+                    android:id="@+id/frg_club_sp_district"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:overlapAnchor="false"
+                    tools:ignore="HardcodedText,UnusedAttribute"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
     <android.support.v7.widget.RecyclerView
-            android:id="@+id/frg_football_club_rcv"
+            android:layout_below="@+id/frg_club_cv_spinner"
+            android:id="@+id/frg_club_rcv"
+            android:visibility="gone"
             android:layout_width="match_parent"
             tools:listitem="@layout/item_club"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
@@ -19,14 +59,13 @@
     <include layout="@layout/view_empty"/>
 
     <android.support.design.widget.FloatingActionButton
-            android:id="@+id/frg_football_club_fab"
+            android:id="@+id/frg_club_fab"
             android:layout_width="wrap_content"
             android:src="@drawable/ic_plus"
             android:layout_alignParentEnd="true"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_margin="@dimen/fs_16"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:layout_alignParentRight="true"/>
+            android:backgroundTint="@color/colorPrimaryDark"/>
 
 </RelativeLayout>
