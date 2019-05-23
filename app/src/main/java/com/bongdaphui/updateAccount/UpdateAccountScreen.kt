@@ -297,6 +297,8 @@ class UpdateAccountScreen : BaseFragment() {
 
                 showDialogUpdate(activity!!.resources.getString(R.string.update_success))
 
+                openClubs()
+
             }
 
             override fun onUpdateFail(err: String) {
