@@ -11,9 +11,9 @@ import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.model.UserModel
-import com.bongdaphui.updateAccount.UpdateAccountScreen
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Utils
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.frg_register_with_email.*
 
 
@@ -64,16 +64,21 @@ class RegisterWithEmailScreen : BaseFragment() {
 
     }
 
+    private fun enableItem(isEnable: Boolean) {
+        frg_register_with_email_et_email.isEnabled = isEnable
+        frg_register_with_email_iv_clear_input_password.isEnabled = isEnable
+        frg_register_with_email_tv_error_input_confirm_password.isEnabled = isEnable
+        frg_register_with_email_tv_register.isEnabled = isEnable
+
+    }
+
     private fun registerAccount() {
 
         if (!validForm()) {
             return
         }
 
-        frg_register_with_email_et_email.isEnabled = false
-        frg_register_with_email_iv_clear_input_password.isEnabled = false
-        frg_register_with_email_tv_error_input_confirm_password.isEnabled = false
-        frg_register_with_email_tv_register.isEnabled = false
+        enableItem(false)
 
         val email = frg_register_with_email_et_email.text.toString()
         val password = frg_register_with_email_et_input_password.text.toString()
@@ -88,44 +93,31 @@ class RegisterWithEmailScreen : BaseFragment() {
 
                     val user = getFireBaseAuth()!!.currentUser
 
-//                    saveUIDUser(Constant().KEY_LOGIN_UID_USER, user!!.uid)
-
                     Log.d(Constant().TAG, "register email uid: " + user!!.uid)
 
+                    val userModel = UserModel(user.uid, "", "", "", "", "", "", "", "", ArrayList())
 
-                    val userModel = UserModel(user.uid,user.photoUrl.toString(), user.displayName ?: "",user.email ?: "",user.phoneNumber ?: "")
                     BaseRequest().saveOrUpdateUser(userModel, object : UpdateListener {
                         override fun onUpdateSuccess() {
+
                             //cache data
                             getDatabase().getUserDAO().insert(userModel)
+
+                            openFindField()
                         }
 
                         override fun onUpdateFail(err: String) {
+
+                            FirebaseAuth.getInstance().signOut()
+
+                            openFindField()
                         }
                     })
-                    replaceFragment(UpdateAccountScreen.getInstance(userModel), true)
-
                 } else {
 
-                    registerFail("Đăng ký thất bại, bạn vui lòng thực hiện lại")
+                    registerFail()
                 }
             }
-            .addOnCanceledListener {
-
-                registerFail("Đăng ký thất bại, bạn vui lòng thực hiện lại")
-
-            }
-            .addOnFailureListener {
-
-                registerFail(it.message!!)
-
-            }
-    }
-
-    private fun openClub() {
-        showProgress(false)
-
-        openClubs()
     }
 
     private fun validForm(): Boolean {
@@ -164,7 +156,6 @@ class RegisterWithEmailScreen : BaseFragment() {
             frg_register_with_email_et_input_password.requestFocus()
 
             valid = false
-
         }
 
         if (frg_register_with_email_et_input_password.text.toString().length < Constant().LENGTH_PASS_WORD) {
@@ -176,9 +167,7 @@ class RegisterWithEmailScreen : BaseFragment() {
             frg_register_with_email_et_input_password.requestFocus()
 
             valid = false
-
         }
-
         if (frg_register_with_email_et_input_confirm_password.text.toString().isEmpty()) {
 
             frg_register_with_email_tv_error_input_confirm_password.visibility = View.VISIBLE
@@ -188,7 +177,6 @@ class RegisterWithEmailScreen : BaseFragment() {
             frg_register_with_email_et_input_confirm_password.requestFocus()
 
             valid = false
-
         }
 
         if (frg_register_with_email_et_input_confirm_password.text.toString()
@@ -202,23 +190,17 @@ class RegisterWithEmailScreen : BaseFragment() {
             frg_register_with_email_et_input_confirm_password.requestFocus()
 
             valid = false
-
         }
         return valid
     }
 
-    private fun registerFail(message: String) {
+    private fun registerFail() {
 
-        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+        showProgress(false)
 
-        onBackPressed()
-    }
+        enableItem(true)
 
-    private fun registerEmailUnValid() {
-
-        Toast.makeText(activity, "Email không tồn tại", Toast.LENGTH_SHORT).show()
-
-        onBackPressed()
+        Toast.makeText(activity, "Đăng ký thất bại, bạn vui lòng thực hiện lại", Toast.LENGTH_SHORT).show()
     }
 }
 

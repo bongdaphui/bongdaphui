@@ -136,11 +136,11 @@ abstract class BaseFragment : Fragment(), BaseInterface {
         }
     }
 
-    fun openClubs() {
+    fun openFindField() {
 
         if (activity != null && activity is MainActivity)
 
-            (activity as MainActivity).openClubs()
+            (activity as MainActivity).openFindField()
 
     }
 

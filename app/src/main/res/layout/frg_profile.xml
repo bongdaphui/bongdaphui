@@ -15,7 +15,7 @@
     <RelativeLayout
             android:id="@+id/frg_profile_container"
             android:layout_width="match_parent"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_height="match_parent">
 
         <LinearLayout

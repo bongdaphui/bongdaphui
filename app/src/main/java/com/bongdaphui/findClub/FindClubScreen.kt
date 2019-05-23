@@ -11,6 +11,7 @@ import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.OnItemClickListener
+import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.ScheduleClubModel
 import com.bongdaphui.utils.DateTimeUtil
 import com.bongdaphui.utils.Enum
@@ -64,6 +65,8 @@ class FindClubScreen : BaseFragment() {
                     if (type == Enum.EnumTypeClick.Phone.value) {
                         if (isLoggedUser) {
                             Utils().openDial(activity!!, "${item.phone}")
+                        } else {
+                            addFragment(LoginScreen())
                         }
                     } else {
 //                        addFragment(ClubInfoScreen.getInstance(item))

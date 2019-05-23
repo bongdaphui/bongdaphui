@@ -91,8 +91,22 @@ class BaseRequest {
                     listener.onFail("Not Found")
                 }
             }
-            .addOnFailureListener { exception ->
-                listener.onFail(exception.localizedMessage)
+        /*.addOnFailureListener { exception ->
+            listener.onFail(exception.localizedMessage)
+        }*/
+    }
+
+    fun saveOrUpdateUser(
+        userModel: UserModel,
+        listener: UpdateListener
+    ) {
+        val db = FirebaseFirestore.getInstance().collection(Constant().userPathField).document(userModel.id)
+        db.set(userModel, SetOptions.merge())
+            .addOnSuccessListener {
+                listener.onUpdateSuccess()
+            }
+            .addOnFailureListener {
+                listener.onUpdateFail()
             }
     }
 
@@ -196,20 +210,6 @@ class BaseRequest {
             }
     }
 
-    fun saveOrUpdateUser(
-        userModel: UserModel,
-        listener: UpdateListener
-    ) {
-        val db = FirebaseFirestore.getInstance().collection(Constant().userPathField).document(userModel.id)
-        db.set(userModel, SetOptions.merge())
-            .addOnSuccessListener {
-                listener.onUpdateSuccess()
-            }
-            .addOnFailureListener {
-                listener.onUpdateFail()
-            }
-    }
-
     fun saveOrUpdateClub(clubModel: ClubModel, listener: UpdateListener) {
 
         FirebaseFirestore.getInstance().collection(Constant().clubPathField).document("${clubModel.id}")
@@ -225,26 +225,33 @@ class BaseRequest {
     }
 
     fun getClubs(listener: GetDataListener<ClubModel>) {
+        try {
 
-        FirebaseFirestore.getInstance().collection(Constant().clubPathField).get()
 
-            .addOnSuccessListener { document ->
+            FirebaseFirestore.getInstance().collection(Constant().clubPathField).get()
 
-                val value = document?.toObjects(ClubModel::class.java)
+                .addOnSuccessListener { document ->
 
-                if (value != null) {
+                    val value = document?.toObjects(ClubModel::class.java)
 
-                    listener.onSuccess(ArrayList(value))
+                    if (value != null) {
 
-                } else {
+                        listener.onSuccess(ArrayList(value))
 
-                    listener.onFail("Not Found")
+                    } else {
+
+                        listener.onFail("Not Found")
+                    }
+                    Log.d("Tien", document.metadata.toString())
                 }
-                Log.d("Tien", document.metadata.toString())
-            }
-            .addOnFailureListener { exception ->
-                listener.onFail(exception.localizedMessage)
-            }
+                .addOnFailureListener { exception ->
+                    listener.onFail(exception.localizedMessage)
+                }
+
+        } catch (e: Exception) {
+            Log.d(Constant().TAG, "crash ${e.message}")
+
+        }
     }
 
     fun registerJoinClub(clubModel: ClubModel, userModel: UserModel, listener: UpdateListener) {

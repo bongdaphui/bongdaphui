@@ -9,10 +9,10 @@ import com.bongdaphui.approvePlayer.ApproveJoinClubScreen
 import com.bongdaphui.base.BaseActivity
 import com.bongdaphui.base.BaseApplication
 import com.bongdaphui.base.BaseFragment
+import com.bongdaphui.club.ClubScreen
 import com.bongdaphui.dao.AppDatabase
 import com.bongdaphui.findClub.FindClubScreen
 import com.bongdaphui.findPlayer.FindPlayerScreen
-import com.bongdaphui.club.ClubScreen
 import com.bongdaphui.footballField.FieldScreen
 import com.bongdaphui.manager.ManagerScreen
 import com.bongdaphui.model.CityModel
@@ -72,7 +72,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         //check intent
         val isOpenFromRequestJoinTeam = intent.extras?.getBoolean(IntentExtraName.REQUEST_JOIN_TEAM, false) ?: false
         if (isOpenFromRequestJoinTeam) {
-            addFragment(getFragmentContainerResId(),ApproveJoinClubScreen())
+            addFragment(getFragmentContainerResId(), ApproveJoinClubScreen())
         } else {
             replaceFragment(SplashScreen(), true)
         }
@@ -167,27 +167,27 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.activity_main_iv_back -> onBackPressed()
-            R.id.activity_main_v_menu_club -> openClubs()
+            R.id.activity_main_v_menu_football_field -> openFindField()
             R.id.activity_main_v_menu_find_player -> openFindPlayer()
             R.id.activity_main_v_menu_find_club -> openFindClub()
-            R.id.activity_main_v_menu_football_field -> openFootballField()
+            R.id.activity_main_v_menu_club -> openClubs()
             R.id.activity_main_v_menu_manager -> openManager()
 
         }
     }
 
-    fun openClubs() {
+    fun openFindField() {
 
-        replaceFragment(ClubScreen(), true)
+        replaceFragment(FieldScreen(), true)
 
-        activity_main_iv_menu_club.isSelected = true
-        activity_main_tv_menu_club.isSelected = true
+        activity_main_iv_menu_club.isSelected = false
+        activity_main_tv_menu_club.isSelected = false
         activity_main_iv_menu_find_player.isSelected = false
         activity_main_tv_menu_find_player.isSelected = false
         activity_main_iv_menu_find_club.isSelected = false
         activity_main_tv_menu_find_club.isSelected = false
-        activity_main_iv_menu_football_field.isSelected = false
-        activity_main_tv_menu_football_field.isSelected = false
+        activity_main_iv_menu_football_field.isSelected = true
+        activity_main_tv_menu_football_field.isSelected = true
         activity_main_iv_menu_settings.isSelected = false
         activity_main_tv_menu_settings.isSelected = false
     }
@@ -224,18 +224,18 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         activity_main_tv_menu_settings.isSelected = false
     }
 
-    private fun openFootballField() {
+    private fun openClubs() {
 
-        replaceFragment(FieldScreen(), true)
+        replaceFragment(ClubScreen(), true)
 
-        activity_main_iv_menu_club.isSelected = false
-        activity_main_tv_menu_club.isSelected = false
+        activity_main_iv_menu_club.isSelected = true
+        activity_main_tv_menu_club.isSelected = true
         activity_main_iv_menu_find_player.isSelected = false
         activity_main_tv_menu_find_player.isSelected = false
         activity_main_iv_menu_find_club.isSelected = false
         activity_main_tv_menu_find_club.isSelected = false
-        activity_main_iv_menu_football_field.isSelected = true
-        activity_main_tv_menu_football_field.isSelected = true
+        activity_main_iv_menu_football_field.isSelected = false
+        activity_main_tv_menu_football_field.isSelected = false
         activity_main_iv_menu_settings.isSelected = false
         activity_main_tv_menu_settings.isSelected = false
     }

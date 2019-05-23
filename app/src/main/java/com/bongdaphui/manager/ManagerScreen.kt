@@ -10,12 +10,14 @@ import com.bongdaphui.approvePlayer.ApproveJoinClubScreen
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.AcceptListener
+import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.myClub.MyClubScreen
 import com.bongdaphui.profile.ProfileScreen
 import com.bongdaphui.scheduleClub.ScheduleClubScreen
 import com.bongdaphui.schedulePlayer.SchedulePlayerScreen
+import com.bongdaphui.updateAccount.UpdateAccountScreen
 import com.bongdaphui.utils.Tools
 import com.bongdaphui.utils.ViewAnimation
 import com.bumptech.glide.Glide
@@ -57,6 +59,18 @@ class ManagerScreen : BaseFragment() {
     }
 
     private fun fillData() {
+
+        if (userModel?.phone.isNullOrEmpty()) {
+
+            frg_manager_v_update_info.visibility = View.VISIBLE
+            frg_manager_profile.visibility = View.GONE
+
+        } else {
+
+            frg_manager_v_update_info.visibility = View.GONE
+            frg_manager_profile.visibility = View.VISIBLE
+        }
+
         frg_manager_tv_name_user.text =
             if (TextUtils.isEmpty(userModel?.name)) activity?.resources?.getText(R.string.three_dot) else userModel?.name
 
@@ -89,6 +103,21 @@ class ManagerScreen : BaseFragment() {
             addFragment(ProfileScreen.getInstance(""))
         }
 
+        frg_manager_v_update_info.setOnClickListener {
+
+            userModel?.let { it1 ->
+                UpdateAccountScreen.getInstance(it1, object : AddDataListener {
+                    override fun onSuccess() {
+
+                        userModel = getDatabase().getUserDAO().getItemById(getUIDUser())
+
+                        fillData()
+                    }
+
+                })
+            }?.let { it2 -> addFragment(it2) }
+        }
+
         frg_manager_bt_toggle_info.setOnClickListener {
 
             toggleSection(it, frg_manager_expand_info)
@@ -119,6 +148,8 @@ class ManagerScreen : BaseFragment() {
                         override fun onAccept() {
 
                             FirebaseAuth.getInstance().signOut()
+
+                            getDatabase().getUserDAO().deleteTable()
 
                             replaceFragment(LoginScreen(), true)
                         }

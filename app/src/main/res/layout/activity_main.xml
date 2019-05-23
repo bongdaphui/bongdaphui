@@ -65,26 +65,25 @@
             android:layout_height="@dimen/fs_56">
 
         <LinearLayout
-                android:id="@+id/activity_main_v_menu_club"
+                android:id="@+id/activity_main_v_menu_football_field"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-
             <ImageView
-                    android:id="@+id/activity_main_iv_menu_club"
+                    android:id="@+id/activity_main_iv_menu_football_field"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/menu_football_select"/>
+                    android:background="@drawable/menu_football_field_select"/>
             <TextView
-                    android:id="@+id/activity_main_tv_menu_club"
-                    android:text="Đội bóng"
+                    android:id="@+id/activity_main_tv_menu_football_field"
+                    android:text="@string/find_field"
                     android:textSize="@dimen/ts_12"
                     android:fontFamily="@font/axis_std_regular"
-                    android:textColor="@drawable/menu_text_select"
                     android:layout_width="wrap_content"
                     android:layout_marginTop="@dimen/fs_3"
+                    android:textColor="@drawable/menu_text_select"
                     android:layout_height="wrap_content"
                     tools:ignore="UnusedAttribute"/>
 
@@ -141,29 +140,31 @@
         </LinearLayout>
 
         <LinearLayout
-                android:id="@+id/activity_main_v_menu_football_field"
+                android:id="@+id/activity_main_v_menu_club"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
             <ImageView
-                    android:id="@+id/activity_main_iv_menu_football_field"
+                    android:id="@+id/activity_main_iv_menu_club"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/menu_football_field_select"/>
+                    android:background="@drawable/menu_football_select"/>
             <TextView
-                    android:id="@+id/activity_main_tv_menu_football_field"
-                    android:text="@string/football_field"
+                    android:id="@+id/activity_main_tv_menu_club"
+                    android:text="Đội bóng"
                     android:textSize="@dimen/ts_12"
                     android:fontFamily="@font/axis_std_regular"
+                    android:textColor="@drawable/menu_text_select"
                     android:layout_width="wrap_content"
                     android:layout_marginTop="@dimen/fs_3"
-                    android:textColor="@drawable/menu_text_select"
                     android:layout_height="wrap_content"
                     tools:ignore="UnusedAttribute"/>
 
         </LinearLayout>
+
         <LinearLayout
                 android:id="@+id/activity_main_v_menu_manager"
                 android:layout_width="0dp"

@@ -84,29 +84,34 @@ class ClubScreen : BaseFragment() {
     private fun loadListClub() {
 
         showProgress(true)
+        try {
 
-        BaseRequest().getClubs(object : GetDataListener<ClubModel> {
-            override fun onSuccess(list: ArrayList<ClubModel>) {
-                listClubModel.clear()
-                listClubModel.addAll(list)
-                Log.d(Constant().TAG, "club size: ${listClubModel.size}")
-                setListClub(listClubModel)
-                adapterClub!!.notifyDataSetChanged()
+            BaseRequest().getClubs(object : GetDataListener<ClubModel> {
+                override fun onSuccess(list: ArrayList<ClubModel>) {
+                    listClubModel.clear()
+                    listClubModel.addAll(list)
+                    Log.d(Constant().TAG, "club size: ${listClubModel.size}")
+                    setListClub(listClubModel)
+                    adapterClub!!.notifyDataSetChanged()
 
-                showProgress(false)
-            }
+                    showProgress(false)
+                }
 
-            override fun onSuccess(item: ClubModel) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
+                override fun onSuccess(item: ClubModel) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
 
-            override fun onFail(message: String) {
+                override fun onFail(message: String) {
 
-                showProgress(false)
+                    showProgress(false)
 
-                Log.d(Constant().TAG, "firebase field fail, message: $message")
-            }
-        })
+                    Log.d(Constant().TAG, "firebase field fail, message: $message")
+                }
+            })
+        } catch (e: Exception) {
+            Log.d(Constant().TAG, "crash >>> ${e.message}")
+
+        }
     }
 
     override fun onDestroy() {

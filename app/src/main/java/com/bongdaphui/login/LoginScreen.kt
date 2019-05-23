@@ -2,7 +2,6 @@ package com.bongdaphui.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +13,9 @@ import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.listener.GetDataListener
+import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.register.RegisterWithEmailScreen
-import com.bongdaphui.updateAccount.UpdateAccountScreen
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Utils
 import com.facebook.AccessToken
@@ -69,13 +68,48 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
 
     override fun onBindView() {
 
-//        FacebookSdk.sdkInitialize(activity)
-
         initFacebook()
 
         initGoogle()
 
         onClick()
+    }
+
+    private fun initGoogle() {
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.google_web_client_id))
+            .requestEmail()
+            .build()
+        mGoogleSignInClient = activity?.let { GoogleSignIn.getClient(it, gso) }
+    }
+
+    private fun initFacebook() {
+
+        // Initialize Facebook Login button
+        callbackManager = CallbackManager.Factory.create()
+
+        buttonFacebookLogin.setReadPermissions("email", "public_profile")
+
+        buttonFacebookLogin.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+
+            override fun onSuccess(loginResult: LoginResult) {
+
+                handleFacebookAccessToken(loginResult.accessToken)
+            }
+
+            override fun onCancel() {
+
+                loginFail()
+
+            }
+
+            override fun onError(error: FacebookException) {
+
+                loginFail()
+
+            }
+        })
     }
 
     private fun onClick() {
@@ -109,7 +143,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
         }
 
         frg_login_screen_ll_skip.setOnClickListener {
-            openClubs()
+            openFindField()
         }
 
         forgot_password.setOnClickListener {
@@ -127,40 +161,43 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
         }
     }
 
-    private fun initFacebook() {
+    //Login email
+    private fun signIn(email: String, password: String) {
+        if (!validForm()) {
+            return
+        }
+        hideKeyBoard()
+        showProgress(true)
 
-        // Initialize Facebook Login button
-        callbackManager = CallbackManager.Factory.create()
+        getFireBaseAuth()!!.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
 
-        buttonFacebookLogin.setReadPermissions("email", "public_profile")
+                showProgress(false)
 
-        buttonFacebookLogin.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+                if (it.isSuccessful) {
 
-            override fun onSuccess(loginResult: LoginResult) {
+                    val user = getFireBaseAuth()!!.currentUser
 
-                Log.d(Constant().TAG, "facebook:onSuccess:$loginResult")
+                    Log.d(Constant().TAG, "login email uid: " + user!!.uid)
 
-                handleFacebookAccessToken(loginResult.accessToken)
+                    checkUserData(user.uid)
+
+                } else {
+
+                    loginFail()
+                }
             }
+            .addOnFailureListener {
 
-            override fun onCancel() {
-
-                Log.d(Constant().TAG, "facebook:onCancel")
-
-                loginFail("facebook:onCancel")
+                loginFail()
 
             }
-
-            override fun onError(error: FacebookException) {
-
-                Log.d(Constant().TAG, "facebook:onError", error)
-
-                loginFail(error.localizedMessage)
-
+            .addOnCanceledListener {
+                loginFail()
             }
-        })
     }
 
+    //Login fb
     private fun handleFacebookAccessToken(token: AccessToken) {
 
         showProgress(true)
@@ -172,66 +209,110 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
                 if (it.isSuccessful) {
 
                     val user = getFireBaseAuth()!!.currentUser
-//                    saveUIDUser(Constant().KEY_LOGIN_UID_USER, user!!.uid)
 
                     Log.d(Constant().TAG, "login fb uid: " + user!!.uid)
 
-                    checkForFirstUpdate(user.uid)
+                    checkUserData(user.uid)
 
                 } else {
 
-                    loginFail(it.exception.toString())
+                    loginFail()
                 }
             }
 
             ?.addOnFailureListener {
 
-                loginFail(it.localizedMessage)
+                loginFail()
             }
     }
 
-    private fun checkForFirstUpdate(uid: String) {
+    //Login gg
+    private fun fireBaseAuthWithGoogle(account: GoogleSignInAccount) {
+
+        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+
+        getFireBaseAuth()!!.signInWithCredential(credential)
+
+            .addOnCompleteListener {
+
+                if (it.isSuccessful) {
+
+                    val user = getFireBaseAuth()!!.currentUser
+
+                    Log.d(Constant().TAG, "login gg uid: " + user!!.uid)
+
+                    checkUserData(user.uid)
+
+                } else {
+
+                    loginFail()
+                }
+            }
+    }
+
+    private fun checkUserData(uid: String) {
+
         BaseRequest().getUserInfo(uid, object : GetDataListener<UserModel> {
             override fun onSuccess(list: ArrayList<UserModel>) {
             }
 
             override fun onSuccess(item: UserModel) {
-                if (TextUtils.isEmpty(item.phone)) {
 
-                    //update account for first time
-                    showProgress(false)
-
-                    replaceFragment(UpdateAccountScreen.getInstance(item), true)
-                } else {
-                    //cache data
-                    getDatabase().getUserDAO().insert(item)
-                    openClub()
-                }
-
-                Log.d(Constant().TAG, "user id: ${item.id}")
+                handleUpdate(item)
             }
 
             override fun onFail(message: String) {
-                //for case not found
 
-                showProgress(false)
+                //not yes have data on fire base (will be alert update on manager screen)
 
-                val userModel = UserModel(uid)
-                replaceFragment(UpdateAccountScreen.getInstance(userModel), true)
+                val userModel = UserModel(uid, "", "", "", "", "", "", "", "", ArrayList())
+
+                BaseRequest().saveOrUpdateUser(userModel, object : UpdateListener {
+                    override fun onUpdateSuccess() {
+
+                        handleUpdate(userModel)
+
+                    }
+
+                    override fun onUpdateFail(err: String) {
+
+                        loginFail()
+                    }
+                })
             }
-
         })
-
     }
 
-    private fun initGoogle() {
+    private fun handleUpdate(userModel: UserModel) {
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.google_web_client_id))
-            .requestEmail()
-            .build()
-        mGoogleSignInClient = activity?.let { GoogleSignIn.getClient(it, gso) }
+        showProgress(false)
 
+        //cache data
+        getDatabase().getUserDAO().insert(userModel)
+
+        openFindField()
+    }
+
+    private fun loginFail() {
+
+        showProgress(false)
+
+        Toast.makeText(
+            activity,
+            "Đăng nhập thất bại. Bạn vui lòng thực hiện lại trong menu Quản lý",
+            Toast.LENGTH_SHORT
+        ).show()
+
+        FirebaseAuth.getInstance().signOut()
+
+        openClub()
+    }
+
+
+    private fun openClub() {
+        showProgress(false)
+
+        openFindField()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -253,95 +334,11 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
                 fireBaseAuthWithGoogle(account!!)
 
             } catch (e: ApiException) {
-                // Google Sign In failed, update UI appropriately
                 Log.d(Constant().TAG, "Google sign in failed", e)
-                // ...
             }
         }
 
     }
-
-    private fun fireBaseAuthWithGoogle(account: GoogleSignInAccount) {
-
-        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-
-        getFireBaseAuth()!!.signInWithCredential(credential)
-
-            .addOnCompleteListener {
-
-                if (it.isSuccessful) {
-                    val user = getFireBaseAuth()!!.currentUser
-
-//                    saveUIDUser(Constant().KEY_LOGIN_UID_USER, user!!.uid)
-
-                    Log.d(Constant().TAG, "login google uid: " + user!!.uid)
-
-                    checkForFirstUpdate(user.uid)
-
-                } else {
-
-                    loginFail(it.exception.toString())
-                }
-            }
-            .addOnFailureListener {
-
-                loginFail(it.localizedMessage)
-            }
-    }
-
-    private fun loginFail(errorMsg: String?) {
-
-        Toast.makeText(activity, "Đăng nhập thất bại \n ${errorMsg!!}", Toast.LENGTH_SHORT).show()
-        showProgress(false)
-        onBackPressed()
-    }
-
-
-    private fun openClub() {
-        showProgress(false)
-
-        openClubs()
-    }
-
-    private fun signIn(email: String, password: String) {
-        if (!validForm()) {
-            return
-        }
-        hideKeyBoard()
-        showProgress(true)
-
-        getFireBaseAuth()!!.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-
-                    val user = getFireBaseAuth()!!.currentUser
-
-//                    saveUIDUser(Constant().KEY_LOGIN_UID_USER, user!!.uid)
-
-                    Log.d(Constant().TAG, "login email uid: " + user!!.uid)
-
-                    checkForFirstUpdate(user.uid)
-
-                } else {
-
-                    loginFail(it.exception.toString())
-                }
-
-                showProgress(false)
-            }
-            .addOnFailureListener {
-
-                loginFail(it.localizedMessage)
-
-                showProgress(false)
-
-            }
-            .addOnCanceledListener {
-                Log.d(Constant().TAG, "login email fail: ")
-
-            }
-    }
-
 
     private fun validForm(): Boolean {
 

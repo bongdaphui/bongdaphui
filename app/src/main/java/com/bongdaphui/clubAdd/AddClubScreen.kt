@@ -239,7 +239,7 @@ class AddClubScreen : BaseFragment() {
             validate = false
         }
 
-        if (!Utils().validatePhoneNumber(frg_add_club_et_phone.text.toString())) {
+        if (frg_add_club_et_phone.text.toString().isNotEmpty() && !Utils().validatePhoneNumber(frg_add_club_et_phone.text.toString())) {
             frg_add_club_tv_error_input_phone.visibility = View.VISIBLE
             frg_add_club_tv_error_input_phone.text = activity!!.getString(R.string.please_enter_your_phone_valid)
             frg_add_club_et_phone.requestFocus()

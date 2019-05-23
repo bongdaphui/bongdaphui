@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
+import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.updateAccount.UpdateAccountScreen
@@ -104,7 +105,15 @@ class ProfileScreen : BaseFragment() {
 
         frg_profile_fb_update.setOnClickListener {
 
-            addFragment(UpdateAccountScreen.getInstance(userModel))
+            addFragment(UpdateAccountScreen.getInstance(userModel, object : AddDataListener{
+                override fun onSuccess() {
+
+                    userModel = getDatabase().getUserDAO().getItemById(getUIDUser())
+
+                    fillData()
+                }
+
+            }))
         }
 
         frg_profile_tv_phone.setOnClickListener {
