@@ -147,7 +147,7 @@
                     android:id="@+id/frg_manager_expand_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:paddingStart="@dimen/fs_46"
                     android:orientation="vertical"
                     tools:ignore="RtlSymmetry">
