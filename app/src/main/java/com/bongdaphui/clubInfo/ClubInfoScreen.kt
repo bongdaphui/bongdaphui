@@ -17,11 +17,13 @@ import com.bongdaphui.clubUpdate.UpdateClubScreen
 import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.listener.AddDataListener
+import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.model.UserStickModel
 import com.bongdaphui.player.PlayerStickAdapter
+import com.bongdaphui.profile.ProfileScreen
 import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
@@ -114,7 +116,14 @@ class ClubInfoScreen : BaseFragment() {
             .into(frg_club_info_iv_logo)
 
 
-        adapterStickPlayer = activity?.let { PlayerStickAdapter(it, listStickPlayer) }
+        adapterStickPlayer = activity?.let {
+            PlayerStickAdapter(it, listStickPlayer, object : OnItemClickListener<UserStickModel> {
+                override fun onItemClick(item: UserStickModel, position: Int, type: Int) {
+                    addFragment(ProfileScreen.getInstance(item.id))
+                }
+
+            })
+        }
 
         recycler_list_player.layoutManager = GridLayoutManager(activity, 3)
         recycler_list_player.setHasFixedSize(true)
