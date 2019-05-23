@@ -92,6 +92,7 @@ class ClubInfoScreen : BaseFragment() {
         }
         adapterStickPlayer?.notifyDataSetChanged()
 
+
     }
 
     @SuppressLint("RestrictedApi")
@@ -125,6 +126,14 @@ class ClubInfoScreen : BaseFragment() {
         if (clubModel?.idCaptain == getUIDUser()) {
             frg_club_info_fb_update.visibility = View.VISIBLE
         }
+        txt_club_info.text = "Đội trưởng: ${clubModel?.caption}\nĐịa chỉ: ${clubModel?.address},${context?.let {
+            clubModel?.idCity?.let { it1 ->
+                Utils().getNameCityDistrictFromId(
+                    it,
+                    it1, clubModel?.idDistrict
+                )
+            }
+        }}\n${clubModel?.phone}"
 
     }
 
@@ -144,10 +153,23 @@ class ClubInfoScreen : BaseFragment() {
         } else {
 
             fab_join_club.setOnClickListener {
-
-                requestJoinGroup()
-
+                context?.let { it1 ->
+                    AlertDialog().showCustomDialog(
+                        it1,
+                        activity!!.resources.getString(R.string.alert),
+                        activity!!.resources.getString(R.string.join_club),
+                        activity!!.resources.getString(R.string.no),
+                        activity!!.resources.getString(R.string.yes),
+                        object : AcceptListener {
+                            override fun onAccept() {
+                                requestJoinGroup()
+                            }
+                        }
+                    )
+                }
             }
+
+
         }
 
         frg_club_info_fb_update.setOnClickListener {
