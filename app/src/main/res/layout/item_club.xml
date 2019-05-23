@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/item_field_container"
+        android:id="@+id/item_club_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_medium"
@@ -15,162 +14,175 @@
         app:cardElevation="2dp">
 
     <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:orientation="vertical"
-            android:background="@color/colorAccent"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:id="@+id/item_club_container"
-            android:layout_height="wrap_content"
-            tools:ignore="UnusedAttribute">
+            android:background="@android:color/white"
+            android:padding="@dimen/fs_10"
+            android:layout_height="wrap_content">
 
         <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fs_20"
-                android:layout_marginTop="@dimen/fs_10"
-                android:layout_marginLeft="@dimen/fs_20"
-                android:orientation="horizontal">
+                android:layout_marginEnd="@dimen/fs_10"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:orientation="vertical">
 
             <com.mikhaellopez.circularimageview.CircularImageView
                     android:id="@+id/item_club_image"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    app:srcCompat="@drawable/ic_picture"
+                    app:srcCompat="@drawable/ic_no_image_green"
                     app:civ_shadow="true"
                     app:civ_shadow_radius="0"
-                    app:civ_background_color="@color/colorAccent"
                     app:civ_border="true"
                     app:civ_border_width="1dp"
-                    app:civ_border_color="@android:color/white"/>
+                    app:civ_border_color="@color/colorPrimaryDark"/>
 
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fs_20"
-                    android:layout_marginEnd="@dimen/fs_20"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="@dimen/fs_20"
-                    tools:ignore="RtlHardcoded">
-
-                <TextView
-                        android:id="@+id/item_club_name"
-                        android:layout_width="wrap_content"
-                        android:textSize="@dimen/ts_16"
-                        android:text="Brothers FC"
-                        android:layout_marginBottom="@dimen/fs_5"
-                        android:fontFamily="@font/axis_std_bold"
-                        android:textColor="@android:color/white"
-                        android:layout_height="wrap_content"/>
-                <TextView
-                        android:id="@+id/item_club_caption"
-                        android:layout_width="wrap_content"
-                        android:textSize="@dimen/ts_14"
-                        android:text="Nguyễn Tấn Linh"
-                        android:fontFamily="@font/axis_std_regular"
-                        android:textColor="@android:color/white"
-                        android:layout_height="wrap_content"/>
-
-                <TextView
-                        android:id="@+id/item_club_area"
-                        android:layout_width="wrap_content"
-                        android:textSize="@dimen/ts_14"
-                        android:text="Bình Thạnh"
-                        android:lineSpacingExtra="@dimen/fs_3"
-                        android:fontFamily="@font/axis_std_regular"
-                        android:textColor="@android:color/white"
-                        android:layout_height="wrap_content"/>
-
-            </LinearLayout>
+            <ImageButton
+                    android:id="@+id/frg_club_iv_phone"
+                    android:layout_width="?attr/actionBarSize"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:tint="@color/colorPrimaryDark"
+                    app:srcCompat="@drawable/ic_call"/>
 
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginEnd="@dimen/fs_20"
-                android:layout_marginLeft="@dimen/fs_20"
-                android:layout_marginStart="@dimen/fs_20"
-                android:layout_marginBottom="@dimen/fs_10"
-                android:layout_marginRight="@dimen/fs_20">
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
 
-            <ImageButton
-                    android:id="@+id/frg_join_club_iv_phone"
-                    android:layout_width="@dimen/fs_71"
-                    android:layout_height="@dimen/spacing_xxlarge"
-                    android:background="@android:color/transparent"
-                    android:tint="@android:color/white"
-                    app:srcCompat="@drawable/ic_phone"/>
+            <TextView
+                    android:id="@+id/item_club_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sân bóng đá HCA"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+                    android:textColor="@color/grey_90"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fs_5"/>
 
             <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="@dimen/fs_20"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                <TextView
-                        android:id="@+id/item_club_phone"
-                        android:layout_width="match_parent"
-                        android:textSize="@dimen/ts_14"
-                        android:paddingTop="@dimen/fs_5"
-                        android:paddingBottom="@dimen/fs_3"
-                        android:text="+84"
-                        android:fontFamily="@font/axis_std_bold"
-                        android:textColor="@android:color/white"
-                        android:layout_height="wrap_content"/>
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content">
 
                 <TextView
                         android:layout_width="wrap_content"
-                        android:textSize="@dimen/ts_12"
-                        android:text="Liên hệ"
-                        android:fontFamily="@font/axis_std_regular"
-                        android:textColor="@android:color/white"
-                        android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                        android:layout_height="wrap_content"
+                        android:text="Đội trưởng:  "
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@color/grey_60"/>
 
                 <TextView
-                        android:id="@+id/item_club_amount_player"
-                        android:layout_width="match_parent"
-                        android:textSize="@dimen/ts_14"
-                        android:paddingTop="@dimen/fs_5"
-                        android:paddingBottom="@dimen/fs_3"
-                        android:text=""
-                        android:fontFamily="@font/axis_std_bold"
-                        android:textColor="@android:color/white"
-                        android:layout_height="wrap_content"/>
+                        android:id="@+id/item_club_caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nguyen Tan Linh"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold"/>
+            </LinearLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fs_5"/>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
                 <TextView
                         android:layout_width="wrap_content"
-                        android:textSize="@dimen/ts_12"
-                        android:text="Số cầu thủ"
-                        android:fontFamily="@font/axis_std_regular"
-                        android:textColor="@android:color/white"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:text="Khu vực:  "
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@color/grey_60"/>
+
+                <TextView
+                        android:id="@+id/item_club_area"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hồ Chí Minh"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold"/>
 
             </LinearLayout>
 
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fs_10"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:id="@+id/item_club_phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0988422495"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textStyle="bold"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Liên hệ"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/grey_60"/>
+
+                </LinearLayout>
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                    <TextView
+                            android:id="@+id/item_club_amount_player"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="15"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textStyle="bold"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Số cầu thủ"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/grey_60"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                    android:id="@+id/item_club_tv_add_schedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Thêm lịch thi đấu"
+                    android:gravity="end"
+                    android:visibility="gone"
+                    android:paddingTop="@dimen/fs_10"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"/>
         </LinearLayout>
-
-        <TextView
-                android:id="@+id/item_club_tv_add_schedule"
-                android:layout_width="wrap_content"
-                android:textSize="@dimen/ts_16"
-                android:text="Thêm lịch thi đấu >>>"
-                android:padding="@dimen/fs_10"
-                android:layout_gravity="end"
-                android:visibility="gone"
-                android:layout_marginBottom="@dimen/fs_5"
-                android:fontFamily="@font/axis_std_bold"
-                android:textColor="@android:color/white"
-                android:layout_height="wrap_content"/>
     </LinearLayout>
 </android.support.v7.widget.CardView>

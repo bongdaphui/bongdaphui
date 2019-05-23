@@ -21,8 +21,7 @@ class ClubHolder(row: View) : RecyclerView.ViewHolder(row) {
 
     var phone: TextView = row.findViewById(R.id.item_club_phone)
 
-    var callClub: ImageButton = row.findViewById(R.id.frg_join_club_iv_phone)
-
     var amountPlayer: TextView = row.findViewById(R.id.item_club_amount_player)
 
+    var call: ImageButton = row.findViewById(R.id.frg_club_iv_phone)
 }

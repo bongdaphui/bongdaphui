@@ -2,6 +2,7 @@ package com.bongdaphui.club
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.clubInfo.ClubInfoScreen
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.OnItemClickListener
+import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Enum
@@ -57,7 +59,9 @@ class ClubScreen : BaseFragment() {
 
     private fun initAdapter() {
 
-        adapterClub = ClubAdapter(context, listClubModel, object :
+        val isLoggedUser = !TextUtils.isEmpty(getUIDUser())
+
+        adapterClub = ClubAdapter(context, listClubModel, isLoggedUser, object :
 
             OnItemClickListener<ClubModel> {
 
@@ -65,9 +69,11 @@ class ClubScreen : BaseFragment() {
 
                 if (type == Enum.EnumTypeClick.Phone.value) {
 
-                    if (item.phone!!.isNotEmpty())
-
-                        Utils().openDial(activity!!, "${item.phone}")
+                    if (isLoggedUser) {
+                        Utils().openDial(activity!!, item.phone)
+                    } else {
+                        addFragment(LoginScreen())
+                    }
 
                 } else if (type == Enum.EnumTypeClick.View.value) {
 

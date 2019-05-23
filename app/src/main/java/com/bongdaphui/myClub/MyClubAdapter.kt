@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide
 class MyClubAdapter(
     var context: Context?,
     private val items: ArrayList<ClubModel>,
-    var onItemClickListener: OnItemClickListener<ClubModel>
+    private var onItemClickListener: OnItemClickListener<ClubModel>
 ) : RecyclerView.Adapter<MyClubHolder>() {
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): MyClubHolder {
@@ -51,9 +51,9 @@ class MyClubAdapter(
 
         viewHolder.area.text = Html.fromHtml("Địa chỉ: <b>${club.address}</b>")
 
-        viewHolder.phone.text = Html.fromHtml("<u>${club.phone}</u>")
+        viewHolder.phone.text = club.phone
 
-        viewHolder.phone.setOnClickListener {
+        viewHolder.call.setOnClickListener {
             onItemClickListener.onItemClick(club, position, Enum.EnumTypeClick.Phone.value)
         }
 

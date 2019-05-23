@@ -1,5 +1,6 @@
 package com.bongdaphui.club
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.text.Html
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide
 class ClubAdapter(
     var context: Context?,
     private val items: ArrayList<ClubModel>,
+    private val isLoggedUser: Boolean = true,
     var onItemClickListener: OnItemClickListener<ClubModel>
 ) : RecyclerView.Adapter<ClubHolder>() {
 
@@ -29,6 +31,7 @@ class ClubAdapter(
         return items.size
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: ClubHolder, position: Int) {
 
         val club: ClubModel = items[position]
@@ -41,29 +44,30 @@ class ClubAdapter(
 
         viewHolder.nameFC.text = club.name
 
-        if (club.caption?.isEmpty()!!) {
+        if (club.caption.isEmpty()) {
             viewHolder.nameCaption.text =
                 Html.fromHtml("Đội trưởng: <b>${context?.resources?.getText(R.string.not_update)}</b>")
 
         } else {
-            viewHolder.nameCaption.text = Html.fromHtml("Đội trưởng: <b>${club.caption}</b>")
+            viewHolder.nameCaption.text = club.caption
         }
 
-        val address = if (club.address?.isNotEmpty()!!) "${club.address}, " else ""
+        val address = if (club.address.isNotEmpty()) "${club.address}, " else ""
 
         viewHolder.area.text =
-            Html.fromHtml("Địa chỉ: <b>$address${context?.let {
-                club.idCity?.let { it1 ->
+            "$address${context?.let {
+                club.idCity.let { it1 ->
                     Utils().getNameCityDistrictFromId(
                         it,
                         it1, club.idDistrict
                     )
                 }
-            }}</b>")
+            }}"
 
-        viewHolder.phone.text = Html.fromHtml("<u>${club.phone}</u>")
+        viewHolder.phone.text =
+            if (isLoggedUser) club.phone else context!!.getString(R.string.need_login_to_see)
 
-        viewHolder.callClub.setOnClickListener {
+        viewHolder.call.setOnClickListener {
             onItemClickListener.onItemClick(club, position, Enum.EnumTypeClick.Phone.value)
         }
 
