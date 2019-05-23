@@ -82,9 +82,9 @@ class MyClubScreen : BaseFragment() {
             }
         })
         adapterMyClub?.setHasStableIds(true)
-        frg_football_club_rcv.adapter = adapterMyClub
-        frg_football_club_rcv.setHasFixedSize(true)
-        frg_football_club_rcv.setItemViewCacheSize(20)
+        frg_club_rcv.adapter = adapterMyClub
+        frg_club_rcv.setHasFixedSize(true)
+        frg_club_rcv.setItemViewCacheSize(20)
     }
 
     private fun getData() {
@@ -128,7 +128,7 @@ class MyClubScreen : BaseFragment() {
 
     private fun onClick() {
 
-        frg_football_club_fab.setOnClickListener {
+        frg_club_fab.setOnClickListener {
             addFragment(AddClubScreen.getInstance(object : AddDataListener {
                 override fun onSuccess() {
                     getData()
@@ -140,7 +140,7 @@ class MyClubScreen : BaseFragment() {
 
     private fun showEmptyView(isShow: Boolean) {
 
-        frg_football_club_rcv.visibility = if (isShow) View.GONE else View.VISIBLE
+        frg_club_rcv.visibility = if (isShow) View.GONE else View.VISIBLE
 
         view_empty.visibility = if (isShow) View.VISIBLE else View.GONE
 
