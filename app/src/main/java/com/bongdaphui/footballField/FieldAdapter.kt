@@ -3,7 +3,6 @@ package com.bongdaphui.footballField
 import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bongdaphui.R
@@ -45,18 +44,11 @@ class FieldAdapter(
 
         viewHolder.name.text = "Sân bóng đá ${fbFieldModel.name}"
 
-        if (Utils().isEmpty(fbFieldModel.phone)) {
+        viewHolder.phone.text =
+            if (isLoggedUser) fbFieldModel.phone else context!!.getString(R.string.need_login_to_see)
 
-            viewHolder.phone.text = context!!.resources.getString(R.string.not_yet_update)
-
-        } else {
-
-            viewHolder.phone.text =
-                Html.fromHtml("<u> ${if (isLoggedUser) fbFieldModel.phone else context!!.getString(R.string.need_login_to_see)}</u>")
-
-            viewHolder.phone.setOnClickListener {
-                itemClickInterface.onItemClick(fbFieldModel, position, Enum.EnumTypeClick.Phone.value)
-            }
+        viewHolder.call.setOnClickListener {
+            itemClickInterface.onItemClick(fbFieldModel, position, Enum.EnumTypeClick.Phone.value)
 
         }
 

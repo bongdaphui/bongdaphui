@@ -143,7 +143,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
         }
 
         frg_login_screen_ll_skip.setOnClickListener {
-            openClubs()
+            openFindField()
         }
 
         forgot_password.setOnClickListener {
@@ -290,7 +290,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
         //cache data
         getDatabase().getUserDAO().insert(userModel)
 
-        openClubs()
+        openFindField()
     }
 
     private fun loginFail() {
@@ -312,7 +312,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
     private fun openClub() {
         showProgress(false)
 
-        openClubs()
+        openFindField()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -90,9 +90,9 @@ class BaseRequest {
                     listener.onFail("Not Found")
                 }
             }
-            /*.addOnFailureListener { exception ->
-                listener.onFail(exception.localizedMessage)
-            }*/
+        /*.addOnFailureListener { exception ->
+            listener.onFail(exception.localizedMessage)
+        }*/
     }
 
     fun saveOrUpdateUser(
@@ -224,26 +224,33 @@ class BaseRequest {
     }
 
     fun getClubs(listener: GetDataListener<ClubModel>) {
+        try {
 
-        FirebaseFirestore.getInstance().collection(Constant().clubPathField).get()
 
-            .addOnSuccessListener { document ->
+            FirebaseFirestore.getInstance().collection(Constant().clubPathField).get()
 
-                val value = document?.toObjects(ClubModel::class.java)
+                .addOnSuccessListener { document ->
 
-                if (value != null) {
+                    val value = document?.toObjects(ClubModel::class.java)
 
-                    listener.onSuccess(ArrayList(value))
+                    if (value != null) {
 
-                } else {
+                        listener.onSuccess(ArrayList(value))
 
-                    listener.onFail("Not Found")
+                    } else {
+
+                        listener.onFail("Not Found")
+                    }
+                    Log.d("Tien", document.metadata.toString())
                 }
-                Log.d("Tien", document.metadata.toString())
-            }
-            .addOnFailureListener { exception ->
-                listener.onFail(exception.localizedMessage)
-            }
+                .addOnFailureListener { exception ->
+                    listener.onFail(exception.localizedMessage)
+                }
+
+        } catch (e: Exception) {
+            Log.d(Constant().TAG, "crash ${e.message}")
+
+        }
     }
 
     fun registerJoinClub(idClub: String, idPlayer: String, listener: UpdateListener) {

@@ -49,8 +49,10 @@ class ClubAdapter(
             viewHolder.nameCaption.text = Html.fromHtml("Đội trưởng: <b>${club.caption}</b>")
         }
 
+        val address = if (club.address?.isNotEmpty()!!) "${club.address}, " else ""
+
         viewHolder.area.text =
-            Html.fromHtml("Địa chỉ: <b>${club.address}, ${context?.let {
+            Html.fromHtml("Địa chỉ: <b>$address${context?.let {
                 club.idCity?.let { it1 ->
                     Utils().getNameCityDistrictFromId(
                         it,

@@ -103,14 +103,14 @@ class RegisterWithEmailScreen : BaseFragment() {
                             //cache data
                             getDatabase().getUserDAO().insert(userModel)
 
-                            openClubs()
+                            openFindField()
                         }
 
                         override fun onUpdateFail(err: String) {
 
                             FirebaseAuth.getInstance().signOut()
 
-                            openClubs()
+                            openFindField()
                         }
                     })
                 } else {
