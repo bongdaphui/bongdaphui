@@ -1,5 +1,6 @@
 package com.bongdaphui.myClub
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.text.Html
@@ -10,6 +11,7 @@ import com.bongdaphui.R
 import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.utils.Enum
+import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
 
 class MyClubAdapter(
@@ -29,6 +31,7 @@ class MyClubAdapter(
         return items.size
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: MyClubHolder, position: Int) {
 
         val club: ClubModel = items[position]
@@ -46,10 +49,20 @@ class MyClubAdapter(
                 Html.fromHtml("Đội trưởng: <b>${context!!.resources.getText(R.string.not_update)}</b>")
 
         } else {
-            viewHolder.nameCaption.text = Html.fromHtml("Đội trưởng: <b>${club.caption}</b>")
+            viewHolder.nameCaption.text = club.caption
         }
 
-        viewHolder.area.text = Html.fromHtml("Địa chỉ: <b>${club.address}</b>")
+        val address = if (club.address.isNotEmpty()) "${club.address}, " else ""
+
+        viewHolder.area.text =
+            "$address${context?.let {
+                club.idCity.let { it1 ->
+                    Utils().getNameCityDistrictFromId(
+                        it,
+                        it1, club.idDistrict
+                    )
+                }
+            }}"
 
         viewHolder.phone.text = club.phone
 
