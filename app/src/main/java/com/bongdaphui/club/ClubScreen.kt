@@ -91,16 +91,18 @@ class ClubScreen : BaseFragment() {
         BaseRequest().getClubs(object : GetDataListener<ClubModel> {
             override fun onSuccess(list: ArrayList<ClubModel>) {
 
+                showProgress(false)
+
+                showEmptyView(list.size == 0)
+
                 if (list.size > 0) {
 
                     clubListFull.clear()
+
                     clubListFull.addAll(list)
-                    showProgress(false)
+
                     initFilterBox()
 
-                } else {
-
-                    showEmptyView(true)
                 }
             }
 
