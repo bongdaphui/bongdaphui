@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -78,6 +79,8 @@ class AddClubScreen : BaseFragment() {
 
         initView()
 
+        fillData()
+
         frg_add_club_tv_input.setOnClickListener {
 
             startInsertData()
@@ -91,6 +94,22 @@ class AddClubScreen : BaseFragment() {
         }
 
     }
+
+    private fun fillData() {
+
+        val userModel = getDatabase().getUserDAO().getItemById(getUIDUser())
+
+        if (userModel.name.isNotEmpty())
+            frg_add_club_et_captain.text = userModel.name.toEditable()
+
+        if (userModel.email.isNotEmpty())
+            frg_add_club_et_email.text = userModel.email.toEditable()
+
+        if (userModel.phone.isNotEmpty())
+            frg_add_club_et_phone.text = userModel.phone.toEditable()
+    }
+
+    private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
     private fun initSpinner() {
         Utils().initSpinnerCity(
@@ -124,7 +143,7 @@ class AddClubScreen : BaseFragment() {
         )
 
         Utils().editTextTextChange(
-            frg_add_club_et_full_name,
+            frg_add_club_et_captain,
             frg_add_club_iv_clear_input_full_name,
             frg_add_club_tv_error_input_full_name
         )
@@ -333,7 +352,7 @@ class AddClubScreen : BaseFragment() {
         Log.d(Constant().TAG, uri)
 
         val name = frg_add_club_et_name_fc.text.toString()
-        val caption = frg_add_club_et_full_name.text.toString()
+        val caption = frg_add_club_et_captain.text.toString()
         val email = frg_add_club_et_email.text.toString()
         val phone = frg_add_club_et_phone.text.toString()
         val dob = frg_add_club_et_dob.text.toString()
@@ -387,7 +406,7 @@ class AddClubScreen : BaseFragment() {
 
         frg_add_club_v_photo.isEnabled = false
         frg_add_club_et_name_fc.isEnabled = false
-        frg_add_club_et_full_name.isEnabled = false
+        frg_add_club_et_captain.isEnabled = false
         frg_add_club_et_email.isEnabled = false
         frg_add_club_et_phone.isEnabled = false
         frg_add_club_iv_dob.isEnabled = false

@@ -62,11 +62,12 @@
                         android:id="@+id/frg_profile_iv_user"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        app:srcCompat="@drawable/ic_person_grey"
+                        app:srcCompat="@drawable/ic_person"
                         app:civ_border="true"
                         app:civ_shadow="true"
+                        android:tint="@color/colorPrimaryDark"
                         app:civ_shadow_radius="0"
-                        app:civ_border_color="@color/colorAccent"
+                        app:civ_border_color="@color/colorPrimaryDark"
                         app:civ_border_width="2dp"/>
 
                 <ImageButton
@@ -113,7 +114,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="178 cm"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                                android:textColor="@color/colorAccent"/>
+                                android:textColor="@color/colorPrimaryDark"/>
 
                         <TextView
                                 android:layout_width="wrap_content"
@@ -140,7 +141,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="68 kg"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                                android:textColor="@color/colorAccent"/>
+                                android:textColor="@color/colorPrimaryDark"/>
 
                         <TextView
                                 android:layout_width="wrap_content"
@@ -167,7 +168,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="29"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                                android:textColor="@color/colorAccent"/>
+                                android:textColor="@color/colorPrimaryDark"/>
 
                         <TextView
                                 android:layout_width="wrap_content"
@@ -207,7 +208,7 @@
                             android:layout_height="wrap_content"
                             android:text="Ngày sinh"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textStyle="bold"/>
 
                     <TextView
@@ -232,7 +233,7 @@
                             android:layout_height="wrap_content"
                             android:text="Email"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textStyle="bold"/>
 
                     <TextView
@@ -268,7 +269,7 @@
                             android:layout_height="wrap_content"
                             android:text="Phone"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textStyle="bold"/>
 
                     <TextView
@@ -293,7 +294,7 @@
                             android:layout_height="wrap_content"
                             android:text="Sở trường"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textStyle="bold"/>
 
                     <TextView
@@ -328,7 +329,7 @@
                             android:layout_height="wrap_content"
                             android:text="Bình luận"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textStyle="bold"/>
 
                     <TextView
@@ -353,7 +354,7 @@
                             android:layout_height="wrap_content"
                             android:text=""
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textStyle="bold"/>
 
                     <TextView
@@ -389,7 +390,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
                 android:tint="@android:color/white"
-                app:backgroundTint="@color/colorAccent"
+                app:backgroundTint="@color/colorPrimaryDark"
                 app:fabSize="normal"
                 app:rippleColor="@color/grey_5"
                 app:srcCompat="@drawable/ic_create"/>

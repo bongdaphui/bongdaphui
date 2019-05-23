@@ -75,6 +75,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_margin="16dp"
                 android:visibility="visible"
+                android:backgroundTint="@color/colorPrimaryDark"
                 android:layout_alignParentRight="true"
                 tools:ignore="RtlHardcoded"/>
 

@@ -262,7 +262,7 @@
                     android:background="@color/grey_10"/>
 
             <LinearLayout
-                    android:id="@+id/frg_manager_match_schedule"
+                    android:id="@+id/frg_manager_v_player_schedule"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"

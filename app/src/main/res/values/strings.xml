@@ -109,5 +109,6 @@
     </string>
     <string name="send_mail_fail">Gửi mail thất bại. Vui lòng thực hiện lại</string>
     <string name="please_choose_type_field">Vui lòng chọn loại sân bạn muốn đá</string>
+    <string name="you_need_update_phone">Bạn cần cập nhật số điện thoại để sử dụng chức năng này</string>
 
 </resources>
