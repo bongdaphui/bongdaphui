@@ -3,7 +3,6 @@ package com.bongdaphui.findPlayer
 import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bongdaphui.R
@@ -53,9 +52,9 @@ class FindPlayerAdapter(
         viewPlayerHolder.tvName.text = model.namePlayer
 
         viewPlayerHolder.tvPhone.text =
-            Html.fromHtml("<u> ${if (isLoggedUser) model.phonePlayer else context?.getString(R.string.need_login_to_see)}</u>")
+            if (isLoggedUser) model.phonePlayer else context?.getString(R.string.need_login_to_see)
 
-        viewPlayerHolder.tvPhone.setOnClickListener {
+        viewPlayerHolder.call.setOnClickListener {
             itemClickInterface.onItemClick(model, position, Enum.EnumTypeClick.Phone.value)
         }
 

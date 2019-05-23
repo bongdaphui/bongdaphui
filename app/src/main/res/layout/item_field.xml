@@ -37,7 +37,7 @@
                     app:civ_shadow_radius="0"
                     app:civ_border="true"
                     app:civ_border_width="1dp"
-                    app:civ_border_color="@android:color/white"/>
+                    app:civ_border_color="@color/colorPrimaryDark"/>
 
             <ImageButton
                     android:id="@+id/item_field_ib_call"
@@ -64,7 +64,7 @@
 
             <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/fs_10"/>
+                    android:layout_height="@dimen/fs_5"/>
 
             <LinearLayout
                     android:orientation="horizontal"
@@ -91,7 +91,7 @@
 
             <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/fs_10"/>
+                    android:layout_height="@dimen/fs_5"/>
 
             <LinearLayout
                     android:orientation="horizontal"
