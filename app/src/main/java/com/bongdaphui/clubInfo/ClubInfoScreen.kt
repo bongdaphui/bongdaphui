@@ -208,14 +208,17 @@ class ClubInfoScreen : BaseFragment() {
 
             clubModel?.let {
                 userModel?.let { it1 ->
+                    showProgress(true)
                     BaseRequest().registerJoinClub(it, it1, message, object : UpdateListener {
                         override fun onUpdateSuccess() {
                             //pending button
+                            showProgress(false)
                             fab_join_club.isEnabled = false
                             showAlertJoinGroup(true)
                         }
 
                         override fun onUpdateFail(err: String) {
+                            showProgress(false)
                             showAlertJoinGroup(false, err)
 
                         }
