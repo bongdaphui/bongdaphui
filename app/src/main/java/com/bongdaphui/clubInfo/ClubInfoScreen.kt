@@ -21,6 +21,7 @@ import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.ClubModel
+import com.bongdaphui.model.UserModel
 import com.bongdaphui.model.UserStickModel
 import com.bongdaphui.player.PlayerStickAdapter
 import com.bongdaphui.profile.ProfileScreen
@@ -35,6 +36,7 @@ class ClubInfoScreen : BaseFragment() {
     private val listStickPlayer: ArrayList<UserStickModel> = ArrayList()
     private var adapterStickPlayer: PlayerStickAdapter? = null
     private var clubModel: ClubModel? = null
+    private var userModel: UserModel? = null
 
     companion object {
 
@@ -79,7 +81,7 @@ class ClubInfoScreen : BaseFragment() {
             clubModel = bundle.getSerializable(CLUB_MODEL) as ClubModel?
 
         }
-
+        userModel = getDatabase().getUserDAO().getItemById(getUIDUser())
         initView()
         loadData()
         onClick()
@@ -197,20 +199,23 @@ class ClubInfoScreen : BaseFragment() {
         val idPlayer = getUIDUser()
         if (!TextUtils.isEmpty(idPlayer)) {
 
-            val idClub = clubModel?.id ?: ""
-            BaseRequest().registerJoinClub(idClub, idPlayer, object : UpdateListener {
-                override fun onUpdateSuccess() {
-                    //pending button
-                    fab_join_club.isEnabled = false
-                    showAlertJoinGroup(true)
+            clubModel?.let {
+                userModel?.let { it1 ->
+                    BaseRequest().registerJoinClub(it, it1, object : UpdateListener {
+                        override fun onUpdateSuccess() {
+                            //pending button
+                            fab_join_club.isEnabled = false
+                            showAlertJoinGroup(true)
+                        }
+
+                        override fun onUpdateFail(err: String) {
+                            showAlertJoinGroup(false, err)
+
+                        }
+
+                    })
                 }
-
-                override fun onUpdateFail(err: String) {
-                    showAlertJoinGroup(false, err)
-
-                }
-
-            })
+            }
         } else {
             //require to login
             //non account

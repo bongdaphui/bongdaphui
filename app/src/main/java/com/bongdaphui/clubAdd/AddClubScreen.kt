@@ -343,7 +343,7 @@ class AddClubScreen : BaseFragment() {
 
         val id = "${Utils().getRandomNumberString()}$currentTime"
 
-        val userCurrent = getDatabase().getUserDAO().getItems()
+        val userCurrent = getDatabase().getUserDAO().getItemById(getUIDUser())
 
         val userStickModel =
             UserStickModel(userCurrent.id, userCurrent.photoUrl, userCurrent.name, userCurrent.position)

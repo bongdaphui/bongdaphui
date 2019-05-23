@@ -1,6 +1,7 @@
 package com.bongdaphui.base
 
 import android.util.Log
+import com.bongdaphui.approvePlayer.ApprovePlayerResponse
 import com.bongdaphui.listener.DeleteDataDataListener
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.UpdateListener
@@ -253,11 +254,11 @@ class BaseRequest {
         }
     }
 
-    fun registerJoinClub(idClub: String, idPlayer: String, listener: UpdateListener) {
+    fun registerJoinClub(clubModel: ClubModel, userModel: UserModel, listener: UpdateListener) {
 
         val db = FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField)
         //check exist
-        db.document(idClub + idPlayer).get().addOnCompleteListener { task ->
+        db.document(clubModel.id + userModel.id).get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val document = task.result
                 val isExist = document?.exists() ?: false
@@ -265,14 +266,20 @@ class BaseRequest {
                     listener.onUpdateFail("Yêu cầu của bạn đang chờ duyệt, vui lòng đợi.")
                 } else {
                     //subscribe club
-                    FirebaseMessaging.getInstance().subscribeToTopic(idClub)
+                    FirebaseMessaging.getInstance().subscribeToTopic(clubModel.id)
                     //save request
-                    val requestMap = HashMap<String, Any>()
-                    requestMap["idClub"] = idClub
-                    requestMap["idPlayer"] = idPlayer
-                    requestMap["isAccepted"] = 2
+                    val approvePlayerResponse = ApprovePlayerResponse(
+                        clubModel.id,
+                        clubModel.name,
+                        userModel.id,
+                        userModel.photoUrl,
+                        userModel.name,
+                        clubModel.idCaptain,
+                        2
+                    )
 
-                    db.document(idClub + idPlayer).set(requestMap, SetOptions.merge())
+
+                    db.document(clubModel.id + userModel.id).set(approvePlayerResponse, SetOptions.merge())
                         .addOnSuccessListener {
                             //send message to captain
                             listener.onUpdateSuccess()
@@ -283,5 +290,27 @@ class BaseRequest {
                 }
             }
         }
+    }
+
+    fun getListApprovePlayer(idCaptain: String, listener: GetDataListener<ApprovePlayerResponse>) {
+
+        FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField).whereEqualTo("idCaptain", idCaptain)
+            .whereEqualTo("accepted", 2).get()
+
+            .addOnSuccessListener { document ->
+
+                val value = document?.toObjects(ApprovePlayerResponse::class.java)
+
+                if (value != null) {
+                    listener.onSuccess(ArrayList(value))
+                } else {
+
+                    listener.onFail("Not Found")
+                }
+                Log.d("Tien", document.metadata.toString())
+            }
+            .addOnFailureListener { exception ->
+                listener.onFail(exception.localizedMessage)
+            }
     }
 }

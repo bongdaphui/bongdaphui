@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.bongdaphui.R
+import com.bongdaphui.approvePlayer.ApproveJoinClubScreen
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.AcceptListener
@@ -129,6 +130,10 @@ class ManagerScreen : BaseFragment() {
 
         frg_manager_my_club_schedule.setOnClickListener {
             addFragment(ScheduleClubScreen())
+        }
+
+        frg_manager_join_club.setOnClickListener {
+            addFragment(ApproveJoinClubScreen())
         }
 
         frg_manager_logout.setOnClickListener {
