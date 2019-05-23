@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 class MyClubAdapter(
     var context: Context?,
     private val items: ArrayList<ClubModel>,
+    private val uid: String,
     private var onItemClickListener: OnItemClickListener<ClubModel>
 ) : RecyclerView.Adapter<MyClubHolder>() {
 
@@ -43,13 +44,8 @@ class MyClubAdapter(
 
         viewHolder.nameFC.text = club.name
 
-        if (club.caption!!.isEmpty()) {
-            viewHolder.nameCaption.text =
-                Html.fromHtml("Đội trưởng: <b>${context!!.resources.getText(R.string.not_update)}</b>")
-
-        } else {
-            viewHolder.nameCaption.text = club.caption
-        }
+        viewHolder.nameCaption.text =
+            if (club.caption.isEmpty()) context!!.resources.getText(R.string.not_update) else club.caption
 
         val address = if (club.address.isNotEmpty()) "${club.address}, " else ""
 
@@ -71,7 +67,8 @@ class MyClubAdapter(
 
         viewHolder.amountPlayer.text = "${club.getAmountPlayer()}"
 
-        viewHolder.addSchedule.visibility = View.VISIBLE
+        viewHolder.addSchedule.visibility = if (uid == club.idCaptain) View.VISIBLE else View.GONE
+
         viewHolder.addSchedule.text = Html.fromHtml("<u>${context!!.resources.getText(R.string.add_schedule_club)}</u>")
         viewHolder.addSchedule.setOnClickListener {
 

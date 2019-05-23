@@ -19,7 +19,7 @@ import com.bongdaphui.model.ClubModel
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
-import kotlinx.android.synthetic.main.fragment_club.*
+import kotlinx.android.synthetic.main.frg_club.*
 import kotlinx.android.synthetic.main.view_empty.*
 
 
@@ -33,7 +33,7 @@ class ClubScreen : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        return inflater.inflate(R.layout.fragment_club, container, false)
+        return inflater.inflate(R.layout.frg_club, container, false)
 
     }
 

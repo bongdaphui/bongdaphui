@@ -170,7 +170,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="sans-serif-light"
-                            android:text="Đội bạn quản lý"
+                            android:text="Danh sách đội bóng"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                             android:textColor="@color/grey_80"/>
 
@@ -187,40 +187,6 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                        android:id="@+id/frg_manager_my_member_club_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:gravity="center_vertical"
-                        android:minHeight="50dp"
-                        android:orientation="horizontal"
-                        android:paddingLeft="@dimen/spacing_large"
-                        android:paddingRight="@dimen/spacing_large"
-                        android:focusable="true">
-
-                    <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif-light"
-                            android:text="Đội bạn là thành viên"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:textColor="@color/grey_80"/>
-
-                    <View
-                            android:layout_width="@dimen/spacing_large"
-                            android:layout_height="wrap_content"/>
-
-                    <ImageButton
-                            android:layout_width="@dimen/spacing_xmlarge"
-                            android:layout_height="@dimen/spacing_xmlarge"
-                            android:background="@android:color/transparent"
-                            android:tint="@color/grey_80"
-                            app:srcCompat="@drawable/ic_arrow_right"/>
-
-                </LinearLayout>
                 <LinearLayout
                         android:id="@+id/frg_manager_my_club_schedule"
                         android:layout_width="match_parent"

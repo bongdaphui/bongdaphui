@@ -15,10 +15,12 @@ import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.model.ClubModel
+import com.bongdaphui.model.UserStickModel
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
-import kotlinx.android.synthetic.main.fragment_club.*
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.frg_club.*
 import kotlinx.android.synthetic.main.view_empty.*
 
 
@@ -30,7 +32,7 @@ class MyClubScreen : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        return inflater.inflate(R.layout.fragment_club, container, false)
+        return inflater.inflate(R.layout.frg_club, container, false)
 
     }
 
@@ -59,7 +61,7 @@ class MyClubScreen : BaseFragment() {
 
     private fun initAdapter() {
 
-        adapterMyClub = MyClubAdapter(context, listMyClubModel, object :
+        adapterMyClub = MyClubAdapter(context, listMyClubModel, getUIDUser(), object :
 
             OnItemClickListener<ClubModel> {
 
@@ -67,9 +69,9 @@ class MyClubScreen : BaseFragment() {
 
                 if (type == Enum.EnumTypeClick.Phone.value) {
 
-                    if (item.phone!!.isNotEmpty())
+                    if (item.phone.isNotEmpty())
 
-                        Utils().openDial(activity!!, "${item.phone}")
+                        Utils().openDial(activity!!, item.phone)
 
                 } else if (type == Enum.EnumTypeClick.AddSchedule.value) {
 
@@ -103,6 +105,20 @@ class MyClubScreen : BaseFragment() {
                     if (getUIDUser() == list[i].idCaptain) {
 
                         listMyClubModel.add(list[i])
+
+                    } else {
+
+                        for (item in list[i].players) {
+
+                            val userStickModel = Gson().fromJson(item, UserStickModel::class.java)
+
+                            if (getUIDUser() == userStickModel.id) {
+
+                                listMyClubModel.add(list[i])
+
+                                break
+                            }
+                        }
                     }
                 }
 
