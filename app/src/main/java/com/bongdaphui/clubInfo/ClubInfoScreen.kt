@@ -206,7 +206,7 @@ class ClubInfoScreen : BaseFragment() {
                 }
 
                 override fun onUpdateFail(err: String) {
-                    showAlertJoinGroup(false)
+                    showAlertJoinGroup(false, err)
 
                 }
 
@@ -234,7 +234,7 @@ class ClubInfoScreen : BaseFragment() {
     }
 
 
-    private fun showAlertJoinGroup(isSuccess: Boolean) {
+    private fun showAlertJoinGroup(isSuccess: Boolean, err: String = "") {
 
         showProgress(false)
 
@@ -244,8 +244,9 @@ class ClubInfoScreen : BaseFragment() {
                 activity!!.resources.getString(R.string.alert),
                 if (isSuccess)
                     activity!!.resources.getString(R.string.request_join_club_success)
-                else
-                    activity!!.resources.getString(R.string.request_join_club_fail),
+                else {
+                    if (TextUtils.isEmpty(err)) activity!!.resources.getString(R.string.request_join_club_fail) else err
+                },
                 "",
                 activity!!.resources.getString(R.string.close),
                 object : AcceptListener {

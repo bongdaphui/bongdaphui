@@ -45,7 +45,7 @@ class ManagerScreen : BaseFragment() {
 
     override fun onBindView() {
 
-        userModel = getDatabase().getUserDAO().getItems()
+        userModel = getDatabase().getUserDAO().getItemById(getUIDUser())
 
         fillData()
 
