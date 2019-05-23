@@ -86,7 +86,7 @@
     <string name="this_feature_need_update_phone">Vui lòng cập nhật số điện thoại để sử dụng tính năng này</string>
     <string name="player_request">Cầu thủ xin gia nhập đội</string>
     <string name="accept_player_message">Cho phép cầu thủ gia nhập</string>
-    <string name="reject_player_message">Từ chối cầu thủ gia nhập</string>
+    <string name="reject_player_message">Từ chối cầu thủ gia nhập</string>xin
     <string name="need_login_to_see">Đăng nhập để xem</string>
     <string name="add_field_fail">Thêm sân thất bại, vui lòng thực hiện lại</string>
     <string name="add_field_success">Thêm sân bóng thành công</string>
@@ -116,5 +116,6 @@
     <string name="you_need_update_phone">Bạn cần cập nhật số điện thoại để sử dụng chức năng này</string>
     <string name="accept">Chấp nhận</string>
     <string name="reject">Từ chối</string>
+    <string name="list_player_request_join">Cầu thủ xin gia nhập đội</string>
 
 </resources>

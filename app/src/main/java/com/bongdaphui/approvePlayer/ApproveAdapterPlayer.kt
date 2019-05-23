@@ -2,6 +2,7 @@ package com.bongdaphui.approvePlayer
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,7 @@ import com.mikhaellopez.circularimageview.CircularImageView
  */
 class ApproveAdapterPlayer(
     var ctx: Context,
-    val items: ArrayList<PlayerApprove>,
+    private val items: ArrayList<PlayerApprove>,
     private var itemClickInterface: OnItemClickListener<PlayerApprove>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val viewItem = 1
@@ -31,8 +32,12 @@ class ApproveAdapterPlayer(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val player = items[position]
+
         if (holder is OriginalViewHolder) {
-            holder.name.text = player.name
+
+            holder.name.text =
+                if (TextUtils.isEmpty(player.name)) ctx.resources.getString(R.string.not_update) else player.name
+
             holder.message.text = player.message
 
             if (!Utils().isEmpty(player.photoUrl))

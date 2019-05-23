@@ -13,7 +13,7 @@ import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.profile.ProfileScreen
 import com.bongdaphui.utils.IntentExtraName
-import kotlinx.android.synthetic.main.fragment_approve_join_club.*
+import kotlinx.android.synthetic.main.frg_approve_join_club.*
 import kotlinx.android.synthetic.main.view_empty.*
 
 /**
@@ -34,18 +34,22 @@ class ApproveJoinClubScreen : BaseFragment() {
         setTitle(activity!!.resources.getString(R.string.player_request))
 
         showFooter(false)
+
+        initData()
+
     }
 
     override fun onBindView() {
         initView()
-        initData()
     }
 
     private fun initData() {
+
         listPlayer.clear()
+
         BaseRequest().getListApprovePlayer(getUIDUser(), object : GetDataListener<ApprovePlayerResponse> {
             override fun onSuccess(list: ArrayList<ApprovePlayerResponse>) {
-
+                listPlayer.clear()
                 val listClub = arrayListOf<String>()
                 list.sortBy { it.idClub }
                 for (approvePlayerResponse in list) {
@@ -102,7 +106,7 @@ class ApproveJoinClubScreen : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_approve_join_club, container, false)
+        return inflater.inflate(R.layout.frg_approve_join_club, container, false)
 
     }
 

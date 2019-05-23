@@ -237,7 +237,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="sans-serif-light"
-                            android:text="Cầu thủ xin gia nhập đội"
+                            android:text="@string/list_player_request_join"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                             android:textColor="@color/grey_80"/>
 
