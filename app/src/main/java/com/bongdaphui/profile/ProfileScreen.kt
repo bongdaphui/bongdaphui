@@ -14,6 +14,7 @@ import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.GetDataListener
+import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.updateAccount.UpdateAccountScreen
@@ -32,7 +33,6 @@ class ProfileScreen : BaseFragment() {
         private var uidUser: String = ""
         private var isApproveProcess = false
         private var idClubApprove: String = ""
-        private var idPlayerApprove: String = ""
 
         fun getInstance(uid: String, isApproveProcess: Boolean = false): ProfileScreen {
 
@@ -47,8 +47,7 @@ class ProfileScreen : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         //get data for approve player
         if (isApproveProcess) {
-            idClubApprove = savedInstanceState?.getString(IntentExtraName.ID_CLUB) ?: ""
-            idPlayerApprove = savedInstanceState?.getString(IntentExtraName.ID_PLAYER) ?: ""
+            idClubApprove = arguments?.getString(IntentExtraName.ID_CLUB) ?: ""
         }
         return inflater.inflate(R.layout.frg_profile, container, false)
 
@@ -159,18 +158,48 @@ class ProfileScreen : BaseFragment() {
                 resources.getString(R.string.agree),
                 object : AcceptListener {
                     override fun onAccept(inputText: String) {
-                        if (isAccept) {
-                            //Approve Player
-
-                        } else {
-                            //Reject Player
-
-                        }
+                        sendRequestApprove(isAccept)
                     }
                 }
             )
         }
 
+    }
+
+    private fun sendRequestApprove(isAccept: Boolean) {
+        BaseRequest().approvePlayer(idClubApprove, userModel, isAccept, object : UpdateListener {
+            override fun onUpdateSuccess() {
+                context?.let { it ->
+                    AlertDialog().showCustomDialog(
+                        it,
+                        resources.getString(R.string.alert),
+                        resources.getString(R.string.update_success), "",
+                        resources.getString(R.string.agree),
+                        object : AcceptListener {
+                            override fun onAccept(inputText: String) {
+                            }
+                        }
+                    )
+                }
+
+            }
+
+            override fun onUpdateFail(err: String) {
+                context?.let { it ->
+                    AlertDialog().showCustomDialog(
+                        it,
+                        resources.getString(R.string.alert),
+                        err, "",
+                        resources.getString(R.string.agree),
+                        object : AcceptListener {
+                            override fun onAccept(inputText: String) {
+                            }
+                        }
+                    )
+                }
+            }
+
+        })
     }
 
     private fun fillData() {

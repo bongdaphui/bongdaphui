@@ -175,7 +175,7 @@ class ClubInfoScreen : BaseFragment() {
                             override fun onAccept(message: String) {
                                 requestJoinGroup(message)
                             }
-                        },true
+                        }, true
                     )
                 }
             }

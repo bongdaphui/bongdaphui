@@ -7,10 +7,12 @@ import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.model.*
 import com.bongdaphui.utils.Constant
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
+import com.google.gson.Gson
 
 
 class BaseRequest {
@@ -254,7 +256,7 @@ class BaseRequest {
         }
     }
 
-    fun registerJoinClub(clubModel: ClubModel, userModel: UserModel,message:String, listener: UpdateListener) {
+    fun registerJoinClub(clubModel: ClubModel, userModel: UserModel, message: String, listener: UpdateListener) {
 
         val db = FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField)
         //check exist
@@ -313,5 +315,30 @@ class BaseRequest {
             .addOnFailureListener { exception ->
                 listener.onFail(exception.localizedMessage)
             }
+    }
+
+    fun approvePlayer(idClub: String, userModel: UserModel, isAccept: Boolean, listener: UpdateListener) {
+        // update request db
+        val userStickModel = UserStickModel(userModel.id, userModel.photoUrl, userModel.name, userModel.position)
+        val dbClub = FirebaseFirestore.getInstance().collection(Constant().clubPathField).document(idClub)
+
+        dbClub.update("players", FieldValue.arrayUnion(Gson().toJson(userStickModel)))
+            .addOnSuccessListener {
+                //update clubs db
+                val db = FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField)
+                //check exist
+                db.document(idClub + userModel.id).update("accepted", if (isAccept) 1 else 0)
+                    .addOnSuccessListener {
+                        listener.onUpdateSuccess()
+
+                    }
+                    .addOnFailureListener {
+                        listener.onUpdateFail(it.localizedMessage)
+                    }
+
+            }.addOnFailureListener {
+                listener.onUpdateFail(it.localizedMessage)
+            }
+
     }
 }

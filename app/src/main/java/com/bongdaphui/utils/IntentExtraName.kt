@@ -7,5 +7,4 @@ object IntentExtraName {
 
     val REQUEST_JOIN_TEAM: String = "request_join_team"
     val ID_CLUB: String = "idClub"
-    val ID_PLAYER: String = "idPlayer"
 }

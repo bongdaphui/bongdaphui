@@ -12,6 +12,7 @@ import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.profile.ProfileScreen
+import com.bongdaphui.utils.IntentExtraName
 import kotlinx.android.synthetic.main.fragment_approve_join_club.*
 import kotlinx.android.synthetic.main.frg_schedule.*
 import kotlinx.android.synthetic.main.view_empty.*
@@ -79,8 +80,7 @@ class ApproveJoinClubScreen : BaseFragment() {
                 override fun onItemClick(item: PlayerApprove, position: Int, type: Int) {
                     val profileFragment = ProfileScreen.getInstance(item.id, true)
                     val bundle = Bundle()
-                    bundle.putString("idClub", item.idClub)
-                    bundle.putString("idPlayer", item.id)
+                    bundle.putString(IntentExtraName.ID_CLUB, item.idClub)
                     profileFragment.arguments = bundle
                     addFragment(profileFragment)
                 }
