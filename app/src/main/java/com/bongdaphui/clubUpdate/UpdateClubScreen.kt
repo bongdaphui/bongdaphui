@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.text.Editable
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -304,13 +305,13 @@ class UpdateClubScreen : BaseFragment() {
             //no image
             if (null == filePathUri) {
 
-                if (clubModel!!.photo?.isEmpty()!!) {
+                if (TextUtils.isEmpty(clubModel?.photo)) {
 
                     storageData("")
 
                 } else {
 
-                    clubModel!!.photo?.let { storageData(it) }
+                    clubModel?.photo?.let { storageData(it) }
                 }
 
                 //has image
@@ -389,10 +390,10 @@ class UpdateClubScreen : BaseFragment() {
             address,
             idDistrict,
             idCity,
-            clubModel?.matchWin,
-            clubModel?.matchLose,
-            clubModel?.countRating,
-            clubModel?.rating,
+            clubModel?.matchWin?:"",
+            clubModel?.matchLose?:"",
+            clubModel?.countRating?:"",
+            clubModel?.rating?:"",
             listPlayer
         )
         BaseRequest().saveOrUpdateClub(model, object : UpdateListener {

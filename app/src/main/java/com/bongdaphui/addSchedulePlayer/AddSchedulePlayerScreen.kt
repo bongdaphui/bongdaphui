@@ -207,7 +207,7 @@ class AddSchedulePlayerScreen : BaseFragment() {
         if (frg_add_schedule_cb_5.isChecked) typeField.append(Enum.EnumTypeField.FivePeople.value)
         if (frg_add_schedule_cb_7.isChecked) typeField.append(Enum.EnumTypeField.SevenPeople.value)
         if (frg_add_schedule_cb_11.isChecked) typeField.append(Enum.EnumTypeField.ElevenPeople.value)
-        val userModel = getDatabase().getUserDAO().getItems()
+        val userModel = getDatabase().getUserDAO().getItemById(getUIDUser())
 
         enableItem(false)
 
