@@ -36,9 +36,8 @@ class MyClubAdapter(
 
         val club: ClubModel = items[position]
 
-        if (club.photo?.isNotEmpty()!!) {
+        if (club.photo.isNotEmpty()) {
             Glide.with(context!!).asBitmap().load(club.photo)
-                .placeholder(context?.resources?.getDrawable(R.drawable.ic_picture))
                 .into(viewHolder.photo)
         }
 

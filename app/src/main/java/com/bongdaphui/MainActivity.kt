@@ -34,17 +34,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
     private lateinit var mAuth: FirebaseAuth
 
-//    private lateinit var prefs: SharedPreference
-
     private lateinit var database: AppDatabase
-
-    private var listCityModel: ArrayList<CityModel> = ArrayList()
-
-    private var listFbFieldModel: ArrayList<FbFieldModel> = ArrayList()
-
-    private var listClubModel: ArrayList<ClubModel> = ArrayList()
-
-    private lateinit var spinnerSearchAdapter: SpinnerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -263,48 +253,6 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         val pid = android.os.Process.myPid()
         android.os.Process.killProcess(pid)
 
-    }
-
-    /*fun saveUIDUser(KEY_NAME: String, text: String) {
-        prefs.save(KEY_NAME, text)
-    }
-
-    fun getUIDUser(KEY_NAME: String): String? {
-        return prefs.getValueString(KEY_NAME)
-    }
-
-    fun clearUIDUser() {
-        return prefs.clearSharedPreference()
-    }*/
-
-    fun setListCityModel(list: ArrayList<CityModel>) {
-
-        listCityModel = list
-    }
-
-    fun getListCityModel(): ArrayList<CityModel> {
-
-        return listCityModel
-    }
-
-    fun setListFieldModel(list: ArrayList<FbFieldModel>) {
-
-        listFbFieldModel = list
-    }
-
-    fun getListFieldModel(): ArrayList<FbFieldModel> {
-
-        return listFbFieldModel
-    }
-
-    fun setListClubModel(list: ArrayList<ClubModel>) {
-
-        listClubModel = list
-    }
-
-    fun getListClubModel(): ArrayList<ClubModel> {
-
-        return listClubModel
     }
 
     fun getDatabase(): AppDatabase {

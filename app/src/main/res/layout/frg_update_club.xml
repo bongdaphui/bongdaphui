@@ -38,7 +38,7 @@
                     android:layout_width="match_parent"
                     android:scaleType="centerCrop"
                     android:layout_margin="@dimen/fs_1"
-                    android:src="@drawable/ic_picture"
+                    android:src="@drawable/ic_no_image_green"
                     android:layout_height="match_parent"/>
             <ImageView
                     android:id="@+id/frg_update_club_iv_camera"

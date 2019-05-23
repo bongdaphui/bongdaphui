@@ -94,17 +94,17 @@ class ClubScreen : BaseFragment() {
 
             BaseRequest().getClubs(object : GetDataListener<ClubModel> {
                 override fun onSuccess(list: ArrayList<ClubModel>) {
+
                     listClubModel.clear()
+
                     listClubModel.addAll(list)
-                    Log.d(Constant().TAG, "club size: ${listClubModel.size}")
-                    setListClub(listClubModel)
+
                     adapterClub!!.notifyDataSetChanged()
 
                     showProgress(false)
                 }
 
                 override fun onSuccess(item: ClubModel) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
 
                 override fun onFail(message: String) {
