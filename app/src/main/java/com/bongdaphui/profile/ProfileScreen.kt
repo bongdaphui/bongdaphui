@@ -10,11 +10,15 @@ import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
+import com.bongdaphui.dialog.AlertDialog
+import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.GetDataListener
+import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.updateAccount.UpdateAccountScreen
 import com.bongdaphui.utils.DateTimeUtil
+import com.bongdaphui.utils.IntentExtraName
 import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.frg_profile.*
@@ -26,17 +30,28 @@ class ProfileScreen : BaseFragment() {
     companion object {
 
         private var uidUser: String = ""
+        private var isApproveProcess = false
+        private var idClubApprove: String = ""
+        private var idPlayerApprove: String = ""
 
-        fun getInstance(uid: String): ProfileScreen {
+        fun getInstance(uid: String, isApproveProcess: Boolean = false): ProfileScreen {
 
             uidUser = uid
+
+            this.isApproveProcess = isApproveProcess
 
             return ProfileScreen()
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        //get data for approve player
+        if (isApproveProcess) {
+            idClubApprove = savedInstanceState?.getString(IntentExtraName.ID_CLUB) ?: ""
+            idPlayerApprove = savedInstanceState?.getString(IntentExtraName.ID_PLAYER) ?: ""
+        }
         return inflater.inflate(R.layout.frg_profile, container, false)
+
 
     }
 
@@ -54,7 +69,7 @@ class ProfileScreen : BaseFragment() {
 
     @SuppressLint("RestrictedApi")
     override fun onBindView() {
-
+        layout_approve_player.visibility = if (isApproveProcess) View.VISIBLE else View.GONE
         if (uidUser.isNotEmpty()) {
 
             getInfoUser()
@@ -124,6 +139,38 @@ class ProfileScreen : BaseFragment() {
         frg_profile_ib_call.setOnClickListener {
             Utils().openDial(activity!!, userModel.phone)
         }
+
+        floatButtonAccept.setOnClickListener {
+            processApprove(true)
+
+        }
+        floatButtonReject.setOnClickListener {
+            processApprove(false)
+        }
+    }
+
+    private fun processApprove(isAccept: Boolean) {
+        context?.let { it ->
+            AlertDialog().showCustomDialog(
+                it,
+                resources.getString(R.string.alert),
+                resources.getString(if (isAccept) R.string.accept_player_message else R.string.reject_player_message),
+                resources.getString(R.string.cancel),
+                resources.getString(R.string.agree),
+                object : AcceptListener {
+                    override fun onAccept(inputText: String) {
+                        if (isAccept) {
+                            //Approve Player
+
+                        } else {
+                            //Reject Player
+
+                        }
+                    }
+                }
+            )
+        }
+
     }
 
     private fun fillData() {

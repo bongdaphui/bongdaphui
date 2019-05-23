@@ -83,6 +83,8 @@
     <string name="google_web_client_id">303996690941-vq3ot26cmv2po4s9n7di8cmco9nj784b.apps.googleusercontent.com
     </string>
     <string name="this_feature_need_login">Vui lòng đăng nhập để sử dụng tính năng này</string>
+    <string name="accept_player_message">Cho phép cầu thủ gia nhập</string>
+    <string name="reject_player_message">Từ chối cầu thủ gia nhập</string>
     <string name="need_login_to_see">Đăng nhập để xem</string>
     <string name="add_field_fail">Thêm sân thất bại, vui lòng thực hiện lại</string>
     <string name="add_field_success">Thêm sân bóng thành công</string>
@@ -110,5 +112,7 @@
     <string name="send_mail_fail">Gửi mail thất bại. Vui lòng thực hiện lại</string>
     <string name="please_choose_type_field">Vui lòng chọn loại sân bạn muốn đá</string>
     <string name="you_need_update_phone">Bạn cần cập nhật số điện thoại để sử dụng chức năng này</string>
+    <string name="accept">Chấp nhận</string>
+    <string name="reject">Từ chối</string>
 
 </resources>

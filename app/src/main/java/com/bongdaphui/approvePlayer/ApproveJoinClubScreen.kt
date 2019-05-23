@@ -11,13 +11,16 @@ import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.model.UserModel
+import com.bongdaphui.profile.ProfileScreen
 import kotlinx.android.synthetic.main.fragment_approve_join_club.*
+import kotlinx.android.synthetic.main.frg_schedule.*
+import kotlinx.android.synthetic.main.view_empty.*
 
 /**
  * Created by ChuTien on ${1/25/2017}.
  */
 class ApproveJoinClubScreen : BaseFragment() {
-    private val listPlayer : ArrayList<PlayerApprove> = ArrayList()
+    private val listPlayer: ArrayList<PlayerApprove> = ArrayList()
     private var userModel: UserModel? = null
     private var mAdapter: ApproveAdapterPlayer? = null
     override fun onBindView() {
@@ -27,20 +30,30 @@ class ApproveJoinClubScreen : BaseFragment() {
 
     private fun initData() {
         listPlayer.clear()
-        BaseRequest().getListApprovePlayer(getUIDUser(),object:GetDataListener<ApprovePlayerResponse>{
+        BaseRequest().getListApprovePlayer(getUIDUser(), object : GetDataListener<ApprovePlayerResponse> {
             override fun onSuccess(list: ArrayList<ApprovePlayerResponse>) {
 
                 val listClub = arrayListOf<String>()
                 list.sortBy { it.idClub }
                 for (approvePlayerResponse in list) {
-                    var section:PlayerApprove? = null
+                    var section: PlayerApprove? = null
                     if (!listClub.contains(approvePlayerResponse.idClub)) {
-                        section = PlayerApprove("","",approvePlayerResponse.nameClub,"",true)
+                        section = PlayerApprove("", "", approvePlayerResponse.nameClub, "", "", true)
                     }
                     section?.let { listPlayer.add(it) }
-                    listPlayer.add(PlayerApprove(approvePlayerResponse.idPlayer,approvePlayerResponse.photoPlayer,approvePlayerResponse.namePlayer,approvePlayerResponse.message,false))
+                    listPlayer.add(
+                        PlayerApprove(
+                            approvePlayerResponse.idPlayer,
+                            approvePlayerResponse.photoPlayer,
+                            approvePlayerResponse.namePlayer,
+                            approvePlayerResponse.message,
+                            approvePlayerResponse.idClub,
+                            false
+                        )
+                    )
                 }
                 mAdapter?.notifyDataSetChanged()
+                showEmptyView(listPlayer.size == 0)
             }
 
             override fun onSuccess(item: ApprovePlayerResponse) {
@@ -48,7 +61,7 @@ class ApproveJoinClubScreen : BaseFragment() {
             }
 
             override fun onFail(message: String) {
-
+                showEmptyView(true)
             }
 
         })
@@ -62,9 +75,14 @@ class ApproveJoinClubScreen : BaseFragment() {
         recycler_approve_player.setItemViewCacheSize(20)
 
         mAdapter = context?.let {
-            ApproveAdapterPlayer(it, listPlayer, object: OnItemClickListener<PlayerApprove>{
+            ApproveAdapterPlayer(it, listPlayer, object : OnItemClickListener<PlayerApprove> {
                 override fun onItemClick(item: PlayerApprove, position: Int, type: Int) {
-
+                    val profileFragment = ProfileScreen.getInstance(item.id, true)
+                    val bundle = Bundle()
+                    bundle.putString("idClub", item.idClub)
+                    bundle.putString("idPlayer", item.id)
+                    profileFragment.arguments = bundle
+                    addFragment(profileFragment)
                 }
 
             })
@@ -75,6 +93,14 @@ class ApproveJoinClubScreen : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_approve_join_club, container, false)
+
+    }
+
+    private fun showEmptyView(isShow: Boolean) {
+
+        recycler_approve_player.visibility = if (isShow) View.GONE else View.VISIBLE
+
+        view_empty.visibility = if (isShow) View.VISIBLE else View.GONE
 
     }
 }
