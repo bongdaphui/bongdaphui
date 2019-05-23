@@ -39,19 +39,22 @@ class FindClubAdapter(
 
         viewPlayerHolder.timeEnd.text = model.endTime
 
-        viewPlayerHolder.typeField.text = "Loại sân: ${model.typeField?.let { Utils().getTypeField(it) }}"
+        viewPlayerHolder.typeField.text = "${model.typeField?.let { Utils().getTypeField(it) }}"
 
         if (model.photoUrl?.isNotEmpty()!!) {
             context?.let {
                 Glide.with(it).asBitmap().load(model.photoUrl)
-                    .placeholder(context?.resources?.getDrawable(R.drawable.ic_person_grey))
                     .into(viewPlayerHolder.imageView)
             }
+        } else {
+
+            viewPlayerHolder.imageView.setImageResource(R.drawable.ic_no_image_green)
         }
 
         viewPlayerHolder.tvName.text = model.nameClub
 
-        viewPlayerHolder.tvPhone.text = if (isLoggedUser) model.phone else context?.getString(R.string.need_login_to_see)
+        viewPlayerHolder.tvPhone.text =
+            if (isLoggedUser) model.phone else context?.getString(R.string.need_login_to_see)
 
         viewPlayerHolder.call.setOnClickListener {
             itemClickInterface.onItemClick(model, position, Enum.EnumTypeClick.Phone.value)

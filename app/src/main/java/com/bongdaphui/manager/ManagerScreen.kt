@@ -5,6 +5,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.dialog.AlertDialog
@@ -157,9 +158,20 @@ class ManagerScreen : BaseFragment() {
             addFragment(LoginScreen())
         }
 
-        frg_manager_match_schedule.setOnClickListener {
+        frg_manager_v_player_schedule.setOnClickListener {
 
-            addFragment(SchedulePlayerScreen())
+            if (userModel?.phone.isNullOrEmpty()) {
+
+                Toast.makeText(
+                    activity,
+                    activity?.resources?.getString(R.string.you_need_update_phone),
+                    Toast.LENGTH_LONG
+                ).show()
+
+            } else {
+
+                addFragment(SchedulePlayerScreen())
+            }
         }
     }
 

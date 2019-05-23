@@ -39,7 +39,7 @@ class FindPlayerAdapter(
 
         viewPlayerHolder.timeEnd.text = model.endTime
 
-        viewPlayerHolder.typeField.text = "Loại sân: ${model.typeField?.let { Utils().getTypeField(it) }}"
+        viewPlayerHolder.typeField.text = "${model.typeField?.let { Utils().getTypeField(it) }}"
 
         if (model.photoUrlPlayer?.isNotEmpty()!!) {
             context?.let {
