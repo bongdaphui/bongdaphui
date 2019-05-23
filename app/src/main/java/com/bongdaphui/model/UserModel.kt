@@ -19,5 +19,5 @@ data class UserModel(
     var height: String = "",
     var weight: String = "",
     var position: String = "",
-    var clubs: java.util.ArrayList<String> = ArrayList()
+    var clubs: ArrayList<String> = ArrayList()
 ) : Serializable

@@ -93,7 +93,7 @@ class Utils {
     }
 
     fun validatePhoneNumber(number: String): Boolean {
-        return PhoneNumberUtils.isGlobalPhoneNumber(number)
+        return PhoneNumberUtils.isGlobalPhoneNumber(number) && number.length > 9
     }
 
     fun showToastInsert(activity: Activity?, isSuccess: Boolean) {

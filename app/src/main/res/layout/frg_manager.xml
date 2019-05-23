@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="visible"
-                android:paddingTop="@dimen/spacing_xxlarge"
+                android:paddingTop="@dimen/fs_20"
                 android:orientation="vertical">
 
             <LinearLayout
@@ -28,6 +28,7 @@
                     android:orientation="horizontal"
                     android:clickable="true"
                     android:padding="@dimen/spacing_large"
+                    android:visibility="gone"
                     android:focusable="true">
 
                 <LinearLayout
@@ -67,20 +68,61 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                    android:id="@+id/frg_manager_v_update_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:minHeight="70dp"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/spacing_large"
+                    android:paddingRight="@dimen/spacing_large"
+                    android:visibility="gone"
+                    android:focusable="true">
+
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Cập nhật thông tin của bạn"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/grey_90"/>
+
+                <View
+                        android:layout_width="@dimen/spacing_large"
+                        android:layout_height="wrap_content"/>
+
+                <ImageButton
+                        android:layout_width="@dimen/spacing_xmlarge"
+                        android:layout_height="@dimen/spacing_xmlarge"
+                        android:background="@android:color/transparent"
+                        android:tint="@color/grey_90"
+                        app:srcCompat="@drawable/ic_arrow_right"/>
+
+
+            </LinearLayout>
+
             <View
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/spacing_large"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/spacing_large"
+                    android:layout_marginRight="@dimen/spacing_large"
+                    android:background="@color/grey_10"/>
 
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
-                    android:minHeight="@dimen/spacing_xxlarge"
+                    android:minHeight="70dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingLeft="@dimen/spacing_large"
-                    android:paddingRight="@dimen/spacing_large" android:focusable="true">
+                    android:paddingRight="@dimen/spacing_large"
+                    android:focusable="true">
 
                 <TextView
                         android:layout_width="0dp"

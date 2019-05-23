@@ -18,6 +18,7 @@ import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.AcceptListener
+import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.utils.*
@@ -27,37 +28,31 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.frg_update_account.*
 import java.io.File
-import java.util.*
 
 
 class UpdateAccountScreen : BaseFragment() {
 
-    var cal = Calendar.getInstance()
-
     // Creating URI.
     private var filePathUri: Uri? = null
-    private var userModel: UserModel? = null
 
     companion object {
 
-        private const val USER_MODEL = "USER_MODEL"
-
+        private var userModel: UserModel? = null
+        private var addDataListener: AddDataListener? = null
 
         fun getInstance(
 
-            userModel: UserModel
+            userModel: UserModel,
+
+            addDataListener: AddDataListener
 
         ): UpdateAccountScreen {
 
-            val screen = UpdateAccountScreen()
+            this.userModel = userModel
 
-            val bundle = Bundle()
+            this.addDataListener = addDataListener
 
-            bundle.putSerializable(USER_MODEL, userModel)
-
-            screen.arguments = bundle
-
-            return screen
+            return UpdateAccountScreen()
         }
     }
 
@@ -78,13 +73,7 @@ class UpdateAccountScreen : BaseFragment() {
 
     override fun onBindView() {
 
-        val bundle = arguments
 
-        if (bundle != null) {
-
-            userModel = bundle.getSerializable(USER_MODEL) as UserModel?
-
-        }
         Utils().initPositionSpinner(activity!!, frg_update_account_sp_position)
 
         fillData(userModel!!)
@@ -198,8 +187,8 @@ class UpdateAccountScreen : BaseFragment() {
 
         }
 
-        if (!Utils().isEmpty(frg_update_account_et_phone.text.toString())
-            && !Utils().validatePhoneNumber(frg_update_account_et_phone.text.toString())
+        if (frg_update_account_et_phone.text.toString().isNotEmpty() &&
+            !Utils().validatePhoneNumber(frg_update_account_et_phone.text.toString())
         ) {
             frg_update_account_tv_error_input_phone.visibility = View.VISIBLE
             frg_update_account_tv_error_input_phone.text = activity!!.getString(R.string.please_enter_your_phone_valid)
@@ -208,6 +197,13 @@ class UpdateAccountScreen : BaseFragment() {
             validate = false
         }
 
+        if (frg_update_account_et_phone.text.toString().isEmpty()) {
+            frg_update_account_tv_error_input_phone.visibility = View.VISIBLE
+            frg_update_account_tv_error_input_phone.text = activity!!.getString(R.string.please_enter_your_phone)
+            frg_update_account_et_phone.requestFocus()
+
+            validate = false
+        }
         return validate
     }
 
@@ -217,7 +213,7 @@ class UpdateAccountScreen : BaseFragment() {
 
             hideKeyBoard()
 
-            disableItem()
+            disableItem(false)
 
             showProgress(true)
 
@@ -291,12 +287,14 @@ class UpdateAccountScreen : BaseFragment() {
 
         BaseRequest().saveOrUpdateUser(userModel, object : UpdateListener {
             override fun onUpdateSuccess() {
+
                 //cache data
 
                 getDatabase().getUserDAO().insert(userModel)
 
-                showDialogUpdate(activity!!.resources.getString(R.string.update_success))
+                addDataListener?.onSuccess()
 
+                showDialogUpdate(activity!!.resources.getString(R.string.update_success))
             }
 
             override fun onUpdateFail(err: String) {
@@ -309,6 +307,8 @@ class UpdateAccountScreen : BaseFragment() {
     private fun showDialogUpdate(message: String) {
 
         showProgress(false)
+
+        disableItem(true)
 
         activity?.let { it ->
             AlertDialog().showCustomDialog(
@@ -326,14 +326,14 @@ class UpdateAccountScreen : BaseFragment() {
         }
     }
 
-    private fun disableItem() {
+    private fun disableItem(isEnable: Boolean) {
 
-        frg_update_account_v_photo.isEnabled = false
-        frg_update_account_et_full_name.isEnabled = false
-        frg_update_account_et_email.isEnabled = false
-        frg_update_account_et_phone.isEnabled = false
-        frg_update_account_iv_dob.isEnabled = false
-        frg_update_account_tv_input.isEnabled = false
+        frg_update_account_v_photo.isEnabled = isEnable
+        frg_update_account_et_full_name.isEnabled = isEnable
+        frg_update_account_et_email.isEnabled = isEnable
+        frg_update_account_et_phone.isEnabled = isEnable
+        frg_update_account_iv_dob.isEnabled = isEnable
+        frg_update_account_tv_input.isEnabled = isEnable
 
     }
 

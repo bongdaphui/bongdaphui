@@ -90,8 +90,22 @@ class BaseRequest {
                     listener.onFail("Not Found")
                 }
             }
-            .addOnFailureListener { exception ->
+            /*.addOnFailureListener { exception ->
                 listener.onFail(exception.localizedMessage)
+            }*/
+    }
+
+    fun saveOrUpdateUser(
+        userModel: UserModel,
+        listener: UpdateListener
+    ) {
+        val db = FirebaseFirestore.getInstance().collection(Constant().userPathField).document(userModel.id)
+        db.set(userModel, SetOptions.merge())
+            .addOnSuccessListener {
+                listener.onUpdateSuccess()
+            }
+            .addOnFailureListener {
+                listener.onUpdateFail()
             }
     }
 
@@ -192,20 +206,6 @@ class BaseRequest {
             .addOnFailureListener {
                 Log.w(Constant().TAG, "Error deleting document ${it.message}")
                 listener.onFail("${it.message}")
-            }
-    }
-
-    fun saveOrUpdateUser(
-        userModel: UserModel,
-        listener: UpdateListener
-    ) {
-        val db = FirebaseFirestore.getInstance().collection(Constant().userPathField).document(userModel.id)
-        db.set(userModel, SetOptions.merge())
-            .addOnSuccessListener {
-                listener.onUpdateSuccess()
-            }
-            .addOnFailureListener {
-                listener.onUpdateFail()
             }
     }
 
