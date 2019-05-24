@@ -40,7 +40,7 @@ class FieldAdapter(
         if (!TextUtils.isEmpty(model.photoUrl)) {
             context?.let { Glide.with(it).asBitmap().load(model.photoUrl).into(viewHolder.image) }
         }else{
-            viewHolder.image.setImageResource(R.drawable.ic_no_image_grey)
+            viewHolder.image.setImageResource(R.drawable.bg_field)
         }
 
         viewHolder.name.text = "Sân bóng đá ${model.name}"
