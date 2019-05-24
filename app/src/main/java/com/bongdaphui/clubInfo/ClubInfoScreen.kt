@@ -178,7 +178,7 @@ class ClubInfoScreen : BaseFragment() {
         } else {
             //check preference request
             val arrRequestedIdClub = getPreferenceArrRequest()
-            fab_join_club.visibility = if (arrRequestedIdClub.contains(clubModel?.id)) View.GONE else View.VISIBLE
+            fab_join_club.isEnabled = !arrRequestedIdClub.contains(clubModel?.id)
 
             fab_join_club.setOnClickListener {
                 checkUser()
