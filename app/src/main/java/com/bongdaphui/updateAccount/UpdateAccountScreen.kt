@@ -22,6 +22,7 @@ import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.model.UserModel
+import com.bongdaphui.model.UserStickModel
 import com.bongdaphui.utils.*
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
@@ -285,7 +286,9 @@ class UpdateAccountScreen : BaseFragment() {
         val position = frg_update_account_sp_position.selectedItemPosition.toString()
 
         val userModel = UserModel(getUIDUser(), uriPhoto, name, email, phone, dob, height, weight, position)
-
+        val oldUserModel = getDatabase().getUserDAO().getItemById(userModel.id)
+        val oldUserStickModel =
+            UserStickModel(oldUserModel.id, oldUserModel.photoUrl, oldUserModel.name, oldUserModel.position)
         BaseRequest().saveOrUpdateUser(userModel, object : UpdateListener {
             override fun onUpdateSuccess() {
 
@@ -303,7 +306,7 @@ class UpdateAccountScreen : BaseFragment() {
 
                 showDialogUpdate(activity!!.resources.getString(R.string.update_fail))
             }
-        })
+        }, oldUserStickModel)
     }
 
     private fun showDialogUpdate(message: String) {

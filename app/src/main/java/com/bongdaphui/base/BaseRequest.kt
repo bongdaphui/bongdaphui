@@ -98,11 +98,65 @@ class BaseRequest {
 
     fun saveOrUpdateUser(
         userModel: UserModel,
-        listener: UpdateListener
+        listener: UpdateListener,
+        oldPlayer: UserStickModel? = null
     ) {
         val db = FirebaseFirestore.getInstance().collection(Constant().userPathField).document(userModel.id)
         db.set(userModel, SetOptions.merge())
             .addOnSuccessListener {
+                if (oldPlayer != null) {
+                    //update all collection has player
+                    //club
+                    val newPlayer =
+                        UserStickModel(userModel.id, userModel.photoUrl, userModel.name, userModel.position)
+                    val dbClub = FirebaseFirestore.getInstance().collection(Constant().clubPathField)
+                    dbClub.whereArrayContains("players", Gson().toJson(oldPlayer))
+                        .get().addOnSuccessListener { document ->
+                            for (item in document) {
+                                val clubModel = item.toObject(ClubModel::class.java)
+                                var oldPlayer = UserStickModel()
+                                for (player in clubModel.players) {
+                                    val playerObj = Gson().fromJson(player, UserStickModel::class.java)
+                                    if (playerObj.id == userModel.id) {
+                                        oldPlayer = playerObj
+                                    }
+                                }
+                                //update if user is captain
+                                if (clubModel.idCaptain == userModel.id) {
+                                    clubModel.caption = userModel.name
+                                    dbClub.document(item.id).set(clubModel, SetOptions.merge())
+                                }
+                                dbClub.document(item.id)
+                                    .update("players", FieldValue.arrayRemove(Gson().toJson(oldPlayer)))
+                                dbClub.document(item.id)
+                                    .update("players", FieldValue.arrayUnion(Gson().toJson(newPlayer)))
+                            }
+                        }
+                    //update schedule db
+                    val dbSchedule = FirebaseFirestore.getInstance().collection(Constant().schedulePlayerPathField)
+                    dbSchedule.whereEqualTo("idPlayer", userModel.id)
+                        .get().addOnSuccessListener { documents ->
+                            for (item in documents) {
+                                var scheduleClubModel = item.toObject(SchedulePlayerModel::class.java)
+                                scheduleClubModel.namePlayer = userModel.name
+                                scheduleClubModel.phonePlayer = userModel.phone
+                                scheduleClubModel.photoUrlPlayer = userModel.photoUrl
+                                dbSchedule.document(item.id).set(scheduleClubModel, SetOptions.merge())
+                            }
+                        }
+
+                    //update request db
+                    val dbRequest = FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField)
+                    dbRequest.whereEqualTo("idPlayer", userModel.id)
+                        .get().addOnSuccessListener { documents ->
+                            for (item in documents) {
+                                var approvePlayerResponse = item.toObject(ApprovePlayerResponse::class.java)
+                                approvePlayerResponse.namePlayer = userModel.name
+                                approvePlayerResponse.photoPlayer = userModel.photoUrl
+                                dbRequest.document(item.id).set(approvePlayerResponse, SetOptions.merge())
+                            }
+                        }
+                }
                 listener.onUpdateSuccess()
             }
             .addOnFailureListener {

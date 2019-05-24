@@ -172,7 +172,7 @@ class ProfileScreen : BaseFragment() {
                         resources.getString(R.string.agree),
                         object : AcceptListener {
                             override fun onAccept(inputText: String) {
-
+                                onBackPressed()
                             }
                         }
                     )

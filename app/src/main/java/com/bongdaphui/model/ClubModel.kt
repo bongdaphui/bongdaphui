@@ -5,22 +5,22 @@ import java.io.Serializable
 
 @IgnoreExtraProperties
 data class ClubModel(
-    val id: String = "",
-    val idCaptain: String = "",
-    val photo: String = "",
-    val name: String = "",
-    val caption: String = "",
-    val email: String = "",
-    val phone: String = "",
-    val dob: String = "",
-    val address: String = "",
-    val idDistrict: String = "",
-    val idCity: String = "",
-    val matchWin: String = "",
-    val matchLose: String = "",
-    val countRating: String = "",
-    val rating: String = "",
-    val players: ArrayList<String> = ArrayList()
+    var id: String = "",
+    var idCaptain: String = "",
+    var photo: String = "",
+    var name: String = "",
+    var caption: String = "",
+    var email: String = "",
+    var phone: String = "",
+    var dob: String = "",
+    var address: String = "",
+    var idDistrict: String = "",
+    var idCity: String = "",
+    var matchWin: String = "",
+    var matchLose: String = "",
+    var countRating: String = "",
+    var rating: String = "",
+    var players: ArrayList<String> = ArrayList()
 
 ) : Serializable {
 
