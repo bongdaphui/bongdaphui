@@ -178,7 +178,7 @@ class ClubInfoScreen : BaseFragment() {
         } else {
             //check preference request
             val arrRequestedIdClub = getPreferenceArrRequest()
-            fab_join_club.isEnabled = !arrRequestedIdClub.contains(clubModel?.id)
+            fab_join_club.isEnabled = !arrRequestedIdClub.contains(clubModel?.id + userModel?.id)
 
             fab_join_club.setOnClickListener {
                 checkUser()
@@ -231,8 +231,8 @@ class ClubInfoScreen : BaseFragment() {
 
             var arrSavedRequest: ArrayList<String> =
                 if (TextUtils.isEmpty(currentRequestStr)) ArrayList() else Gson().fromJson(currentRequestStr, type)
-            if (!arrSavedRequest.contains(id)) {
-                arrSavedRequest.add(id)
+            if (!arrSavedRequest.contains(id + userModel?.id)) {
+                arrSavedRequest.add(id + userModel?.id)
             }
             sharePreferenceManager.setString(Constant().KEY_REQUEST_JOIN_TEAM, Gson().toJson(arrSavedRequest))
         }
