@@ -14,6 +14,7 @@ import com.bongdaphui.model.UserModel
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.frg_login.*
 import kotlinx.android.synthetic.main.frg_register_with_email.*
 
 
@@ -56,6 +57,13 @@ class RegisterWithEmailScreen : BaseFragment() {
             frg_register_with_email_iv_clear_input_confirm_password,
             frg_register_with_email_tv_error_input_confirm_password
         )
+
+        frg_register_with_email_container.setOnTouchListener { _, _ ->
+
+            hideKeyBoard()
+            false
+        }
+
 
         frg_register_with_email_tv_register.setOnClickListener {
 

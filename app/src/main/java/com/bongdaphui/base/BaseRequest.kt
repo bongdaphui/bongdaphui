@@ -226,6 +226,27 @@ class BaseRequest {
             }
     }
 
+    fun getClubInfo(id: String, listener: GetDataListener<ClubModel>) {
+
+        FirebaseFirestore.getInstance().collection(Constant().clubPathField).document(id).get()
+
+            .addOnSuccessListener { document ->
+
+                val value = document?.toObject(ClubModel::class.java)
+
+                if (value != null) {
+
+                    listener.onSuccess(value)
+
+                } else {
+
+                    listener.onFail("Có lỗi khi lấy thông tin đội bóng!")
+                }
+            }.addOnFailureListener {
+                listener.onFail("Có lỗi khi lấy thông tin đội bóng!")
+            }
+    }
+
     fun getClubs(listener: GetDataListener<ClubModel>) {
         try {
 
@@ -296,7 +317,8 @@ class BaseRequest {
 
     fun getListApprovePlayer(idCaptain: String, listener: GetDataListener<ApprovePlayerResponse>) {
 
-        FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField).whereEqualTo("idCaptain", idCaptain).get()
+        FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField).whereEqualTo("idCaptain", idCaptain)
+            .get()
 
             .addOnSuccessListener { document ->
 
@@ -325,7 +347,7 @@ class BaseRequest {
                 //update clubs db
                 val db = FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField)
                 //check exist
-                deleteDocument(Constant().requestJoinPathField,idClub+userModel.id,object:  DeleteDataDataListener{
+                deleteDocument(Constant().requestJoinPathField, idClub + userModel.id, object : DeleteDataDataListener {
                     override fun onSuccess() {
                         listener.onUpdateSuccess()
                     }
