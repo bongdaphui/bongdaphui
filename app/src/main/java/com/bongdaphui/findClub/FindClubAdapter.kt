@@ -48,7 +48,7 @@ class FindClubAdapter(
             }
         } else {
 
-            viewPlayerHolder.imageView.setImageResource(R.drawable.ic_no_image_green)
+            viewPlayerHolder.imageView.setImageResource(R.drawable.ic_no_image_grey)
         }
 
         viewPlayerHolder.tvName.text = model.nameClub

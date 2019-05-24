@@ -197,9 +197,10 @@ class FieldScreen : BaseFragment() {
             addFragment(AddFieldScreen.getInstance(object : AddDataListener {
                 override fun onSuccess() {
 
-                    fieldListFull.clear()
-                    fieldList.clear()
-                    getDataFromCache()
+                        //field will be check and insert by admin
+//                    fieldListFull.clear()
+//                    fieldList.clear()
+//                    getDataFromCache()
                 }
             }))
         }

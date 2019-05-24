@@ -91,14 +91,9 @@ class AddFieldScreen : BaseFragment() {
                 override fun onSelectCity(_idCity: String, _idDistrict: String) {
 
                     idCity = _idCity
-
                     idDistrict = _idDistrict
-
-                    Log.d(Constant().TAG, "spinner onSelectCity with idCity: $idCity - idDistrict : $idDistrict")
-
                 }
             })
-
         hideKeyBoard()
     }
 
@@ -276,15 +271,16 @@ class AddFieldScreen : BaseFragment() {
             priceField, "", "", "", ""
         )
 
-        val db = FirebaseFirestore.getInstance().document("${Constant().collectionPathField}/$idField")
+        //add data to field request
+        val db = FirebaseFirestore.getInstance().document("${Constant().collectionPathFieldRequest}/$idField")
 
         db.set(fieldModel)
             .addOnSuccessListener {
 
+                //field will be check and insert by admin
                 //cache data
-                getDatabase().getFieldDAO().insert(fieldModel)
-
-                addDataListener?.onSuccess()
+//                getDatabase().getFieldDAO().insert(fieldModel)
+//                addDataListener?.onSuccess()
 
                 showAlertAddField(activity!!.resources.getString(R.string.add_field_success))
 

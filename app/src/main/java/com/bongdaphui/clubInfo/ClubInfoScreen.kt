@@ -10,6 +10,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.clubUpdate.UpdateClubScreen
@@ -59,7 +60,7 @@ class ClubInfoScreen : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(com.bongdaphui.R.layout.frg_club_info, container, false)
+        return inflater.inflate(R.layout.frg_club_info, container, false)
 
     }
 
@@ -109,13 +110,10 @@ class ClubInfoScreen : BaseFragment() {
         }
 
         collapsing_toolbar.title = clubModel!!.name
-        Glide.with(context!!).load(
-            if (TextUtils.isEmpty(clubModel?.photo)) Utils().getDrawable(
-                context!!,
-                com.bongdaphui.R.drawable.bg_field
-            ) else clubModel?.photo
-        )
-            .into(frg_club_info_iv_logo)
+
+        if (!TextUtils.isEmpty(clubModel?.photo)) {
+            Glide.with(context!!).asBitmap().load(clubModel?.photo).into(frg_club_info_iv_logo)
+        }
 
         adapterStickPlayer = activity?.let {
             PlayerStickAdapter(it, listStickPlayer, object : OnItemClickListener<UserStickModel> {
@@ -137,7 +135,7 @@ class ClubInfoScreen : BaseFragment() {
         }
 
         frg_club_info_tv_captain.text =
-            if (clubModel?.caption?.isEmpty()!!) context?.resources?.getText(com.bongdaphui.R.string.not_update) else clubModel?.caption
+            if (clubModel?.caption?.isEmpty()!!) context?.resources?.getText(R.string.not_update) else clubModel?.caption
 
         val address = if (clubModel?.address?.isNotEmpty()!!) "${clubModel?.address}, " else ""
 
@@ -150,7 +148,7 @@ class ClubInfoScreen : BaseFragment() {
         }}"
 
         frg_club_info_tv_phone.text =
-            if (clubModel?.phone?.isEmpty()!!) context?.resources?.getText(com.bongdaphui.R.string.not_update) else clubModel?.phone
+            if (clubModel?.phone?.isEmpty()!!) context?.resources?.getText(R.string.not_update) else clubModel?.phone
 
     }
 
@@ -267,10 +265,10 @@ class ClubInfoScreen : BaseFragment() {
                 context?.let { it1 ->
                     AlertDialog().showCustomDialog(
                         it1,
-                        activity!!.resources.getString(com.bongdaphui.R.string.alert),
-                        activity!!.resources.getString(com.bongdaphui.R.string.join_club),
-                        activity!!.resources.getString(com.bongdaphui.R.string.no),
-                        activity!!.resources.getString(com.bongdaphui.R.string.yes),
+                        activity!!.resources.getString(R.string.alert),
+                        activity!!.resources.getString(R.string.join_club),
+                        activity!!.resources.getString(R.string.no),
+                        activity!!.resources.getString(R.string.yes),
 
                         object : AcceptListener {
                             override fun onAccept(message: String) {
@@ -284,10 +282,10 @@ class ClubInfoScreen : BaseFragment() {
                 activity?.let { it ->
                     AlertDialog().showCustomDialog(
                         it,
-                        activity!!.resources.getString(com.bongdaphui.R.string.alert),
-                        activity!!.resources.getString(com.bongdaphui.R.string.this_feature_need_update_phone),
+                        activity!!.resources.getString(R.string.alert),
+                        activity!!.resources.getString(R.string.this_feature_need_update_phone),
                         "",
-                        activity!!.resources.getString(com.bongdaphui.R.string.agree),
+                        activity!!.resources.getString(R.string.agree),
                         object : AcceptListener {
                             override fun onAccept(inputText: String) {
 
@@ -302,10 +300,10 @@ class ClubInfoScreen : BaseFragment() {
             activity?.let { it ->
                 AlertDialog().showCustomDialog(
                     it,
-                    activity!!.resources.getString(com.bongdaphui.R.string.alert),
-                    activity!!.resources.getString(com.bongdaphui.R.string.this_feature_need_login),
-                    activity!!.resources.getString(com.bongdaphui.R.string.cancel),
-                    activity!!.resources.getString(com.bongdaphui.R.string.agree),
+                    activity!!.resources.getString(R.string.alert),
+                    activity!!.resources.getString(R.string.this_feature_need_login),
+                    activity!!.resources.getString(R.string.cancel),
+                    activity!!.resources.getString(R.string.agree),
                     object : AcceptListener {
                         override fun onAccept(inputText: String) {
 
@@ -324,14 +322,14 @@ class ClubInfoScreen : BaseFragment() {
         activity?.let { it ->
             AlertDialog().showCustomDialog(
                 it,
-                activity!!.resources.getString(com.bongdaphui.R.string.alert),
+                activity!!.resources.getString(R.string.alert),
                 if (isSuccess)
-                    activity!!.resources.getString(com.bongdaphui.R.string.request_join_club_success)
+                    activity!!.resources.getString(R.string.request_join_club_success)
                 else {
-                    if (TextUtils.isEmpty(err)) activity!!.resources.getString(com.bongdaphui.R.string.request_join_club_fail) else err
+                    if (TextUtils.isEmpty(err)) activity!!.resources.getString(R.string.request_join_club_fail) else err
                 },
                 "",
-                activity!!.resources.getString(com.bongdaphui.R.string.close),
+                activity!!.resources.getString(R.string.close),
                 object : AcceptListener {
                     override fun onAccept(inputText: String) {
                     }
