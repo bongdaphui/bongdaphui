@@ -47,6 +47,8 @@ class ApproveJoinClubScreen : BaseFragment() {
 
         listPlayer.clear()
 
+        showProgress(true)
+
         BaseRequest().getListApprovePlayer(getUIDUser(), object : GetDataListener<ApprovePlayerResponse> {
             override fun onSuccess(list: ArrayList<ApprovePlayerResponse>) {
                 listPlayer.clear()
@@ -111,6 +113,8 @@ class ApproveJoinClubScreen : BaseFragment() {
     }
 
     private fun showEmptyView(isShow: Boolean) {
+
+        showProgress(false)
 
         recycler_approve_player.visibility = if (isShow) View.GONE else View.VISIBLE
 

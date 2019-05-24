@@ -76,8 +76,6 @@ class ProfileScreen : BaseFragment() {
 
         } else {
 
-            frg_profile_container.visibility = View.VISIBLE
-
             frg_profile_fb_update.visibility = View.VISIBLE
 
             userModel = getDatabase().getUserDAO().getItemById(getUIDUser())
@@ -97,8 +95,6 @@ class ProfileScreen : BaseFragment() {
             }
 
             override fun onSuccess(item: UserModel) {
-
-                frg_profile_container.visibility = View.VISIBLE
 
                 showProgress(false)
 
@@ -204,6 +200,8 @@ class ProfileScreen : BaseFragment() {
     }
 
     private fun fillData() {
+
+        frg_profile_container.visibility = View.VISIBLE
 
         frg_profile_tv_name.text =
             if (userModel.name.isEmpty()) activity!!.resources.getString(R.string.three_dot) else userModel.name
