@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.content.ContextCompat
 import android.text.Editable
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -356,7 +357,7 @@ class UpdateAccountScreen : BaseFragment() {
         frg_update_account_et_height.text = userModel.height.toEditable()
         frg_update_account_et_weight.text = userModel.weight.toEditable()
 
-        frg_update_account_sp_position.setSelection(userModel.position.toInt())
+        frg_update_account_sp_position.setSelection(if (TextUtils.isEmpty(userModel.position)) 0 else userModel.position.toInt())
     }
 
     private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
