@@ -1,4 +1,4 @@
-package com.bongdaphui.footballField
+package com.bongdaphui.field
 
 import android.os.Bundle
 import android.text.TextUtils

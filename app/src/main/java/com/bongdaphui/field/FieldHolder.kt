@@ -1,4 +1,4 @@
-package com.bongdaphui.footballField
+package com.bongdaphui.field
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
