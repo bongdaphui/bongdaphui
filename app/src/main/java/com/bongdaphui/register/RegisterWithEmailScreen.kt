@@ -103,10 +103,12 @@ class RegisterWithEmailScreen : BaseFragment() {
 
                     Log.d(Constant().TAG, "register email uid: " + user!!.uid)
 
-                    val userModel = UserModel(user.uid, "", "", "", "", "", "", "", "", ArrayList())
+                    val userModel = UserModel(user.uid, "", "", email, "", "", "", "", "", ArrayList())
 
                     BaseRequest().saveOrUpdateUser(userModel, object : UpdateListener {
                         override fun onUpdateSuccess() {
+
+                            showProgress(false)
 
                             //cache data
                             getDatabase().getUserDAO().insert(userModel)
@@ -115,6 +117,8 @@ class RegisterWithEmailScreen : BaseFragment() {
                         }
 
                         override fun onUpdateFail(err: String) {
+
+                            showProgress(false)
 
                             FirebaseAuth.getInstance().signOut()
 
