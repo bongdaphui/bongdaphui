@@ -128,7 +128,7 @@ class UpdateClubScreen : BaseFragment() {
 
                     idDistrict = _idDistrict
 
-                    Log.d(Constant().TAG, "spinner onSelectCity with idCity: $idCity - idDistrict : $idDistrict")
+//                    Log.d(Constant().TAG, "spinner onSelectCity with idCity: $idCity - idDistrict : $idDistrict")
 
                 }
             })

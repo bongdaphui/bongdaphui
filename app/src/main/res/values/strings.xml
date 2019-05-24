@@ -90,7 +90,7 @@
     <string name="need_login_to_see">Đăng nhập để xem</string>
     <string name="add_field_fail">Thêm sân thất bại, vui lòng thực hiện lại</string>
     <string name="add_field_success">Chúng tôi đã nhận được thông tin sân của bạn.\nChúng tôi sẽ kiểm tra và thêm vào cơ sở dữ liệu sớm nhất.
-    \nMọi thông tin xin gửi về địa chỉ email: bongdaphui.247@gmail.com\nXin chân thành cảm ơn.</string>
+    \nMọi thông tin chỉnh sửa hoặc thêm mới xin gửi về địa chỉ email: bongdaphui.247@gmail.com\nXin chân thành cảm ơn.</string>
     <string name="update_success">Cập nhật thành công</string>
     <string name="update_fail">Có lỗi khi cập nhật. Vui lòng thực hiện lại.</string>
     <string name="add_field_is_available">Sân bóng này đã có trên hệ thống.\nNếu bạn muốn thay đổi thông tin sân hãy

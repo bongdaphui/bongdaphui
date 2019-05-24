@@ -121,7 +121,7 @@ class AddFieldScreen : BaseFragment() {
 
             showProgress(true)
 
-            BaseRequest().getDataField(object : GetDataListener<FbFieldModel> {
+            BaseRequest().getDataField(Constant().collectionPathField, object : GetDataListener<FbFieldModel> {
                 override fun onSuccess(item: FbFieldModel) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }

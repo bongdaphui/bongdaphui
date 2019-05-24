@@ -169,6 +169,9 @@
 
         <TextView
                 android:id="@+id/frg_add_field_tv_error_input_address"
+                android:text="Vui lòng nhập địa chỉ sân"
+                android:visibility="invisible"
+                android:layout_marginBottom="@dimen/fs_12"
                 style="@style/tv_error_item_input"/>
 
         <LinearLayout

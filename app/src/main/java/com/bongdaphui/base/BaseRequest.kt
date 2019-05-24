@@ -30,9 +30,9 @@ class BaseRequest {
         }
     }
 
-    fun getDataField(listener: GetDataListener<FbFieldModel>) {
+    fun getDataField(path: String, listener: GetDataListener<FbFieldModel>) {
 
-        val db = FirebaseFirestore.getInstance().collection(Constant().collectionPathField)
+        val db = FirebaseFirestore.getInstance().collection(path)
 
         val fieldList: ArrayList<FbFieldModel> = ArrayList()
 
@@ -58,8 +58,6 @@ class BaseRequest {
                     )
                     fieldList.add(fbFieldModel)
                 }
-
-                Log.d(Constant().TAG, "field size: ${fieldList.size}")
 
                 if (fieldList.size > 0) {
 
@@ -203,11 +201,11 @@ class BaseRequest {
         val db = FirebaseFirestore.getInstance().collection(collection).document(document)
         db.delete()
             .addOnSuccessListener {
-                Log.d(Constant().TAG, "DocumentSnapshot successfully deleted!")
+//                Log.d(Constant().TAG, "DocumentSnapshot successfully deleted!")
                 listener.onSuccess()
             }
             .addOnFailureListener {
-                Log.w(Constant().TAG, "Error deleting document ${it.message}")
+//                Log.w(Constant().TAG, "Error deleting document ${it.message}")
                 listener.onFail("${it.message}")
             }
     }
@@ -363,6 +361,5 @@ class BaseRequest {
             }
 
     }
-
 
 }
