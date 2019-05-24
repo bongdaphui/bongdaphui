@@ -174,16 +174,9 @@ class FieldScreen : BaseFragment() {
 
 //                        Log.d(Constant().TAG, "fieldList sort size: ${fieldList.size}")
 
-                        if (fieldList.size > 0) {
+                        showEmptyView(fieldList.size == 0)
 
-                            showEmptyView(false)
-
-                            fieldAdapter.notifyDataSetChanged()
-
-                        } else {
-
-                            showEmptyView(true)
-                        }
+                        fieldAdapter.notifyDataSetChanged()
                     }
                 })
         }

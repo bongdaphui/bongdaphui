@@ -3,6 +3,7 @@ package com.bongdaphui.field
 import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bongdaphui.R
@@ -34,47 +35,47 @@ class FieldAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: FieldHolder, position: Int) {
 
-        val fbFieldModel: FbFieldModel = items[position]
+        val model: FbFieldModel = items[position]
 
-        if (fbFieldModel.photoUrl?.isNotEmpty()!!) {
-            Glide.with(this.context!!).asBitmap().load(fbFieldModel.photoUrl)
-                .placeholder(context?.resources?.getDrawable(R.drawable.ic_person_grey))
-                .into(viewHolder.image)
+        if (!TextUtils.isEmpty(model.photoUrl)) {
+            context?.let { Glide.with(it).asBitmap().load(model.photoUrl).into(viewHolder.image) }
+        }else{
+            viewHolder.image.setImageResource(R.drawable.ic_no_image_grey)
         }
 
-        viewHolder.name.text = "Sân bóng đá ${fbFieldModel.name}"
+        viewHolder.name.text = "Sân bóng đá ${model.name}"
 
         viewHolder.phone.text =
-            if (isLoggedUser) fbFieldModel.phone else context!!.getString(R.string.need_login_to_see)
+            if (isLoggedUser) model.phone else context!!.getString(R.string.need_login_to_see)
 
         viewHolder.call.setOnClickListener {
-            itemClickInterface.onItemClick(fbFieldModel, position, Enum.EnumTypeClick.Phone.value)
+            itemClickInterface.onItemClick(model, position, Enum.EnumTypeClick.Phone.value)
 
         }
 
-        viewHolder.address.text = fbFieldModel.address
+        viewHolder.address.text = model.address
 
-        if (Utils().isEmpty(fbFieldModel.amountField)) {
+        if (Utils().isEmpty(model.amountField)) {
 
             viewHolder.amountField.text = context!!.resources.getString(R.string.not_yet_update)
 
         } else {
 
-            viewHolder.amountField.text = fbFieldModel.amountField
+            viewHolder.amountField.text = model.amountField
         }
 
-        if (Utils().isEmpty(fbFieldModel.price)) {
+        if (Utils().isEmpty(model.price)) {
 
             viewHolder.price.text = context!!.resources.getString(R.string.not_yet_update)
 
         } else {
 
             viewHolder.price.text =
-                "${Utils().formatMoney(Constant().ONE_DECIMAL_FORMAT, fbFieldModel.price!!)} VND"
+                "${Utils().formatMoney(Constant().ONE_DECIMAL_FORMAT, model.price!!)} VND"
         }
 
         viewHolder.container.setOnClickListener {
-            itemClickInterface.onItemClick(fbFieldModel, position, Enum.EnumTypeClick.View.value)
+            itemClickInterface.onItemClick(model, position, Enum.EnumTypeClick.View.value)
         }
 
     }
