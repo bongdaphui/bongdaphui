@@ -306,13 +306,13 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
 
         Toast.makeText(
             activity,
-            "Đăng nhập thất bại. Bạn vui lòng thực hiện lại trong menu Quản lý",
+            "Đăng nhập thất bại. Bạn vui lòng thực hiện lại.",
             Toast.LENGTH_SHORT
         ).show()
 
         FirebaseAuth.getInstance().signOut()
 
-        openClub()
+//        openClub()
     }
 
 
