@@ -3,6 +3,7 @@ package com.bongdaphui.findPlayer
 import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bongdaphui.R
@@ -41,12 +42,10 @@ class FindPlayerAdapter(
 
         viewPlayerHolder.typeField.text = "${model.typeField?.let { Utils().getTypeField(it) }}"
 
-        if (model.photoUrlPlayer?.isNotEmpty()!!) {
-            context?.let {
-                Glide.with(it).asBitmap().load(model.photoUrlPlayer)
-                    .placeholder(context?.resources?.getDrawable(R.drawable.ic_person_grey))
-                    .into(viewPlayerHolder.imageView)
-            }
+        if (!TextUtils.isEmpty(model.photoUrlPlayer)) {
+            context?.let { Glide.with(it).asBitmap().load(model.photoUrlPlayer).into(viewPlayerHolder.imageView) }
+        }else{
+            viewPlayerHolder.imageView.setImageResource(R.drawable.ic_person_grey)
         }
 
         viewPlayerHolder.tvName.text = model.namePlayer

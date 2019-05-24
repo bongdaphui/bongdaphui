@@ -3,6 +3,7 @@ package com.bongdaphui.findClub
 import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bongdaphui.R
@@ -41,13 +42,11 @@ class FindClubAdapter(
 
         viewPlayerHolder.typeField.text = "${model.typeField?.let { Utils().getTypeField(it) }}"
 
-        if (model.photoUrl?.isNotEmpty()!!) {
+        if (!TextUtils.isEmpty(model.photoUrl)) {
             context?.let {
-                Glide.with(it).asBitmap().load(model.photoUrl)
-                    .into(viewPlayerHolder.imageView)
+                Glide.with(it).asBitmap().load(model.photoUrl).into(viewPlayerHolder.imageView)
             }
         } else {
-
             viewPlayerHolder.imageView.setImageResource(R.drawable.ic_no_image_grey)
         }
 
