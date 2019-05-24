@@ -201,11 +201,11 @@ class BaseRequest {
         val db = FirebaseFirestore.getInstance().collection(collection).document(document)
         db.delete()
             .addOnSuccessListener {
-//                Log.d(Constant().TAG, "DocumentSnapshot successfully deleted!")
+                //                Log.d(Constant().TAG, "DocumentSnapshot successfully deleted!")
                 listener.onSuccess()
             }
             .addOnFailureListener {
-//                Log.w(Constant().TAG, "Error deleting document ${it.message}")
+                //                Log.w(Constant().TAG, "Error deleting document ${it.message}")
                 listener.onFail("${it.message}")
             }
     }
@@ -362,4 +362,14 @@ class BaseRequest {
 
     }
 
+    fun getCountRequest(idCaptain: String, listener: GetDataListener<Int>) {
+        FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField).whereEqualTo("idCaptain", idCaptain)
+            .get()
+            .addOnSuccessListener { document ->
+                listener.onSuccess(document.size())
+            }
+            .addOnFailureListener { exception ->
+                listener.onFail(exception.localizedMessage)
+            }
+    }
 }
