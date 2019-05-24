@@ -40,6 +40,25 @@ class ManagerScreen : BaseFragment() {
     override fun onResume() {
         super.onResume()
 
+        //request badge count
+        userModel?.id?.let {
+            BaseRequest().getCountRequest(it, object : GetDataListener<Int> {
+                override fun onSuccess(list: ArrayList<Int>) {
+                }
+
+                override fun onSuccess(item: Int) {
+                    if (item > 0) {
+                        txt_count_request.text = item.toString()
+                        txt_count_request.visibility = View.VISIBLE
+                    }
+                }
+
+                override fun onFail(message: String) {
+                }
+
+            })
+        }
+
         showHeader(true)
 
         showButtonBack(false)
@@ -75,24 +94,7 @@ class ManagerScreen : BaseFragment() {
             frg_manager_v_update_info.visibility = View.GONE
             frg_manager_profile.visibility = View.VISIBLE
 
-            //request badge count
-            userModel?.id?.let {
-                BaseRequest().getCountRequest(it, object : GetDataListener<Int> {
-                    override fun onSuccess(list: ArrayList<Int>) {
-                    }
 
-                    override fun onSuccess(item: Int) {
-                        if (item > 0) {
-                            txt_count_request.text = item.toString()
-                            txt_count_request.visibility = View.VISIBLE
-                        }
-                    }
-
-                    override fun onFail(message: String) {
-                    }
-
-                })
-            }
         }
 
         frg_manager_tv_name_user.text =
