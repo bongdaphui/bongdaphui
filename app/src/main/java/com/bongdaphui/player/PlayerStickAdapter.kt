@@ -12,14 +12,15 @@ import com.bongdaphui.R
 import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.model.UserStickModel
 import com.bongdaphui.utils.Enum
+import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
 
 /**
  * Created by ChuTien on ${1/25/2017}.
  */
 class PlayerStickAdapter(
-    var ctx: Context,
-    val items: ArrayList<UserStickModel>,
+    private var ctx: Context,
+    private val items: ArrayList<UserStickModel>,
     private var itemClickInterface: OnItemClickListener<UserStickModel>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -35,7 +36,9 @@ class PlayerStickAdapter(
                 if (TextUtils.isEmpty(userModule.name)) ctx.resources.getString(R.string.not_update) else userModule.name
 
             holder.position.text =
-                if (TextUtils.isEmpty(userModule.position)) ctx.resources.getString(R.string.not_update) else userModule.position
+                if (TextUtils.isEmpty(userModule.position)) ctx.resources.getString(R.string.not_update) else Utils().getPosition(
+                    userModule.position.toInt()
+                )
 
             if (userModule.photoUrl.isNotEmpty())
                 Glide.with(ctx).asBitmap().load(userModule.photoUrl).into(holder.image)

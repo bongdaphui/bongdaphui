@@ -97,6 +97,7 @@ class ClubInfoScreen : BaseFragment() {
                 listStickPlayer.add(Gson().fromJson(item, UserStickModel::class.java))
             }
         }
+        listStickPlayer.sortBy { it.position }
         adapterStickPlayer?.notifyDataSetChanged()
     }
 
