@@ -364,5 +364,16 @@ class BaseRequest {
 
     }
 
+    fun getCountRequest(idCaptain: String, listener: GetDataListener<Int>) {
+        FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField).whereEqualTo("idCaptain", idCaptain)
+            .get()
+            .addOnSuccessListener { document ->
+                listener.onSuccess(document.size())
+            }
+            .addOnFailureListener { exception ->
+                listener.onFail(exception.localizedMessage)
+            }
+    }
+
 
 }

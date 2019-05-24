@@ -9,9 +9,11 @@ import android.widget.Toast
 import com.bongdaphui.R
 import com.bongdaphui.approvePlayer.ApproveJoinClubScreen
 import com.bongdaphui.base.BaseFragment
+import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.listener.AddDataListener
+import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.myClub.MyClubScreen
@@ -61,7 +63,7 @@ class ManagerScreen : BaseFragment() {
 
     private fun fillData() {
 
-        if (userModel?.phone.isNullOrEmpty()) {
+        if (TextUtils.isEmpty(userModel?.phone)) {
 
             frg_manager_v_update_info.visibility = View.VISIBLE
             frg_manager_profile.visibility = View.GONE
@@ -70,6 +72,27 @@ class ManagerScreen : BaseFragment() {
 
             frg_manager_v_update_info.visibility = View.GONE
             frg_manager_profile.visibility = View.VISIBLE
+
+            //request badge count
+            userModel?.id?.let {
+                BaseRequest().getCountRequest(it, object : GetDataListener<Int> {
+                    override fun onSuccess(list: ArrayList<Int>) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+
+                    override fun onSuccess(item: Int) {
+                        if (item > 0) {
+                            txt_count_request.text = item.toString()
+                            txt_count_request.visibility = View.VISIBLE
+                        }
+                    }
+
+                    override fun onFail(message: String) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+
+                })
+            }
         }
 
         frg_manager_tv_name_user.text =
