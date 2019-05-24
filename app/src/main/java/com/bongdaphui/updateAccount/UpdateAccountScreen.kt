@@ -22,7 +22,6 @@ import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.utils.*
-import com.bongdaphui.utils.Enum
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -281,7 +280,8 @@ class UpdateAccountScreen : BaseFragment() {
         val dob = frg_update_account_et_dob.text.toString()
         val height = frg_update_account_et_height.text.toString()
         val weight = frg_update_account_et_weight.text.toString()
-        val position = frg_update_account_sp_position.selectedItem.toString()
+
+        val position = frg_update_account_sp_position.selectedItemPosition.toString()
 
         val userModel = UserModel(getUIDUser(), uriPhoto, name, email, phone, dob, height, weight, position)
 
@@ -319,7 +319,7 @@ class UpdateAccountScreen : BaseFragment() {
                 "",
                 activity!!.resources.getString(R.string.close),
                 object : AcceptListener {
-                    override fun onAccept(inputText:String) {
+                    override fun onAccept(inputText: String) {
                         onBackPressed()
                     }
                 }
@@ -353,12 +353,7 @@ class UpdateAccountScreen : BaseFragment() {
         frg_update_account_et_height.text = userModel.height.toEditable()
         frg_update_account_et_weight.text = userModel.weight.toEditable()
 
-        when {
-            userModel.position == Enum.EnumPosition.GK.namePos -> frg_update_account_sp_position.setSelection(Enum.EnumPosition.GK.value)
-            userModel.position == Enum.EnumPosition.DF.namePos -> frg_update_account_sp_position.setSelection(Enum.EnumPosition.DF.value)
-            userModel.position == Enum.EnumPosition.MF.namePos -> frg_update_account_sp_position.setSelection(Enum.EnumPosition.MF.value)
-            userModel.position == Enum.EnumPosition.SK.namePos -> frg_update_account_sp_position.setSelection(Enum.EnumPosition.SK.value)
-        }
+        frg_update_account_sp_position.setSelection(userModel.position.toInt())
     }
 
     private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)

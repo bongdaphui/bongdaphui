@@ -233,7 +233,9 @@ class ProfileScreen : BaseFragment() {
             if (userModel.phone.isEmpty()) activity!!.resources.getString(R.string.three_dot) else userModel.phone
 
         frg_profile_tv_position.text =
-            if (userModel.position.isEmpty()) activity!!.resources.getString(R.string.three_dot) else userModel.position
+            if (userModel.position.isEmpty()) activity!!.resources.getString(R.string.three_dot) else Utils().getPosition(
+                userModel.position.toInt()
+            )
 
         frg_profile_ib_message.visibility = if (userModel.id == getUIDUser()) View.GONE else View.VISIBLE
 

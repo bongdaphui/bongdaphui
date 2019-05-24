@@ -344,14 +344,46 @@ class Utils {
 
     fun initPositionSpinner(context: Context, sp: Spinner) {
         val listPosition: ArrayList<String> = ArrayList()
-        listPosition.add(Enum.EnumPosition.GK.namePos)
-        listPosition.add(Enum.EnumPosition.DF.namePos)
-        listPosition.add(Enum.EnumPosition.MF.namePos)
-        listPosition.add(Enum.EnumPosition.SK.namePos)
+        listPosition.add(Enum.EnumPosition.ThuMon.namePos)
+        listPosition.add(Enum.EnumPosition.HauVeTrai.namePos)
+        listPosition.add(Enum.EnumPosition.TrungVe.namePos)
+        listPosition.add(Enum.EnumPosition.HauVePhai.namePos)
+        listPosition.add(Enum.EnumPosition.TienVePhongNgu.namePos)
+        listPosition.add(Enum.EnumPosition.TienVeTrungTam.namePos)
+        listPosition.add(Enum.EnumPosition.TienVeTanCong.namePos)
+        listPosition.add(Enum.EnumPosition.TienDaoTrai.namePos)
+        listPosition.add(Enum.EnumPosition.TienDaoPhai.namePos)
+        listPosition.add(Enum.EnumPosition.TienDaoLui.namePos)
+        listPosition.add(Enum.EnumPosition.TrungPhong.namePos)
 
         val adapter = SpinnerAdapter(context, R.layout.item_spinner, listPosition)
 
         sp.adapter = adapter
+    }
+
+    fun getPosition(pos: Int): String {
+
+        var position = ""
+
+
+        when (pos) {
+            Enum.EnumPosition.ThuMon.value -> position = Enum.EnumPosition.ThuMon.namePos
+            Enum.EnumPosition.HauVeTrai.value -> position = Enum.EnumPosition.HauVeTrai.namePos
+            Enum.EnumPosition.TrungVe.value -> position = Enum.EnumPosition.TrungVe.namePos
+            Enum.EnumPosition.HauVePhai.value -> position = Enum.EnumPosition.HauVePhai.namePos
+            Enum.EnumPosition.TienVePhongNgu.value -> position = Enum.EnumPosition.TienVePhongNgu.namePos
+            Enum.EnumPosition.TienVeTrungTam.value -> position = Enum.EnumPosition.TienVeTrungTam.namePos
+            Enum.EnumPosition.TienVeTanCong.value -> position = Enum.EnumPosition.TienVeTanCong.namePos
+            Enum.EnumPosition.TienDaoTrai.value -> position = Enum.EnumPosition.TienDaoTrai.namePos
+            Enum.EnumPosition.TienDaoPhai.value -> position = Enum.EnumPosition.TienDaoPhai.namePos
+            Enum.EnumPosition.TienDaoLui.value -> position = Enum.EnumPosition.TienDaoLui.namePos
+            Enum.EnumPosition.TrungPhong.value -> position = Enum.EnumPosition.TrungPhong.namePos
+        }
+
+
+        return position
+
+
     }
 
     private fun loadJSONFromAsset(context: Context, fileName: String): String? {
