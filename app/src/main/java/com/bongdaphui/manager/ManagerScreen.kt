@@ -52,16 +52,18 @@ class ManagerScreen : BaseFragment() {
     override fun onBindView() {
 
         userModel = getDatabase().getUserDAO().getItemById(getUIDUser())
+        if (isAdded) {
+            fillData()
 
-        fillData()
+            checkLogin()
 
-        checkLogin()
-
-        onClick()
+            onClick()
+        }
 
     }
 
     private fun fillData() {
+
 
         if (TextUtils.isEmpty(userModel?.phone)) {
 
@@ -77,7 +79,6 @@ class ManagerScreen : BaseFragment() {
             userModel?.id?.let {
                 BaseRequest().getCountRequest(it, object : GetDataListener<Int> {
                     override fun onSuccess(list: ArrayList<Int>) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                     }
 
                     override fun onSuccess(item: Int) {
@@ -88,7 +89,6 @@ class ManagerScreen : BaseFragment() {
                     }
 
                     override fun onFail(message: String) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                     }
 
                 })
