@@ -48,6 +48,8 @@ class Constant {
 
     val KEY_SHARED_PREFERENCES = "football.com.manager"
 
+    val KEY_REQUEST_JOIN_TEAM = "request_join_team"
+
     val KEY_LOGIN_UID_USER = "uid"
     val KEY_LOGIN_TYPE_USER = "type"
 

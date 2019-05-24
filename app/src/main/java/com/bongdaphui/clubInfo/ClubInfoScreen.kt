@@ -10,7 +10,6 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.clubUpdate.UpdateClubScreen
@@ -25,9 +24,12 @@ import com.bongdaphui.model.UserModel
 import com.bongdaphui.model.UserStickModel
 import com.bongdaphui.player.PlayerStickAdapter
 import com.bongdaphui.profile.ProfileScreen
+import com.bongdaphui.utils.Constant
+import com.bongdaphui.utils.SharePreferenceManager
 import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.frg_club_info.*
 
 
@@ -57,7 +59,7 @@ class ClubInfoScreen : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.frg_club_info, container, false)
+        return inflater.inflate(com.bongdaphui.R.layout.frg_club_info, container, false)
 
     }
 
@@ -110,7 +112,7 @@ class ClubInfoScreen : BaseFragment() {
         Glide.with(context!!).load(
             if (TextUtils.isEmpty(clubModel?.photo)) Utils().getDrawable(
                 context!!,
-                R.drawable.bg_field
+                com.bongdaphui.R.drawable.bg_field
             ) else clubModel?.photo
         )
             .into(frg_club_info_iv_logo)
@@ -135,7 +137,7 @@ class ClubInfoScreen : BaseFragment() {
         }
 
         frg_club_info_tv_captain.text =
-            if (clubModel?.caption?.isEmpty()!!) context?.resources?.getText(R.string.not_update) else clubModel?.caption
+            if (clubModel?.caption?.isEmpty()!!) context?.resources?.getText(com.bongdaphui.R.string.not_update) else clubModel?.caption
 
         val address = if (clubModel?.address?.isNotEmpty()!!) "${clubModel?.address}, " else ""
 
@@ -148,7 +150,7 @@ class ClubInfoScreen : BaseFragment() {
         }}"
 
         frg_club_info_tv_phone.text =
-            if (clubModel?.phone?.isEmpty()!!) context?.resources?.getText(R.string.not_update) else clubModel?.phone
+            if (clubModel?.phone?.isEmpty()!!) context?.resources?.getText(com.bongdaphui.R.string.not_update) else clubModel?.phone
 
     }
 
@@ -175,9 +177,11 @@ class ClubInfoScreen : BaseFragment() {
             fab_join_club.visibility = View.GONE
 
         } else {
+            //check preference request
+            val arrRequestedIdClub = getPreferenceArrRequest()
+            fab_join_club.visibility = if (arrRequestedIdClub.contains(clubModel?.id)) View.GONE else View.VISIBLE
 
             fab_join_club.setOnClickListener {
-
                 checkUser()
 
             }
@@ -202,18 +206,53 @@ class ClubInfoScreen : BaseFragment() {
             userModel?.let { it1 ->
                 BaseRequest().registerJoinClub(it, it1, message, object : UpdateListener {
                     override fun onUpdateSuccess() {
+                        savePreferenceRequest(it.id)
                         //pending button
                         fab_join_club.isEnabled = false
                         showAlertJoinGroup(true)
                     }
 
                     override fun onUpdateFail(err: String) {
+                        if (err.contains("chờ duyệt")) {
+                            savePreferenceRequest(it.id)
+                        }
                         showAlertJoinGroup(false, err)
                     }
                 })
             }
         }
     }
+
+    private fun savePreferenceRequest(id: String) {
+        //save Preference
+        context?.let {
+            val sharePreferenceManager = SharePreferenceManager.getInstance(it)
+            val type = object : TypeToken<ArrayList<String>>() {}.type
+            val currentRequestStr = sharePreferenceManager.getString(Constant().KEY_REQUEST_JOIN_TEAM)
+
+            var arrSavedRequest: ArrayList<String> =
+                if (TextUtils.isEmpty(currentRequestStr)) ArrayList() else Gson().fromJson(currentRequestStr, type)
+            if (!arrSavedRequest.contains(id)) {
+                arrSavedRequest.add(id)
+            }
+            sharePreferenceManager.setString(Constant().KEY_REQUEST_JOIN_TEAM, Gson().toJson(arrSavedRequest))
+        }
+    }
+
+    private fun getPreferenceArrRequest(): ArrayList<String> {
+        //save Preference
+        context?.let {
+            val sharePreferenceManager = SharePreferenceManager.getInstance(it)
+            val type = object : TypeToken<ArrayList<String>>() {}.type
+            val currentRequestStr = sharePreferenceManager.getString(Constant().KEY_REQUEST_JOIN_TEAM)
+            if (TextUtils.isEmpty(currentRequestStr)) {
+                return ArrayList()
+            }
+            return Gson().fromJson(currentRequestStr, type)
+        }
+        return ArrayList()
+    }
+
 
     private fun checkUser() {
 
@@ -228,10 +267,10 @@ class ClubInfoScreen : BaseFragment() {
                 context?.let { it1 ->
                     AlertDialog().showCustomDialog(
                         it1,
-                        activity!!.resources.getString(R.string.alert),
-                        activity!!.resources.getString(R.string.join_club),
-                        activity!!.resources.getString(R.string.no),
-                        activity!!.resources.getString(R.string.yes),
+                        activity!!.resources.getString(com.bongdaphui.R.string.alert),
+                        activity!!.resources.getString(com.bongdaphui.R.string.join_club),
+                        activity!!.resources.getString(com.bongdaphui.R.string.no),
+                        activity!!.resources.getString(com.bongdaphui.R.string.yes),
 
                         object : AcceptListener {
                             override fun onAccept(message: String) {
@@ -245,10 +284,10 @@ class ClubInfoScreen : BaseFragment() {
                 activity?.let { it ->
                     AlertDialog().showCustomDialog(
                         it,
-                        activity!!.resources.getString(R.string.alert),
-                        activity!!.resources.getString(R.string.this_feature_need_update_phone),
+                        activity!!.resources.getString(com.bongdaphui.R.string.alert),
+                        activity!!.resources.getString(com.bongdaphui.R.string.this_feature_need_update_phone),
                         "",
-                        activity!!.resources.getString(R.string.agree),
+                        activity!!.resources.getString(com.bongdaphui.R.string.agree),
                         object : AcceptListener {
                             override fun onAccept(inputText: String) {
 
@@ -263,10 +302,10 @@ class ClubInfoScreen : BaseFragment() {
             activity?.let { it ->
                 AlertDialog().showCustomDialog(
                     it,
-                    activity!!.resources.getString(R.string.alert),
-                    activity!!.resources.getString(R.string.this_feature_need_login),
-                    activity!!.resources.getString(R.string.cancel),
-                    activity!!.resources.getString(R.string.agree),
+                    activity!!.resources.getString(com.bongdaphui.R.string.alert),
+                    activity!!.resources.getString(com.bongdaphui.R.string.this_feature_need_login),
+                    activity!!.resources.getString(com.bongdaphui.R.string.cancel),
+                    activity!!.resources.getString(com.bongdaphui.R.string.agree),
                     object : AcceptListener {
                         override fun onAccept(inputText: String) {
 
@@ -285,14 +324,14 @@ class ClubInfoScreen : BaseFragment() {
         activity?.let { it ->
             AlertDialog().showCustomDialog(
                 it,
-                activity!!.resources.getString(R.string.alert),
+                activity!!.resources.getString(com.bongdaphui.R.string.alert),
                 if (isSuccess)
-                    activity!!.resources.getString(R.string.request_join_club_success)
+                    activity!!.resources.getString(com.bongdaphui.R.string.request_join_club_success)
                 else {
-                    if (TextUtils.isEmpty(err)) activity!!.resources.getString(R.string.request_join_club_fail) else err
+                    if (TextUtils.isEmpty(err)) activity!!.resources.getString(com.bongdaphui.R.string.request_join_club_fail) else err
                 },
                 "",
-                activity!!.resources.getString(R.string.close),
+                activity!!.resources.getString(com.bongdaphui.R.string.close),
                 object : AcceptListener {
                     override fun onAccept(inputText: String) {
                     }
