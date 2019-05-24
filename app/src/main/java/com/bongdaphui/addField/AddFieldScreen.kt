@@ -272,7 +272,7 @@ class AddFieldScreen : BaseFragment() {
         )
 
         //add data to field request
-        val db = FirebaseFirestore.getInstance().document("${Constant().collectionPathFieldRequest}/$idField")
+        val db = FirebaseFirestore.getInstance().document("${Constant().collectionPathRequestField}/$idField")
 
         db.set(fieldModel)
             .addOnSuccessListener {
