@@ -181,6 +181,11 @@ class AddFieldScreen : BaseFragment() {
             validate = false
         }
 
+        if (activity?.let { Utils().isNoDistrict(idDistrict, false, it) }!!) {
+            frg_add_field_tv_error_input_city_district.visibility = View.VISIBLE
+            validate = false
+        }
+
         return validate
     }
 

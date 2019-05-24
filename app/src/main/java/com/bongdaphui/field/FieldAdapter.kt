@@ -43,7 +43,7 @@ class FieldAdapter(
             viewHolder.image.setImageResource(R.drawable.bg_field)
         }
 
-        viewHolder.name.text = "Sân bóng đá ${model.name}"
+        viewHolder.name.text = model.name
 
         viewHolder.phone.text =
             if (isLoggedUser) model.phone else context!!.getString(R.string.need_login_to_see)

@@ -214,6 +214,7 @@
 
         <TextView
                 android:id="@+id/frg_add_field_tv_error_input_city_district"
+                android:text="@string/please_choose_district"
                 style="@style/tv_error_item_input"/>
 
         <TextView

@@ -19,7 +19,6 @@ import com.bongdaphui.utils.Utils
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.frg_add_schedule.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class AddSchedulePlayerScreen : BaseFragment() {
@@ -154,6 +153,10 @@ class AddSchedulePlayerScreen : BaseFragment() {
     }
 
     private fun startAdd() {
+
+        if (activity?.let { Utils().isNoDistrict(idDistrict, true, it) }!!) {
+            return
+        }
 
         val startTime =
             frg_add_schedule_bt_from_date.text.toString() + " " + frg_add_schedule_bt_from_time.text.toString()

@@ -325,6 +325,13 @@
 
         </LinearLayout>
 
+        <TextView
+                android:id="@+id/frg_add_club_tv_error_input_district"
+                android:text="@string/please_choose_district"
+                android:visibility="invisible"
+                android:layout_marginBottom="@dimen/fs_12"
+                style="@style/tv_error_item_input"/>
+
         <Button
                 android:id="@+id/frg_add_club_tv_input"
                 android:layout_width="match_parent"

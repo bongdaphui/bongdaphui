@@ -118,6 +118,33 @@
 
             <View
                     android:layout_width="match_parent"
+                    android:layout_height="@dimen/fs_5"/>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Khu vực:  "
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/grey_60"/>
+
+                <TextView
+                        android:id="@+id/item_find_area"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Quận 1, Hồ Chí Minh"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <View
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/fs_10"/>
 
             <LinearLayout

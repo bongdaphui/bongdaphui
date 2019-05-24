@@ -163,7 +163,7 @@ class FieldScreen : BaseFragment() {
 
                         for (i in 0 until fieldListFull.size) {
 
-                            if (_idCity == fieldListFull[i].idCity!! && _idDistrict == fieldListFull[i].idDistrict!!) {
+                            if (_idCity == fieldListFull[i].idCity!! && ("0" == _idDistrict || _idDistrict == fieldListFull[i].idDistrict!!)) {
 
                                 fieldListTemp.add(fieldListFull[i])
                             }
@@ -172,7 +172,7 @@ class FieldScreen : BaseFragment() {
                         fieldList.clear()
                         fieldList.addAll(fieldListTemp)
 
-//                        Log.d(Constant().TAG, "fieldList sort size: ${fieldList.size}")
+                        fieldList.sortBy { it.idDistrict }
 
                         showEmptyView(fieldList.size == 0)
 

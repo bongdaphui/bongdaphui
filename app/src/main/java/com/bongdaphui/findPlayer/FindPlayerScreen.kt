@@ -138,7 +138,7 @@ class FindPlayerScreen : BaseFragment() {
                         for (i in 0 until scheduleListFull.size) {
 
                             if (_idCity == scheduleListFull[i].idCity
-                                && _idDistrict == scheduleListFull[i].idDistrict
+                                && ("0" == _idDistrict || _idDistrict == scheduleListFull[i].idDistrict)
 //                                && getUIDUser() != scheduleListFull[i].idPlayer
 
                                 //check end time is valid with current time

@@ -118,17 +118,14 @@ class UpdateClubScreen : BaseFragment() {
         Utils().initSpinnerCity(
             activity!!,
             frg_update_club_sp_city, clubModel
-                ?.idCity?.toInt()?:0,
-            frg_update_club_sp_district, clubModel?.idDistrict?.toInt()?:0,
+                ?.idCity?.toInt() ?: 0,
+            frg_update_club_sp_district, clubModel?.idDistrict?.toInt() ?: 0,
             object :
                 BaseSpinnerSelectInterface {
                 override fun onSelectCity(_idCity: String, _idDistrict: String) {
 
                     idCity = _idCity
-
                     idDistrict = _idDistrict
-
-//                    Log.d(Constant().TAG, "spinner onSelectCity with idCity: $idCity - idDistrict : $idDistrict")
 
                 }
             })
@@ -292,6 +289,12 @@ class UpdateClubScreen : BaseFragment() {
 
             validate = false
         }
+
+        if (activity?.let { Utils().isNoDistrict(idDistrict, false, it) }!!) {
+            frg_update_club_tv_error_input_district.visibility = View.VISIBLE
+            validate = false
+        }
+
         return validate
     }
 

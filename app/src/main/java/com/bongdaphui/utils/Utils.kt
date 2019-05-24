@@ -19,6 +19,8 @@ import android.widget.*
 import com.bongdaphui.R
 import com.bongdaphui.addField.SpinnerAdapter
 import com.bongdaphui.base.BaseApplication
+import com.bongdaphui.dialog.AlertDialog
+import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.model.CityModel
 import com.bongdaphui.model.CommentModel
@@ -532,5 +534,30 @@ class Utils {
         if (listType.contains(Enum.EnumTypeField.ElevenPeople.value)) typeField.append(Enum.EnumTypeField.ElevenPeople.value)
 
         return typeField.toString()
+    }
+
+    fun isNoDistrict(idDistrict: String, isShowDialog: Boolean, context: Context): Boolean {
+
+        var validate = false
+
+        if ("0" == idDistrict) {
+            if (isShowDialog) {
+                context.let {
+                    AlertDialog().showCustomDialog(
+                        it,
+                        context.resources.getString(R.string.alert),
+                        context.resources.getString(R.string.please_choose_district),
+                        "",
+                        context.resources.getString(R.string.agree),
+                        object : AcceptListener {
+                            override fun onAccept(message: String) {
+                            }
+                        }
+                    )
+                }
+            }
+            validate = true
+        }
+        return validate
     }
 }
