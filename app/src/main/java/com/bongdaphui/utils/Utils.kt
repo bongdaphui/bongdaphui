@@ -527,9 +527,9 @@ class Utils {
     fun getTypeField(listType: String): String {
 
         val typeField = StringBuilder()
-        if (listType.contains(Enum.EnumTypeField.FivePeople.value)) typeField.append(Enum.EnumTypeField.FivePeople.value)
-        if (listType.contains(Enum.EnumTypeField.SevenPeople.value)) typeField.append(", ${Enum.EnumTypeField.SevenPeople.value}")
-        if (listType.contains(Enum.EnumTypeField.ElevenPeople.value)) typeField.append(", ${Enum.EnumTypeField.ElevenPeople.value}")
+        if (listType.contains(Enum.EnumTypeField.FivePeople.value)) typeField.append("${Enum.EnumTypeField.FivePeople.value}   ")
+        if (listType.contains(Enum.EnumTypeField.SevenPeople.value)) typeField.append("${Enum.EnumTypeField.SevenPeople.value}   ")
+        if (listType.contains(Enum.EnumTypeField.ElevenPeople.value)) typeField.append(Enum.EnumTypeField.ElevenPeople.value)
 
         return typeField.toString()
     }
