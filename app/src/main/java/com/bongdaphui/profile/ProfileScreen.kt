@@ -15,7 +15,6 @@ import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.UpdateListener
-import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.updateAccount.UpdateAccountScreen
 import com.bongdaphui.utils.DateTimeUtil
@@ -50,8 +49,6 @@ class ProfileScreen : BaseFragment() {
             idClubApprove = arguments?.getString(IntentExtraName.ID_CLUB) ?: ""
         }
         return inflater.inflate(R.layout.frg_profile, container, false)
-
-
     }
 
     override fun onResume() {
@@ -68,7 +65,9 @@ class ProfileScreen : BaseFragment() {
 
     @SuppressLint("RestrictedApi")
     override fun onBindView() {
+
         layout_approve_player.visibility = if (isApproveProcess) View.VISIBLE else View.GONE
+
         if (uidUser.isNotEmpty()) {
 
             getInfoUser()
@@ -85,9 +84,7 @@ class ProfileScreen : BaseFragment() {
 
             fillData()
         }
-
         onClick()
-
     }
 
     private fun getInfoUser() {
@@ -127,7 +124,6 @@ class ProfileScreen : BaseFragment() {
 
                     fillData()
                 }
-
             }))
         }
 

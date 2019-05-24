@@ -32,7 +32,7 @@
                     android:id="@+id/item_field_image"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    app:srcCompat="@drawable/ic_no_image_green"
+                    app:srcCompat="@drawable/ic_no_image_grey"
                     app:civ_shadow="true"
                     app:civ_shadow_radius="0"
                     app:civ_border="true"

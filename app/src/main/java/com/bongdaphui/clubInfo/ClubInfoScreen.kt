@@ -107,13 +107,10 @@ class ClubInfoScreen : BaseFragment() {
         }
 
         collapsing_toolbar.title = clubModel!!.name
-        Glide.with(context!!).load(
-            if (TextUtils.isEmpty(clubModel?.photo)) Utils().getDrawable(
-                context!!,
-                R.drawable.bg_field
-            ) else clubModel?.photo
-        )
-            .into(frg_club_info_iv_logo)
+
+        if (!TextUtils.isEmpty(clubModel?.photo)) {
+            Glide.with(context!!).asBitmap().load(clubModel?.photo).into(frg_club_info_iv_logo)
+        }
 
         adapterStickPlayer = activity?.let {
             PlayerStickAdapter(it, listStickPlayer, object : OnItemClickListener<UserStickModel> {
@@ -156,9 +153,7 @@ class ClubInfoScreen : BaseFragment() {
     private fun onClick() {
 
         toolbar.setOnClickListener {
-
             onBackPressed()
-
         }
 
         val userCurrentStickModel =
@@ -169,7 +164,6 @@ class ClubInfoScreen : BaseFragment() {
                 userModel?.position ?: ""
             )
 
-
         if (clubModel?.idCaptain.equals(getUIDUser()) || listStickPlayer.contains(userCurrentStickModel)) {
 
             fab_join_club.visibility = View.GONE
@@ -179,7 +173,6 @@ class ClubInfoScreen : BaseFragment() {
             fab_join_club.setOnClickListener {
 
                 checkUser()
-
             }
         }
 
@@ -187,7 +180,6 @@ class ClubInfoScreen : BaseFragment() {
 
             addFragment(UpdateClubScreen.getInstance(clubModel!!, object : AddDataListener {
                 override fun onSuccess() {
-
 
                 }
             }))

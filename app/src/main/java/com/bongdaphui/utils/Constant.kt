@@ -9,6 +9,7 @@ class Constant {
     val roomData = "db_bongdaphui"
 
     val collectionPathField = "fields"
+    val collectionPathFieldRequest = "fields_request"
 
     val userPathField = "users"
 
