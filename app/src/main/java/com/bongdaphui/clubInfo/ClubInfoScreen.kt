@@ -25,9 +25,12 @@ import com.bongdaphui.model.UserModel
 import com.bongdaphui.model.UserStickModel
 import com.bongdaphui.player.PlayerStickAdapter
 import com.bongdaphui.profile.ProfileScreen
+import com.bongdaphui.utils.Constant
+import com.bongdaphui.utils.SharePreferenceManager
 import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.frg_club_info.*
 
 
@@ -153,7 +156,9 @@ class ClubInfoScreen : BaseFragment() {
     private fun onClick() {
 
         toolbar.setOnClickListener {
+
             onBackPressed()
+
         }
 
         val userCurrentStickModel =
@@ -164,15 +169,19 @@ class ClubInfoScreen : BaseFragment() {
                 userModel?.position ?: ""
             )
 
+
         if (clubModel?.idCaptain.equals(getUIDUser()) || listStickPlayer.contains(userCurrentStickModel)) {
 
             fab_join_club.visibility = View.GONE
 
         } else {
+            //check preference request
+            val arrRequestedIdClub = getPreferenceArrRequest()
+            fab_join_club.visibility = if (arrRequestedIdClub.contains(clubModel?.id)) View.GONE else View.VISIBLE
 
             fab_join_club.setOnClickListener {
-
                 checkUser()
+
             }
         }
 
@@ -180,6 +189,7 @@ class ClubInfoScreen : BaseFragment() {
 
             addFragment(UpdateClubScreen.getInstance(clubModel!!, object : AddDataListener {
                 override fun onSuccess() {
+
 
                 }
             }))
@@ -194,18 +204,53 @@ class ClubInfoScreen : BaseFragment() {
             userModel?.let { it1 ->
                 BaseRequest().registerJoinClub(it, it1, message, object : UpdateListener {
                     override fun onUpdateSuccess() {
+                        savePreferenceRequest(it.id)
                         //pending button
                         fab_join_club.isEnabled = false
                         showAlertJoinGroup(true)
                     }
 
                     override fun onUpdateFail(err: String) {
+                        if (err.contains("chờ duyệt")) {
+                            savePreferenceRequest(it.id)
+                        }
                         showAlertJoinGroup(false, err)
                     }
                 })
             }
         }
     }
+
+    private fun savePreferenceRequest(id: String) {
+        //save Preference
+        context?.let {
+            val sharePreferenceManager = SharePreferenceManager.getInstance(it)
+            val type = object : TypeToken<ArrayList<String>>() {}.type
+            val currentRequestStr = sharePreferenceManager.getString(Constant().KEY_REQUEST_JOIN_TEAM)
+
+            var arrSavedRequest: ArrayList<String> =
+                if (TextUtils.isEmpty(currentRequestStr)) ArrayList() else Gson().fromJson(currentRequestStr, type)
+            if (!arrSavedRequest.contains(id)) {
+                arrSavedRequest.add(id)
+            }
+            sharePreferenceManager.setString(Constant().KEY_REQUEST_JOIN_TEAM, Gson().toJson(arrSavedRequest))
+        }
+    }
+
+    private fun getPreferenceArrRequest(): ArrayList<String> {
+        //save Preference
+        context?.let {
+            val sharePreferenceManager = SharePreferenceManager.getInstance(it)
+            val type = object : TypeToken<ArrayList<String>>() {}.type
+            val currentRequestStr = sharePreferenceManager.getString(Constant().KEY_REQUEST_JOIN_TEAM)
+            if (TextUtils.isEmpty(currentRequestStr)) {
+                return ArrayList()
+            }
+            return Gson().fromJson(currentRequestStr, type)
+        }
+        return ArrayList()
+    }
+
 
     private fun checkUser() {
 
