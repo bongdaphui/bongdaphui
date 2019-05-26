@@ -25,9 +25,12 @@ import com.bongdaphui.model.UserModel
 import com.bongdaphui.model.UserStickModel
 import com.bongdaphui.player.PlayerStickAdapter
 import com.bongdaphui.profile.ProfileScreen
+import com.bongdaphui.utils.Constant
+import com.bongdaphui.utils.SharePreferenceManager
 import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.frg_club_info.*
 
 
@@ -57,7 +60,7 @@ class ClubInfoScreen : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(com.bongdaphui.R.layout.frg_club_info, container, false)
+        return inflater.inflate(R.layout.frg_club_info, container, false)
 
     }
 
@@ -94,12 +97,11 @@ class ClubInfoScreen : BaseFragment() {
                 listStickPlayer.add(Gson().fromJson(item, UserStickModel::class.java))
             }
         }
+        listStickPlayer.sortBy { it.position }
         adapterStickPlayer?.notifyDataSetChanged()
-
-
     }
 
-    @SuppressLint("RestrictedApi")
+    @SuppressLint("RestrictedApi", "SetTextI18n")
     private fun initView() {
 
         if (activity is AppCompatActivity) {
@@ -109,13 +111,10 @@ class ClubInfoScreen : BaseFragment() {
         }
 
         collapsing_toolbar.title = clubModel!!.name
-        Glide.with(context!!).load(
-            if (TextUtils.isEmpty(clubModel?.photo)) Utils().getDrawable(
-                context!!,
-                R.drawable.bg_field
-            ) else clubModel?.photo
-        )
-            .into(frg_club_info_iv_logo)
+
+        if (!TextUtils.isEmpty(clubModel?.photo)) {
+            Glide.with(context!!).asBitmap().load(clubModel?.photo).into(frg_club_info_iv_logo)
+        }
 
         adapterStickPlayer = activity?.let {
             PlayerStickAdapter(it, listStickPlayer, object : OnItemClickListener<UserStickModel> {
@@ -135,14 +134,22 @@ class ClubInfoScreen : BaseFragment() {
         if (clubModel?.idCaptain == getUIDUser()) {
             frg_club_info_fb_update.visibility = View.VISIBLE
         }
-        txt_club_info.text = "Đội trưởng: ${clubModel?.caption}\nĐịa chỉ: ${clubModel?.address},${context?.let {
-            clubModel?.idCity?.let { it1 ->
-                Utils().getNameCityDistrictFromId(
-                    it,
-                    it1, clubModel?.idDistrict
-                )
-            }
-        }}\n${clubModel?.phone}"
+
+        frg_club_info_tv_captain.text =
+            if (clubModel?.caption?.isEmpty()!!) context?.resources?.getText(R.string.not_update) else clubModel?.caption
+
+        val address = if (clubModel?.address?.isNotEmpty()!!) "${clubModel?.address}, " else ""
+
+        frg_club_info_tv_address.text = "$address${activity?.let {
+            Utils().getNameCityDistrictFromId(
+                it,
+                clubModel!!.idCity,
+                clubModel!!.idDistrict
+            )
+        }}"
+
+        frg_club_info_tv_phone.text =
+            if (clubModel?.phone?.isEmpty()!!) context?.resources?.getText(R.string.not_update) else clubModel?.phone
 
     }
 
@@ -169,25 +176,14 @@ class ClubInfoScreen : BaseFragment() {
             fab_join_club.visibility = View.GONE
 
         } else {
+            //check preference request
+            val arrRequestedIdClub = getPreferenceArrRequest()
+            fab_join_club.isEnabled = !arrRequestedIdClub.contains(clubModel?.id + userModel?.id)
 
             fab_join_club.setOnClickListener {
-                context?.let { it1 ->
-                    AlertDialog().showCustomDialog(
-                        it1,
-                        activity!!.resources.getString(R.string.alert),
-                        activity!!.resources.getString(R.string.join_club),
-                        activity!!.resources.getString(R.string.no),
-                        activity!!.resources.getString(R.string.yes),
-                        object : AcceptListener {
-                            override fun onAccept(message: String) {
-                                requestJoinGroup(message)
-                            }
-                        }, true
-                    )
-                }
+                checkUser()
+
             }
-
-
         }
 
         frg_club_info_fb_update.setOnClickListener {
@@ -201,35 +197,107 @@ class ClubInfoScreen : BaseFragment() {
         }
     }
 
-
     private fun requestJoinGroup(message: String) {
+
+        showProgress(true)
+
+        clubModel?.let {
+            userModel?.let { it1 ->
+                BaseRequest().registerJoinClub(it, it1, message, object : UpdateListener {
+                    override fun onUpdateSuccess() {
+                        savePreferenceRequest(it.id)
+                        //pending button
+                        fab_join_club.isEnabled = false
+                        showAlertJoinGroup(true)
+                    }
+
+                    override fun onUpdateFail(err: String) {
+                        if (err.contains("chờ duyệt")) {
+                            savePreferenceRequest(it.id)
+                        }
+                        showAlertJoinGroup(false, err)
+                    }
+                })
+            }
+        }
+    }
+
+    private fun savePreferenceRequest(id: String) {
+        //save Preference
+        context?.let {
+            val sharePreferenceManager = SharePreferenceManager.getInstance(it)
+            val type = object : TypeToken<ArrayList<String>>() {}.type
+            val currentRequestStr = sharePreferenceManager.getString(Constant().KEY_REQUEST_JOIN_TEAM)
+
+            var arrSavedRequest: ArrayList<String> =
+                if (TextUtils.isEmpty(currentRequestStr)) ArrayList() else Gson().fromJson(currentRequestStr, type)
+            if (!arrSavedRequest.contains(id + userModel?.id)) {
+                arrSavedRequest.add(id + userModel?.id)
+            }
+            sharePreferenceManager.setString(Constant().KEY_REQUEST_JOIN_TEAM, Gson().toJson(arrSavedRequest))
+        }
+    }
+
+    private fun getPreferenceArrRequest(): ArrayList<String> {
+        //save Preference
+        context?.let {
+            val sharePreferenceManager = SharePreferenceManager.getInstance(it)
+            val type = object : TypeToken<ArrayList<String>>() {}.type
+            val currentRequestStr = sharePreferenceManager.getString(Constant().KEY_REQUEST_JOIN_TEAM)
+            if (TextUtils.isEmpty(currentRequestStr)) {
+                return ArrayList()
+            }
+            return Gson().fromJson(currentRequestStr, type)
+        }
+        return ArrayList()
+    }
+
+
+    private fun checkUser() {
+
         val idPlayer = getUIDUser()
+
         if (!TextUtils.isEmpty(idPlayer)) {
 
-            clubModel?.let {
-                userModel?.let { it1 ->
-                    showProgress(true)
-                    BaseRequest().registerJoinClub(it, it1, message, object : UpdateListener {
-                        override fun onUpdateSuccess() {
-                            //pending button
-                            showProgress(false)
-                            fab_join_club.isEnabled = false
-                            showAlertJoinGroup(true)
+            val phoneUser = getDatabase().getUserDAO().getItemById(idPlayer).phone
+
+            if (!TextUtils.isEmpty(phoneUser)) {
+
+                context?.let { it1 ->
+                    AlertDialog().showCustomDialog(
+                        it1,
+                        activity!!.resources.getString(R.string.alert),
+                        activity!!.resources.getString(R.string.join_club),
+                        activity!!.resources.getString(R.string.no),
+                        activity!!.resources.getString(R.string.yes),
+
+                        object : AcceptListener {
+                            override fun onAccept(message: String) {
+
+                                requestJoinGroup(message)
+                            }
+                        }, true
+                    )
+                }
+            } else {
+                activity?.let { it ->
+                    AlertDialog().showCustomDialog(
+                        it,
+                        activity!!.resources.getString(R.string.alert),
+                        activity!!.resources.getString(R.string.this_feature_need_update_phone),
+                        "",
+                        activity!!.resources.getString(R.string.agree),
+                        object : AcceptListener {
+                            override fun onAccept(inputText: String) {
+
+                            }
                         }
-
-                        override fun onUpdateFail(err: String) {
-                            showProgress(false)
-                            showAlertJoinGroup(false, err)
-
-                        }
-
-                    })
+                    )
                 }
             }
         } else {
             //require to login
             //non account
-
             activity?.let { it ->
                 AlertDialog().showCustomDialog(
                     it,
@@ -247,7 +315,6 @@ class ClubInfoScreen : BaseFragment() {
             }
         }
     }
-
 
     private fun showAlertJoinGroup(isSuccess: Boolean, err: String = "") {
 

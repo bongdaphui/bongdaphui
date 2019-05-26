@@ -3,6 +3,7 @@ package com.bongdaphui.findClub
 import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bongdaphui.R
@@ -31,36 +32,46 @@ class FindClubAdapter(
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(viewPlayerHolder: FindClubHolder, position: Int) {
+    override fun onBindViewHolder(holder: FindClubHolder, position: Int) {
 
         val model: ScheduleClubModel = items[position]
 
-        viewPlayerHolder.timeStart.text = model.startTime
+        holder.timeStart.text = model.startTime
 
-        viewPlayerHolder.timeEnd.text = model.endTime
+        holder.timeEnd.text = model.endTime
 
-        viewPlayerHolder.typeField.text = "${model.typeField?.let { Utils().getTypeField(it) }}"
+        holder.typeField.text = "${model.typeField?.let { Utils().getTypeField(it) }}"
 
-        if (model.photoUrl?.isNotEmpty()!!) {
+        holder.area.text =
+            "${context?.let {
+                model.idCity.let { it1 ->
+                    it1?.let { it2 ->
+                        Utils().getNameCityDistrictFromId(
+                            it,
+                            it2, model.idDistrict
+                        )
+                    }
+                }
+            }}"
+
+        if (!TextUtils.isEmpty(model.photoUrl)) {
             context?.let {
-                Glide.with(it).asBitmap().load(model.photoUrl)
-                    .into(viewPlayerHolder.imageView)
+                Glide.with(it).asBitmap().load(model.photoUrl).into(holder.imageView)
             }
         } else {
-
-            viewPlayerHolder.imageView.setImageResource(R.drawable.ic_no_image_green)
+            holder.imageView.setImageResource(R.drawable.ic_no_image_grey)
         }
 
-        viewPlayerHolder.tvName.text = model.nameClub
+        holder.tvName.text = model.nameClub
 
-        viewPlayerHolder.tvPhone.text =
+        holder.tvPhone.text =
             if (isLoggedUser) model.phone else context?.getString(R.string.need_login_to_see)
 
-        viewPlayerHolder.call.setOnClickListener {
+        holder.call.setOnClickListener {
             itemClickInterface.onItemClick(model, position, Enum.EnumTypeClick.Phone.value)
         }
 
-        viewPlayerHolder.containerView.setOnClickListener {
+        holder.containerView.setOnClickListener {
             itemClickInterface.onItemClick(model, position, Enum.EnumTypeClick.View.value)
 
         }

@@ -35,7 +35,7 @@
                     android:layout_width="match_parent"
                     android:scaleType="fitCenter"
                     android:layout_margin="@dimen/fs_1"
-                    android:src="@drawable/ic_no_image_green"
+                    android:src="@drawable/ic_no_image_grey"
                     android:layout_height="match_parent"
                     tools:ignore="ContentDescription"/>
             <ImageView
@@ -169,6 +169,9 @@
 
         <TextView
                 android:id="@+id/frg_add_field_tv_error_input_address"
+                android:text="Vui lòng nhập địa chỉ sân"
+                android:visibility="invisible"
+                android:layout_marginBottom="@dimen/fs_12"
                 style="@style/tv_error_item_input"/>
 
         <LinearLayout
@@ -211,6 +214,7 @@
 
         <TextView
                 android:id="@+id/frg_add_field_tv_error_input_city_district"
+                android:text="@string/please_choose_district"
                 style="@style/tv_error_item_input"/>
 
         <TextView

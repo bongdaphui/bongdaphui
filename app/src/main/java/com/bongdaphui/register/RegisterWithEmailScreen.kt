@@ -14,6 +14,7 @@ import com.bongdaphui.model.UserModel
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.frg_login.*
 import kotlinx.android.synthetic.main.frg_register_with_email.*
 
 
@@ -57,6 +58,13 @@ class RegisterWithEmailScreen : BaseFragment() {
             frg_register_with_email_tv_error_input_confirm_password
         )
 
+        frg_register_with_email_container.setOnTouchListener { _, _ ->
+
+            hideKeyBoard()
+            false
+        }
+
+
         frg_register_with_email_tv_register.setOnClickListener {
 
             registerAccount()
@@ -95,10 +103,12 @@ class RegisterWithEmailScreen : BaseFragment() {
 
                     Log.d(Constant().TAG, "register email uid: " + user!!.uid)
 
-                    val userModel = UserModel(user.uid, "", "", "", "", "", "", "", "", ArrayList())
+                    val userModel = UserModel(user.uid, "", "", email, "", "", "", "", "", ArrayList())
 
                     BaseRequest().saveOrUpdateUser(userModel, object : UpdateListener {
                         override fun onUpdateSuccess() {
+
+                            showProgress(false)
 
                             //cache data
                             getDatabase().getUserDAO().insert(userModel)
@@ -107,6 +117,8 @@ class RegisterWithEmailScreen : BaseFragment() {
                         }
 
                         override fun onUpdateFail(err: String) {
+
+                            showProgress(false)
 
                             FirebaseAuth.getInstance().signOut()
 

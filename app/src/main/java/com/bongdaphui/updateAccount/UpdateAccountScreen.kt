@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.content.ContextCompat
 import android.text.Editable
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,8 +22,8 @@ import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.model.UserModel
+import com.bongdaphui.model.UserStickModel
 import com.bongdaphui.utils.*
-import com.bongdaphui.utils.Enum
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -281,10 +282,13 @@ class UpdateAccountScreen : BaseFragment() {
         val dob = frg_update_account_et_dob.text.toString()
         val height = frg_update_account_et_height.text.toString()
         val weight = frg_update_account_et_weight.text.toString()
-        val position = frg_update_account_sp_position.selectedItem.toString()
+
+        val position = frg_update_account_sp_position.selectedItemPosition.toString()
 
         val userModel = UserModel(getUIDUser(), uriPhoto, name, email, phone, dob, height, weight, position)
-
+        val oldUserModel = getDatabase().getUserDAO().getItemById(userModel.id)
+        val oldUserStickModel =
+            UserStickModel(oldUserModel.id, oldUserModel.photoUrl, oldUserModel.name, oldUserModel.position)
         BaseRequest().saveOrUpdateUser(userModel, object : UpdateListener {
             override fun onUpdateSuccess() {
 
@@ -302,7 +306,7 @@ class UpdateAccountScreen : BaseFragment() {
 
                 showDialogUpdate(activity!!.resources.getString(R.string.update_fail))
             }
-        })
+        }, oldUserStickModel)
     }
 
     private fun showDialogUpdate(message: String) {
@@ -319,7 +323,7 @@ class UpdateAccountScreen : BaseFragment() {
                 "",
                 activity!!.resources.getString(R.string.close),
                 object : AcceptListener {
-                    override fun onAccept(inputText:String) {
+                    override fun onAccept(inputText: String) {
                         onBackPressed()
                     }
                 }
@@ -353,12 +357,7 @@ class UpdateAccountScreen : BaseFragment() {
         frg_update_account_et_height.text = userModel.height.toEditable()
         frg_update_account_et_weight.text = userModel.weight.toEditable()
 
-        when {
-            userModel.position == Enum.EnumPosition.GK.namePos -> frg_update_account_sp_position.setSelection(Enum.EnumPosition.GK.value)
-            userModel.position == Enum.EnumPosition.DF.namePos -> frg_update_account_sp_position.setSelection(Enum.EnumPosition.DF.value)
-            userModel.position == Enum.EnumPosition.MF.namePos -> frg_update_account_sp_position.setSelection(Enum.EnumPosition.MF.value)
-            userModel.position == Enum.EnumPosition.SK.namePos -> frg_update_account_sp_position.setSelection(Enum.EnumPosition.SK.value)
-        }
+        frg_update_account_sp_position.setSelection(if (TextUtils.isEmpty(userModel.position)) 0 else userModel.position.toInt())
     }
 
     private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)

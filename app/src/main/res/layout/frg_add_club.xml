@@ -39,7 +39,7 @@
                     android:layout_width="match_parent"
                     android:scaleType="centerCrop"
                     android:layout_margin="@dimen/fs_1"
-                    android:src="@drawable/ic_no_image_green"
+                    android:src="@drawable/ic_no_image_grey"
                     android:layout_height="match_parent"/>
             <ImageView
                     android:id="@+id/frg_add_club_iv_camera"
@@ -324,6 +324,13 @@
             </RelativeLayout>
 
         </LinearLayout>
+
+        <TextView
+                android:id="@+id/frg_add_club_tv_error_input_district"
+                android:text="@string/please_choose_district"
+                android:visibility="invisible"
+                android:layout_marginBottom="@dimen/fs_12"
+                style="@style/tv_error_item_input"/>
 
         <Button
                 android:id="@+id/frg_add_club_tv_input"

@@ -48,8 +48,8 @@ class AlertDialog {
         edInput.visibility = if(isInput) View.VISIBLE else View.GONE
 
         (dialog.findViewById(R.id.bt_accept) as Button).setOnClickListener {
-            acceptListener.onAccept(edInput.text.toString())
             dialog.dismiss()
+            acceptListener.onAccept(edInput.text.toString())
         }
 
         dialog.show()

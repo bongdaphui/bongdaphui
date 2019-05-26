@@ -5,13 +5,16 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
+import com.bongdaphui.clubInfo.ClubInfoScreen
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.login.LoginScreen
+import com.bongdaphui.model.ClubModel
 import com.bongdaphui.model.ScheduleClubModel
 import com.bongdaphui.utils.DateTimeUtil
 import com.bongdaphui.utils.Enum
@@ -69,7 +72,25 @@ class FindClubScreen : BaseFragment() {
                             addFragment(LoginScreen())
                         }
                     } else {
-//                        addFragment(ClubInfoScreen.getInstance(item))
+
+                        showProgress(true)
+
+                        item.idClub?.let {
+                            BaseRequest().getClubInfo(it, object : GetDataListener<ClubModel> {
+                                override fun onSuccess(list: ArrayList<ClubModel>) {}
+
+                                override fun onSuccess(item: ClubModel) {
+                                    showProgress(false)
+                                    addFragment(ClubInfoScreen.getInstance(item))
+                                }
+
+                                override fun onFail(message: String) {
+                                    showProgress(false)
+                                    Toast.makeText(activity!!, message, Toast.LENGTH_LONG)
+                                        .show()
+                                }
+                            })
+                        }
                     }
                 }
             })
@@ -80,7 +101,6 @@ class FindClubScreen : BaseFragment() {
         findClubAdapter.setHasStableIds(true)
 
         frg_find_club_rcv.adapter = findClubAdapter
-
     }
 
     private fun getData() {
@@ -136,8 +156,8 @@ class FindClubScreen : BaseFragment() {
                         for (i in 0 until scheduleListFull.size) {
 
                             if (_idCity == scheduleListFull[i].idCity
-                                && _idDistrict == scheduleListFull[i].idDistrict
-                                && getUIDUser() != scheduleListFull[i].idCaptain
+                                && ("0" == _idDistrict || _idDistrict == scheduleListFull[i].idDistrict)
+//                                && getUIDUser() != scheduleListFull[i].idCaptain
 
                                 //check end time is valid with current time
                                 && scheduleListFull[i].endTime?.let {

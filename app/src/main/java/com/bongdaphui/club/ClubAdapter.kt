@@ -3,6 +3,7 @@ package com.bongdaphui.club
 import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bongdaphui.R
@@ -33,41 +34,42 @@ class ClubAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: ClubHolder, position: Int) {
 
-        val club: ClubModel = items[position]
+        val model: ClubModel = items[position]
 
-        if (club.photo.isNotEmpty()) {
-            Glide.with(context!!).asBitmap().load(club.photo)
-                .into(viewHolder.photo)
+        if (!TextUtils.isEmpty(model.photo)) {
+            context?.let { Glide.with(it).asBitmap().load(model.photo).into(viewHolder.photo) }
+        } else {
+            viewHolder.photo.setImageResource(R.drawable.ic_no_image_grey)
         }
 
-        viewHolder.nameFC.text = club.name
+        viewHolder.nameFC.text = model.name
 
         viewHolder.nameCaption.text =
-            if (club.caption.isEmpty()) context?.resources?.getText(R.string.not_update) else club.caption
+            if (model.caption.isEmpty()) context?.resources?.getText(R.string.not_update) else model.caption
 
-        val address = if (club.address.isNotEmpty()) "${club.address}, " else ""
+        val address = if (model.address.isNotEmpty()) "${model.address}, " else ""
 
         viewHolder.area.text =
             "$address${context?.let {
-                club.idCity.let { it1 ->
+                model.idCity.let { it1 ->
                     Utils().getNameCityDistrictFromId(
                         it,
-                        it1, club.idDistrict
+                        it1, model.idDistrict
                     )
                 }
             }}"
 
         viewHolder.phone.text =
-            if (isLoggedUser) club.phone else context!!.getString(R.string.need_login_to_see)
+            if (isLoggedUser) model.phone else context!!.getString(R.string.need_login_to_see)
 
         viewHolder.call.setOnClickListener {
-            onItemClickListener.onItemClick(club, position, Enum.EnumTypeClick.Phone.value)
+            onItemClickListener.onItemClick(model, position, Enum.EnumTypeClick.Phone.value)
         }
 
-        viewHolder.amountPlayer.text = "${club.getAmountPlayer()}"
+        viewHolder.amountPlayer.text = "${model.getAmountPlayer()}"
 
         viewHolder.container.setOnClickListener {
-            onItemClickListener.onItemClick(club, position, Enum.EnumTypeClick.View.value)
+            onItemClickListener.onItemClick(model, position, Enum.EnumTypeClick.View.value)
         }
 
     }

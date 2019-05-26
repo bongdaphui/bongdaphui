@@ -18,6 +18,7 @@ import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.AcceptListener
+import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.model.FbFieldModel
@@ -37,6 +38,18 @@ class AddFieldScreen : BaseFragment() {
     private var idDistrict: String = ""
 
     private var filePathUri: Uri? = null
+
+    companion object {
+
+        private var addDataListener: AddDataListener? = null
+
+        fun getInstance(addDataListener: AddDataListener): AddFieldScreen {
+
+            this.addDataListener = addDataListener
+
+            return AddFieldScreen()
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.frg_add_field, container, false)
@@ -78,14 +91,9 @@ class AddFieldScreen : BaseFragment() {
                 override fun onSelectCity(_idCity: String, _idDistrict: String) {
 
                     idCity = _idCity
-
                     idDistrict = _idDistrict
-
-                    Log.d(Constant().TAG, "spinner onSelectCity with idCity: $idCity - idDistrict : $idDistrict")
-
                 }
             })
-
         hideKeyBoard()
     }
 
@@ -113,7 +121,7 @@ class AddFieldScreen : BaseFragment() {
 
             showProgress(true)
 
-            BaseRequest().getDataField(object : GetDataListener<FbFieldModel> {
+            BaseRequest().getDataField(Constant().collectionPathField, object : GetDataListener<FbFieldModel> {
                 override fun onSuccess(item: FbFieldModel) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
@@ -170,6 +178,11 @@ class AddFieldScreen : BaseFragment() {
         if (frg_add_field_et_address.text.toString().isEmpty()) {
             frg_add_field_tv_error_input_address.visibility = View.VISIBLE
             frg_add_field_et_address.requestFocus()
+            validate = false
+        }
+
+        if (activity?.let { Utils().isNoDistrict(idDistrict, false, it) }!!) {
+            frg_add_field_tv_error_input_city_district.visibility = View.VISIBLE
             validate = false
         }
 
@@ -263,18 +276,19 @@ class AddFieldScreen : BaseFragment() {
             priceField, "", "", "", ""
         )
 
-        val db = FirebaseFirestore.getInstance().document("${Constant().collectionPathField}/$idField")
+        //add data to field request
+        val db = FirebaseFirestore.getInstance().document("${Constant().collectionPathRequestField}/$idField")
 
         db.set(fieldModel)
             .addOnSuccessListener {
 
-                Log.d(Constant().TAG, "upload field success")
-
+                //field will be check and insert by admin
                 //cache data
-
-                getDatabase().getFieldDAO().insert(fieldModel)
+//                getDatabase().getFieldDAO().insert(fieldModel)
+//                addDataListener?.onSuccess()
 
                 showAlertAddField(activity!!.resources.getString(R.string.add_field_success))
+
             }
             .addOnFailureListener {
 

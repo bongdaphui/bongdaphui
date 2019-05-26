@@ -91,16 +91,18 @@ class ClubScreen : BaseFragment() {
         BaseRequest().getClubs(object : GetDataListener<ClubModel> {
             override fun onSuccess(list: ArrayList<ClubModel>) {
 
+                showProgress(false)
+
+                showEmptyView(list.size == 0)
+
                 if (list.size > 0) {
 
                     clubListFull.clear()
+
                     clubListFull.addAll(list)
-                    showProgress(false)
+
                     initFilterBox()
 
-                } else {
-
-                    showEmptyView(true)
                 }
             }
 
@@ -134,13 +136,17 @@ class ClubScreen : BaseFragment() {
 
                         for (i in 0 until clubListFull.size) {
 
-                            if (_idCity == clubListFull[i].idCity && _idDistrict == clubListFull[i].idDistrict) {
+                            if (_idCity == clubListFull[i].idCity &&
+                                ("0" == _idDistrict || _idDistrict == clubListFull[i].idDistrict)
+                            ) {
 
                                 clubList.add(clubListFull[i])
                             }
                         }
+
                         showEmptyView(clubList.size == 0)
 
+                        clubList.sortBy { it.idDistrict }
                         clubAdapter?.notifyDataSetChanged()
                     }
                 })

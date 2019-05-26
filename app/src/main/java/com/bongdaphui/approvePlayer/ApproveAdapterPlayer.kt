@@ -13,7 +13,6 @@ import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.mikhaellopez.circularimageview.CircularImageView
 
 /**
@@ -21,11 +20,11 @@ import com.mikhaellopez.circularimageview.CircularImageView
  */
 class ApproveAdapterPlayer(
     var ctx: Context,
-    val items: ArrayList<PlayerApprove>,
+    private val items: ArrayList<PlayerApprove>,
     private var itemClickInterface: OnItemClickListener<PlayerApprove>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val VIEW_ITEM = 1
-    private val VIEW_SECTION = 0
+    private val viewItem = 1
+    private val viewSection = 0
 
     override fun getItemCount(): Int {
         return items.size
@@ -33,15 +32,16 @@ class ApproveAdapterPlayer(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val player = items[position]
+
         if (holder is OriginalViewHolder) {
-            holder.name.setText(player.name)
-            holder.message.setText(player.message)
-            if (!TextUtils.isEmpty(player.photoUrl)) {
-                Glide.with(ctx).load(
-                    player.photoUrl
-                )
-                    .into(holder.image)
-            }
+
+            holder.name.text =
+                if (TextUtils.isEmpty(player.name)) ctx.resources.getString(R.string.not_update) else player.name
+
+            holder.message.text = player.message
+
+            if (!Utils().isEmpty(player.photoUrl))
+                Glide.with(ctx).load(player.photoUrl).into(holder.image)
 
             holder.itemView.setOnClickListener {
                 itemClickInterface.onItemClick(player, position, Enum.EnumTypeClick.View.value)
@@ -50,13 +50,13 @@ class ApproveAdapterPlayer(
 
         } else {
             val view = holder as SectionViewHolder
-            view.title_section.setText(player.name)
+            view.titleSection.text = player.name
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
-        if (viewType == VIEW_ITEM) {
+        if (viewType == viewItem) {
             val v = LayoutInflater.from(parent.context).inflate(R.layout.item_player_approve, parent, false)
             vh = OriginalViewHolder(v)
         } else {
@@ -68,24 +68,15 @@ class ApproveAdapterPlayer(
     }
 
     inner class OriginalViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        var image: ImageView
-        var name: TextView
-        var message: TextView
+        var image: ImageView = v.findViewById(R.id.image) as CircularImageView
+        var name: TextView = v.findViewById(R.id.name) as TextView
+        var message: TextView = v.findViewById(R.id.message) as TextView
 
-        init {
-            image = v.findViewById(R.id.image) as CircularImageView
-            name = v.findViewById(R.id.name) as TextView
-            message = v.findViewById(R.id.message) as TextView
-
-        }
     }
 
     class SectionViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        var title_section: TextView
+        var titleSection: TextView = v.findViewById(R.id.title_section) as TextView
 
-        init {
-            title_section = v.findViewById(R.id.title_section) as TextView
-        }
     }
 
     override fun getItemId(position: Int): Long {
@@ -93,7 +84,7 @@ class ApproveAdapterPlayer(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (this.items[position].section) VIEW_SECTION else VIEW_ITEM
+        return if (this.items[position].section) viewSection else viewItem
     }
 
     fun insertItem(index: Int, player: PlayerApprove) {

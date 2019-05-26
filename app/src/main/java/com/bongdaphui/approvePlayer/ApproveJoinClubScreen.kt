@@ -13,8 +13,7 @@ import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.profile.ProfileScreen
 import com.bongdaphui.utils.IntentExtraName
-import kotlinx.android.synthetic.main.fragment_approve_join_club.*
-import kotlinx.android.synthetic.main.frg_schedule.*
+import kotlinx.android.synthetic.main.frg_approve_join_club.*
 import kotlinx.android.synthetic.main.view_empty.*
 
 /**
@@ -24,23 +23,32 @@ class ApproveJoinClubScreen : BaseFragment() {
     private val listPlayer: ArrayList<PlayerApprove> = ArrayList()
     private var userModel: UserModel? = null
     private var mAdapter: ApproveAdapterPlayer? = null
+
+    override fun onResume() {
+        super.onResume()
+
+        showHeader(true)
+
+        showButtonBack(true)
+
+        setTitle(activity!!.resources.getString(R.string.player_request))
+
+        showFooter(false)
+
+        initData()
+
+    }
+
     override fun onBindView() {
         initView()
     }
 
-    override fun onResume() {
-        super.onResume()
-        initData()
-        showHeader(true)
-
-        setTitle(resources.getString(R.string.list_player_request_join))
-
-        showButtonBack(true)
-
-        showFooter(false)
-    }
-
     private fun initData() {
+
+        listPlayer.clear()
+
+        showProgress(true)
+
         BaseRequest().getListApprovePlayer(getUIDUser(), object : GetDataListener<ApprovePlayerResponse> {
             override fun onSuccess(list: ArrayList<ApprovePlayerResponse>) {
                 listPlayer.clear()
@@ -74,9 +82,7 @@ class ApproveJoinClubScreen : BaseFragment() {
             override fun onFail(message: String) {
                 showEmptyView(true)
             }
-
         })
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -102,11 +108,13 @@ class ApproveJoinClubScreen : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_approve_join_club, container, false)
+        return inflater.inflate(R.layout.frg_approve_join_club, container, false)
 
     }
 
     private fun showEmptyView(isShow: Boolean) {
+
+        showProgress(false)
 
         recycler_approve_player.visibility = if (isShow) View.GONE else View.VISIBLE
 

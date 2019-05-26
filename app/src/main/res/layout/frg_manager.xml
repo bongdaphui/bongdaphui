@@ -61,7 +61,7 @@
                         android:layout_height="60dp"
                         app:srcCompat="@drawable/ic_person"
                         app:civ_shadow="true"
-                        android:tint="@color/colorPrimaryDark"
+                        android:tint="@color/grey_40"
                         app:civ_shadow_radius="0"
                         app:civ_border="true"
                         app:civ_border_width="1dp"
@@ -240,7 +240,17 @@
                             android:text="@string/list_player_request_join"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                             android:textColor="@color/grey_80"/>
-
+                    <TextView
+                            android:id="@+id/txt_count_request"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:maxLines="1"
+                            android:visibility="gone"
+                            style="@style/tv_ts_12_c_2d2d2d_bold"
+                            android:gravity="center"
+                            android:textColor="@android:color/white"
+                            android:background="@drawable/shape_primary_circle"
+                    />
                     <View
                             android:layout_width="@dimen/spacing_large"
                             android:layout_height="wrap_content"/>

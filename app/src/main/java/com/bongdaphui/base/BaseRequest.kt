@@ -30,9 +30,9 @@ class BaseRequest {
         }
     }
 
-    fun getDataField(listener: GetDataListener<FbFieldModel>) {
+    fun getDataField(path: String, listener: GetDataListener<FbFieldModel>) {
 
-        val db = FirebaseFirestore.getInstance().collection(Constant().collectionPathField)
+        val db = FirebaseFirestore.getInstance().collection(path)
 
         val fieldList: ArrayList<FbFieldModel> = ArrayList()
 
@@ -58,8 +58,6 @@ class BaseRequest {
                     )
                     fieldList.add(fbFieldModel)
                 }
-
-                Log.d(Constant().TAG, "field size: ${fieldList.size}")
 
                 if (fieldList.size > 0) {
 
@@ -100,11 +98,65 @@ class BaseRequest {
 
     fun saveOrUpdateUser(
         userModel: UserModel,
-        listener: UpdateListener
+        listener: UpdateListener,
+        oldPlayer: UserStickModel? = null
     ) {
         val db = FirebaseFirestore.getInstance().collection(Constant().userPathField).document(userModel.id)
         db.set(userModel, SetOptions.merge())
             .addOnSuccessListener {
+                if (oldPlayer != null) {
+                    //update all collection has player
+                    //club
+                    val newPlayer =
+                        UserStickModel(userModel.id, userModel.photoUrl, userModel.name, userModel.position)
+                    val dbClub = FirebaseFirestore.getInstance().collection(Constant().clubPathField)
+                    dbClub.whereArrayContains("players", Gson().toJson(oldPlayer))
+                        .get().addOnSuccessListener { document ->
+                            for (item in document) {
+                                val clubModel = item.toObject(ClubModel::class.java)
+                                var oldPlayer = UserStickModel()
+                                for (player in clubModel.players) {
+                                    val playerObj = Gson().fromJson(player, UserStickModel::class.java)
+                                    if (playerObj.id == userModel.id) {
+                                        oldPlayer = playerObj
+                                    }
+                                }
+                                //update if user is captain
+                                if (clubModel.idCaptain == userModel.id) {
+                                    clubModel.caption = userModel.name
+                                    dbClub.document(item.id).set(clubModel, SetOptions.merge())
+                                }
+                                dbClub.document(item.id)
+                                    .update("players", FieldValue.arrayRemove(Gson().toJson(oldPlayer)))
+                                dbClub.document(item.id)
+                                    .update("players", FieldValue.arrayUnion(Gson().toJson(newPlayer)))
+                            }
+                        }
+                    //update schedule db
+                    val dbSchedule = FirebaseFirestore.getInstance().collection(Constant().schedulePlayerPathField)
+                    dbSchedule.whereEqualTo("idPlayer", userModel.id)
+                        .get().addOnSuccessListener { documents ->
+                            for (item in documents) {
+                                var scheduleClubModel = item.toObject(SchedulePlayerModel::class.java)
+                                scheduleClubModel.namePlayer = userModel.name
+                                scheduleClubModel.phonePlayer = userModel.phone
+                                scheduleClubModel.photoUrlPlayer = userModel.photoUrl
+                                dbSchedule.document(item.id).set(scheduleClubModel, SetOptions.merge())
+                            }
+                        }
+
+                    //update request db
+                    val dbRequest = FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField)
+                    dbRequest.whereEqualTo("idPlayer", userModel.id)
+                        .get().addOnSuccessListener { documents ->
+                            for (item in documents) {
+                                var approvePlayerResponse = item.toObject(ApprovePlayerResponse::class.java)
+                                approvePlayerResponse.namePlayer = userModel.name
+                                approvePlayerResponse.photoPlayer = userModel.photoUrl
+                                dbRequest.document(item.id).set(approvePlayerResponse, SetOptions.merge())
+                            }
+                        }
+                }
                 listener.onUpdateSuccess()
             }
             .addOnFailureListener {
@@ -203,11 +255,11 @@ class BaseRequest {
         val db = FirebaseFirestore.getInstance().collection(collection).document(document)
         db.delete()
             .addOnSuccessListener {
-                Log.d(Constant().TAG, "DocumentSnapshot successfully deleted!")
+                //                Log.d(Constant().TAG, "DocumentSnapshot successfully deleted!")
                 listener.onSuccess()
             }
             .addOnFailureListener {
-                Log.w(Constant().TAG, "Error deleting document ${it.message}")
+                //                Log.w(Constant().TAG, "Error deleting document ${it.message}")
                 listener.onFail("${it.message}")
             }
     }
@@ -223,6 +275,27 @@ class BaseRequest {
             }
             .addOnFailureListener {
                 listener.onUpdateFail()
+            }
+    }
+
+    fun getClubInfo(id: String, listener: GetDataListener<ClubModel>) {
+
+        FirebaseFirestore.getInstance().collection(Constant().clubPathField).document(id).get()
+
+            .addOnSuccessListener { document ->
+
+                val value = document?.toObject(ClubModel::class.java)
+
+                if (value != null) {
+
+                    listener.onSuccess(value)
+
+                } else {
+
+                    listener.onFail("Có lỗi khi lấy thông tin đội bóng!")
+                }
+            }.addOnFailureListener {
+                listener.onFail("Có lỗi khi lấy thông tin đội bóng!")
             }
     }
 
@@ -296,7 +369,8 @@ class BaseRequest {
 
     fun getListApprovePlayer(idCaptain: String, listener: GetDataListener<ApprovePlayerResponse>) {
 
-        FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField).whereEqualTo("idCaptain", idCaptain).get()
+        FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField).whereEqualTo("idCaptain", idCaptain)
+            .get()
 
             .addOnSuccessListener { document ->
 
@@ -325,7 +399,7 @@ class BaseRequest {
                 //update clubs db
                 val db = FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField)
                 //check exist
-                deleteDocument(Constant().requestJoinPathField,idClub+userModel.id,object:  DeleteDataDataListener{
+                deleteDocument(Constant().requestJoinPathField, idClub + userModel.id, object : DeleteDataDataListener {
                     override fun onSuccess() {
                         listener.onUpdateSuccess()
                     }
@@ -342,5 +416,14 @@ class BaseRequest {
 
     }
 
-
+    fun getCountRequest(idCaptain: String, listener: GetDataListener<Int>) {
+        FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField).whereEqualTo("idCaptain", idCaptain)
+            .get()
+            .addOnSuccessListener { document ->
+                listener.onSuccess(document.size())
+            }
+            .addOnFailureListener { exception ->
+                listener.onFail(exception.localizedMessage)
+            }
+    }
 }

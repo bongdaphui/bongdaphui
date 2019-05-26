@@ -18,10 +18,17 @@ class Enum {
     }
 
     enum class EnumPosition(val value: Int, val namePos: String) {
-        GK(0, "Thủ Môn"),
-        DF(1, "Hậu Vệ"),
-        MF(2, "Tiền Vệ"),
-        SK(3, "Tiền Đạo")
+        ThuMon(0, "Thủ Môn"),
+        HauVeTrai(1, "Hậu Vệ Trái"),
+        TrungVe(2, "Trung Vệ"),
+        HauVePhai(3, "Hậu Vệ Phải"),
+        TienVePhongNgu(4, "Tiền Vệ Phòng Ngự"),
+        TienVeTrungTam(5, "Tiền Vệ Trung Tâm"),
+        TienVeTanCong(6, "Tiền Vệ Tấn Công"),
+        TienDaoTrai(7, "Tiền Đạo Trái"),
+        TienDaoPhai(8, "Tiền Đạo Phải"),
+        TienDaoLui(9, "Tiền Đạo Lùi"),
+        TrungPhong(10, "Trung Phong")
     }
 
     enum class EnumTypeField(val value: String) {

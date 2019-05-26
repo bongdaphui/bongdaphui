@@ -111,16 +111,13 @@ class SchedulePlayerScreen : BaseFragment() {
 
                 scheduleList.sortBy { it.id }
 
-                showEmptyView(scheduleList.size > 0)
+                showEmptyView(false)
 
                 schedulePlayerAdapter.notifyDataSetChanged()
 
-                showProgress(false)
             }
 
             override fun onFail(message: String) {
-
-                showProgress(false)
 
                 showEmptyView(true)
             }
@@ -129,9 +126,11 @@ class SchedulePlayerScreen : BaseFragment() {
 
     private fun showEmptyView(isShow: Boolean) {
 
-        frg_schedule_rcv.visibility = if (!isShow) View.GONE else View.VISIBLE
+        showProgress(false)
 
-        view_empty.visibility = if (!isShow) View.VISIBLE else View.GONE
+        frg_schedule_rcv.visibility = if (isShow) View.GONE else View.VISIBLE
+
+        view_empty.visibility = if (isShow) View.VISIBLE else View.GONE
 
     }
 }

@@ -29,6 +29,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.frg_add_club.*
+import kotlinx.android.synthetic.main.frg_add_field.*
 import java.io.File
 import java.util.*
 
@@ -121,10 +122,7 @@ class AddClubScreen : BaseFragment() {
                 override fun onSelectCity(_idCity: String, _idDistrict: String) {
 
                     idCity = _idCity
-
                     idDistrict = _idDistrict
-
-                    Log.d(Constant().TAG, "spinner onSelectCity with idCity: $idCity - idDistrict : $idDistrict")
 
                 }
             })
@@ -286,6 +284,10 @@ class AddClubScreen : BaseFragment() {
 
             validate = false
 
+        }
+        if (activity?.let { Utils().isNoDistrict(idDistrict, false, it) }!!) {
+            frg_add_club_tv_error_input_district.visibility = View.VISIBLE
+            validate = false
         }
 
         return validate

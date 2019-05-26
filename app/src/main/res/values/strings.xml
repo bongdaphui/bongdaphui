@@ -29,7 +29,7 @@
     <string name="text">text</string>
     <string name="list_member">Danh Sách Đội Bóng</string>
     <string name="list_fc">Đội bóng</string>
-    <string name="list_fc_manager">Đội bóng bạn quản lý</string>
+    <string name="list_club">Danh sách đội bóng</string>
     <string name="join_club">Lời nhắn cho đội trưởng:</string>
     <string name="update_info">Cập nhật thông tin</string>
     <string name="update">Cập nhật</string>
@@ -83,15 +83,18 @@
     <string name="google_web_client_id">303996690941-vq3ot26cmv2po4s9n7di8cmco9nj784b.apps.googleusercontent.com
     </string>
     <string name="this_feature_need_login">Vui lòng đăng nhập để sử dụng tính năng này</string>
+    <string name="this_feature_need_update_phone">Vui lòng cập nhật số điện thoại để sử dụng tính năng này</string>
+    <string name="player_request">Cầu thủ xin gia nhập đội</string>
     <string name="accept_player_message">Cho phép cầu thủ gia nhập</string>
     <string name="reject_player_message">Từ chối cầu thủ gia nhập</string>xin
     <string name="need_login_to_see">Đăng nhập để xem</string>
     <string name="add_field_fail">Thêm sân thất bại, vui lòng thực hiện lại</string>
-    <string name="add_field_success">Thêm sân bóng thành công</string>
+    <string name="add_field_success">Chúng tôi đã nhận được thông tin sân của bạn.\nChúng tôi sẽ kiểm tra và thêm vào cơ sở dữ liệu sớm nhất.
+    \nMọi thông tin chỉnh sửa hoặc thêm mới xin gửi về địa chỉ email: bongdaphui.247@gmail.com\nXin chân thành cảm ơn.</string>
     <string name="update_success">Cập nhật thành công</string>
     <string name="update_fail">Có lỗi khi cập nhật. Vui lòng thực hiện lại.</string>
-    <string name="add_field_is_available">Sân bóng này đã có trên hệ thống.\n Nếu bạn muốn thay đổi thông tin sân hãy
-        gửi thông tin về địa chỉ email bongdaphui.247@gmail.com \n Chúng tôi sẽ cập nhật thông tin cho bạn.
+    <string name="add_field_is_available">Sân bóng này đã có trên hệ thống.\nNếu bạn muốn thay đổi thông tin sân hãy
+        gửi thông tin về địa chỉ email bongdaphui.247@gmail.com \nChúng tôi sẽ cập nhật thông tin cho bạn. Xin cảm ơn.
     </string>
     <string name="album">Hình ảnh</string>
     <string name="missing_position">Vị trí ưu tiên</string>
@@ -115,5 +118,6 @@
     <string name="accept">Chấp nhận</string>
     <string name="reject">Từ chối</string>
     <string name="list_player_request_join">Cầu thủ xin gia nhập đội</string>
+    <string name="please_choose_district">Vui lòng chọn Quận / Huyện</string>
 
 </resources>

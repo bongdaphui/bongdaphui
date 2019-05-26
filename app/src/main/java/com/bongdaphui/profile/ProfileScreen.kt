@@ -15,7 +15,6 @@ import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.UpdateListener
-import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.updateAccount.UpdateAccountScreen
 import com.bongdaphui.utils.DateTimeUtil
@@ -50,8 +49,6 @@ class ProfileScreen : BaseFragment() {
             idClubApprove = arguments?.getString(IntentExtraName.ID_CLUB) ?: ""
         }
         return inflater.inflate(R.layout.frg_profile, container, false)
-
-
     }
 
     override fun onResume() {
@@ -68,7 +65,9 @@ class ProfileScreen : BaseFragment() {
 
     @SuppressLint("RestrictedApi")
     override fun onBindView() {
+
         layout_approve_player.visibility = if (isApproveProcess) View.VISIBLE else View.GONE
+
         if (uidUser.isNotEmpty()) {
 
             getInfoUser()
@@ -77,17 +76,13 @@ class ProfileScreen : BaseFragment() {
 
         } else {
 
-            frg_profile_container.visibility = View.VISIBLE
-
             frg_profile_fb_update.visibility = View.VISIBLE
 
             userModel = getDatabase().getUserDAO().getItemById(getUIDUser())
 
             fillData()
         }
-
         onClick()
-
     }
 
     private fun getInfoUser() {
@@ -100,8 +95,6 @@ class ProfileScreen : BaseFragment() {
             }
 
             override fun onSuccess(item: UserModel) {
-
-                frg_profile_container.visibility = View.VISIBLE
 
                 showProgress(false)
 
@@ -127,7 +120,6 @@ class ProfileScreen : BaseFragment() {
 
                     fillData()
                 }
-
             }))
         }
 
@@ -180,7 +172,7 @@ class ProfileScreen : BaseFragment() {
                         resources.getString(R.string.agree),
                         object : AcceptListener {
                             override fun onAccept(inputText: String) {
-
+                                onBackPressed()
                             }
                         }
                     )
@@ -208,6 +200,8 @@ class ProfileScreen : BaseFragment() {
     }
 
     private fun fillData() {
+
+        frg_profile_container.visibility = View.VISIBLE
 
         frg_profile_tv_name.text =
             if (userModel.name.isEmpty()) activity!!.resources.getString(R.string.three_dot) else userModel.name
@@ -237,7 +231,9 @@ class ProfileScreen : BaseFragment() {
             if (userModel.phone.isEmpty()) activity!!.resources.getString(R.string.three_dot) else userModel.phone
 
         frg_profile_tv_position.text =
-            if (userModel.position.isEmpty()) activity!!.resources.getString(R.string.three_dot) else userModel.position
+            if (userModel.position.isEmpty()) activity!!.resources.getString(R.string.three_dot) else Utils().getPosition(
+                userModel.position.toInt()
+            )
 
         frg_profile_ib_message.visibility = if (userModel.id == getUIDUser()) View.GONE else View.VISIBLE
 

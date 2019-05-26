@@ -1,7 +1,6 @@
 package com.bongdaphui.utils
 
 import android.Manifest
-import com.bongdaphui.BuildConfig
 
 class Constant {
 
@@ -11,6 +10,9 @@ class Constant {
 
     val collectionPathField = if (BuildConfig.DEBUG) "dev_fields" else "fields"
 
+    val collectionPathRequestField = "fields_request"
+
+    val userPathField = "users"
     val userPathField = if (BuildConfig.DEBUG) "dev_users" else "users"
 
     val clubPathField = if (BuildConfig.DEBUG) "dev_clubs" else "clubs"
@@ -48,6 +50,8 @@ class Constant {
     val sharePreferenceName = "sharePrefenceFile"
 
     val KEY_SHARED_PREFERENCES = "football.com.manager"
+
+    val KEY_REQUEST_JOIN_TEAM = "request_join_team"
 
     val KEY_LOGIN_UID_USER = "uid"
     val KEY_LOGIN_TYPE_USER = "type"

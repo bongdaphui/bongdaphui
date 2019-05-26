@@ -25,6 +25,8 @@ class FindPlayerHolder(row: View) : RecyclerView.ViewHolder(row) {
 
     var typeField: TextView = row.findViewById(R.id.item_find_type_field)
 
+    var area: TextView = row.findViewById(R.id.item_find_area)
+
     var call: ImageButton = row.findViewById(R.id.item_find_ib_call)
 
 }
