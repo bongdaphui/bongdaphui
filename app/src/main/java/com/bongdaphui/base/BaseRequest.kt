@@ -393,26 +393,40 @@ class BaseRequest {
         // update request db
         val userStickModel = UserStickModel(userModel.id, userModel.photoUrl, userModel.name, userModel.position)
         val dbClub = FirebaseFirestore.getInstance().collection(Constant().clubPathField).document(idClub)
+        if (isAccept) {
+            dbClub.update("players", FieldValue.arrayUnion(Gson().toJson(userStickModel)))
+                .addOnSuccessListener {
+                    //delete request
+                    deleteDocument(
+                        Constant().requestJoinPathField,
+                        idClub + userModel.id,
+                        object : DeleteDataDataListener {
+                            override fun onSuccess() {
+                                listener.onUpdateSuccess()
+                            }
 
-        dbClub.update("players", FieldValue.arrayUnion(Gson().toJson(userStickModel)))
-            .addOnSuccessListener {
-                //update clubs db
-                val db = FirebaseFirestore.getInstance().collection(Constant().requestJoinPathField)
-                //check exist
-                deleteDocument(Constant().requestJoinPathField, idClub + userModel.id, object : DeleteDataDataListener {
-                    override fun onSuccess() {
-                        listener.onUpdateSuccess()
-                    }
+                            override fun onFail(message: String) {
+                                listener.onUpdateFail(message)
+                            }
 
-                    override fun onFail(message: String) {
-                        listener.onUpdateFail(message)
-                    }
+                        })
 
-                })
+                }.addOnFailureListener {
+                    listener.onUpdateFail(it.localizedMessage)
+                }
 
-            }.addOnFailureListener {
-                listener.onUpdateFail(it.localizedMessage)
-            }
+        } else {
+            deleteDocument(Constant().requestJoinPathField, idClub + userModel.id, object : DeleteDataDataListener {
+                override fun onSuccess() {
+                    listener.onUpdateSuccess()
+                }
+
+                override fun onFail(message: String) {
+                    listener.onUpdateFail(message)
+                }
+
+            })
+        }
 
     }
 
