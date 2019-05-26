@@ -1,6 +1,7 @@
 package com.bongdaphui.utils
 
 import android.Manifest
+import com.bongdaphui.BuildConfig
 
 class Constant {
 
@@ -8,21 +9,21 @@ class Constant {
 
     val roomData = "db_bongdaphui"
 
-    val collectionPathField = "fields"
+    val collectionPathField = if (BuildConfig.DEBUG) "dev_fields" else "fields"
 
-    val userPathField = "users"
+    val userPathField = if (BuildConfig.DEBUG) "dev_users" else "users"
 
-    val clubPathField = "clubs"
+    val clubPathField = if (BuildConfig.DEBUG) "dev_clubs" else "clubs"
 
-    val requestJoinPathField = "requests"
+    val requestJoinPathField = if (BuildConfig.DEBUG) "dev_requests" else "requests"
 
-    val schedulePlayerPathField = "schedule_player"
+    val schedulePlayerPathField = if (BuildConfig.DEBUG) "dev_schedule_player" else "schedule_player"
 
-    val scheduleClubPathField = "schedule_club"
+    val scheduleClubPathField = if (BuildConfig.DEBUG) "dev_schedule_club" else "schedule_club"
 
-    val pathStorageField = "field_image/"
+    val pathStorageField = if (BuildConfig.DEBUG) "dev/field_image/" else "field_image/"
 
-    var pathStorageUser = "user_image/"
+    var pathStorageUser = if (BuildConfig.DEBUG) "dev/user_image/" else "user_image/"
 
     val emailRegularExpression =
         "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"
@@ -40,9 +41,9 @@ class Constant {
 
     var CHILD_PLAYERS = "players"
 
-    var STORAGE_CLUB = "club_image/"
+    var STORAGE_CLUB = if (BuildConfig.DEBUG) "dev/club_image/" else "club_image/"
 
-    var STORAGE_PLAYER = "player_image/"
+    var STORAGE_PLAYER = if (BuildConfig.DEBUG) "dev/player_image/" else "player_image/"
 
     val sharePreferenceName = "sharePrefenceFile"
 
@@ -56,7 +57,7 @@ class Constant {
     val sizeImage = 100F //0.1 MB
 
     val CAMERA_WRITE_EXTERNAL_PERMISSIONS =
-        arrayOf( Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     val CALL_PHONE =
         arrayOf(Manifest.permission.CALL_PHONE)
 
