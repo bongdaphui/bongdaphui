@@ -380,7 +380,7 @@ class UpdateClubScreen : BaseFragment() {
 
         val id = "${clubModel?.id}"
 
-        val listPlayer = arrayListOf(Gson().toJson(clubModel?.players))
+        val listPlayer = clubModel?.players ?: ArrayList()
 
         val model = ClubModel(
             id,
