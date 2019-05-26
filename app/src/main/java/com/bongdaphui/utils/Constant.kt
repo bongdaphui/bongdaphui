@@ -1,6 +1,7 @@
 package com.bongdaphui.utils
 
 import android.Manifest
+import com.bongdaphui.BuildConfig
 
 class Constant {
 
@@ -10,9 +11,8 @@ class Constant {
 
     val collectionPathField = if (BuildConfig.DEBUG) "dev_fields" else "fields"
 
-    val collectionPathRequestField = "fields_request"
+    val collectionPathRequestField = if (BuildConfig.DEBUG) "dev_fields_request" else "fields_request"
 
-    val userPathField = "users"
     val userPathField = if (BuildConfig.DEBUG) "dev_users" else "users"
 
     val clubPathField = if (BuildConfig.DEBUG) "dev_clubs" else "clubs"
