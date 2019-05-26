@@ -36,16 +36,16 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
-
-        //setup fire base
-        val builder = FirebaseOptions.Builder()
-            .setApplicationId("1:303996690941:android:37a411d693a33eff")
-            .setApiKey("AIzaSyB5GkogHL0UNqnsY4WVBFb5gq26cO6vJqY")
-            .setDatabaseUrl("https://bongdaphui-27e53.firebaseio.com")
-            .setStorageBucket("bongdaphui-27e53.appspot.com")
-            .setProjectId("bongdaphui-27e53")
-
-        FirebaseApp.initializeApp(this, builder.build())
+//
+//        //setup fire base
+//        val builder = FirebaseOptions.Builder()
+//            .setApplicationId("1:303996690941:android:37a411d693a33eff")
+//            .setApiKey("AIzaSyB5GkogHL0UNqnsY4WVBFb5gq26cO6vJqY")
+//            .setDatabaseUrl("https://bongdaphui-27e53.firebaseio.com")
+//            .setStorageBucket("bongdaphui-27e53.appspot.com")
+//            .setProjectId("bongdaphui-27e53")
+//
+//        FirebaseApp.initializeApp(this, builder.build())
 
         mAuth = FirebaseAuth.getInstance()
 

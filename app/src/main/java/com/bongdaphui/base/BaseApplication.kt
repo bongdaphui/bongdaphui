@@ -5,6 +5,7 @@ import android.content.Context
 import android.support.multidex.MultiDexApplication
 import android.support.v7.app.AppCompatActivity
 import com.google.firebase.FirebaseApp
+import com.google.firebase.storage.FirebaseStorage
 
 @SuppressLint("Registered")
 class BaseApplication : MultiDexApplication() {
@@ -32,7 +33,7 @@ class BaseApplication : MultiDexApplication() {
         mContext = applicationContext
 
         FirebaseApp.initializeApp(applicationContext)
-
+        FirebaseStorage.getInstance().maxOperationRetryTimeMillis = 1000
 
     }
 
