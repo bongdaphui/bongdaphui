@@ -27,6 +27,10 @@ class Constant {
 
     var pathStorageUser = if (BuildConfig.DEBUG) "dev/user_image/" else "user_image/"
 
+    val collectionPathWelcome = "welcome"
+
+    var pathStorageWelcome = "welcome_image/"
+
     val emailRegularExpression =
         "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"
     // Root Database Name for Firebase Database.
@@ -52,6 +56,8 @@ class Constant {
     val KEY_SHARED_PREFERENCES = "football.com.manager"
 
     val KEY_REQUEST_JOIN_TEAM = "request_join_team"
+
+    val keyIsSeenWelcome= "keyIsSeenWelcom"
 
     val KEY_LOGIN_UID_USER = "uid"
     val KEY_LOGIN_TYPE_USER = "type"

@@ -11,11 +11,14 @@ import com.bongdaphui.addField.AddFieldScreen
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.dialog.AlertDialog
+import com.bongdaphui.dialog.WelcomeDialog
 import com.bongdaphui.listener.*
 import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.FbFieldModel
+import com.bongdaphui.model.WelcomeModel
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Enum
+import com.bongdaphui.utils.SharedPreference
 import com.bongdaphui.utils.Utils
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.frg_field.*
@@ -52,6 +55,31 @@ class FieldScreen : BaseFragment() {
 
         onClick()
 
+        initWelcomeDialog()
+
+    }
+
+    private fun initWelcomeDialog() {
+
+        val isSeen =
+            activity?.let { SharedPreference(it).getValueBoolien(SharedPreference.KeyName.KEY_WELCOME.name, false) }
+
+        if (!isSeen!!) {
+            BaseRequest().getWelcome(object : GetDataListener<WelcomeModel> {
+                override fun onSuccess(item: WelcomeModel) {
+
+                }
+
+                override fun onFail(message: String) {
+                }
+
+                override fun onSuccess(list: ArrayList<WelcomeModel>) {
+
+                    context?.let { WelcomeDialog().show(it, list) }
+
+                }
+            })
+        }
     }
 
     private fun getDataFromCache() {

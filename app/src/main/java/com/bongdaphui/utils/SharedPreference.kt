@@ -5,8 +5,17 @@ import android.content.Context
 import android.content.SharedPreferences
 
 class SharedPreference(val context: Context) {
-    private val PREFS_NAME = "brotherfc"
-    val sharedPref: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    private val prefsName = "bongdaphui"
+    private val sharedPref: SharedPreferences = context.getSharedPreferences(prefsName, Context.MODE_PRIVATE)
+
+    enum class KeyName(private val nameString: String) {
+        KEY_WELCOME("KEY_WELCOME");
+
+
+        override fun toString(): String {
+            return nameString
+        }
+    }
 
     @SuppressLint("CommitPrefEdits")
     fun save(KEY_NAME: String, text: String) {
@@ -70,4 +79,6 @@ class SharedPreference(val context: Context) {
         editor.remove(KEY_NAME)
         editor.apply()
     }
+
+
 }

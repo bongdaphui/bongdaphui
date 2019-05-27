@@ -440,4 +440,30 @@ class BaseRequest {
                 listener.onFail(exception.localizedMessage)
             }
     }
+
+    fun getWelcome(listener: GetDataListener<WelcomeModel>) {
+
+        val list: ArrayList<WelcomeModel> = ArrayList()
+
+        FirebaseFirestore.getInstance().collection(Constant().collectionPathWelcome).get()
+
+            .addOnSuccessListener { result ->
+
+                for (document in result) {
+
+                    val welcomeModel = WelcomeModel(
+                        document.data["id"] as String?,
+                        document.data["photo"] as String?,
+                        document.data["title"] as String?,
+                        document.data["content"] as String?
+                    )
+
+                    list.add(welcomeModel)
+                }
+
+                if (list.size > 0) {
+                    listener.onSuccess(list)
+                }
+            }
+    }
 }
