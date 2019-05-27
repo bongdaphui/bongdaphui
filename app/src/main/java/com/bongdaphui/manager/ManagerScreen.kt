@@ -66,6 +66,8 @@ class ManagerScreen : BaseFragment() {
         setTitle(activity!!.resources.getString(R.string.manager))
 
         showFooter(true)
+
+        getVersionApp()
     }
 
     override fun onBindView() {
@@ -221,5 +223,12 @@ class ManagerScreen : BaseFragment() {
             view.animate().setDuration(200).rotation(0f)
             false
         }
+    }
+
+    private fun getVersionApp() {
+        val packageInfo = activity?.packageManager?.getPackageInfo(activity?.packageName, 0)
+        val versionName = packageInfo?.versionName
+
+        frg_manager_tv_version.text = "Phiên bản: $versionName"
     }
 }
