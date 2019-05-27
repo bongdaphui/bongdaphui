@@ -139,7 +139,7 @@ class UpdateAccountScreen : BaseFragment() {
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             requestPermissions(
-                Constant().CAMERA_WRITE_EXTERNAL_PERMISSIONS,
+                Constant().cameraWriteExternalPermission,
                 RequestCode().readExternalStorage
             )
         } else if (ContextCompat.checkSelfPermission(
@@ -242,7 +242,7 @@ class UpdateAccountScreen : BaseFragment() {
                 // Creating second StorageReference.
                 val storageReference2nd: StorageReference =
                     storageReference.child(
-                        Constant().pathStorageUser + System.currentTimeMillis() + "." + Utils().getFileExtension(
+                        FireBasePath().storageUser + System.currentTimeMillis() + "." + Utils().getFileExtension(
                             activity, filePathUri!!
                         )
                     )
@@ -274,7 +274,7 @@ class UpdateAccountScreen : BaseFragment() {
 
     private fun storageData(uriPhoto: String) {
 
-        Log.d(Constant().TAG, uriPhoto)
+        Log.d(Constant().tag, uriPhoto)
 
         val name = frg_update_account_et_full_name.text.toString()
         val email = frg_update_account_et_email.text.toString()

@@ -25,7 +25,6 @@ import com.bongdaphui.utils.*
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.frg_update_club.*
 import java.io.File
 
@@ -188,7 +187,7 @@ class UpdateClubScreen : BaseFragment() {
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             requestPermissions(
-                Constant().CAMERA_WRITE_EXTERNAL_PERMISSIONS,
+                Constant().cameraWriteExternalPermission,
                 RequestCode().readExternalStorage
             )
         } else if (ContextCompat.checkSelfPermission(
@@ -332,7 +331,7 @@ class UpdateClubScreen : BaseFragment() {
                 // Creating second StorageReference.
                 val storageReference2nd: StorageReference =
                     storageReference.child(
-                        Constant().STORAGE_CLUB + System.currentTimeMillis() + "." + Utils().getFileExtension(
+                        FireBasePath().storageClub + System.currentTimeMillis() + "." + Utils().getFileExtension(
                             activity, filePathUri!!
                         )
                     )
@@ -365,7 +364,7 @@ class UpdateClubScreen : BaseFragment() {
 
     private fun storageData(uri: String) {
 
-        Log.d(Constant().TAG, uri)
+        Log.d(Constant().tag, uri)
 
         val name = frg_update_club_et_name_fc.text.toString()
         val caption = frg_update_club_et_captain.text.toString()

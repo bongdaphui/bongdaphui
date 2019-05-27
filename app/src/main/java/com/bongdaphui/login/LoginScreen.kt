@@ -34,7 +34,6 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import kotlinx.android.synthetic.main.frg_add_field.*
 import kotlinx.android.synthetic.main.frg_login.*
 import java.util.*
 
@@ -185,7 +184,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
 
                     val user = getFireBaseAuth()!!.currentUser
 
-                    Log.d(Constant().TAG, "login email uid: " + user!!.uid)
+                    Log.d(Constant().tag, "login email uid: " + user!!.uid)
 
                     checkUserData(user.uid)
 
@@ -217,7 +216,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
 
                     val user = getFireBaseAuth()!!.currentUser
 
-                    Log.d(Constant().TAG, "login fb uid: " + user!!.uid)
+                    Log.d(Constant().tag, "login fb uid: " + user!!.uid)
 
                     checkUserData(user.uid)
 
@@ -246,7 +245,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
 
                     val user = getFireBaseAuth()!!.currentUser
 
-                    Log.d(Constant().TAG, "login gg uid: " + user!!.uid)
+                    Log.d(Constant().tag, "login gg uid: " + user!!.uid)
 
                     checkUserData(user.uid)
 
@@ -341,7 +340,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
                 fireBaseAuthWithGoogle(account!!)
 
             } catch (e: ApiException) {
-                Log.e(Constant().TAG, "Google sign in failed", e)
+                Log.e(Constant().tag, "Google sign in failed", e)
                 activity?.let { it ->
                     AlertDialog().showCustomDialog(
                         it,"Lỗi",
@@ -383,7 +382,7 @@ class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
 
         }
 
-        if (frg_login_with_email_et_input_password.text.toString().length < Constant().LENGTH_PASS_WORD) {
+        if (frg_login_with_email_et_input_password.text.toString().length < Constant().lengthPassWord) {
 
             frg_login_with_email_et_input_password.error = getString(R.string.invalid_password)
 

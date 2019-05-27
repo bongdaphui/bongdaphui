@@ -121,7 +121,7 @@ class AddFieldScreen : BaseFragment() {
 
             showProgress(true)
 
-            BaseRequest().getDataField(Constant().collectionPathField, object : GetDataListener<FbFieldModel> {
+            BaseRequest().getDataField(FireBasePath().collectionField, object : GetDataListener<FbFieldModel> {
                 override fun onSuccess(item: FbFieldModel) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
@@ -217,7 +217,7 @@ class AddFieldScreen : BaseFragment() {
             // Creating second StorageReference.
             val storageReference2nd: StorageReference =
                 storageReference.child(
-                    Constant().pathStorageField + System.currentTimeMillis() + "." + Utils().getFileExtension(
+                    FireBasePath().storageField + System.currentTimeMillis() + "." + Utils().getFileExtension(
                         activity,
                         filePathUri!!
                     )
@@ -277,7 +277,7 @@ class AddFieldScreen : BaseFragment() {
         )
 
         //add data to field request
-        val db = FirebaseFirestore.getInstance().document("${Constant().collectionPathRequestField}/$idField")
+        val db = FirebaseFirestore.getInstance().document("${FireBasePath().collectionRequestField}/$idField")
 
         db.set(fieldModel)
             .addOnSuccessListener {
@@ -292,7 +292,7 @@ class AddFieldScreen : BaseFragment() {
             }
             .addOnFailureListener {
 
-                Log.d(Constant().TAG, "upload field fail : $it")
+                Log.d(Constant().tag, "upload field fail : $it")
 
                 showAlertAddField(activity!!.resources.getString(R.string.add_field_fail))
             }
@@ -363,7 +363,7 @@ class AddFieldScreen : BaseFragment() {
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             requestPermissions(
-                Constant().CAMERA_WRITE_EXTERNAL_PERMISSIONS,
+                Constant().cameraWriteExternalPermission,
                 RequestCode().readExternalStorage
             )
         } else if (ContextCompat.checkSelfPermission(

@@ -12,10 +12,8 @@ import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.model.ScheduleClubModel
-import com.bongdaphui.utils.Constant
-import com.bongdaphui.utils.DateTimeUtil
+import com.bongdaphui.utils.*
 import com.bongdaphui.utils.Enum
-import com.bongdaphui.utils.Utils
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.frg_add_schedule.*
 import java.util.*
@@ -214,7 +212,7 @@ class AddScheduleClubScreen : BaseFragment() {
 
         showProgress(true)
 
-        val db = FirebaseFirestore.getInstance().collection(Constant().scheduleClubPathField)
+        val db = FirebaseFirestore.getInstance().collection(FireBasePath().collectionScheduleClub)
 
         val id =
             DateTimeUtil().getTimeInMilliseconds(startTime, DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format)
@@ -243,7 +241,7 @@ class AddScheduleClubScreen : BaseFragment() {
             }
             .addOnFailureListener {
 
-                Log.d(Constant().TAG, "add schedule club fail : $it")
+                Log.d(Constant().tag, "add schedule club fail : $it")
 
                 showDialogAddScheduleClub(activity!!.resources.getString(R.string.add_schedule_player_fail))
             }

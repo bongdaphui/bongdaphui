@@ -231,7 +231,7 @@ class Utils {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
-                Log.d(Constant().TAG, "spinner onNothingSelected")
+                Log.d(Constant().tag, "spinner onNothingSelected")
 
             }
         }
@@ -247,12 +247,12 @@ class Utils {
 
                 spInterface.onSelectCity(idCity, idDistrict)
 
-//                Log.d(Constant().TAG, "district spinner select with idCity: $idCity - idDistrict : $idDistrict")
+//                Log.d(Constant().tag, "district spinner select with idCity: $idCity - idDistrict : $idDistrict")
 
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
-                Log.d(Constant().TAG, "spinner onNothingSelected")
+                Log.d(Constant().tag, "spinner onNothingSelected")
 
             }
         }
@@ -402,7 +402,7 @@ class Utils {
 
         } catch (e: IOException) {
 
-            Log.d(Constant().TAG, "loadJSONFromAsset fail : ${e.message}")
+            Log.d(Constant().tag, "loadJSONFromAsset fail : ${e.message}")
 
             return null
         }
@@ -450,7 +450,7 @@ class Utils {
             }
         } catch (e: JSONException) {
 
-            Log.d(Constant().TAG, "getListCity fail : ${e.message}")
+            Log.d(Constant().tag, "getListCity fail : ${e.message}")
         }
 
         return listCity
@@ -513,7 +513,7 @@ class Utils {
             }
         } catch (e: JSONException) {
 
-            Log.d(Constant().TAG, "getListField fail : ${e.message}")
+            Log.d(Constant().tag, "getListField fail : ${e.message}")
         }
 
         return listField

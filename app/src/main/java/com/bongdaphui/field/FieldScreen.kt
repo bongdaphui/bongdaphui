@@ -11,15 +11,13 @@ import com.bongdaphui.addField.AddFieldScreen
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.dialog.AlertDialog
-import com.bongdaphui.dialog.WelcomeDialog
+import com.bongdaphui.dialog.TutorialDialog
 import com.bongdaphui.listener.*
 import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.FbFieldModel
-import com.bongdaphui.model.WelcomeModel
-import com.bongdaphui.utils.Constant
+import com.bongdaphui.model.TutorialModel
+import com.bongdaphui.utils.*
 import com.bongdaphui.utils.Enum
-import com.bongdaphui.utils.SharedPreference
-import com.bongdaphui.utils.Utils
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.frg_field.*
 import kotlinx.android.synthetic.main.view_empty.*
@@ -62,20 +60,20 @@ class FieldScreen : BaseFragment() {
     private fun initWelcomeDialog() {
 
         val isSeen =
-            activity?.let { SharedPreference(it).getValueBoolien(SharedPreference.KeyName.KEY_WELCOME.name, false) }
+            activity?.let { SharedPreference(it).getValueBoolien(SharedPreference.KeyName.KEY_TUTORIAL.name, false) }
 
         if (!isSeen!!) {
-            BaseRequest().getWelcome(object : GetDataListener<WelcomeModel> {
-                override fun onSuccess(item: WelcomeModel) {
+            BaseRequest().getTutorial(object : GetDataListener<TutorialModel> {
+                override fun onSuccess(item: TutorialModel) {
 
                 }
 
                 override fun onFail(message: String) {
                 }
 
-                override fun onSuccess(list: ArrayList<WelcomeModel>) {
+                override fun onSuccess(list: ArrayList<TutorialModel>) {
 
-                    context?.let { WelcomeDialog().show(it, list) }
+                    context?.let { TutorialDialog().show(it, list) }
 
                 }
             })
@@ -126,7 +124,7 @@ class FieldScreen : BaseFragment() {
 
         showProgress(true)
 
-        BaseRequest().getDataField(Constant().collectionPathField, object : GetDataListener<FbFieldModel> {
+        BaseRequest().getDataField(FireBasePath().collectionField, object : GetDataListener<FbFieldModel> {
             override fun onSuccess(item: FbFieldModel) {
             }
 
@@ -185,7 +183,7 @@ class FieldScreen : BaseFragment() {
                     BaseSpinnerSelectInterface {
                     override fun onSelectCity(_idCity: String, _idDistrict: String) {
 
-//                        Log.d(Constant().TAG, "spinner onSelectCity with idCity: $_idCity - idDistrict : $_idDistrict")
+//                        Log.d(Constant().tag, "spinner onSelectCity with idCity: $_idCity - idDistrict : $_idDistrict")
 
                         val fieldListTemp: ArrayList<FbFieldModel> = ArrayList()
 
@@ -271,7 +269,7 @@ class FieldScreen : BaseFragment() {
         if (listFieldRequest.size > 0) {
 
             //check field
-            BaseRequest().getDataField(Constant().collectionPathField, object : GetDataListener<FbFieldModel> {
+            BaseRequest().getDataField(FireBasePath().collectionField, object : GetDataListener<FbFieldModel> {
                 override fun onSuccess(item: FbFieldModel) {
                 }
 
@@ -283,16 +281,16 @@ class FieldScreen : BaseFragment() {
 
                             //san nay da ton tai => xoa field request
                             BaseRequest().deleteDocument(
-                                Constant().collectionPathRequestField,
+                                FireBasePath().collectionRequestField,
                                 listFieldRequest[step].id.toString(),
                                 object : DeleteDataDataListener {
                                     override fun onFail(message: String) {
-                                        Log.d(Constant().TAG, "delete field  request fail : $message")
+                                        Log.d(Constant().tag, "delete field  request fail : $message")
 
                                     }
 
                                     override fun onSuccess() {
-                                        Log.d(Constant().TAG, "delete field request success")
+                                        Log.d(Constant().tag, "delete field request success")
 
                                         showProgress(false)
 
@@ -305,49 +303,49 @@ class FieldScreen : BaseFragment() {
 
                     //add data from field request to field
                     val db = FirebaseFirestore.getInstance()
-                        .document("${Constant().collectionPathField}/${listFieldRequest[step].id}")
+                        .document("${FireBasePath().collectionField}/${listFieldRequest[step].id}")
 
                     db.set(listFieldRequest[step])
                         .addOnSuccessListener {
-                            Log.d(Constant().TAG, "add field request success")
+                            Log.d(Constant().tag, "add field request success")
 
                             step++
 
                             showProgress(false)
 
                             //xoa field request
-                            BaseRequest().deleteDocument(
-                                Constant().collectionPathRequestField,
+                            /*BaseRequest().deleteDocument(
+                                FireBasePath().collectionRequestField,
                                 listFieldRequest[step].id.toString(),
                                 object : DeleteDataDataListener {
                                     override fun onFail(message: String) {
-                                        Log.d(Constant().TAG, "delete field  request after add fail : $message")
+                                        Log.d(Constant().tag, "delete field  request after add fail : $message")
 
                                     }
 
                                     override fun onSuccess() {
-                                        Log.d(Constant().TAG, "delete field request after add success")
+                                        Log.d(Constant().tag, "delete field request after add success")
 
                                         showProgress(false)
 
                                     }
-                                })
+                                })*/
                         }
                         .addOnFailureListener {
 
-                            Log.d(Constant().TAG, "upload field fail : $it")
+                            Log.d(Constant().tag, "upload field fail : $it")
                         }
                 }
 
                 override fun onFail(message: String) {
-                    Log.d(Constant().TAG, "check field fail : $message")
+                    Log.d(Constant().tag, "check field fail : $message")
 
                 }
             })
 
         } else {
 
-            BaseRequest().getDataField(Constant().collectionPathRequestField, object : GetDataListener<FbFieldModel> {
+            BaseRequest().getDataField(FireBasePath().collectionRequestField, object : GetDataListener<FbFieldModel> {
                 override fun onSuccess(item: FbFieldModel) {
 
                 }
@@ -371,7 +369,7 @@ class FieldScreen : BaseFragment() {
                 }
 
                 override fun onFail(message: String) {
-                    Log.d(Constant().TAG, "get list field request fail : $message")
+                    Log.d(Constant().tag, "get list field request fail : $message")
 
                 }
             })

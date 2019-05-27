@@ -14,7 +14,6 @@ import com.bongdaphui.model.UserModel
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.frg_login.*
 import kotlinx.android.synthetic.main.frg_register_with_email.*
 
 
@@ -101,7 +100,7 @@ class RegisterWithEmailScreen : BaseFragment() {
 
                     val user = getFireBaseAuth()!!.currentUser
 
-                    Log.d(Constant().TAG, "register email uid: " + user!!.uid)
+                    Log.d(Constant().tag, "register email uid: " + user!!.uid)
 
                     val userModel = UserModel(user.uid, "", "", email, "", "", "", "", "", ArrayList())
 
@@ -170,7 +169,7 @@ class RegisterWithEmailScreen : BaseFragment() {
             valid = false
         }
 
-        if (frg_register_with_email_et_input_password.text.toString().length < Constant().LENGTH_PASS_WORD) {
+        if (frg_register_with_email_et_input_password.text.toString().length < Constant().lengthPassWord) {
 
             frg_register_with_email_tv_error_input_password.visibility = View.VISIBLE
             frg_register_with_email_tv_error_input_password.text =

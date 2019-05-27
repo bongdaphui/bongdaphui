@@ -9,7 +9,7 @@ class SharedPreference(val context: Context) {
     private val sharedPref: SharedPreferences = context.getSharedPreferences(prefsName, Context.MODE_PRIVATE)
 
     enum class KeyName(private val nameString: String) {
-        KEY_WELCOME("KEY_WELCOME");
+        KEY_TUTORIAL("KEY_TUTORIAL");
 
 
         override fun toString(): String {

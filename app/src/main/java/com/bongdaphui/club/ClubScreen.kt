@@ -113,7 +113,7 @@ class ClubScreen : BaseFragment() {
 
                 showProgress(false)
 
-                Log.d(Constant().TAG, "firebase field fail, message: $message")
+                Log.d(Constant().tag, "firebase field fail, message: $message")
             }
         })
     }

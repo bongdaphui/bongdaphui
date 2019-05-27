@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bongdaphui.R
-import com.bongdaphui.model.WelcomeModel
+import com.bongdaphui.model.TutorialModel
 import com.bumptech.glide.Glide
 
-class WelcomeAdapter(val context: Context, val inflater: LayoutInflater, val items: ArrayList<WelcomeModel>) : PagerAdapter() {
+class TutorialAdapter(val context: Context, val inflater: LayoutInflater, val items: ArrayList<TutorialModel>) : PagerAdapter() {
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         container.removeView(`object` as View)
@@ -19,7 +19,7 @@ class WelcomeAdapter(val context: Context, val inflater: LayoutInflater, val ite
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
 
-        val holder = inflater.inflate(R.layout.item_welcome_step, container, false)
+        val holder = inflater.inflate(R.layout.item_tutorial_step, container, false)
 
         container.addView(holder, 0)
 

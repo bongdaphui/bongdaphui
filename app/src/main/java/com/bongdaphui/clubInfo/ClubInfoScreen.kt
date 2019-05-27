@@ -227,14 +227,14 @@ class ClubInfoScreen : BaseFragment() {
         context?.let {
             val sharePreferenceManager = SharePreferenceManager.getInstance(it)
             val type = object : TypeToken<ArrayList<String>>() {}.type
-            val currentRequestStr = sharePreferenceManager.getString(Constant().KEY_REQUEST_JOIN_TEAM)
+            val currentRequestStr = sharePreferenceManager.getString(Constant().keyRequestJoinTeam)
 
             var arrSavedRequest: ArrayList<String> =
                 if (TextUtils.isEmpty(currentRequestStr)) ArrayList() else Gson().fromJson(currentRequestStr, type)
             if (!arrSavedRequest.contains(id + userModel?.id)) {
                 arrSavedRequest.add(id + userModel?.id)
             }
-            sharePreferenceManager.setString(Constant().KEY_REQUEST_JOIN_TEAM, Gson().toJson(arrSavedRequest))
+            sharePreferenceManager.setString(Constant().keyRequestJoinTeam, Gson().toJson(arrSavedRequest))
         }
     }
 
@@ -243,7 +243,7 @@ class ClubInfoScreen : BaseFragment() {
         context?.let {
             val sharePreferenceManager = SharePreferenceManager.getInstance(it)
             val type = object : TypeToken<ArrayList<String>>() {}.type
-            val currentRequestStr = sharePreferenceManager.getString(Constant().KEY_REQUEST_JOIN_TEAM)
+            val currentRequestStr = sharePreferenceManager.getString(Constant().keyRequestJoinTeam)
             if (TextUtils.isEmpty(currentRequestStr)) {
                 return ArrayList()
             }

@@ -64,7 +64,7 @@ class DateTimeUtil {
             val mDate = sdf.parse(date)
             timeInMilliseconds = mDate.time
         } catch (e: ParseException) {
-            Log.d(Constant().TAG, "getTimeInMilliseconds : ${e.message}")
+            Log.d(Constant().tag, "getTimeInMilliseconds : ${e.message}")
         }
         return timeInMilliseconds
     }

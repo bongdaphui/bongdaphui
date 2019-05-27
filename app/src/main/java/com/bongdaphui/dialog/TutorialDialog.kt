@@ -13,11 +13,11 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.bongdaphui.R
-import com.bongdaphui.model.WelcomeModel
+import com.bongdaphui.model.TutorialModel
 import com.bongdaphui.utils.SharedPreference
 
-class WelcomeDialog {
-    fun show(context: Context, list: ArrayList<WelcomeModel>) {
+class TutorialDialog {
+    fun show(context: Context, list: ArrayList<TutorialModel>) {
         val dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_welcome)
@@ -27,7 +27,7 @@ class WelcomeDialog {
         lp.width = WindowManager.LayoutParams.MATCH_PARENT
         lp.height = WindowManager.LayoutParams.MATCH_PARENT
 
-        val adapter = WelcomeAdapter(context, LayoutInflater.from(context), list)
+        val adapter = TutorialAdapter(context, LayoutInflater.from(context), list)
 
         val viewPager: ViewPager = dialog.findViewById(R.id.dialog_welcome_view_pager) as ViewPager
 
@@ -45,7 +45,7 @@ class WelcomeDialog {
                     bottomProgressDots(context, dialog, position, list)
 
                     if (position == list.size - 1) {
-                        context.let { SharedPreference(it).save(SharedPreference.KeyName.KEY_WELCOME.name, true) }
+                        context.let { SharedPreference(it).save(SharedPreference.KeyName.KEY_TUTORIAL.name, true) }
                         btnNext.text = context.getString(R.string.close)
                         btnNext.setBackgroundColor(context.resources.getColor(R.color.orange_400))
                         btnNext.setTextColor(Color.WHITE)
@@ -83,7 +83,7 @@ class WelcomeDialog {
 
     }
 
-    fun bottomProgressDots(context: Context, dialog: Dialog, currentIndex: Int, list: ArrayList<WelcomeModel>) {
+    fun bottomProgressDots(context: Context, dialog: Dialog, currentIndex: Int, list: ArrayList<TutorialModel>) {
         val dotsLayout = dialog.findViewById(R.id.dialog_welcome_layout_dots) as LinearLayout
         val dots = arrayOfNulls<ImageView>(list.size)
 

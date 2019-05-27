@@ -29,7 +29,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.frg_add_club.*
-import kotlinx.android.synthetic.main.frg_add_field.*
 import java.io.File
 import java.util.*
 
@@ -183,7 +182,7 @@ class AddClubScreen : BaseFragment() {
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             requestPermissions(
-                Constant().CAMERA_WRITE_EXTERNAL_PERMISSIONS,
+                Constant().cameraWriteExternalPermission,
                 RequestCode().readExternalStorage
             )
         } else if (ContextCompat.checkSelfPermission(
@@ -316,7 +315,7 @@ class AddClubScreen : BaseFragment() {
                 // Creating second StorageReference.
                 val storageReference2nd: StorageReference =
                     storageReference.child(
-                        Constant().STORAGE_CLUB + System.currentTimeMillis() + "." + Utils().getFileExtension(
+                        FireBasePath().storageClub + System.currentTimeMillis() + "." + Utils().getFileExtension(
                             activity, filePathUri!!
                         )
                     )
@@ -351,7 +350,7 @@ class AddClubScreen : BaseFragment() {
 
     private fun storageData(uri: String) {
 
-        Log.d(Constant().TAG, uri)
+        Log.d(Constant().tag, uri)
 
         val name = frg_add_club_et_name_fc.text.toString()
         val caption = frg_add_club_et_captain.text.toString()

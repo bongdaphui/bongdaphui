@@ -71,7 +71,7 @@ class FieldAdapter(
         } else {
 
             viewHolder.price.text =
-                "${Utils().formatMoney(Constant().ONE_DECIMAL_FORMAT, model.price!!)} VND"
+                "${Utils().formatMoney(Constant().oneDecimalFormat, model.price!!)} VND"
         }
 
         viewHolder.container.setOnClickListener {

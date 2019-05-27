@@ -136,7 +136,7 @@ class MyClubScreen : BaseFragment() {
 
                 showEmptyView(true)
 
-                Log.d(Constant().TAG, "firebase my club fail, message: $message")
+                Log.d(Constant().tag, "firebase my club fail, message: $message")
             }
         })
     }

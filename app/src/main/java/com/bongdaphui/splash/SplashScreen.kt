@@ -34,7 +34,7 @@ class SplashScreen : BaseFragment() {
 
         if (null != currentUser) {
 
-            Log.d(Constant().TAG, "splash user uid: ${currentUser.uid}")
+            Log.d(Constant().tag, "splash user uid: ${currentUser.uid}")
 
             openFindField()
 

@@ -12,10 +12,8 @@ import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.model.SchedulePlayerModel
-import com.bongdaphui.utils.Constant
-import com.bongdaphui.utils.DateTimeUtil
+import com.bongdaphui.utils.*
 import com.bongdaphui.utils.Enum
-import com.bongdaphui.utils.Utils
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.frg_add_schedule.*
 import java.util.*
@@ -216,7 +214,7 @@ class AddSchedulePlayerScreen : BaseFragment() {
 
         showProgress(true)
 
-        val db = FirebaseFirestore.getInstance().collection(Constant().schedulePlayerPathField)
+        val db = FirebaseFirestore.getInstance().collection(FireBasePath().collectionSchedulePlayer)
 
         val id =
             DateTimeUtil().getTimeInMilliseconds(startTime, DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format)
@@ -246,7 +244,7 @@ class AddSchedulePlayerScreen : BaseFragment() {
             }
             .addOnFailureListener {
 
-                Log.d(Constant().TAG, "add schedule player fail : $it")
+                Log.d(Constant().tag, "add schedule player fail : $it")
 
                 showDialogAddSchedulePlayer(activity!!.resources.getString(R.string.add_schedule_player_fail))
             }
