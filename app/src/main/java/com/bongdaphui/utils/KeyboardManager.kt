@@ -19,7 +19,7 @@ object KeyboardManager {
     fun isShowSoftKeyboard(activity: AppCompatActivity): Boolean {
 
         val inputMethodManager = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        return inputMethodManager.isActive
+        return inputMethodManager.isActive(activity.currentFocus)
 
     }
 

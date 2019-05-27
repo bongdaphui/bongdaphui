@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.text.TextUtils
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.bongdaphui.R
@@ -67,6 +68,7 @@ class ClubInfoScreen : BaseFragment() {
     override fun onResume() {
 
         super.onResume()
+
 
         showHeader(false)
 
@@ -156,10 +158,8 @@ class ClubInfoScreen : BaseFragment() {
     @SuppressLint("RestrictedApi")
     private fun onClick() {
 
-        toolbar.setOnClickListener {
-
-            onBackPressed()
-
+        toolbar.setNavigationOnClickListener {
+            super.onBackPressed()
         }
 
         val userCurrentStickModel =
@@ -196,6 +196,8 @@ class ClubInfoScreen : BaseFragment() {
             }))
         }
     }
+
+
 
     private fun requestJoinGroup(message: String) {
 
@@ -338,6 +340,7 @@ class ClubInfoScreen : BaseFragment() {
             )
         }
     }
+
 }
 
 
