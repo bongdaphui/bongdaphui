@@ -20,7 +20,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:layout_marginStart" tools:ignore="NewApi">@dimen/fs_15</item>
+        <item name="android:layout_marginStart">@dimen/fs_15</item>
     </style>
 
     <style name="title_item_input">
@@ -30,7 +30,7 @@
         <item name="android:layout_marginBottom">@dimen/fs_12</item>
         <item name="android:textColor">@color/c_2d2d2d</item>
         <item name="android:textSize">@dimen/ts_12</item>
-        <item name="android:fontFamily" tools:ignore="NewApi">@font/axis_std_bold</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="et_item_input">
@@ -42,10 +42,9 @@
         <item name="android:scrollHorizontally">true</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textColorHint">@color/c_9b9b9b</item>
-        <item name="android:textSize">@dimen/ts_13</item>
         <item name="android:textCursorDrawable">@null</item>
-        <item name="android:layout_marginStart" tools:ignore="NewApi">@dimen/fs_15</item>
-        <item name="android:fontFamily" tools:ignore="NewApi">@font/axis_std_regular</item>
+        <item name="android:layout_marginStart">@dimen/fs_15</item>
+        <item name="android:textSize">@dimen/ts_12</item>
         <item name="android:imeOptions">actionNext</item>
     </style>
 
@@ -62,9 +61,8 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/c_b21225</item>
-        <item name="android:fontFamily" tools:ignore="NewApi">@font/axis_std_regular</item>
-        <item name="android:textSize">@dimen/ts_10</item>
         <item name="android:layout_marginTop">@dimen/fs_3</item>
+        <item name="android:textSize">@dimen/ts_12</item>
         <item name="android:layout_marginBottom">@dimen/fs_3</item>
         <item name="android:visibility">invisible</item>
     </style>
@@ -74,23 +72,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/c_2d2d2d</item>
         <item name="android:textSize">@dimen/ts_12</item>
-        <item name="android:fontFamily" tools:ignore="NewApi">@font/axis_std_bold</item>
-    </style>
-
-    <style name="tv_ts_14_c_white_regular">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">@dimen/ts_14</item>
-        <item name="android:fontFamily">@font/axis_std_regular</item>
-    </style>
-
-    <style name="tv_ts_14_c_2d2d2d_regular">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/c_2d2d2d</item>
-        <item name="android:textSize">@dimen/ts_14</item>
-        <item name="android:fontFamily">@font/axis_std_regular</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="tv_ts_15_c_white_bold">
@@ -98,7 +80,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/ts_15</item>
-        <item name="android:fontFamily" tools:ignore="NewApi">@font/axis_std_bold</item>
+        <item name="android:textStyle">bold</item>
+
     </style>
 
     <style name="tv_ts_15_c_2d2d2d_bold">
@@ -106,7 +89,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/c_2d2d2d</item>
         <item name="android:textSize">@dimen/ts_15</item>
-        <item name="android:fontFamily" tools:ignore="NewApi">@font/axis_std_bold</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="tv_ts_15_c_black_bold">
@@ -114,7 +97,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">@dimen/ts_15</item>
-        <item name="android:fontFamily" tools:ignore="NewApi">@font/axis_std_bold</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="tv_ts_16_c_accent_dark_bold">
@@ -122,7 +105,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:textSize">@dimen/ts_16</item>
-        <item name="android:fontFamily">@font/axis_std_bold</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="tv_ts_16_c_2d2d2d_regular">
@@ -130,16 +113,6 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/c_2d2d2d</item>
         <item name="android:textSize">@dimen/ts_16</item>
-        <item name="android:fontFamily">@font/axis_std_regular</item>
-    </style>
-
-
-    <style name="tv_ts_18_c_2d2d2d_bold">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/c_2d2d2d</item>
-        <item name="android:textSize">@dimen/ts_18</item>
-        <item name="android:fontFamily" tools:ignore="NewApi">@font/axis_std_bold</item>
     </style>
 
     <style name="ExpandedTitle" parent="@android:style/TextAppearance">

@@ -456,7 +456,7 @@ class Utils {
         return listCity
     }
 
-    fun getListField(context: Context): ArrayList<FbFieldModel> {
+    /*fun getListField(context: Context): ArrayList<FbFieldModel> {
 
         val listField = ArrayList<FbFieldModel>()
 
@@ -517,7 +517,7 @@ class Utils {
         }
 
         return listField
-    }
+    }*/
 
     fun hiddenRefresh(swipeRefreshLayout: SwipeRefreshLayout?) {
 
