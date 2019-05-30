@@ -21,6 +21,7 @@ import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import kotlinx.android.synthetic.main.frg_find_player.*
 import kotlinx.android.synthetic.main.view_empty.*
+import kotlinx.android.synthetic.main.view_floating_action_button.*
 import java.util.*
 import kotlin.collections.ArrayList
 

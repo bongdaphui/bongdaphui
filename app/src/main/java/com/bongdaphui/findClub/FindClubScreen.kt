@@ -21,6 +21,7 @@ import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import kotlinx.android.synthetic.main.frg_find_club.*
 import kotlinx.android.synthetic.main.view_empty.*
+import kotlinx.android.synthetic.main.view_floating_action_button.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -87,7 +88,7 @@ class FindClubScreen : BaseFragment() {
 
     private fun onClick() {
 
-        frg_find_club_floatingActionButton.setOnClickListener {
+        floatingActionButton.setOnClickListener {
             showSingleChoiceDialog()
         }
     }

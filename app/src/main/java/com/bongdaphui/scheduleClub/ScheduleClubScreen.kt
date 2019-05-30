@@ -15,6 +15,7 @@ import com.bongdaphui.model.ScheduleClubModel
 import com.bongdaphui.utils.DateTimeUtil
 import kotlinx.android.synthetic.main.frg_schedule.*
 import kotlinx.android.synthetic.main.view_empty.*
+import kotlinx.android.synthetic.main.view_floating_action_button.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -52,7 +53,6 @@ class ScheduleClubScreen : BaseFragment() {
         getData()
 
         floatingActionButton.visibility = View.GONE
-
     }
 
     private fun initListSchedule() {
