@@ -1,18 +1,18 @@
 package com.bongdaphui.findClub
 
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.bongdaphui.R
+import com.bongdaphui.addScheduleClub.AddScheduleClubScreen
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.clubInfo.ClubInfoScreen
-import com.bongdaphui.listener.BaseSpinnerSelectInterface
-import com.bongdaphui.listener.GetDataListener
-import com.bongdaphui.listener.OnItemClickListener
+import com.bongdaphui.listener.*
 import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.model.ScheduleClubModel
@@ -33,6 +33,8 @@ class FindClubScreen : BaseFragment() {
 
     private lateinit var findClubAdapter: FindClubAdapter
 
+    private var listMyClubModel: ArrayList<ClubModel> = ArrayList()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         return inflater.inflate(R.layout.frg_find_club, container, false)
@@ -50,12 +52,91 @@ class FindClubScreen : BaseFragment() {
 
     override fun onBindView() {
 
+        onClick()
+
         initListSchedule()
 
         getData()
 
         refreshData()
 
+        getMyClub()
+    }
+
+    private fun getMyClub() {
+
+        BaseRequest().getClubs(object : GetDataListener<ClubModel> {
+            override fun onSuccess(list: ArrayList<ClubModel>) {
+
+                listMyClubModel.clear()
+
+                for (i in 0 until list.size) {
+                    if (getUIDUser() == list[i].idCaptain) {
+                        listMyClubModel.add(list[i])
+                    }
+                }
+            }
+
+            override fun onSuccess(item: ClubModel) {
+            }
+
+            override fun onFail(message: String) {
+            }
+        })
+    }
+
+    private fun onClick() {
+
+        frg_find_club_floatingActionButton.setOnClickListener {
+            showSingleChoiceDialog()
+        }
+    }
+
+    private fun showSingleChoiceDialog() {
+
+        if (listMyClubModel.size > 0) {
+
+            val clubs = arrayOfNulls<String>(listMyClubModel.size)
+
+            var clubModel: ClubModel = listMyClubModel[0]
+
+            for (i in 0 until listMyClubModel.size) {
+                clubs[i] = listMyClubModel[i].name
+            }
+
+            val builder = activity?.let { AlertDialog.Builder(it) }
+
+            builder?.setTitle("Chọn đội bóng để thêm lịch thi đấu")
+
+            builder?.setSingleChoiceItems(clubs, 0) { _, i -> clubModel = listMyClubModel[i] }
+
+            builder?.setPositiveButton(R.string.agree) { _, _ ->
+                addFragment(AddScheduleClubScreen.getInstance(clubModel, object : AddDataListener {
+                    override fun onSuccess() {
+                        getData()
+                    }
+                }))
+            }
+
+            builder?.setNegativeButton(R.string.cancel, null)
+
+            builder?.show()
+
+        } else {
+            activity?.let { it ->
+                com.bongdaphui.dialog.AlertDialog().showCustomDialog(
+                    it,
+                    activity!!.resources.getString(R.string.alert),
+                    activity!!.resources.getString(R.string.you_no_club),
+                    "",
+                    activity!!.resources.getString(R.string.agree),
+                    object : AcceptListener {
+                        override fun onAccept(inputText: String) {
+                        }
+                    }
+                )
+            }
+        }
     }
 
     private fun initListSchedule() {
@@ -124,7 +205,6 @@ class FindClubScreen : BaseFragment() {
                 showEmptyView(false)
 
                 initFilterBox()
-
             }
 
             override fun onFail(message: String) {

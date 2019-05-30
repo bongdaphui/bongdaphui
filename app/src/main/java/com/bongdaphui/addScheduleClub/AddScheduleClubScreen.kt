@@ -9,6 +9,7 @@ import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.AcceptListener
+import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.model.ClubModel
 import com.bongdaphui.model.ScheduleClubModel
@@ -27,13 +28,14 @@ class AddScheduleClubScreen : BaseFragment() {
     companion object {
 
         private var clubModel: ClubModel? = null
+        private var addDataListener: AddDataListener? = null
 
-        fun getInstance(model: ClubModel): AddScheduleClubScreen {
+        fun getInstance(model: ClubModel, listener: AddDataListener): AddScheduleClubScreen {
 
             clubModel = model
+            addDataListener = listener
 
             return AddScheduleClubScreen()
-
         }
     }
 
@@ -236,7 +238,7 @@ class AddScheduleClubScreen : BaseFragment() {
 
         db.document(idDocument).set(scheduleClubModel)
             .addOnSuccessListener {
-
+                addDataListener?.onSuccess()
                 showDialogAddScheduleClub(activity!!.resources.getString(R.string.add_schedule_player_success))
             }
             .addOnFailureListener {

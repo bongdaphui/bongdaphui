@@ -120,5 +120,6 @@
     <string name="list_player_request_join">Cầu thủ xin gia nhập đội</string>
     <string name="please_choose_district">Vui lòng chọn Quận / Huyện</string>
     <string name="next">Tiếp theo</string>
+    <string name="you_no_club">Bạn vẫn chưa quản lý câu lạc bộ nào</string>
 
 </resources>
