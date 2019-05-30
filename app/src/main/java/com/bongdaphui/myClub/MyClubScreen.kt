@@ -22,6 +22,7 @@ import com.bongdaphui.utils.Utils
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.frg_club.*
 import kotlinx.android.synthetic.main.view_empty.*
+import kotlinx.android.synthetic.main.view_floating_action_button.*
 
 
 class MyClubScreen : BaseFragment() {
@@ -144,7 +145,7 @@ class MyClubScreen : BaseFragment() {
 
     private fun onClick() {
 
-        frg_club_fab.setOnClickListener {
+        floatingActionButton.setOnClickListener {
             addFragment(AddClubScreen.getInstance(object : AddDataListener {
                 override fun onSuccess() {
                     getData()

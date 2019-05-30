@@ -65,18 +65,7 @@
 
         <include layout="@layout/view_empty"/>
 
-        <android.support.design.widget.FloatingActionButton
-                android:id="@+id/frg_field_fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_plus"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="16dp"
-                android:visibility="visible"
-                android:backgroundTint="@color/colorPrimaryDark"
-                android:layout_alignParentRight="true"
-                tools:ignore="RtlHardcoded"/>
+        <include layout="@layout/view_floating_action_button"/>
 
     </RelativeLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

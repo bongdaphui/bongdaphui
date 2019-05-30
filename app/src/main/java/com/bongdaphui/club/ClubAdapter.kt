@@ -37,7 +37,10 @@ class ClubAdapter(
         val model: ClubModel = items[position]
 
         if (!TextUtils.isEmpty(model.photo)) {
-            context?.let { Glide.with(it).asBitmap().load(model.photo).into(viewHolder.photo) }
+            context?.let {
+                Glide.with(it).asBitmap().load(model.photo).placeholder(R.drawable.ic_no_image_grey)
+                    .into(viewHolder.photo)
+            }
         } else {
             viewHolder.photo.setImageResource(R.drawable.ic_no_image_grey)
         }

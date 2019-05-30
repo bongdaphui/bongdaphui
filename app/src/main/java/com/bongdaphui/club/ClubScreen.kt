@@ -21,6 +21,7 @@ import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import kotlinx.android.synthetic.main.frg_club.*
 import kotlinx.android.synthetic.main.view_empty.*
+import kotlinx.android.synthetic.main.view_floating_action_button.*
 
 
 class ClubScreen : BaseFragment() {
@@ -49,7 +50,7 @@ class ClubScreen : BaseFragment() {
 
         initAdapter()
 
-        frg_club_fab.visibility = View.GONE
+        floatingActionButton.visibility = View.GONE
 
         loadListClub()
     }

@@ -55,7 +55,10 @@ class FindPlayerAdapter(
             }}"
 
         if (!TextUtils.isEmpty(model.photoUrlPlayer)) {
-            context?.let { Glide.with(it).asBitmap().load(model.photoUrlPlayer).into(holder.imageView) }
+            context?.let {
+                Glide.with(it).asBitmap().load(model.photoUrlPlayer).placeholder(R.drawable.ic_person_grey)
+                    .into(holder.imageView)
+            }
         } else {
             holder.imageView.setImageResource(R.drawable.ic_person_grey)
         }

@@ -58,14 +58,6 @@
 
     <include layout="@layout/view_empty"/>
 
-    <android.support.design.widget.FloatingActionButton
-            android:id="@+id/frg_club_fab"
-            android:layout_width="wrap_content"
-            android:src="@drawable/ic_plus"
-            android:layout_alignParentEnd="true"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="@dimen/fs_16"
-            android:backgroundTint="@color/colorPrimaryDark"/>
+    <include layout="@layout/view_floating_action_button"/>
 
 </RelativeLayout>

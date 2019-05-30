@@ -65,5 +65,7 @@
 
         <include layout="@layout/view_empty"/>
 
+        <include layout="@layout/view_floating_action_button"/>
+
     </RelativeLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

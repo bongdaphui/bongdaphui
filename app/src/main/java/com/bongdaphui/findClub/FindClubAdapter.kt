@@ -56,7 +56,8 @@ class FindClubAdapter(
 
         if (!TextUtils.isEmpty(model.photoUrl)) {
             context?.let {
-                Glide.with(it).asBitmap().load(model.photoUrl).into(holder.imageView)
+                Glide.with(it).asBitmap().load(model.photoUrl).placeholder(R.drawable.ic_no_image_grey)
+                    .into(holder.imageView)
             }
         } else {
             holder.imageView.setImageResource(R.drawable.ic_no_image_grey)

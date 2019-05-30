@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bongdaphui.R
+import com.bongdaphui.addSchedulePlayer.AddSchedulePlayerScreen
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
+import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.OnItemClickListener
@@ -19,6 +21,7 @@ import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import kotlinx.android.synthetic.main.frg_find_player.*
 import kotlinx.android.synthetic.main.view_empty.*
+import kotlinx.android.synthetic.main.view_floating_action_button.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -48,12 +51,26 @@ class FindPlayerScreen : BaseFragment() {
 
     override fun onBindView() {
 
+        onClick()
+
         initListSchedule()
 
         getData()
 
         refreshData()
 
+    }
+
+    private fun onClick() {
+
+        floatingActionButton.setOnClickListener {
+            addFragment(AddSchedulePlayerScreen.getInstance(object : AddDataListener {
+                override fun onSuccess() {
+                    getData()
+                }
+
+            }))
+        }
     }
 
     private fun initListSchedule() {

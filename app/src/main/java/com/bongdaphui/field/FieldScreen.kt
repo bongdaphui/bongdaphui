@@ -21,6 +21,7 @@ import com.bongdaphui.utils.Enum
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.frg_field.*
 import kotlinx.android.synthetic.main.view_empty.*
+import kotlinx.android.synthetic.main.view_floating_action_button.*
 
 class FieldScreen : BaseFragment() {
 
@@ -210,7 +211,7 @@ class FieldScreen : BaseFragment() {
 
     private fun onClick() {
 
-        frg_field_fab.setOnClickListener {
+        floatingActionButton.setOnClickListener {
 
             addFragment(AddFieldScreen.getInstance(object : AddDataListener {
                 override fun onSuccess() {
