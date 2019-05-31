@@ -23,9 +23,10 @@ import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
 import com.bongdaphui.model.CityModel
-import com.bongdaphui.model.CommentModel
 import com.bongdaphui.model.DistrictModel
-import com.bongdaphui.model.FbFieldModel
+import com.google.gson.Gson
+import com.google.gson.JsonArray
+import com.google.gson.reflect.TypeToken
 import org.json.JSONArray
 import org.json.JSONException
 import java.io.IOException
@@ -559,5 +560,19 @@ class Utils {
             validate = true
         }
         return validate
+    }
+
+    fun <T> listToArray(list: ArrayList<T>): JsonArray {
+        val gson = Gson()
+        val element = gson.toJsonTree(list, object : TypeToken<List<T>>() {
+
+        }.type)
+
+        if (!element.isJsonArray) {
+            // fail appropriately
+
+        }
+
+        return element.asJsonArray
     }
 }

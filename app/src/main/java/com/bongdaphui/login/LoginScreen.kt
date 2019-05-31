@@ -40,7 +40,6 @@ import java.util.*
 
 class LoginScreen : BaseFragment(), GoogleApiClient.OnConnectionFailedListener {
     override fun onConnectionFailed(p0: ConnectionResult) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private var mGoogleSignInClient: GoogleSignInClient? = null

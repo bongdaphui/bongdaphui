@@ -78,7 +78,6 @@ class MyClubScreen : BaseFragment() {
 
                     addFragment(AddScheduleClubScreen.getInstance(item, object : AddDataListener {
                         override fun onSuccess() {
-                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                         }
 
                     }))
