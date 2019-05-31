@@ -6,7 +6,7 @@ import android.arch.persistence.room.TypeConverters
 import com.bongdaphui.model.FbFieldModel
 import com.bongdaphui.model.UserModel
 
-@Database(entities = [FbFieldModel::class, UserModel::class], version = 1,exportSchema = false)
+@Database(entities = [FbFieldModel::class, UserModel::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 

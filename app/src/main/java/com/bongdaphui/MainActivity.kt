@@ -53,6 +53,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
         database = Room.databaseBuilder(this, AppDatabase::class.java, Constant().roomData)
             .allowMainThreadQueries()
+            .fallbackToDestructiveMigration()
             .build()
 
         //check intent
@@ -62,8 +63,6 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         } else {
             replaceFragment(SplashScreen(), true)
         }
-
-
     }
 
     fun getFireBaseAuth(): FirebaseAuth? {

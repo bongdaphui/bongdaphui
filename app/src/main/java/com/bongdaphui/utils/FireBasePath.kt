@@ -8,7 +8,7 @@ class FireBasePath {
 
     val collectionTutorial = "tutorial"
 
-    val collectionField = if (BuildConfig.DEBUG) "dev_fields" else "fields"
+    val collectionField = "fields"
 
     val collectionRequestField = if (BuildConfig.DEBUG) "dev_fields_request" else "fields_request"
 

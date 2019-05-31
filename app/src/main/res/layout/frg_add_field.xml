@@ -98,11 +98,11 @@
                 android:text="@string/phone"/>
 
         <RelativeLayout
-                android:id="@+id/frg_add_field_v_input_phone"
+                android:id="@+id/frg_add_field_v_input_phone_1"
                 style="@style/bg_item_input">
 
             <ImageButton
-                    android:id="@+id/frg_add_field_iv_phone"
+                    android:id="@+id/frg_add_field_iv_phone_1"
                     android:layout_width="@dimen/spacing_xxlarge"
                     android:layout_height="@dimen/spacing_xxlarge"
                     android:background="@android:color/transparent"
@@ -110,25 +110,60 @@
                     app:srcCompat="@drawable/ic_phone"/>
 
             <EditText
-                    android:id="@+id/frg_add_field_et_phone"
+                    android:id="@+id/frg_add_field_et_phone_1"
                     style="@style/et_item_input"
-                    android:layout_toStartOf="@+id/frg_add_field_iv_clear_input_phone"
-                    android:layout_toEndOf="@+id/frg_add_field_iv_phone"
-                    android:hint="@string/please_enter_phone_field"
+                    android:layout_toStartOf="@+id/frg_add_field_iv_clear_input_phone_1"
+                    android:layout_toEndOf="@+id/frg_add_field_iv_phone_1"
+                    android:hint="Số điện thoại 1"
                     android:inputType="phone"
-                    android:layout_toLeftOf="@+id/frg_add_field_iv_clear_input_phone"
-                    android:layout_toRightOf="@+id/frg_add_field_iv_phone"
+                    android:layout_toLeftOf="@+id/frg_add_field_iv_clear_input_phone_1"
+                    android:layout_toRightOf="@+id/frg_add_field_iv_phone_1"
                     tools:ignore="Autofill"/>
 
             <ImageView
-                    android:id="@+id/frg_add_field_iv_clear_input_phone"
+                    android:id="@+id/frg_add_field_iv_clear_input_phone_1"
                     style="@style/iv_clear_item_input"
                     tools:ignore="ContentDescription"/>
 
         </RelativeLayout>
 
         <TextView
-                android:id="@+id/frg_add_field_tv_error_input_phone"
+                android:id="@+id/frg_add_field_tv_error_input_phone_1"
+                style="@style/tv_error_item_input"
+                android:text="@string/please_enter_phone_field"/>
+
+        <RelativeLayout
+                android:id="@+id/frg_add_field_v_input_phone_2"
+                style="@style/bg_item_input">
+
+            <ImageButton
+                    android:id="@+id/frg_add_field_iv_phone_2"
+                    android:layout_width="@dimen/spacing_xxlarge"
+                    android:layout_height="@dimen/spacing_xxlarge"
+                    android:background="@android:color/transparent"
+                    android:tint="@color/c_d2d2d2"
+                    app:srcCompat="@drawable/ic_phone"/>
+
+            <EditText
+                    android:id="@+id/frg_add_field_et_phone_2"
+                    style="@style/et_item_input"
+                    android:layout_toStartOf="@+id/frg_add_field_iv_clear_input_phone_2"
+                    android:layout_toEndOf="@+id/frg_add_field_iv_phone_2"
+                    android:hint="Số điện thoại 2"
+                    android:inputType="phone"
+                    android:layout_toLeftOf="@+id/frg_add_field_iv_clear_input_phone_2"
+                    android:layout_toRightOf="@+id/frg_add_field_iv_phone_2"
+                    tools:ignore="Autofill"/>
+
+            <ImageView
+                    android:id="@+id/frg_add_field_iv_clear_input_phone_2"
+                    style="@style/iv_clear_item_input"
+                    tools:ignore="ContentDescription"/>
+
+        </RelativeLayout>
+
+        <TextView
+                android:id="@+id/frg_add_field_tv_error_input_phone_2"
                 style="@style/tv_error_item_input"
                 android:text="@string/please_enter_phone_field"/>
 
@@ -257,33 +292,57 @@
                 style="@style/title_item_input"
                 android:text="@string/price_field"/>
 
-        <RelativeLayout
-                android:id="@+id/frg_add_field_v_input_price_field"
-                style="@style/bg_item_input">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <ImageView
-                    android:id="@+id/frg_add_field_iv_price_field"
-                    style="@style/iv_icon_item_input"
-                    android:src="@drawable/ic_price"
-                    tools:ignore="ContentDescription"/>
+            <RelativeLayout
+                    android:id="@+id/frg_add_field_v_input_price_field_min"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="@dimen/fs_15"
+                    style="@style/bg_item_input">
 
-            <EditText
-                    android:id="@+id/frg_add_field_et_price_field"
-                    style="@style/et_item_input"
-                    android:layout_toStartOf="@+id/frg_add_field_iv_clear_input_price_field"
-                    android:layout_toEndOf="@+id/frg_add_field_iv_price_field"
-                    android:hint="@string/please_enter_price_one_hour"
-                    android:inputType="numberDecimal"
-                    android:layout_toLeftOf="@+id/frg_add_field_iv_clear_input_price_field"
-                    android:layout_toRightOf="@+id/frg_add_field_iv_price_field"
-                    tools:ignore="Autofill"/>
+                <EditText
+                        android:id="@+id/frg_add_field_et_price_field_min"
+                        style="@style/et_item_input"
+                        android:layout_toStartOf="@+id/frg_add_field_iv_clear_input_price_field_min"
+                        android:hint="Giá thấp nhất"
+                        android:inputType="numberDecimal"
+                        android:layout_toLeftOf="@+id/frg_add_field_iv_clear_input_price_field_min"
+                        tools:ignore="Autofill"/>
 
-            <ImageView
-                    android:id="@+id/frg_add_field_iv_clear_input_price_field"
-                    style="@style/iv_clear_item_input"
-                    tools:ignore="ContentDescription"/>
+                <ImageView
+                        android:id="@+id/frg_add_field_iv_clear_input_price_field_min"
+                        style="@style/iv_clear_item_input"
+                        tools:ignore="ContentDescription"/>
 
-        </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/frg_add_field_v_input_price_field_max"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    style="@style/bg_item_input">
+
+                <EditText
+                        android:id="@+id/frg_add_field_et_price_field_max"
+                        style="@style/et_item_input"
+                        android:layout_toStartOf="@+id/frg_add_field_iv_clear_input_price_field_max"
+                        android:hint="Giá cao nhất"
+                        android:inputType="numberDecimal"
+                        android:layout_toLeftOf="@+id/frg_add_field_iv_clear_input_price_field_max"
+                        tools:ignore="Autofill"/>
+
+                <ImageView
+                        android:id="@+id/frg_add_field_iv_clear_input_price_field_max"
+                        style="@style/iv_clear_item_input"
+                        tools:ignore="ContentDescription"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
 
         <TextView
                 android:id="@+id/frg_add_field_tv_error_input_price"

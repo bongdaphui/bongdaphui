@@ -106,7 +106,11 @@ class FieldScreen : BaseFragment() {
 
                 if (type == Enum.EnumTypeClick.Phone.value) {
                     if (isLoggedUser) {
-                        Utils().openDial(activity!!, "${item.phone}")
+                        if (TextUtils.isEmpty(item.phone2)) {
+                            item.phone?.let { Utils().openDial(activity!!, it) }
+                        } else {
+                            item.phone?.let { item.phone2?.let { it1 -> showSingleChoiceDialog(it, it1) } }
+                        }
                     } else {
                         addFragment(LoginScreen())
                     }
@@ -119,6 +123,29 @@ class FieldScreen : BaseFragment() {
         fieldAdapter.setHasStableIds(true)
         frg_field_rcv.adapter = fieldAdapter
 
+    }
+
+    private fun showSingleChoiceDialog(phone: String, phone2: String) {
+
+        val phones = arrayOfNulls<String>(2)
+        phones[0] = phone
+        phones[1] = phone2
+
+        var phoneCall = "${phones[0]}"
+
+        val builder = activity?.let { android.support.v7.app.AlertDialog.Builder(it) }
+
+        builder?.setTitle("Bạn muốn gọi số nào?")
+
+        builder?.setSingleChoiceItems(phones, 0) { _, i -> phoneCall = "${phones[i]}" }
+
+        builder?.setPositiveButton(R.string.call) { _, _ ->
+            Utils().openDial(activity!!, phoneCall)
+        }
+
+        builder?.setNegativeButton(R.string.cancel, null)
+
+        builder?.show()
     }
 
     private fun getData() {
@@ -261,7 +288,7 @@ class FieldScreen : BaseFragment() {
 
     // Linh sẽ thực hiện thủ công
 
-    val listFieldRequest: ArrayList<FbFieldModel> = ArrayList()
+   /* val listFieldRequest: ArrayList<FbFieldModel> = ArrayList()
     private var step = 0
 
     private fun addFieldRequestToField() {
@@ -315,7 +342,7 @@ class FieldScreen : BaseFragment() {
                             showProgress(false)
 
                             //xoa field request
-                            /*BaseRequest().deleteDocument(
+                            *//*BaseRequest().deleteDocument(
                                 FireBasePath().collectionRequestField,
                                 listFieldRequest[step].id.toString(),
                                 object : DeleteDataDataListener {
@@ -330,7 +357,7 @@ class FieldScreen : BaseFragment() {
                                         showProgress(false)
 
                                     }
-                                })*/
+                                })*//*
                         }
                         .addOnFailureListener {
 
@@ -375,5 +402,5 @@ class FieldScreen : BaseFragment() {
                 }
             })
         }
-    }
+    }*/
 }

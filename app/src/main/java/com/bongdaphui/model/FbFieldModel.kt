@@ -16,12 +16,13 @@ data class FbFieldModel(
     val photoUrl: String? = "",
     var name: String? = "",
     val phone: String? = "",
+    val phone2: String? = "",
     val address: String? = "",
     val amountField: String? = "",
     val price: String? = "",
+    val priceMax: String? = "",
     val lat: String? = "",
     val lng: String? = "",
     val countRating: String? = "",
     val rating: String? = ""
-//    val comment: ArrayList<CommentModel>? = ArrayList()
 ) : Serializable

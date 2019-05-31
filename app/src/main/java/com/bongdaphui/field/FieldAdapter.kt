@@ -38,15 +38,19 @@ class FieldAdapter(
         val model: FbFieldModel = items[position]
 
         if (!TextUtils.isEmpty(model.photoUrl)) {
-            context?.let { Glide.with(it).asBitmap().load(model.photoUrl).into(viewHolder.image) }
-        }else{
+            context?.let {
+                Glide.with(it).asBitmap().load(model.photoUrl).placeholder(R.drawable.bg_field).into(viewHolder.image)
+            }
+        } else {
             viewHolder.image.setImageResource(R.drawable.bg_field)
         }
 
         viewHolder.name.text = model.name
 
+        val phone = if (TextUtils.isEmpty(model.phone2)) model.phone else "${model.phone} - ${model.phone2}"
+
         viewHolder.phone.text =
-            if (isLoggedUser) model.phone else context!!.getString(R.string.need_login_to_see)
+            if (isLoggedUser) phone else context!!.getString(R.string.need_login_to_see)
 
         viewHolder.call.setOnClickListener {
             itemClickInterface.onItemClick(model, position, Enum.EnumTypeClick.Phone.value)
@@ -57,27 +61,33 @@ class FieldAdapter(
 
         if (Utils().isEmpty(model.amountField)) {
 
-            viewHolder.amountField.text = context!!.resources.getString(R.string.not_yet_update)
+            viewHolder.amountField.text = context?.resources?.getString(R.string.three_dot)
 
         } else {
 
             viewHolder.amountField.text = model.amountField
         }
 
-        if (Utils().isEmpty(model.price)) {
+        if (TextUtils.isEmpty(model.price) && TextUtils.isEmpty(model.priceMax)) {
 
-            viewHolder.price.text = context!!.resources.getString(R.string.not_yet_update)
+            viewHolder.price.text = context?.resources?.getString(R.string.three_dot)
 
         } else {
 
-            viewHolder.price.text =
-                "${Utils().formatMoney(Constant().oneDecimalFormat, model.price!!)} VND"
+            val min =
+                if (TextUtils.isEmpty(model.price)) context?.resources?.getString(R.string.three_dot) else
+                    Utils().formatMoney(Constant().oneDecimalFormat, model.price!!)
+
+            val max =
+                if (TextUtils.isEmpty(model.priceMax)) context?.resources?.getString(R.string.three_dot) else
+                    Utils().formatMoney(Constant().oneDecimalFormat, model.priceMax!!)
+
+            viewHolder.price.text = "$min - $max"
         }
 
         viewHolder.container.setOnClickListener {
             itemClickInterface.onItemClick(model, position, Enum.EnumTypeClick.View.value)
         }
-
     }
 
     override fun getItemId(position: Int): Long {

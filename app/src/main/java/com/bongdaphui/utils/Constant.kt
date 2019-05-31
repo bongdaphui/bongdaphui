@@ -4,7 +4,7 @@ import android.Manifest
 
 class Constant {
 
-    val tag = "bongdaphui"
+    val tag = "linhnt"
 
     val roomData = "db_bongdaphui"
 

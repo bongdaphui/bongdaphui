@@ -9,18 +9,17 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
-import com.bongdaphui.base.BaseRequest
 import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.AcceptListener
 import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.BaseSpinnerSelectInterface
-import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.model.FbFieldModel
 import com.bongdaphui.utils.*
 import com.bumptech.glide.Glide
@@ -110,6 +109,7 @@ class AddFieldScreen : BaseFragment() {
         frg_add_field_tv_input.setOnClickListener {
 
             checkFieldAndGetIdForField()
+
         }
     }
 
@@ -121,30 +121,7 @@ class AddFieldScreen : BaseFragment() {
 
             showProgress(true)
 
-            BaseRequest().getDataField(FireBasePath().collectionField, object : GetDataListener<FbFieldModel> {
-                override fun onSuccess(item: FbFieldModel) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                }
-
-                override fun onSuccess(list: ArrayList<FbFieldModel>) {
-
-                    for (i in 0 until list.size) {
-
-                        if (list[i].name == frg_add_field_et_name.text.toString() || list[i].phone == frg_add_field_et_phone.text.toString()) {
-
-                            showAlertAddField(activity!!.resources.getString(R.string.add_field_is_available))
-
-                            break
-                        }
-                    }
-                    startInsertField()
-                }
-
-                override fun onFail(message: String) {
-
-                    showAlertAddField(activity!!.resources.getString(R.string.add_field_fail))
-                }
-            })
+            startInsertField()
         }
     }
 
@@ -152,30 +129,45 @@ class AddFieldScreen : BaseFragment() {
 
         var validate = true
 
-        if (frg_add_field_et_name.text.toString().isEmpty()) {
+        if (TextUtils.isEmpty(frg_add_field_et_name.text.toString())) {
             frg_add_field_tv_error_input_name.visibility = View.VISIBLE
             frg_add_field_et_name.requestFocus()
             validate = false
         }
 
-        if (frg_add_field_et_phone.text.toString().isEmpty()) {
-            frg_add_field_tv_error_input_phone.visibility = View.VISIBLE
-            frg_add_field_tv_error_input_phone.text =
-                activity!!.getString(R.string.please_enter_your_phone)
-            frg_add_field_et_phone.requestFocus()
+        if (TextUtils.isEmpty(frg_add_field_et_phone_1.text.toString()) && TextUtils.isEmpty(frg_add_field_et_phone_2.text.toString())) {
+            frg_add_field_tv_error_input_phone_1.visibility = View.VISIBLE
+            frg_add_field_tv_error_input_phone_1.text =
+                activity!!.getString(R.string.please_enter_phone_field)
+            frg_add_field_et_phone_1.requestFocus()
             validate = false
         }
 
-        if (!Utils().validatePhoneNumber(frg_add_field_et_phone.text.toString())) {
-            frg_add_field_tv_error_input_phone.visibility = View.VISIBLE
-            frg_add_field_tv_error_input_phone.text =
+        if (!TextUtils.isEmpty(frg_add_field_et_phone_1.text.toString()) && !Utils().validatePhoneNumber(
+                frg_add_field_et_phone_1.text.toString()
+            )
+        ) {
+            frg_add_field_tv_error_input_phone_1.visibility = View.VISIBLE
+            frg_add_field_tv_error_input_phone_1.text =
                 activity!!.getString(R.string.please_enter_your_phone_valid)
-            frg_add_field_et_phone.requestFocus()
+            frg_add_field_et_phone_1.requestFocus()
 
             validate = false
         }
 
-        if (frg_add_field_et_address.text.toString().isEmpty()) {
+        if (!TextUtils.isEmpty(frg_add_field_et_phone_2.text.toString()) && !Utils().validatePhoneNumber(
+                frg_add_field_et_phone_2.text.toString()
+            )
+        ) {
+            frg_add_field_tv_error_input_phone_2.visibility = View.VISIBLE
+            frg_add_field_tv_error_input_phone_2.text =
+                activity!!.getString(R.string.please_enter_your_phone_valid)
+            frg_add_field_et_phone_2.requestFocus()
+
+            validate = false
+        }
+
+        if (TextUtils.isEmpty(frg_add_field_et_address.text.toString())) {
             frg_add_field_tv_error_input_address.visibility = View.VISIBLE
             frg_add_field_et_address.requestFocus()
             validate = false
@@ -192,12 +184,14 @@ class AddFieldScreen : BaseFragment() {
     private fun enableItem(isDisable: Boolean) {
 
         frg_add_field_et_name.isEnabled = isDisable
-        frg_add_field_et_phone.isEnabled = isDisable
+        frg_add_field_et_phone_1.isEnabled = isDisable
+        frg_add_field_et_phone_2.isEnabled = isDisable
         frg_add_field_et_address.isEnabled = isDisable
         frg_add_field_sp_district.isEnabled = isDisable
         frg_add_field_sp_city.isEnabled = isDisable
         frg_add_field_et_count_field.isEnabled = isDisable
-        frg_add_field_et_price_field.isEnabled = isDisable
+        frg_add_field_et_price_field_min.isEnabled = isDisable
+        frg_add_field_et_price_field_max.isEnabled = isDisable
 
     }
 
@@ -253,31 +247,45 @@ class AddFieldScreen : BaseFragment() {
     private fun setData(uriPhoto: String) {
 
         val name = frg_add_field_et_name.text.toString()
-        val phone = frg_add_field_et_phone.text.toString()
+        var phone1 = frg_add_field_et_phone_1.text.toString()
+        var phone2 = frg_add_field_et_phone_2.text.toString()
+
+        if (TextUtils.isEmpty(phone1) && !TextUtils.isEmpty(phone2)) {
+            phone1 = phone2
+            phone2 = ""
+        }
         val address =
             frg_add_field_et_address.text.toString() +
                     ", " + frg_add_field_sp_district.selectedItem.toString() +
                     ", " + frg_add_field_sp_city.selectedItem.toString()
 
         val amountField = frg_add_field_et_count_field.text.toString()
-        val priceField = frg_add_field_et_price_field.text.toString()
+        val priceFieldMin = frg_add_field_et_price_field_min.text.toString()
+        val priceFieldMax = frg_add_field_et_price_field_max.text.toString()
 
-        val idField = Calendar.getInstance().timeInMillis
+        val id = Calendar.getInstance().timeInMillis
 
         val fieldModel = FbFieldModel(
-            idField,
+            id,
             idCity,
             idDistrict,
             uriPhoto,
             name,
-            phone,
+            phone1,
+            phone2,
             address,
             amountField,
-            priceField, "", "", "", ""
+            priceFieldMin,
+            priceFieldMax,
+            "",
+            "",
+            "",
+            ""
         )
 
         //add data to field request
-        val db = FirebaseFirestore.getInstance().document("${FireBasePath().collectionRequestField}/$idField")
+        val db =
+            FirebaseFirestore.getInstance().document("${FireBasePath().collectionRequestField}/${fieldModel.id}")
 
         db.set(fieldModel)
             .addOnSuccessListener {
@@ -288,7 +296,6 @@ class AddFieldScreen : BaseFragment() {
 //                addDataListener?.onSuccess()
 
                 showAlertAddField(activity!!.resources.getString(R.string.add_field_success))
-
             }
             .addOnFailureListener {
 
@@ -332,9 +339,15 @@ class AddFieldScreen : BaseFragment() {
         )
 
         Utils().editTextTextChange(
-            frg_add_field_et_phone,
-            frg_add_field_iv_clear_input_phone,
-            frg_add_field_tv_error_input_phone
+            frg_add_field_et_phone_1,
+            frg_add_field_iv_clear_input_phone_1,
+            frg_add_field_tv_error_input_phone_1
+        )
+
+        Utils().editTextTextChange(
+            frg_add_field_et_phone_2,
+            frg_add_field_iv_clear_input_phone_2,
+            frg_add_field_tv_error_input_phone_2
         )
 
         Utils().editTextTextChange(
@@ -350,8 +363,14 @@ class AddFieldScreen : BaseFragment() {
         )
 
         Utils().editTextTextChange(
-            frg_add_field_et_price_field,
-            frg_add_field_iv_clear_input_price_field,
+            frg_add_field_et_price_field_min,
+            frg_add_field_iv_clear_input_price_field_min,
+            frg_add_field_tv_error_input_price
+        )
+
+        Utils().editTextTextChange(
+            frg_add_field_et_price_field_max,
+            frg_add_field_iv_clear_input_price_field_max,
             frg_add_field_tv_error_input_price
         )
     }
