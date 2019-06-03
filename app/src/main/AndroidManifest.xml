@@ -63,6 +63,9 @@
                 android:name="com.facebook.sdk.ApplicationId"
                 android:value="@string/facebook_app_id"/>
 
+        <!--disable analytics-->
+        <meta-data android:name="google_analytics_adid_collection_enabled" android:value="false" />
+
     </application>
 
 </manifest>
