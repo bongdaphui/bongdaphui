@@ -117,7 +117,8 @@ class DateTimeUtil {
     fun dialogTimePickerLight(context: Activity, bt: Button) {
         val curCalender = Calendar.getInstance()
         val datePicker = TimePickerDialog.newInstance({ view, hourOfDay, minute, second ->
-            bt.text = "$hourOfDay:$minute"
+            val mMinute = if (10 > minute) "0$minute" else "$minute"
+            bt.text = "$hourOfDay:$mMinute"
         }, curCalender.get(Calendar.HOUR_OF_DAY), curCalender.get(Calendar.MINUTE), true)
         //set dark light
         datePicker.isThemeDark = false
