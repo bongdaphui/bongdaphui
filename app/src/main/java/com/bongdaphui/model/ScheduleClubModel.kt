@@ -11,8 +11,8 @@ data class ScheduleClubModel(
     val idCity: String? = "",
     val idDistrict: String? = "",
     val startTime: String? = "",
-    val nameClub: String? = "",
     val endTime: String? = "",
+    val nameClub: String? = "",
     val phone: String? = "",
     val photoUrl: String? = "",
     val typeField: String? = ""
