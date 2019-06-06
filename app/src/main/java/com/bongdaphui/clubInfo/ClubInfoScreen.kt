@@ -8,38 +8,42 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.text.TextUtils
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
-import com.bongdaphui.clubUpdate.UpdateClubScreen
+import com.bongdaphui.comment.CommentAdapter
 import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.listener.AcceptListener
-import com.bongdaphui.listener.AddDataListener
 import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.ClubModel
+import com.bongdaphui.model.CommentModel
 import com.bongdaphui.model.UserModel
 import com.bongdaphui.model.UserStickModel
 import com.bongdaphui.player.PlayerStickAdapter
 import com.bongdaphui.profile.ProfileScreen
 import com.bongdaphui.utils.Constant
+import com.bongdaphui.utils.DateTimeUtil
 import com.bongdaphui.utils.SharePreferenceManager
 import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.frg_club_info.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ClubInfoScreen : BaseFragment() {
 
     private val listStickPlayer: ArrayList<UserStickModel> = ArrayList()
+    private val listComment: ArrayList<CommentModel> = ArrayList()
     private var adapterStickPlayer: PlayerStickAdapter? = null
+    private var commentAdapter: CommentAdapter? = null
     private var clubModel: ClubModel? = null
     private var userModel: UserModel? = null
 
@@ -70,7 +74,6 @@ class ClubInfoScreen : BaseFragment() {
 
         super.onResume()
 
-
         showHeader(false)
 
         showFooter(false)
@@ -99,9 +102,17 @@ class ClubInfoScreen : BaseFragment() {
             for (item in it.players) {
                 listStickPlayer.add(Gson().fromJson(item, UserStickModel::class.java))
             }
+
+            for (item in it.comments) {
+                listComment.add(Gson().fromJson(item, CommentModel::class.java))
+            }
         }
         listStickPlayer.sortBy { it.position }
         adapterStickPlayer?.notifyDataSetChanged()
+
+        listComment.sortBy { it.id }
+        listComment.reverse()
+        commentAdapter?.notifyDataSetChanged()
     }
 
     @SuppressLint("RestrictedApi", "SetTextI18n")
@@ -119,20 +130,9 @@ class ClubInfoScreen : BaseFragment() {
             Glide.with(context!!).asBitmap().load(clubModel?.photo).into(frg_club_info_iv_logo)
         }
 
-        adapterStickPlayer = activity?.let {
-            PlayerStickAdapter(it, listStickPlayer, object : OnItemClickListener<UserStickModel> {
-                override fun onItemClick(item: UserStickModel, position: Int, type: Int) {
-                    addFragment(ProfileScreen.getInstance(item.id))
-                }
-            })
-        }
+        initPlayer()
 
-        recycler_list_player.layoutManager = GridLayoutManager(activity, 3)
-        recycler_list_player.setHasFixedSize(true)
-        recycler_list_player.setItemViewCacheSize(5)
-        adapterStickPlayer?.setHasStableIds(true)
-
-        recycler_list_player.adapter = adapterStickPlayer
+        initComment()
 
         frg_club_info_tv_captain.text =
             if (clubModel?.caption?.isEmpty()!!) context?.resources?.getText(R.string.not_update) else clubModel?.caption
@@ -152,6 +152,39 @@ class ClubInfoScreen : BaseFragment() {
 
     }
 
+    private fun initPlayer() {
+        adapterStickPlayer = activity?.let {
+            PlayerStickAdapter(it, listStickPlayer, object : OnItemClickListener<UserStickModel> {
+                override fun onItemClick(item: UserStickModel, position: Int, type: Int) {
+                    addFragment(ProfileScreen.getInstance(item.id))
+                }
+            })
+        }
+
+        recycler_list_player.layoutManager = GridLayoutManager(activity, 3)
+        recycler_list_player.setHasFixedSize(true)
+        recycler_list_player.setItemViewCacheSize(5)
+        adapterStickPlayer?.setHasStableIds(true)
+
+        recycler_list_player.adapter = adapterStickPlayer
+    }
+
+    private fun initComment() {
+        commentAdapter = activity?.let {
+            CommentAdapter(it, listComment, object : OnItemClickListener<CommentModel> {
+                override fun onItemClick(item: CommentModel, position: Int, type: Int) {
+
+                }
+            })
+        }
+
+        recycler_list_comment.setHasFixedSize(true)
+        recycler_list_comment.setItemViewCacheSize(5)
+        commentAdapter?.setHasStableIds(true)
+
+        recycler_list_comment.adapter = commentAdapter
+    }
+
     @SuppressLint("RestrictedApi")
     private fun onClick() {
 
@@ -166,7 +199,6 @@ class ClubInfoScreen : BaseFragment() {
                 userModel?.name ?: "",
                 userModel?.position ?: ""
             )
-
 
         if (clubModel?.idCaptain.equals(getUIDUser()) || listStickPlayer.contains(userCurrentStickModel)) {
 
@@ -355,11 +387,24 @@ class ClubInfoScreen : BaseFragment() {
     private fun submitReview(message: String) {
         showProgress(true)
 
+        val currentTime = Calendar.getInstance().timeInMillis
+
         clubModel?.let {
             userModel?.let { it1 ->
-                BaseRequest().writeReviewClub(it, it1, message, object : UpdateListener {
+                BaseRequest().writeReviewClub(currentTime, it, it1, message, object : UpdateListener {
                     override fun onUpdateSuccess() {
+
                         showProgress(false)
+
+                        val commentModel = CommentModel(
+                            "$currentTime", userModel!!.id, userModel!!.name, userModel!!.photoUrl, message,
+                            DateTimeUtil().getFormat(
+                                currentTime,
+                                DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format
+                            )
+                        )
+                        listComment.add(0, commentModel)
+                        commentAdapter?.notifyDataSetChanged()
                     }
 
                     override fun onUpdateFail(err: String) {
@@ -370,9 +415,7 @@ class ClubInfoScreen : BaseFragment() {
                             "Có lỗi trong quá trình gửi đánh giá, bạn vui lòng thực hiện lại!",
                             Toast.LENGTH_LONG
                         ).show()
-
                     }
-
                 })
             }
         }

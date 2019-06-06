@@ -7,8 +7,8 @@ import com.bongdaphui.listener.GetDataListener
 import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.model.*
 import com.bongdaphui.utils.Constant
+import com.bongdaphui.utils.DateTimeUtil
 import com.bongdaphui.utils.FireBasePath
-import com.bongdaphui.utils.Utils
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -440,12 +440,12 @@ class BaseRequest {
 
     }
 
-    fun writeReviewClub(clubModel: ClubModel, userModel: UserModel, review: String, listener: UpdateListener) {
+    fun writeReviewClub(currentTime: Long, clubModel: ClubModel, userModel: UserModel, review: String, listener: UpdateListener) {
 
-        val currentTime = Calendar.getInstance().timeInMillis
-        val id = "${Utils().getRandomNumberString()}$currentTime"
-
-        val commentModel = CommentModel(id, userModel.id, userModel.name, review)
+        val commentModel = CommentModel(
+            "$currentTime", userModel.id, userModel.name, userModel.photoUrl, review,
+            DateTimeUtil().getFormat(currentTime, DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format)
+        )
         val dbClub = FirebaseFirestore.getInstance().collection(FireBasePath().collectionClub).document(clubModel.id)
 
         dbClub.update("comments", FieldValue.arrayUnion(Gson().toJson(commentModel)))

@@ -43,16 +43,15 @@ class ClubScreen : BaseFragment() {
 
         showHeader(false)
         showFooter(true)
+        loadListClub()
+
     }
 
     @SuppressLint("RestrictedApi")
     override fun onBindView() {
 
         initAdapter()
-
         floatingActionButton.visibility = View.GONE
-
-        loadListClub()
     }
 
     private fun initAdapter() {

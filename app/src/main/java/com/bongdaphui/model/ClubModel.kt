@@ -20,7 +20,8 @@ data class ClubModel(
     var matchLose: String = "",
     var countRating: String = "",
     var rating: String = "",
-    var players: ArrayList<String> = ArrayList()
+    var players: ArrayList<String> = ArrayList(),
+    var comments: ArrayList<String> = ArrayList()
 
 ) : Serializable {
 

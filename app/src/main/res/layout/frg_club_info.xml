@@ -277,9 +277,11 @@
                 </LinearLayout>
                 <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_list_comment"
+                        android:layout_marginStart="40dp"
                         android:layout_marginTop="@dimen/fs_10"
                         android:layout_marginBottom="@dimen/fs_10"
                         android:layout_width="match_parent"
+                        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                         android:layout_height="wrap_content"/>
 
             </LinearLayout>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/item_comment_iv_user"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                app:srcCompat="@drawable/ic_person_grey"
+                app:civ_shadow="true"
+                app:civ_shadow_radius="0"
+                app:civ_border="true"
+                app:civ_border_width="1dp"
+                android:layout_marginEnd="@dimen/fs_5"
+                app:civ_border_color="@color/c_b2973f"/>
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/fs_10"
+                android:paddingEnd="@dimen/fs_10"
+                android:paddingTop="@dimen/fs_2"
+                android:paddingBottom="@dimen/fs_2"
+                android:background="@drawable/bg_grey_solid_no_border_15_radius"
+                android:orientation="vertical">
+
+            <TextView
+                    android:id="@+id/item_comment_tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/three_dot"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"/>
+            <TextView
+                    android:id="@+id/item_comment_tv_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/three_dot"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/grey_90"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+            android:id="@+id/item_comment_tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:text="@string/three_dot"
+            android:textSize="@dimen/ts_10"
+            android:textColor="@color/grey_60"/>
+    <View android:layout_width="1dp" android:layout_height="@dimen/fs_10"/>
+</LinearLayout>

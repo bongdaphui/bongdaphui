@@ -6,5 +6,7 @@ data class CommentModel(
     val id: String? = "",
     val idUser: String? = "",
     val nameUser: String? = "",
-    val content: String? = ""
+    val photoUser: String? = "",
+    val content: String? = "",
+    val time: String? = ""
 ) : Serializable
