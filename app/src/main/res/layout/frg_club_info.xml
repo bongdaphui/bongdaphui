@@ -196,7 +196,6 @@
                     </LinearLayout>
                 </LinearLayout>
 
-
                 <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/fs_10"/>
@@ -230,12 +229,54 @@
                                 android:textColor="@color/colorPrimary"
                                 android:textStyle="bold"/>
 
-
                     </LinearLayout>
 
                 </LinearLayout>
                 <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_list_player"
+                        android:layout_marginTop="@dimen/fs_10"
+                        android:layout_marginBottom="@dimen/fs_10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/fs_10"/>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    <ImageButton
+                            android:layout_width="@dimen/spacing_mxlarge"
+                            android:layout_height="@dimen/spacing_mxlarge"
+                            android:background="@android:color/transparent"
+                            android:tint="@color/grey_60"
+                            app:srcCompat="@drawable/ic_list"/>
+
+                    <View
+                            android:layout_width="@dimen/spacing_large"
+                            android:layout_height="match_parent"/>
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Đánh giá"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                                android:textColor="@color/colorPrimary"
+                                android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_list_comment"
                         android:layout_marginTop="@dimen/fs_10"
                         android:layout_marginBottom="@dimen/fs_10"
                         android:layout_width="match_parent"
@@ -268,7 +309,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/spacing_large"
             android:gravity="center"
-            android:visibility="gone"
             app:layout_anchorGravity="bottom|right|end"
             android:tint="@android:color/white"
             app:backgroundTint="@color/colorPrimaryDark"

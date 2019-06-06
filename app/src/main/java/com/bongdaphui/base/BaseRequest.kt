@@ -8,12 +8,15 @@ import com.bongdaphui.listener.UpdateListener
 import com.bongdaphui.model.*
 import com.bongdaphui.utils.Constant
 import com.bongdaphui.utils.FireBasePath
+import com.bongdaphui.utils.Utils
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.Gson
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class BaseRequest {
@@ -372,7 +375,8 @@ class BaseRequest {
 
     fun getListApprovePlayer(idCaptain: String, listener: GetDataListener<ApprovePlayerResponse>) {
 
-        FirebaseFirestore.getInstance().collection(FireBasePath().collectionRequestJoinClub).whereEqualTo("idCaptain", idCaptain)
+        FirebaseFirestore.getInstance().collection(FireBasePath().collectionRequestJoinClub)
+            .whereEqualTo("idCaptain", idCaptain)
             .get()
 
             .addOnSuccessListener { document ->
@@ -419,22 +423,44 @@ class BaseRequest {
                 }
 
         } else {
-            deleteDocument(FireBasePath().collectionRequestJoinClub, idClub + userModel.id, object : DeleteDataDataListener {
-                override fun onSuccess() {
-                    listener.onUpdateSuccess()
-                }
+            deleteDocument(
+                FireBasePath().collectionRequestJoinClub,
+                idClub + userModel.id,
+                object : DeleteDataDataListener {
+                    override fun onSuccess() {
+                        listener.onUpdateSuccess()
+                    }
 
-                override fun onFail(message: String) {
-                    listener.onUpdateFail(message)
-                }
+                    override fun onFail(message: String) {
+                        listener.onUpdateFail(message)
+                    }
 
-            })
+                })
         }
 
     }
 
+    fun writeReviewClub(clubModel: ClubModel, userModel: UserModel, review: String, listener: UpdateListener) {
+
+        val currentTime = Calendar.getInstance().timeInMillis
+        val id = "${Utils().getRandomNumberString()}$currentTime"
+
+        val commentModel = CommentModel(id, userModel.id, userModel.name, review)
+        val dbClub = FirebaseFirestore.getInstance().collection(FireBasePath().collectionClub).document(clubModel.id)
+
+        dbClub.update("comments", FieldValue.arrayUnion(Gson().toJson(commentModel)))
+            .addOnSuccessListener {
+                listener.onUpdateSuccess()
+            }
+            .addOnFailureListener {
+                listener.onUpdateFail(it.localizedMessage)
+            }
+
+    }
+
     fun getCountRequest(idCaptain: String, listener: GetDataListener<Int>) {
-        FirebaseFirestore.getInstance().collection(FireBasePath().collectionRequestJoinClub).whereEqualTo("idCaptain", idCaptain)
+        FirebaseFirestore.getInstance().collection(FireBasePath().collectionRequestJoinClub)
+            .whereEqualTo("idCaptain", idCaptain)
             .get()
             .addOnSuccessListener { document ->
                 listener.onSuccess(document.size())

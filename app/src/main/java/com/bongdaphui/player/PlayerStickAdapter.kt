@@ -41,7 +41,7 @@ class PlayerStickAdapter(
                 )
 
             if (userModule.photoUrl.isNotEmpty())
-                Glide.with(ctx).asBitmap().load(userModule.photoUrl).into(holder.image)
+                Glide.with(ctx).asBitmap().load(userModule.photoUrl).placeholder(R.drawable.ic_person_grey).into(holder.image)
 
             holder.itemView.setOnClickListener {
                 itemClickInterface.onItemClick(userModule, position, Enum.EnumTypeClick.View.value)

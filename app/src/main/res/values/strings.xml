@@ -122,5 +122,7 @@
     <string name="please_choose_district">Vui lòng chọn Quận / Huyện</string>
     <string name="next">Tiếp theo</string>
     <string name="you_no_club">Bạn vẫn chưa quản lý câu lạc bộ nào</string>
+    <string name="write_review">Viết đánh giá</string>
+    <string name="submit_review">Gửi đánh giá</string>
 
 </resources>

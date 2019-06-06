@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.bongdaphui.R
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
@@ -133,10 +134,6 @@ class ClubInfoScreen : BaseFragment() {
 
         recycler_list_player.adapter = adapterStickPlayer
 
-        if (clubModel?.idCaptain == getUIDUser()) {
-            frg_club_info_fb_update.visibility = View.VISIBLE
-        }
-
         frg_club_info_tv_captain.text =
             if (clubModel?.caption?.isEmpty()!!) context?.resources?.getText(R.string.not_update) else clubModel?.caption
 
@@ -188,15 +185,9 @@ class ClubInfoScreen : BaseFragment() {
 
         frg_club_info_fb_update.setOnClickListener {
 
-            addFragment(UpdateClubScreen.getInstance(clubModel!!, object : AddDataListener {
-                override fun onSuccess() {
-
-
-                }
-            }))
+            showDialogWriteReview()
         }
     }
-
 
 
     private fun requestJoinGroup(message: String) {
@@ -341,6 +332,51 @@ class ClubInfoScreen : BaseFragment() {
         }
     }
 
+    private fun showDialogWriteReview() {
+        context?.let { it1 ->
+            AlertDialog().showCustomDialog(
+                it1,
+                activity!!.resources.getString(R.string.write_review),
+                "",
+                activity!!.resources.getString(R.string.cancel),
+                activity!!.resources.getString(R.string.submit_review),
+
+                object : AcceptListener {
+                    override fun onAccept(message: String) {
+
+                        submitReview(message)
+
+                    }
+                }, true
+            )
+        }
+    }
+
+    private fun submitReview(message: String) {
+        showProgress(true)
+
+        clubModel?.let {
+            userModel?.let { it1 ->
+                BaseRequest().writeReviewClub(it, it1, message, object : UpdateListener {
+                    override fun onUpdateSuccess() {
+                        showProgress(false)
+                    }
+
+                    override fun onUpdateFail(err: String) {
+                        showProgress(false)
+
+                        Toast.makeText(
+                            activity,
+                            "Có lỗi trong quá trình gửi đánh giá, bạn vui lòng thực hiện lại!",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                    }
+
+                })
+            }
+        }
+    }
 }
 
 
