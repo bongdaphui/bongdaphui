@@ -2,7 +2,6 @@ package com.bongdaphui.field
 
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,15 +9,18 @@ import com.bongdaphui.R
 import com.bongdaphui.addField.AddFieldScreen
 import com.bongdaphui.base.BaseFragment
 import com.bongdaphui.base.BaseRequest
-import com.bongdaphui.dialog.AlertDialog
 import com.bongdaphui.dialog.TutorialDialog
-import com.bongdaphui.listener.*
+import com.bongdaphui.listener.AddDataListener
+import com.bongdaphui.listener.BaseSpinnerSelectInterface
+import com.bongdaphui.listener.GetDataListener
+import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.login.LoginScreen
 import com.bongdaphui.model.FbFieldModel
 import com.bongdaphui.model.TutorialModel
-import com.bongdaphui.utils.*
 import com.bongdaphui.utils.Enum
-import com.google.firebase.firestore.FirebaseFirestore
+import com.bongdaphui.utils.FireBasePath
+import com.bongdaphui.utils.SharedPreference
+import com.bongdaphui.utils.Utils
 import kotlinx.android.synthetic.main.frg_field.*
 import kotlinx.android.synthetic.main.view_empty.*
 import kotlinx.android.synthetic.main.view_floating_action_button.*
@@ -187,13 +189,8 @@ class FieldScreen : BaseFragment() {
     }
 
     private fun saveCache(fieldListFull: ArrayList<FbFieldModel>) {
-
-//        val dataListener = database.getFieldDAO()
-
         for (i in 0 until fieldListFull.size) {
-
             getDatabase().getFieldDAO().insert(fieldListFull[i])
-
         }
     }
 
@@ -288,61 +285,61 @@ class FieldScreen : BaseFragment() {
 
     // Linh sẽ thực hiện thủ công
 
-   /* val listFieldRequest: ArrayList<FbFieldModel> = ArrayList()
-    private var step = 0
+    /* val listFieldRequest: ArrayList<FbFieldModel> = ArrayList()
+     private var step = 0
 
-    private fun addFieldRequestToField() {
+     private fun addFieldRequestToField() {
 
-        showProgress(true)
-        if (listFieldRequest.size > 0) {
+         showProgress(true)
+         if (listFieldRequest.size > 0) {
 
-            //check field
-            BaseRequest().getDataField(FireBasePath().collectionField, object : GetDataListener<FbFieldModel> {
-                override fun onSuccess(item: FbFieldModel) {
-                }
+             //check field
+             BaseRequest().getDataField(FireBasePath().collectionField, object : GetDataListener<FbFieldModel> {
+                 override fun onSuccess(item: FbFieldModel) {
+                 }
 
-                override fun onSuccess(list: java.util.ArrayList<FbFieldModel>) {
+                 override fun onSuccess(list: java.util.ArrayList<FbFieldModel>) {
 
-                    for (i in 0 until list.size) {
+                     for (i in 0 until list.size) {
 
-                        if (list[i].name == listFieldRequest[step].name || list[i].phone == listFieldRequest[step].phone) {
+                         if (list[i].name == listFieldRequest[step].name || list[i].phone == listFieldRequest[step].phone) {
 
-                            //san nay da ton tai => xoa field request
-                            BaseRequest().deleteDocument(
-                                FireBasePath().collectionRequestField,
-                                listFieldRequest[step].id.toString(),
-                                object : DeleteDataDataListener {
-                                    override fun onFail(message: String) {
-                                        Log.d(Constant().tag, "delete field  request fail : $message")
+                             //san nay da ton tai => xoa field request
+                             BaseRequest().deleteDocument(
+                                 FireBasePath().collectionRequestField,
+                                 listFieldRequest[step].id.toString(),
+                                 object : DeleteDataDataListener {
+                                     override fun onFail(message: String) {
+                                         Log.d(Constant().tag, "delete field  request fail : $message")
 
-                                    }
+                                     }
 
-                                    override fun onSuccess() {
-                                        Log.d(Constant().tag, "delete field request success")
+                                     override fun onSuccess() {
+                                         Log.d(Constant().tag, "delete field request success")
 
-                                        showProgress(false)
+                                         showProgress(false)
 
-                                    }
-                                })
+                                     }
+                                 })
 
-                            break
-                        }
-                    }
+                             break
+                         }
+                     }
 
-                    //add data from field request to field
-                    val db = FirebaseFirestore.getInstance()
-                        .document("${FireBasePath().collectionField}/${listFieldRequest[step].id}")
+                     //add data from field request to field
+                     val db = FirebaseFirestore.getInstance()
+                         .document("${FireBasePath().collectionField}/${listFieldRequest[step].id}")
 
-                    db.set(listFieldRequest[step])
-                        .addOnSuccessListener {
-                            Log.d(Constant().tag, "add field request success")
+                     db.set(listFieldRequest[step])
+                         .addOnSuccessListener {
+                             Log.d(Constant().tag, "add field request success")
 
-                            step++
+                             step++
 
-                            showProgress(false)
+                             showProgress(false)
 
-                            //xoa field request
-                            *//*BaseRequest().deleteDocument(
+                             //xoa field request
+                             *//*BaseRequest().deleteDocument(
                                 FireBasePath().collectionRequestField,
                                 listFieldRequest[step].id.toString(),
                                 object : DeleteDataDataListener {

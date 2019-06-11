@@ -209,15 +209,14 @@ class AddScheduleClubScreen : BaseFragment() {
         if (frg_add_schedule_cb_7.isChecked) typeField.append(Enum.EnumTypeField.SevenPeople.value)
         if (frg_add_schedule_cb_11.isChecked) typeField.append(Enum.EnumTypeField.ElevenPeople.value)
 
-
         enableItem(false)
 
         showProgress(true)
 
         val db = FirebaseFirestore.getInstance().collection(FireBasePath().collectionScheduleClub)
 
-        val id =
-            DateTimeUtil().getTimeInMilliseconds(startTime, DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format)
+        val id = Calendar.getInstance().timeInMillis
+//            DateTimeUtil().getTimeInMilliseconds(startTime, DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format)
 
         val scheduleClubModel = ScheduleClubModel(
             "$id",

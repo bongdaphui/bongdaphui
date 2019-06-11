@@ -53,7 +53,7 @@ class FindPlayerScreen : BaseFragment() {
 
         initListSchedule()
 
-        getData()
+        getDataFromCache()
 
         refreshData()
 
@@ -66,7 +66,6 @@ class FindPlayerScreen : BaseFragment() {
                 override fun onSuccess() {
                     getData()
                 }
-
             }))
         }
     }
@@ -99,6 +98,22 @@ class FindPlayerScreen : BaseFragment() {
 
     }
 
+    private fun getDataFromCache() {
+
+        scheduleListFull = getDatabase().getSchedulePlayerDAO().getItems() as ArrayList<SchedulePlayerModel>
+
+        scheduleList.addAll(scheduleListFull)
+
+        if (scheduleList.size > 0) {
+
+            initFilterBox()
+
+        } else {
+
+            getData()
+        }
+    }
+
     private fun getData() {
 
         showProgress(true)
@@ -117,9 +132,12 @@ class FindPlayerScreen : BaseFragment() {
 
                 scheduleListFull.addAll(list)
 
-                frg_find_player_cv_spinner?.visibility = if (scheduleListFull.size > 0) View.VISIBLE else View.GONE
-
                 initFilterBox()
+
+                getDatabase().getSchedulePlayerDAO().deleteTable()
+                for (i in 0 until scheduleListFull.size) {
+                    getDatabase().getSchedulePlayerDAO().insert(scheduleListFull[i])
+                }
             }
 
             override fun onFail(message: String) {
@@ -136,6 +154,8 @@ class FindPlayerScreen : BaseFragment() {
     private fun initFilterBox() {
 
         if (isAdded) {
+
+            frg_find_player_cv_spinner?.visibility = View.VISIBLE
 
             Utils().initSpinnerCity(
                 activity!!,
@@ -168,7 +188,7 @@ class FindPlayerScreen : BaseFragment() {
 
                         if (scheduleList.size > 0) {
 
-                            scheduleList.sortBy { it.id }
+                            scheduleList.sortBy { it.getTimeInMillisStart() }
 
                             showEmptyView(false)
 

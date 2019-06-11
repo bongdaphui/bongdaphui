@@ -216,8 +216,9 @@ class AddSchedulePlayerScreen : BaseFragment() {
 
         val db = FirebaseFirestore.getInstance().collection(FireBasePath().collectionSchedulePlayer)
 
-        val id =
-            DateTimeUtil().getTimeInMilliseconds(startTime, DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format)
+        val id = Calendar.getInstance().timeInMillis
+
+//        DateTimeUtil().getTimeInMilliseconds(startTime, DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format)
 
         val schedulePlayerModel = SchedulePlayerModel(
             "$id",

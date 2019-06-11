@@ -55,7 +55,7 @@ class FindClubScreen : BaseFragment() {
 
         initListSchedule()
 
-        getData()
+        getDataFromCache()
 
         refreshData()
 
@@ -182,6 +182,22 @@ class FindClubScreen : BaseFragment() {
         frg_find_club_rcv.adapter = findClubAdapter
     }
 
+    private fun getDataFromCache() {
+
+        scheduleListFull = getDatabase().getScheduleClubDAO().getItems() as ArrayList<ScheduleClubModel>
+
+        scheduleList.addAll(scheduleListFull)
+
+        if (scheduleList.size > 0) {
+
+            initFilterBox()
+
+        } else {
+
+            getData()
+        }
+    }
+
     private fun getData() {
 
         showProgress(true)
@@ -197,12 +213,14 @@ class FindClubScreen : BaseFragment() {
                 Utils().hiddenRefresh(frg_find_club_refresh_view)
 
                 scheduleListFull.clear()
-
                 scheduleListFull.addAll(list)
 
-                frg_find_club_cv_spinner?.visibility = if (scheduleListFull.size > 0) View.VISIBLE else View.GONE
-
                 initFilterBox()
+
+                getDatabase().getScheduleClubDAO().deleteTable()
+                for (i in 0 until scheduleListFull.size) {
+                    getDatabase().getScheduleClubDAO().insert(scheduleListFull[i])
+                }
             }
 
             override fun onFail(message: String) {
@@ -217,7 +235,10 @@ class FindClubScreen : BaseFragment() {
     }
 
     private fun initFilterBox() {
+
         if (isAdded) {
+
+            frg_find_club_cv_spinner?.visibility = View.VISIBLE
 
             Utils().initSpinnerCity(
                 activity!!,
@@ -250,7 +271,7 @@ class FindClubScreen : BaseFragment() {
 
                         if (scheduleList.size > 0) {
 
-                            scheduleList.sortBy { it.id }
+                            scheduleList.sortBy { it.getTimeInMillisStart() }
 
                             showEmptyView(false)
 

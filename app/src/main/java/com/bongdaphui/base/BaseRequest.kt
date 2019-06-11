@@ -15,11 +15,11 @@ import com.google.firebase.firestore.SetOptions
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.Gson
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class BaseRequest {
+
+    private val notYetData = "Chưa có dữ liệu"
 
     fun removeImage(urlImage: String) {
 
@@ -38,45 +38,22 @@ class BaseRequest {
 
         val db = FirebaseFirestore.getInstance().collection(path)
 
-        val fieldList: ArrayList<FbFieldModel> = ArrayList()
-
         db.orderBy("name").get()
-            .addOnSuccessListener { result ->
+            .addOnSuccessListener { document ->
 
-                for (document in result) {
+                val value = document?.toObjects(FbFieldModel::class.java)
 
-                    val fbFieldModel = FbFieldModel(
-                        document.data["id"] as Long?,
-                        document.data["idCity"] as String?,
-                        document.data["idDistrict"] as String?,
-                        document.data["photoUrl"] as String?,
-                        document.data["name"] as String?,
-                        document.data["phone"] as String?,
-                        document.data["phone2"] as String?,
-                        document.data["address"] as String?,
-                        document.data["amountField"] as String?,
-                        document.data["price"] as String?,
-                        document.data["priceMax"] as String?,
-                        document.data["lat"] as String?,
-                        document.data["lng"] as String?,
-                        document.data["countRating"] as String?,
-                        document.data["rating"] as String?
-                    )
-                    fieldList.add(fbFieldModel)
-                }
+                if (value != null && value.size > 0) {
 
-                if (fieldList.size > 0) {
-
-                    listener.onSuccess(fieldList)
+                    listener.onSuccess(ArrayList(value))
 
                 } else {
 
-                    listener.onFail("Chưa có dữ liệu")
+                    listener.onFail(notYetData)
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d(Constant().tag, "Error getting documents: ", exception)
-                listener.onFail("${exception.message}")
+                listener.onFail(exception.localizedMessage)
             }
     }
 
@@ -94,12 +71,12 @@ class BaseRequest {
 
                 } else {
 
-                    listener.onFail("Not Found")
+                    listener.onFail(notYetData)
                 }
             }
-        /*.addOnFailureListener { exception ->
-            listener.onFail(exception.localizedMessage)
-        }*/
+            .addOnFailureListener { exception ->
+                listener.onFail(exception.localizedMessage)
+            }
     }
 
     fun saveOrUpdateUser(
@@ -172,107 +149,65 @@ class BaseRequest {
 
     fun getSchedulePlayer(listener: GetDataListener<SchedulePlayerModel>) {
 
-        val schedulePlayerList: ArrayList<SchedulePlayerModel> = ArrayList()
-
         FirebaseFirestore.getInstance().collection(FireBasePath().collectionSchedulePlayer).get()
 
-            .addOnSuccessListener { result ->
+            .addOnSuccessListener { document ->
+                val value = document?.toObjects(SchedulePlayerModel::class.java)
 
-                for (document in result) {
+                if (value != null && value.size > 0) {
 
-                    val schedulePlayerModel = SchedulePlayerModel(
-                        document.data["id"] as String?,
-                        document.data["idCity"] as String?,
-                        document.data["idDistrict"] as String?,
-                        document.data["startTime"] as String?,
-                        document.data["endTime"] as String?,
-                        document.data["idPlayer"] as String?,
-                        document.data["namePlayer"] as String?,
-                        document.data["phonePlayer"] as String?,
-                        document.data["photoUrlPlayer"] as String?,
-                        document.data["typeField"] as String?
-                    )
-                    schedulePlayerList.add(schedulePlayerModel)
-                }
-                Log.d(Constant().tag, "schedule player size: ${schedulePlayerList.size}")
-
-                if (schedulePlayerList.size > 0) {
-
-                    listener.onSuccess(schedulePlayerList)
+                    listener.onSuccess(ArrayList(value))
 
                 } else {
 
-                    listener.onFail("Chưa có dữ liệu")
+                    listener.onFail(notYetData)
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d(Constant().tag, "Error getting documents: ", exception)
-                listener.onFail("${exception.message}")
+                listener.onFail(exception.localizedMessage)
             }
     }
 
     fun getScheduleClub(listener: GetDataListener<ScheduleClubModel>) {
 
-        val scheduleClubList: ArrayList<ScheduleClubModel> = ArrayList()
-
         FirebaseFirestore.getInstance().collection(FireBasePath().collectionScheduleClub).get()
 
-            .addOnSuccessListener { result ->
+            .addOnSuccessListener { document ->
+                val value = document?.toObjects(ScheduleClubModel::class.java)
 
-                for (document in result) {
+                if (value != null && value.size > 0) {
 
-                    val scheduleClubModel = ScheduleClubModel(
-                        document.data["id"] as String?,
-                        document.data["idClub"] as String?,
-                        document.data["idCaptain"] as String?,
-                        document.data["idCity"] as String?,
-                        document.data["idDistrict"] as String?,
-                        document.data["startTime"] as String?,
-                        document.data["endTime"] as String?,
-                        document.data["nameClub"] as String?,
-                        document.data["phone"] as String?,
-                        document.data["photoUrl"] as String?,
-                        document.data["typeField"] as String?
-                    )
-
-                    scheduleClubList.add(scheduleClubModel)
-                }
-                Log.d(Constant().tag, "schedule club size: ${scheduleClubList.size}")
-
-                if (scheduleClubList.size > 0) {
-
-                    listener.onSuccess(scheduleClubList)
+                    listener.onSuccess(ArrayList(value))
 
                 } else {
 
-                    listener.onFail("Chưa có dữ liệu")
+                    listener.onFail(notYetData)
                 }
+                Log.d(Constant().tag, document.metadata.toString())
+
             }
             .addOnFailureListener { exception ->
-                Log.d(Constant().tag, "Error getting documents: ", exception)
-                listener.onFail("${exception.message}")
+                listener.onFail(exception.localizedMessage)
             }
     }
 
-    fun deleteDocument(
+    private fun deleteDocument(
         collection: String, document: String, listener: DeleteDataDataListener
     ) {
 
         val db = FirebaseFirestore.getInstance().collection(collection).document(document)
         db.delete()
             .addOnSuccessListener {
-                //                Log.d(Constant().tag, "DocumentSnapshot successfully deleted!")
                 listener.onSuccess()
             }
             .addOnFailureListener {
-                //                Log.w(Constant().tag, "Error deleting document ${it.message}")
                 listener.onFail("${it.message}")
             }
     }
 
     fun saveOrUpdateClub(clubModel: ClubModel, listener: UpdateListener) {
 
-        FirebaseFirestore.getInstance().collection(FireBasePath().collectionClub).document("${clubModel.id}")
+        FirebaseFirestore.getInstance().collection(FireBasePath().collectionClub).document(clubModel.id)
 
             .set(clubModel, SetOptions.merge())
 
@@ -298,17 +233,15 @@ class BaseRequest {
 
                 } else {
 
-                    listener.onFail("Có lỗi khi lấy thông tin đội bóng!")
+                    listener.onFail(notYetData)
                 }
             }.addOnFailureListener {
-                listener.onFail("Có lỗi khi lấy thông tin đội bóng!")
+                listener.onFail(notYetData)
             }
     }
 
     fun getClubs(listener: GetDataListener<ClubModel>) {
         try {
-
-
             FirebaseFirestore.getInstance().collection(FireBasePath().collectionClub).get()
 
                 .addOnSuccessListener { document ->
@@ -440,7 +373,13 @@ class BaseRequest {
 
     }
 
-    fun writeReviewClub(currentTime: Long, clubModel: ClubModel, userModel: UserModel, review: String, listener: UpdateListener) {
+    fun writeReviewClub(
+        currentTime: Long,
+        clubModel: ClubModel,
+        userModel: UserModel,
+        review: String,
+        listener: UpdateListener
+    ) {
 
         val commentModel = CommentModel(
             "$currentTime", userModel.id, userModel.name, userModel.photoUrl, review,
