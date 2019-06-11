@@ -153,5 +153,7 @@
     <string name="time_ago_months">%d tháng</string>
     <string name="time_ago_year">1 năm</string>
     <string name="time_ago_years">%d năm</string>
+    <string name="count_review">(%s)</string>
+    <string name="not_yet_review">(Hiện chưa có đánh giá)</string>
 
 </resources>

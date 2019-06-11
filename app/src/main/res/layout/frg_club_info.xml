@@ -262,7 +262,8 @@
                     <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:layout_gravity="center_horizontal"
+                            android:orientation="horizontal">
 
                         <TextView
                                 android:layout_width="wrap_content"
@@ -271,6 +272,15 @@
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                                 android:textColor="@color/colorPrimary"
                                 android:textStyle="bold"/>
+
+                        <TextView
+                                android:id="@+id/frg_club_info_count_comment"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/fs_10"
+                                android:textStyle="italic"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                android:textColor="@color/grey_60"/>
 
                     </LinearLayout>
 

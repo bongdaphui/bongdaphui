@@ -44,9 +44,7 @@ class FindPlayerScreen : BaseFragment() {
         super.onResume()
 
         showHeader(false)
-
         showFooter(true)
-
     }
 
     override fun onBindView() {
@@ -119,10 +117,9 @@ class FindPlayerScreen : BaseFragment() {
 
                 scheduleListFull.addAll(list)
 
-                showEmptyView(false)
+                frg_find_player_cv_spinner?.visibility = if (scheduleListFull.size > 0) View.VISIBLE else View.GONE
 
                 initFilterBox()
-
             }
 
             override fun onFail(message: String) {
@@ -139,8 +136,6 @@ class FindPlayerScreen : BaseFragment() {
     private fun initFilterBox() {
 
         if (isAdded) {
-
-            frg_find_player_cv_spinner.visibility = View.VISIBLE
 
             Utils().initSpinnerCity(
                 activity!!,
@@ -205,6 +200,7 @@ class FindPlayerScreen : BaseFragment() {
         view_empty?.visibility = if (isShow) View.VISIBLE else View.GONE
 
         frg_find_player_rcv?.visibility = if (isShow) View.GONE else View.VISIBLE
+
     }
 
     override fun onDestroy() {

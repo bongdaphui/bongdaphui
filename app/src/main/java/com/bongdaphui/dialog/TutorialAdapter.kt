@@ -9,9 +9,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bongdaphui.R
 import com.bongdaphui.model.TutorialModel
+import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
 
-class TutorialAdapter(val context: Context, val inflater: LayoutInflater, val items: ArrayList<TutorialModel>) : PagerAdapter() {
+class TutorialAdapter(val context: Context, val inflater: LayoutInflater, val items: ArrayList<TutorialModel>) :
+    PagerAdapter() {
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         container.removeView(`object` as View)
@@ -25,26 +27,22 @@ class TutorialAdapter(val context: Context, val inflater: LayoutInflater, val it
 
         val welcomeModel = items[position]
 
-
         if (null != holder) {
 
             val imageView = holder.findViewById(R.id.item_welcome_step_image) as ImageView
-            Glide.with(context).asBitmap().load(welcomeModel.photo).into(imageView)
+            Glide.with(context).asBitmap().load(welcomeModel.photo)
+                .placeholder(Utils().getCircularProgressDrawable(context)).into(imageView)
 
             val title = holder.findViewById(R.id.item_welcome_step_title) as TextView
             title.text = welcomeModel.title
 
-
             val content = holder.findViewById(R.id._item_welcome_step_content) as TextView
             content.text = welcomeModel.content
-
         }
-
         return holder
     }
 
     override fun isViewFromObject(p0: View, p1: Any): Boolean {
-
         return p0 == p1
     }
 
@@ -52,5 +50,4 @@ class TutorialAdapter(val context: Context, val inflater: LayoutInflater, val it
 
         return items.size
     }
-
 }

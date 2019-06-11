@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.support.v4.content.ContextCompat
+import android.support.v4.widget.CircularProgressDrawable
 import android.support.v4.widget.SwipeRefreshLayout
 import android.telephony.PhoneNumberUtils
 import android.text.Editable
@@ -574,5 +575,14 @@ class Utils {
         }
 
         return element.asJsonArray
+    }
+
+    internal fun getCircularProgressDrawable(context: Context): CircularProgressDrawable? {
+        val circularProgressDrawable = CircularProgressDrawable(context)
+        circularProgressDrawable.strokeWidth = 5f
+        circularProgressDrawable.centerRadius = 50f
+        circularProgressDrawable.setColorSchemeColors(context.resources.getColor(R.color.colorPrimaryDark))
+        circularProgressDrawable.start()
+        return circularProgressDrawable
     }
 }

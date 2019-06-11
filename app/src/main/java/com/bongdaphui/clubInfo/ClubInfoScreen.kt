@@ -47,6 +47,8 @@ class ClubInfoScreen : BaseFragment() {
     private var clubModel: ClubModel? = null
     private var userModel: UserModel? = null
 
+    private var countComment = 0
+
     companion object {
 
         private const val CLUB_MODEL = "CLUB_MODEL"
@@ -113,6 +115,9 @@ class ClubInfoScreen : BaseFragment() {
         listComment.sortBy { it.id }
         listComment.reverse()
         commentAdapter?.notifyDataSetChanged()
+
+        countComment = listComment.size
+        setCountComment(countComment)
     }
 
     @SuppressLint("RestrictedApi", "SetTextI18n")
@@ -384,6 +389,17 @@ class ClubInfoScreen : BaseFragment() {
         }
     }
 
+    private fun setCountComment(count: Int) {
+        frg_club_info_count_comment.text =
+            activity?.resources?.getString(R.string.count_review)
+                ?.let { it2 ->
+                    if (count > 0) String.format(
+                        it2,
+                        "$count"
+                    ) else activity?.resources?.getString(R.string.not_yet_review)
+                }
+    }
+
     private fun submitReview(message: String) {
         showProgress(true)
 
@@ -405,6 +421,9 @@ class ClubInfoScreen : BaseFragment() {
                         )
                         listComment.add(0, commentModel)
                         commentAdapter?.notifyDataSetChanged()
+
+                        countComment++
+                        setCountComment(countComment)
                     }
 
                     override fun onUpdateFail(err: String) {

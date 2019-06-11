@@ -46,9 +46,7 @@ class FindClubScreen : BaseFragment() {
         super.onResume()
 
         showHeader(false)
-
         showFooter(true)
-
     }
 
     override fun onBindView() {
@@ -118,7 +116,6 @@ class FindClubScreen : BaseFragment() {
                     }
                 }))
             }
-
             builder?.setNegativeButton(R.string.cancel, null)
 
             builder?.show()
@@ -203,7 +200,7 @@ class FindClubScreen : BaseFragment() {
 
                 scheduleListFull.addAll(list)
 
-                showEmptyView(false)
+                frg_find_club_cv_spinner?.visibility = if (scheduleListFull.size > 0) View.VISIBLE else View.GONE
 
                 initFilterBox()
             }
@@ -221,8 +218,6 @@ class FindClubScreen : BaseFragment() {
 
     private fun initFilterBox() {
         if (isAdded) {
-
-            frg_find_club_cv_spinner.visibility = View.VISIBLE
 
             Utils().initSpinnerCity(
                 activity!!,
