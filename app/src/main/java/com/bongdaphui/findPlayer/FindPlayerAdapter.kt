@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.bongdaphui.R
 import com.bongdaphui.listener.OnItemClickListener
 import com.bongdaphui.model.SchedulePlayerModel
+import com.bongdaphui.utils.DateTimeUtil
 import com.bongdaphui.utils.Enum
 import com.bongdaphui.utils.Utils
 import com.bumptech.glide.Glide
@@ -36,9 +37,19 @@ class FindPlayerAdapter(
 
         val model: SchedulePlayerModel = items[position]
 
-        holder.timeStart.text = model.startTime
+        holder.timeStart.text = model.startTime?.let {
+            DateTimeUtil().getFormatDate(
+                it,
+                DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format
+            )
+        }
 
-        holder.timeEnd.text = model.endTime
+        holder.timeEnd.text = model.endTime?.let {
+            DateTimeUtil().getFormatDate(
+                it,
+                DateTimeUtil.DateFormatDefinition.DD_MM_YYYY_HH_MM.format
+            )
+        }
 
         holder.typeField.text = "${model.typeField?.let { Utils().getTypeField(it) }}"
 

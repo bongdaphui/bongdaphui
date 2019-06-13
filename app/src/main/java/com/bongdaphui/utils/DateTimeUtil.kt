@@ -17,8 +17,10 @@ class DateTimeUtil {
 
     enum class DateFormatDefinition(val format: String) {
         DD_MM_YYYY("dd/MM/yyyy"),
+        DD_MM_YYYY_("dd-MM-yyyy"),
         DD_MM_YYYY_HH_MM("dd/MM/yyyy HH:mm"),
-        HH_MM("HH:mm");
+        HH_MM("HH:mm"),
+        EEEE("EEEE");
 
 
         override fun toString(): String {
@@ -52,6 +54,34 @@ class DateTimeUtil {
         @SuppressLint("SimpleDateFormat")
         val newFormat = SimpleDateFormat(type)
         return newFormat.format(Date(dateTime!!))
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getFormatDate(date: String, type: String): String {
+
+        var timeInMilliseconds = getTimeInMilliseconds(date, type)
+
+        val hour = getFormat(timeInMilliseconds, DateFormatDefinition.HH_MM.format)
+
+        val day = getFormat(timeInMilliseconds, DateFormatDefinition.DD_MM_YYYY_.format)
+
+        val date = SimpleDateFormat(type).parse(date)
+
+        var dayOfWeek = ""
+
+        if (date != null) {
+            when (date.day) {
+                0 -> dayOfWeek = "Chủ nhật"
+                1 -> dayOfWeek = "Thứ 2"
+                2 -> dayOfWeek = "Thứ 3"
+                3 -> dayOfWeek = "Thứ 4"
+                4 -> dayOfWeek = "Thứ 5"
+                5 -> dayOfWeek = "Thứ 6"
+                6 -> dayOfWeek = "Thứ 7"
+            }
+        }
+
+        return "$hour $dayOfWeek, $day"
     }
 
     @SuppressLint("SimpleDateFormat")
